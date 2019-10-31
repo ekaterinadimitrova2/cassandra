@@ -19,7 +19,6 @@ package org.apache.cassandra.db.compaction;
 
 public enum OperationType
 {
-    /** Each modification here should be also applied to {@link org.apache.cassandra.tools.nodetool.Stop#compactionType} */
     COMPACTION("Compaction"),
     VALIDATION("Validation"),
     KEY_CACHE_SAVE("Key cache save"),
