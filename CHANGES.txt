@@ -404,7 +404,7 @@ Merged from 3.0:
  * Ensure legacy rows have primary key livenessinfo when they contain illegal cells (CASSANDRA-15365)
 Merged from 2.2:
  * In-JVM DTest: Set correct internode message version for upgrade test (CASSANDRA-15371)
-
+ * nodetool compactionstats showing extra pending task for TWCS - patch implemented (CASSANDRA-15409)
 
 3.11.5
  * Fix cassandra-env.sh to use $CASSANDRA_CONF to find cassandra-jaas.config (CASSANDRA-14305)
