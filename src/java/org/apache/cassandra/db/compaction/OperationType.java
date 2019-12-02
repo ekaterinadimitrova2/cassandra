@@ -17,6 +17,7 @@
  */
 package org.apache.cassandra.db.compaction;
 
+/** Each modification here should be also applied to {@link org.apache.cassandra.tools.nodetool.Stop#compactionType} */
 public enum OperationType
 {
     COMPACTION("Compaction"),
