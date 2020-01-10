@@ -1382,6 +1382,7 @@ Merged from 2.1:
  * Fix conditions on static columns (CASSANDRA-10264)
  * AssertionError: attempted to delete non-existing file CommitLog (CASSANDRA-10377)
  * Fix sorting for queries with an IN condition on partition key columns (CASSANDRA-10363)
+ * Race condition when setting bootstrap flags: fixed issue (CASSANDRA-14878)
 
 
 3.0-rc2
