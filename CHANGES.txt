@@ -33,6 +33,9 @@ Merged from 2.2:
  * In-JVM DTest: Set correct internode message version for upgrade test (CASSANDRA-15371)
  * In-JVM DTest: Support NodeTool in dtest (CASSANDRA-15429)
  * Added data modeling documentation (CASSANDRA-15443)
+ * The flag 'cross_node_timeout' has been set as true by default. This change is done under the 
+   assumption that users have setup NTP on their clusters or otherwise synchronize their clocks,
+   and that clocks are modestly in sync,since this is a requirement for general correctness of last write wins. (CASSANDRA-15216)
 
 4.0-alpha2
  * Fix SASI non-literal string comparisons (range operators) (CASSANDRA-15169)
