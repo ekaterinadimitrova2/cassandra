@@ -24,6 +24,7 @@
    is done under the assumption that users have setup NTP on their clusters or
    otherwise synchronize their clocks, and that clocks are mostly in sync, since
    this is a requirement for general correctness of last write wins. (CASSANDRA-15216)
+ * Upgrade hppc library to the latest 0.8.1 version (CASSANDRA-12995)
 Merged from 3.11:
  * Fix nodetool compactionstats showing extra pending task for TWCS - patch implemented (CASSANDRA-15409)
  * Fix SELECT JSON formatting for the "duration" type (CASSANDRA-15075)
