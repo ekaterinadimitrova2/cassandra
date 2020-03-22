@@ -17,60 +17,19 @@
  */
 package org.apache.cassandra.db.virtual;
 
-import java.util.Set;
-
-import com.google.common.collect.Sets;
-
 import org.apache.cassandra.config.Config;
 import org.apache.cassandra.db.DecoratedKey;
 import org.apache.cassandra.db.marshal.*;
 import org.apache.cassandra.dht.LocalPartitioner;
 import org.apache.cassandra.schema.TableMetadata;
 
+import static org.apache.cassandra.config.SysPropertiesConfig.CASSANDRA_RELEVANT_ENVS;
+import static org.apache.cassandra.config.SysPropertiesConfig.CASSANDRA_RELEVANT_PROPERTIES;
+
 final class SystemPropertiesTable extends AbstractVirtualTable
 {
     private static final String NAME = "name";
     private static final String VALUE = "value";
-
-    private static final Set<String> CASSANDRA_RELEVANT_PROPERTIES = Sets.newHashSet(
-            // base jvm properties
-            "java.home",
-            "java.io.tmpdir",
-            "java.library.path",
-            "java.security.egd",
-            "java.version",
-            "java.vm.name",
-            "line.separator",
-            "os.arch",
-            "os.name",
-            "user.home",
-            "sun.arch.data.model",
-            // jmx properties
-            "java.rmi.server.hostname",
-            "java.rmi.server.randomID",
-            "com.sun.management.jmxremote.authenticate",
-            "com.sun.management.jmxremote.rmi.port",
-            "com.sun.management.jmxremote.ssl",
-            "com.sun.management.jmxremote.ssl.need.client.auth",
-            "com.sun.management.jmxremote.access.file",
-            "com.sun.management.jmxremote.password.file",
-            "com.sun.management.jmxremote.port",
-            "com.sun.management.jmxremote.ssl.enabled.protocols",
-            "com.sun.management.jmxremote.ssl.enabled.cipher.suites",
-            "mx4jaddress",
-            "mx4jport",
-            // cassandra properties (without the "cassandra." prefix)
-            "cassandra-foreground",
-            "cassandra-pidfile",
-            "default.provide.overlapping.tombstones",
-            "org.apache.cassandra.disable_mbean_registration",
-            // only for testing
-            "org.apache.cassandra.db.virtual.SystemPropertiesTableTest"
-            );
-
-    private static final Set<String> CASSANDRA_RELEVANT_ENVS = Sets.newHashSet(
-            "JAVA_HOME"
-            );
 
     SystemPropertiesTable(String keyspace)
     {

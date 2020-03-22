@@ -23,6 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.config.SysPropertiesConfig;
+
 /**
  * If mx4j-tools is in the classpath call maybeLoad to load the HTTP interface of mx4j.
  *
@@ -75,7 +77,7 @@ public class Mx4jTool
 
     private static String getAddress()
     {
-        String sAddress = System.getProperty("mx4jaddress");
+        String sAddress = SysPropertiesConfig.getSAddress();
         if (StringUtils.isEmpty(sAddress))
             sAddress = FBUtilities.getBroadcastAddressAndPort().address.getHostAddress();
         return sAddress;
@@ -84,7 +86,7 @@ public class Mx4jTool
     private static int getPort()
     {
         int port = 8081;
-        String sPort = System.getProperty("mx4jport");
+        String sPort = SysPropertiesConfig.getSPort();
         if (StringUtils.isNotEmpty(sPort))
             port = Integer.parseInt(sPort);
         return port;

@@ -2696,7 +2696,7 @@ public class DatabaseDescriptor
     public static boolean hasLargeAddressSpace()
     {
         // currently we just check if it's a 64bit arch, but any we only really care if the address space is large
-        String datamodel = System.getProperty("sun.arch.data.model");
+        String datamodel = SysPropertiesConfig.getSunArchDataModel();
         if (datamodel != null)
         {
             switch (datamodel)
@@ -2705,7 +2705,7 @@ public class DatabaseDescriptor
                 case "32": return false;
             }
         }
-        String arch = System.getProperty("os.arch");
+        String arch = SysPropertiesConfig.getOsArch();
         return arch.contains("64") || arch.contains("sparcv9");
     }
 

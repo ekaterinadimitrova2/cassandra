@@ -52,6 +52,7 @@ import org.apache.cassandra.auth.IAuthorizer;
 import org.apache.cassandra.auth.INetworkAuthorizer;
 import org.apache.cassandra.auth.IRoleManager;
 import org.apache.cassandra.config.DatabaseDescriptor;
+import org.apache.cassandra.config.SysPropertiesConfig;
 import org.apache.cassandra.db.DecoratedKey;
 import org.apache.cassandra.db.SerializationHeader;
 import org.apache.cassandra.db.marshal.AbstractType;
@@ -915,7 +916,7 @@ public class FBUtilities
             	try (BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
                      BufferedReader err = new BufferedReader(new InputStreamReader(p.getErrorStream())))
                 {
-            		String lineSep = System.getProperty("line.separator");
+            		String lineSep = SysPropertiesConfig.getLineSeparator();
 	                StringBuilder sb = new StringBuilder();
 	                String str;
 	                while ((str = in.readLine()) != null)
@@ -1036,7 +1037,7 @@ public class FBUtilities
 
     public static File getToolsOutputDirectory()
     {
-        File historyDir = new File(System.getProperty("user.home"), ".cassandra");
+        File historyDir = new File(SysPropertiesConfig.getUserHome(), ".cassandra");
         FileUtils.createDirectory(historyDir);
         return historyDir;
     }

@@ -27,6 +27,8 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.config.SysPropertiesConfig;
+
 /**
  * Helper class to avoid catching and rethrowing checked exceptions on MBean and
  * allow turning of MBean registration for test purposes.
@@ -35,7 +37,7 @@ public interface MBeanWrapper
 {
     static final Logger logger = LoggerFactory.getLogger(MBeanWrapper.class);
 
-    static final MBeanWrapper instance = Boolean.getBoolean("org.apache.cassandra.disable_mbean_registration") ?
+    static final MBeanWrapper instance = SysPropertiesConfig.isDisabledMbeanRegistration() ?
                                          new NoOpMBeanWrapper() :
                                          new PlatformMBeanWrapper();
 

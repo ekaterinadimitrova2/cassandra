@@ -43,6 +43,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.config.SysPropertiesConfig;
+import org.apache.cassandra.utils.SyncUtil;
 import org.apache.cassandra.concurrent.ScheduledExecutors;
 import org.apache.cassandra.io.FSError;
 import org.apache.cassandra.io.FSErrorHandler;
@@ -125,7 +127,7 @@ public final class FileUtils
         }
     }
 
-    private static final File tempDir = new File(System.getProperty("java.io.tmpdir"));
+    private static final File tempDir = new File(SysPropertiesConfig.getJavaIoTmpDir());
     private static final AtomicLong tempFileNum = new AtomicLong();
 
     public static File getTempDir()

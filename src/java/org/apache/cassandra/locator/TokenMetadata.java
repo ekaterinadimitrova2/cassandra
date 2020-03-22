@@ -27,6 +27,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.*;
+
+import org.apache.cassandra.config.SysPropertiesConfig;
 import org.apache.cassandra.locator.ReplicaCollection.Builder.Conflict;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -1201,42 +1203,42 @@ public class TokenMetadata
             if (!eps.isEmpty())
             {
                 sb.append("Normal Tokens:");
-                sb.append(System.getProperty("line.separator"));
+                sb.append(SysPropertiesConfig.getLineSeparator());
                 for (InetAddressAndPort ep : eps)
                 {
                     sb.append(ep);
                     sb.append(':');
                     sb.append(endpointToTokenMap.get(ep));
-                    sb.append(System.getProperty("line.separator"));
+                    sb.append(SysPropertiesConfig.getLineSeparator());
                 }
             }
 
             if (!bootstrapTokens.isEmpty())
             {
                 sb.append("Bootstrapping Tokens:" );
-                sb.append(System.getProperty("line.separator"));
+                sb.append(SysPropertiesConfig.getLineSeparator());
                 for (Map.Entry<Token, InetAddressAndPort> entry : bootstrapTokens.entrySet())
                 {
                     sb.append(entry.getValue()).append(':').append(entry.getKey());
-                    sb.append(System.getProperty("line.separator"));
+                    sb.append(SysPropertiesConfig.getLineSeparator());
                 }
             }
 
             if (!leavingEndpoints.isEmpty())
             {
                 sb.append("Leaving Endpoints:");
-                sb.append(System.getProperty("line.separator"));
+                sb.append(SysPropertiesConfig.getLineSeparator());
                 for (InetAddressAndPort ep : leavingEndpoints)
                 {
                     sb.append(ep);
-                    sb.append(System.getProperty("line.separator"));
+                    sb.append(SysPropertiesConfig.getLineSeparator());
                 }
             }
 
             if (!pendingRanges.isEmpty())
             {
                 sb.append("Pending Ranges:");
-                sb.append(System.getProperty("line.separator"));
+                sb.append(SysPropertiesConfig.getLineSeparator());
                 sb.append(printPendingRanges());
             }
         }

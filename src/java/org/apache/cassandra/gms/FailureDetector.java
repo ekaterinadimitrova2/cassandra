@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.*;
 
+import org.apache.cassandra.config.SysPropertiesConfig;
 import org.apache.cassandra.locator.Replica;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -384,7 +385,7 @@ public class FailureDetector implements IFailureDetector, FailureDetectorMBean
             ArrivalWindow hWnd = arrivalSamples.get(ep);
             sb.append(ep).append(" : ");
             sb.append(hWnd);
-            sb.append(System.getProperty("line.separator"));
+            sb.append(SysPropertiesConfig.getLineSeparator());
         }
         sb.append("-----------------------------------------------------------------------");
         return sb.toString();

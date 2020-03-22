@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.config.DatabaseDescriptor;
+import org.apache.cassandra.config.SysPropertiesConfig;
 import org.apache.cassandra.cql3.statements.schema.CreateTableStatement;
 import org.apache.cassandra.dht.IPartitioner;
 import org.apache.cassandra.dht.Murmur3Partitioner;
@@ -152,7 +153,7 @@ public class CqlBulkRecordWriter extends RecordWriter<Object, List<ByteBuffer>>
 
     protected String getOutputLocation() throws IOException
     {
-        String dir = conf.get(OUTPUT_LOCATION, System.getProperty("java.io.tmpdir"));
+        String dir = conf.get(OUTPUT_LOCATION, SysPropertiesConfig.getJavaIoTmpDir());
         if (dir == null)
             throw new IOException("Output directory not defined, if hadoop is not setting java.io.tmpdir then define " + OUTPUT_LOCATION);
         return dir;
