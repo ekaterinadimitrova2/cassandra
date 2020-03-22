@@ -48,6 +48,9 @@ import org.yaml.snakeyaml.introspector.MissingProperty;
 import org.yaml.snakeyaml.introspector.Property;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class YamlConfigurationLoader implements ConfigurationLoader
 {
     private static final Logger logger = LoggerFactory.getLogger(YamlConfigurationLoader.class);
@@ -200,6 +203,8 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 missingProperties.add(result.getName());
             }
+
+            //Parse whatever needs to be parsed
 
             return new Property(result.getName(), result.getType())
             {

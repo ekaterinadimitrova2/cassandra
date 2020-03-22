@@ -34,6 +34,7 @@ import com.google.common.collect.Iterables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.config.SysPropertiesConfig;
 import org.apache.cassandra.cql3.QueryProcessor;
 import org.apache.cassandra.cql3.UntypedResultSet;
 import org.apache.cassandra.schema.TableMetadata;
@@ -181,7 +182,7 @@ public class StartupChecks
     {
         public void execute()
         {
-            if (System.getProperty("com.sun.management.jmxremote.port") != null)
+            if (SysPropertiesConfig.getRMIConnectionsPort() != null)
             {
                 logger.warn("Use of com.sun.management.jmxremote.port at startup is deprecated. " +
                             "Please use cassandra.jmx.remote.port instead.");
@@ -197,7 +198,7 @@ public class StartupChecks
             if (!DatabaseDescriptor.hasLargeAddressSpace())
                 logger.warn("32bit JVM detected.  It is recommended to run Cassandra on a 64bit JVM for better performance.");
 
-            String javaVmName = System.getProperty("java.vm.name");
+            String javaVmName = SysPropertiesConfig.getJavaVMname();
             if (!(javaVmName.contains("HotSpot") || javaVmName.contains("OpenJDK")))
             {
                 logger.warn("Non-Oracle JVM detected.  Some features, such as immediate unmap of compacted SSTables, may not work as intended");
@@ -213,7 +214,7 @@ public class StartupChecks
          */
         private void checkOutOfMemoryHandling()
         {
-            if (JavaUtils.supportExitOnOutOfMemory(System.getProperty("java.version")))
+            if (JavaUtils.supportExitOnOutOfMemory(SysPropertiesConfig.getJavaVersion()))
             {
                 if (!jvmOptionsContainsOneOf("-XX:OnOutOfMemoryError=", "-XX:+ExitOnOutOfMemoryError", "-XX:+CrashOnOutOfMemoryError"))
                     logger.warn("The JVM is not configured to stop on OutOfMemoryError which can cause data corruption."
