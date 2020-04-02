@@ -1,4 +1,7 @@
 4.0-alpha5
+ * Standaridize storage configuration parameters' names. Backward compatibility with the old names.
+   Add the possibility for the user to provide in the form of a suffix different units for Memory, Time, and Rate parameters, i.e.
+   commitlog_sync_period = 500ms/500s/500ns, etc.(CASSANDRA-15234-3)
  * Differentiate follower/initator in StreamMessageHeader (CASSANDRA-15665)
  * Add a startup check to detect if LZ4 uses java rather than native implementation (CASSANDRA-15884)
  * Fix missing topology events when running multiple nodes on the same network interface (CASSANDRA-15677)
