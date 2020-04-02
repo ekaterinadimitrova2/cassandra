@@ -126,9 +126,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             Yaml yaml = new Yaml(constructor);
             Config result = loadConfig(yaml, configBytes);
             propertiesChecker.check();
+            //properties parse units
+            if(!isOldYAML)
+                Config.parseUnits(result);
+
             return result;
         }
-        catch (YAMLException e)
+        catch (YAMLException | NoSuchFieldException | IllegalAccessException e)
         {
             throw new ConfigurationException("Invalid yaml: " + url + SystemUtils.LINE_SEPARATOR
                                              +  " Error: " + e.getMessage(), false);
@@ -197,7 +201,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                 put("cross_node_timeout", "internode_timeout");
                 put("native_transport_max_threads", "max_native_transport_threads");
                 put("native_transport_max_frame_size_in_mb", "max_native_transport_frame_size_in_mb");
-                put("native_transport_max_concurrent_connections", "max_native_transport_frame_size_in_mb");
+                put("native_transport_max_concurrent_connections", "max_native_transport_concurrent_connections");
                 put("native_transport_max_concurrent_connections_per_ip", "max_native_transport_concurrent_connections_per_ip");
                 put("otc_coalescing_strategy", "outbound_connection_coalescing_strategy");
                 put("otc_coalescing_window_us", "outbound_connection_coalescing_window_us");
@@ -232,6 +236,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                 }
 
                 //Backward compatibility in case the user is still using the old version of the storage config yaml file
+                //Could be used in cases when for some reason only a name of a parameter is changed
                 //CASSANDRA-15234
                 if(isOldYAML)
                 {
@@ -272,6 +277,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                     {
                         nullProperties.add(getName());
                     }
+
                     result.set(object, value);
                 }
 

@@ -85,8 +85,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -94,17 +94,17 @@ jobs:
   j8_cqlsh-dtests-py2-with-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
     - run:
         name: Clone Cassandra dtest Repository (via git)
         command: |
-          git clone --single-branch --branch $DTEST_BRANCH --depth 1 $DTEST_REPO ~/cassandra-dtest
+          git clone --single-branch --branch $DTEST_BRANCH --depth 1 $DTEST_REPO ~/cassandra-dtest 
     - run:
         name: Configure virtualenv and python Dependencies
         command: |
@@ -162,8 +162,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -253,8 +253,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -331,8 +331,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -340,10 +340,10 @@ jobs:
   j11_cqlsh-dtests-py3-with-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -408,8 +408,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -418,10 +418,10 @@ jobs:
   j11_cqlsh-dtests-py3-no-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -486,8 +486,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -564,8 +564,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -574,10 +574,10 @@ jobs:
   j8_cqlsh-dtests-py3-with-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -642,8 +642,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -651,10 +651,10 @@ jobs:
   j8_cqlsh-dtests-py2-no-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -719,8 +719,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -728,10 +728,10 @@ jobs:
   j11_cqlsh-dtests-py2-with-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -796,20 +796,20 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
     - CASSANDRA_USE_JDK11: true
   j11_dtests-with-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -877,8 +877,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -887,10 +887,10 @@ jobs:
   j8_dtests-no-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -936,10 +936,10 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
-    - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
+    - CCM_MAX_HEAP_SIZE: 2048M
+    - CCM_HEAP_NEWSIZE: 512M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_upgradetests-no-vnodes:
@@ -1035,8 +1035,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1080,8 +1080,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1171,8 +1171,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1262,8 +1262,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1343,8 +1343,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1353,10 +1353,10 @@ jobs:
   j11_cqlsh-dtests-py2-no-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1421,8 +1421,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1431,10 +1431,10 @@ jobs:
   j8_dtests-with-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1480,8 +1480,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1557,8 +1557,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1649,8 +1649,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1729,8 +1729,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1738,10 +1738,10 @@ jobs:
   j8_cqlsh-dtests-py3-no-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1806,8 +1806,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1883,8 +1883,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1928,8 +1928,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1973,8 +1973,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1982,10 +1982,10 @@ jobs:
   j11_dtests-no-vnodes:
     docker:
     - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2053,8 +2053,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -2145,8 +2145,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -2213,8 +2213,8 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
-    - DTEST_BRANCH: master
+    - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
+    - DTEST_BRANCH: CASSANDRA-15234-3
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
