@@ -297,12 +297,27 @@ public class DatabaseDescriptor
                                    ? new YamlConfigurationLoader()
                                    : FBUtilities.<ConfigurationLoader>construct(loaderClass, "configuration loading");
         Config config = loader.loadConfig();
+        try
+        {
+            Config.parseUnits(config);
+        }
+        catch (NoSuchFieldException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+
 
         if (!hasLoggedConfig)
         {
             hasLoggedConfig = true;
             Config.log(config);
         }
+
+
 
         return config;
     }
