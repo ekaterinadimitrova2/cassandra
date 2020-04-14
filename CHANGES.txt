@@ -1,4 +1,5 @@
 4.0-alpha4
+ * Standardise config and JVM parameters (CASSANDRA-15234)
  * Replace array iterators with get by index (CASSANDRA-15394)
  * Minimize BTree iterator allocations (CASSANDRA-15389)
  * Add client request size server metrics (CASSANDRA-15704)
