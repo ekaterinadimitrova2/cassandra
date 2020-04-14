@@ -201,7 +201,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                 put("cross_node_timeout", "internode_timeout");
                 put("native_transport_max_threads", "max_native_transport_threads");
                 put("native_transport_max_frame_size_in_mb", "max_native_transport_frame_size_in_mb");
-                put("native_transport_max_concurrent_connections", "max_native_transport_frame_size_in_mb");
+                put("native_transport_max_concurrent_connections", "max_native_transport_concurrent_connections");
                 put("native_transport_max_concurrent_connections_per_ip", "max_native_transport_concurrent_connections_per_ip");
                 put("otc_coalescing_strategy", "outbound_connection_coalescing_strategy");
                 put("otc_coalescing_window_us", "outbound_connection_coalescing_window_us");

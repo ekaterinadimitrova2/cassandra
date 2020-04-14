@@ -1052,7 +1052,7 @@ server_encryption_options:
   optional: false
   # if enabled, will open up an encrypted listening socket on ssl_storage_port. Should be used
   # during upgrade to 4.0; otherwise, set to false.
-  enable_legacy_ssl_storage_port: false
+  legacy_ssl_storage_port_enabled: false
   # on outbound connections, determine which type of peers to securely connect to. 'enabled' must be set to true.
   internode_encryption: none
   keystore: conf/.keystore
