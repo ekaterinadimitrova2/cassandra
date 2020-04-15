@@ -144,6 +144,7 @@ public class ConfigCustomUnitsTest
         assertEquals(1024, config.column_index_size_in_kb);
         assertEquals(1, config.compaction_throughput_mb_per_sec);
         assertEquals(1, config.stream_throughput_outbound_megabits_per_sec);
+        assertEquals(20, config.commitlog_sync_period_in_ms);
     }
     public static class TestLoader implements ConfigurationLoader
     {
@@ -159,6 +160,7 @@ public class ConfigCustomUnitsTest
             testConfig.column_index_size = "1MB";
             testConfig.compaction_throughput = "1000Kbps";
             testConfig.stream_throughput_outbound = "1000000bps";
+            testConfig.commitlog_sync_period = "20ms";
 
             return testConfig;
         }
