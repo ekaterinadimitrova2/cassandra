@@ -1,4 +1,5 @@
 4.0-beta2
+ * Remove COMPACT STORAGE internals (CASSANDRA-13994)
  * Make TimestampSerializer accept fractional seconds of varying precision (CASSANDRA-15976)
  * Improve cassandra-stress logging when using a profile file that doesn't exist (CASSANDRA-14425)
  * Improve logging for socket connection/disconnection (CASSANDRA-15980)
@@ -68,6 +69,8 @@ Merged from 2.2:
  * Allow sending Entire SSTables over SSL (CASSANDRA-15740)
  * Fix CQLSH UTF-8 encoding issue for Python 2/3 compatibility (CASSANDRA-15739)
  * Fix batch statement preparation when multiple tables and parameters are used (CASSANDRA-15730)
+=======
+4.0-alpha4
  * Fix regression with traceOutgoingMessage printing message size (CASSANDRA-15687)
  * Ensure repaired data tracking reads a consistent amount of data across replicas (CASSANDRA-15601)
  * Fix CQLSH to avoid arguments being evaluated (CASSANDRA-15660)
