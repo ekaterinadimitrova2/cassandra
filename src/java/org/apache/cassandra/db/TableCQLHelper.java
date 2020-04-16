@@ -57,9 +57,8 @@ public class TableCQLHelper
     {
         List<ColumnMetadata> cds = new ArrayList<>(metadata.clusteringColumns().size());
 
-        if (!metadata.isStaticCompactTable())
-            for (ColumnMetadata cd : metadata.clusteringColumns())
-                cds.add(cd);
+        for (ColumnMetadata cd : metadata.clusteringColumns())
+            cds.add(cd);
 
         return cds;
     }
@@ -71,20 +70,6 @@ public class TableCQLHelper
         for (ColumnMetadata cd : metadata.staticColumns())
             cds.add(cd);
 
-        if (metadata.isDense())
-        {
-            // remove an empty type
-            for (ColumnMetadata cd : metadata.regularColumns())
-                if (!cd.type.equals(EmptyType.instance))
-                    cds.add(cd);
-        }
-        // "regular" columns are not exposed for static compact tables
-        else if (!metadata.isStaticCompactTable())
-        {
-            for (ColumnMetadata cd : metadata.regularColumns())
-                cds.add(cd);
-        }
-
         return cds;
     }
 
@@ -95,13 +80,6 @@ public class TableCQLHelper
     public static String getTableMetadataAsCQL(TableMetadata metadata, boolean includeDroppedColumns)
     {
         StringBuilder sb = new StringBuilder();
-        if (!isCqlCompatible(metadata))
-        {
-            sb.append(String.format("/*\nWarning: Table %s omitted because it has constructs not compatible with CQL (was created via legacy API).\n",
-                                    metadata.toString()));
-            sb.append("\nApproximate structure, for reference:");
-            sb.append("\n(this should not be used to reproduce this schema)\n\n");
-        }
 
         sb.append("CREATE TABLE IF NOT EXISTS ");
         sb.append(metadata.toString()).append(" (");
@@ -129,7 +107,6 @@ public class TableCQLHelper
         for (ColumnMetadata cfd: partitionColumns)
         {
             cdCommaAppender.accept(sb);
-            sb.append(toCQL(cfd, metadata.isStaticCompactTable()));
         }
 
         if (includeDroppedColumns)
@@ -176,9 +153,6 @@ public class TableCQLHelper
 
         sb.append("ID = ").append(metadata.id).append("\n\tAND ");
 
-        if (metadata.isCompactTable())
-            sb.append("COMPACT STORAGE\n\tAND ");
-
         if (clusteringColumns.size() > 0)
         {
             sb.append("CLUSTERING ORDER BY (");
@@ -195,10 +169,6 @@ public class TableCQLHelper
         sb.append(toCQL(metadata.params));
         sb.append(";");
 
-        if (!isCqlCompatible(metadata))
-        {
-            sb.append("\n*/");
-        }
         return sb.toString();
     }
 
@@ -410,21 +380,5 @@ public class TableCQLHelper
                     stringBuilder.append(',').append(afterComma);
             }
         };
-    }
-
-    /**
-     * Whether or not the given metadata is compatible / representable with CQL Language
-     */
-    public static boolean isCqlCompatible(TableMetadata metaData)
-    {
-        if (metaData.isSuper())
-            return false;
-
-        if (metaData.isCompactTable()
-            && metaData.regularColumns().size() > 1
-            && metaData.clusteringColumns().size() >= 1)
-            return false;
-
-        return true;
     }
 }
