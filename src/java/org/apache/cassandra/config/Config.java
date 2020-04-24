@@ -184,21 +184,21 @@ public class Config
     public boolean start_native_transport = true;
     public int native_transport_port = 9042;
     public Integer native_transport_port_ssl = null;
-    //Effective cassandra.yaml v.2.0 native_transport_max_threads is renamed to max_native_transport_threads
+    //Effective cassandra.yaml v.2.0 native_transport_max_threads is renamed to native_transport_threads_max
     //The old name is kept to keep backwards compatibility
-    public int max_native_transport_threads = 128;
+    public int native_transport_threads_max = 128;
     //Effective cassandra.yaml v.2.0 native_transport_max_frame_size_in_mb is renamed to
-    // max_native_transport_frame_size_in_mb
+    // native_transport_frame_size_max_in_mb
     //The old name is kept to keep backwards compatibility
-    public int max_native_transport_frame_size_in_mb = 256;
+    public int native_transport_frame_size_max_in_mb = 256;
     //Effective cassandra.yaml v.2.0 native_transport_max_concurrent_connections is renamed to
-    // max_native_transport_concurrent_connections
+    // native_transport_concurrent_connections_max
     //The old name is kept to keep backwards compatibility
-    public volatile long max_native_transport_concurrent_connections = -1L;
+    public volatile long native_transport_concurrent_connections_max = -1L;
     //Effective cassandra.yaml v.2.0 native_transport_max_concurrent_connections_per_ip is renamed to
-    // max_native_transport_concurrent_connections_per_ip
+    // native_transport_concurrent_connections_per_ip_max
     //The old name is kept to keep backwards compatibility
-    public volatile long max_native_transport_concurrent_connections_per_ip = -1L;
+    public volatile long native_transport_concurrent_connections_per_ip_max = -1L;
     public boolean native_transport_flush_in_batches_legacy = false;
     public volatile boolean native_transport_allow_older_protocols = true;
     public int native_transport_frame_block_size_in_kb = 32;

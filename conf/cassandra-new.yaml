@@ -986,7 +986,7 @@ start_native_transport: true
 native_transport_port: 9042
 # The maximum threads for handling requests (note that idle threads are stopped
 # after 30 seconds so there is no corresponding minimum setting).
-# max_native_transport_threads: 128
+# native_transport_threads_max: 128
 #
 # Enabling native transport encryption in client_encryption_options allows you to either use
 # encryption for the standard port or to use a dedicated, additional port along with the unencrypted
@@ -1000,10 +1000,10 @@ native_transport_port: 9042
 # The maximum size of allowed frame. Frame (requests) larger than this will
 # be rejected as invalid. The default is 256MB. If you're changing this parameter,
 # you may want to adjust max_value_size_in_mb accordingly. This should be positive and less than 2048.
-# max_native_transport_frame_size_in_mb: 256
+# native_transport_frame_size_max_in_mb: 256
 # The maximum number of concurrent client connections.
 # The default is -1, which means unlimited.
-# max_native_transport_concurrent_connections: -1
+# native_transport_concurrent_connections_max: -1
 
 # If checksumming is enabled as a protocol option, denotes the size of the chunks into which frame
 # are bodies will be broken and checksummed.
@@ -1025,7 +1025,7 @@ native_transport_allow_older_protocols: true
 
 # The maximum number of concurrent client connections per source ip.
 # The default is -1, which means unlimited.
-# max_native_transport_concurrent_connections_per_ip: -1
+# native_transport_concurrent_connections_per_ip_max: -1
 # enable or disable keepalive on rpc/native connections
 rpc_keepalive: true
 

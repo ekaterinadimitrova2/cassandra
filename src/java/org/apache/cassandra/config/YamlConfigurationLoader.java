@@ -189,16 +189,16 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
         private final Set<String> nullProperties = new HashSet<>();
 
-        private static final Map<String, String> MAP_OLD_TO_NEW_PARAMETERS = new HashMap<String, String>()
+        private final Map<String, String> MAP_OLD_TO_NEW_PARAMETERS = new HashMap<String, String>()
         {
             {
                 put("enable_user_defined_functions", "user_defined_functions_enabled");
                 put("enable_scripted_user_defined_functions", "scripted_user_defined_functions_enabled");
                 put("cross_node_timeout", "internode_timeout");
-                put("native_transport_max_threads", "max_native_transport_threads");
-                put("native_transport_max_frame_size_in_mb", "max_native_transport_frame_size_in_mb");
-                put("native_transport_max_concurrent_connections", "max_native_transport_frame_size_in_mb");
-                put("native_transport_max_concurrent_connections_per_ip", "max_native_transport_concurrent_connections_per_ip");
+                put("native_transport_max_threads", "native_transport_threads_max");
+                put("native_transport_max_frame_size_in_mb", "native_transport_frame_size_max_in_mb");
+                put("native_transport_max_concurrent_connections", "native_transport_frame_size_max_in_mb");
+                put("native_transport_max_concurrent_connections_per_ip", "native_transport_concurrent_connections_per_ip_max");
                 put("otc_coalescing_strategy", "outbound_connection_coalescing_strategy");
                 put("otc_coalescing_window_us", "outbound_connection_coalescing_window_us");
                 put("otc_coalescing_enough_coalesced_messages", "outbound_connection_coalescing_enough_coalesced_messages");
@@ -302,9 +302,14 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             }
             if (isOldYAML)
             {
-                logger.info("You are using the old version of the Cassandra storage config YAML file." +
+                logger.warn("You are using the old version of the Cassandra storage config YAML file." +
                                                  "Cassandra still provides backward compatibility but it is " +
-                                                 "recommended to consider update.");
+                                                 "recommended to consider update. The following properties have been renamed: " +
+                            "enable_user_defined_functions, enable_scripted_user_defined_functions, cross_node_timeout, " +
+                            "native_transport_max_threads, native_transport_max_frame_size_in_mb, native_transport_max_concurrent_connections" +
+                            "native_transport_max_concurrent_connections_per_ip, otc_coalescing_strategy, otc_coalescing_window_us" +
+                            "otc_coalescing_enough_coalesced_messages, otc_backlog_expiration_interval_ms, enable_legacy_ssl_storage_port" +
+                            "enable_materialized_views, enable_sasi_indexes, enable_transient_replication");
             }
         }
     }

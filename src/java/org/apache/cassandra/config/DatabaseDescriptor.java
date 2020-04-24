@@ -498,8 +498,8 @@ public class DatabaseDescriptor
 
         checkForLowestAcceptedTimeouts(conf);
 
-        checkValidForByteConversion(conf.max_native_transport_frame_size_in_mb,
-                                    "max_native_transport_frame_size_in_mb", ByteUnit.MEBI_BYTES);
+        checkValidForByteConversion(conf.native_transport_frame_size_max_in_mb,
+                                    "native_transport_frame_size_max_in_mb", ByteUnit.MEBI_BYTES);
 
         checkValidForByteConversion(conf.column_index_size_in_kb,
                                     "column_index_size_in_kb", ByteUnit.KIBI_BYTES);
@@ -2073,37 +2073,37 @@ public class DatabaseDescriptor
 
     public static int getNativeTransportMaxThreads()
     {
-        return conf.max_native_transport_threads;
+        return conf.native_transport_threads_max;
     }
 
     public static void setNativeTransportMaxThreads(int max_threads)
     {
-        conf.max_native_transport_threads = max_threads;
+        conf.native_transport_threads_max = max_threads;
     }
 
     public static int getNativeTransportMaxFrameSize()
     {
-        return (int) ByteUnit.MEBI_BYTES.toBytes(conf.max_native_transport_frame_size_in_mb);
+        return (int) ByteUnit.MEBI_BYTES.toBytes(conf.native_transport_frame_size_max_in_mb);
     }
 
     public static long getNativeTransportMaxConcurrentConnections()
     {
-        return conf.max_native_transport_concurrent_connections;
+        return conf.native_transport_concurrent_connections_max;
     }
 
     public static void setNativeTransportMaxConcurrentConnections(long nativeTransportMaxConcurrentConnections)
     {
-        conf.max_native_transport_concurrent_connections = nativeTransportMaxConcurrentConnections;
+        conf.native_transport_concurrent_connections_max = nativeTransportMaxConcurrentConnections;
     }
 
     public static long getNativeTransportMaxConcurrentConnectionsPerIp()
     {
-        return conf.max_native_transport_concurrent_connections_per_ip;
+        return conf.native_transport_concurrent_connections_per_ip_max;
     }
 
     public static void setNativeTransportMaxConcurrentConnectionsPerIp(long max_native_transport_concurrent_connections_per_ip)
     {
-        conf.max_native_transport_concurrent_connections_per_ip = max_native_transport_concurrent_connections_per_ip;
+        conf.native_transport_concurrent_connections_per_ip_max = max_native_transport_concurrent_connections_per_ip;
     }
 
     public static boolean useNativeTransportLegacyFlusher()
