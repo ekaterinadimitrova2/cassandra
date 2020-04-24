@@ -53,26 +53,6 @@ public class TableCQLHelper
         return l;
     }
 
-    private static List<ColumnMetadata> getClusteringColumns(TableMetadata metadata)
-    {
-        List<ColumnMetadata> cds = new ArrayList<>(metadata.clusteringColumns().size());
-
-        for (ColumnMetadata cd : metadata.clusteringColumns())
-            cds.add(cd);
-
-        return cds;
-    }
-
-    private static List<ColumnMetadata> getPartitionColumns(TableMetadata metadata)
-    {
-        List<ColumnMetadata> cds = new ArrayList<>(metadata.regularAndStaticColumns().size());
-
-        for (ColumnMetadata cd : metadata.staticColumns())
-            cds.add(cd);
-
-        return cds;
-    }
-
     /**
      * Build a CQL String representation of Table Metadata
      */
@@ -85,8 +65,8 @@ public class TableCQLHelper
         sb.append(metadata.toString()).append(" (");
 
         List<ColumnMetadata> partitionKeyColumns = metadata.partitionKeyColumns();
-        List<ColumnMetadata> clusteringColumns = getClusteringColumns(metadata);
-        List<ColumnMetadata> partitionColumns = getPartitionColumns(metadata);
+        List<ColumnMetadata> clusteringColumns = metadata.clusteringColumns();
+        Iterable<ColumnMetadata> otherColumns = metadata.regularAndStaticColumns();
 
         Consumer<StringBuilder> cdCommaAppender = commaAppender("\n\t");
         sb.append("\n\t");
@@ -104,9 +84,10 @@ public class TableCQLHelper
             sb.append(toCQL(cfd));
         }
 
-        for (ColumnMetadata cfd: partitionColumns)
+        for (ColumnMetadata cfd: otherColumns)
         {
             cdCommaAppender.accept(sb);
+            sb.append(toCQL(cfd));
         }
 
         if (includeDroppedColumns)
