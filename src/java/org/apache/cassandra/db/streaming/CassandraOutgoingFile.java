@@ -59,7 +59,7 @@ public class CassandraOutgoingFile implements OutgoingStream
     private final boolean keepSSTableLevel;
     private final ComponentManifest manifest;
 
-    private final boolean shouldStreamEntireSSTable;
+    private final boolean shouldStreamEntireSStable;
 
     public CassandraOutgoingFile(StreamOperation operation, Ref<SSTableReader> ref,
                                  List<SSTableReader.PartitionPositionBounds> sections, List<Range<Token>> normalizedRanges,
@@ -86,6 +86,7 @@ public class CassandraOutgoingFile implements OutgoingStream
                                  .withCompressionMetadata(sstable.compression ? sstable.getCompressionMetadata() : null)
                                  .withSerializationHeader(sstable.header.toComponent())
                                  .isEntireSSTable(shouldStreamEntireSSTable)
+
                                  .withComponentManifest(manifest)
                                  .withFirstKey(sstable.first)
                                  .withTableId(sstable.metadata().id)
@@ -166,7 +167,8 @@ public class CassandraOutgoingFile implements OutgoingStream
         CassandraStreamHeader.serializer.serialize(header, out, version);
         out.flush();
 
-        if (shouldStreamEntireSSTable && out instanceof AsyncStreamingOutputPlus)
+        if (shouldStreamEntireSStable && out instanceof AsyncStreamingOutputPlus)
+
         {
             CassandraEntireSSTableStreamWriter writer = new CassandraEntireSSTableStreamWriter(sstable, session, manifest);
             writer.write((AsyncStreamingOutputPlus) out);
