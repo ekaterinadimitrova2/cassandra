@@ -371,7 +371,7 @@ public class PreviewRepairTest extends TestBaseImpl
             List<String> messages = status.subList(1, status.size());
 
             if (ActiveRepairService.ParentRepairStatus.valueOf(status.get(0)) == ActiveRepairService.ParentRepairStatus.COMPLETED
-                            && messages.get(1) == "Repaired data is inconsistent")
+                            && messages.get(1).contains("Repaired data is inconsistent"))
             {
                 wasInconsistent.set(true);
             }
