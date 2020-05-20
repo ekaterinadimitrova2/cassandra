@@ -17,8 +17,12 @@
  */
 package org.apache.cassandra.config;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +42,6 @@ import org.apache.cassandra.audit.AuditLogOptions;
 import org.apache.cassandra.fql.FullQueryLoggerOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
 import org.apache.cassandra.exceptions.ConfigurationException;
-import org.apache.cassandra.utils.memory.MemoryUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,6 +67,25 @@ public class Config
 
     public volatile String permissions_validity = "2000ms";
     public volatile int permissions_validity_in_ms = 2000;
+    /* KATE: below is a working example
+    public volatile int permissions_validity_2 = toMsInInt("2000ns");
+    public int toMsInInt(String value)
+    {
+        //parse the string field value
+        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
+
+        if (!matcher.find())
+        {
+            throw new ConfigurationException("Invalid yaml. A property has invalid format." +
+                                             "Please check your units.", false);
+        }
+
+        TimeUnit sourceUnit = getCustomTimeUnit(matcher.group(2), "permissions_validity", value);
+
+        return (int) sourceUnit.toMillis(Integer.parseInt(matcher.group(1)));
+    }
+    */
+
     public volatile int permissions_cache_max_entries = 1000;
     public volatile String permissions_update_interval = "-1";
     public volatile int permissions_update_interval_in_ms = -1;
@@ -251,6 +273,7 @@ public class Config
      */
     public String max_value_size = "256MB";
     public int max_value_size_in_mb = 256;
+
 
     public boolean snapshot_before_compaction = false;
     public boolean auto_snapshot = true;
@@ -833,14 +856,32 @@ public class Config
         }
     };
 
-    public static void parseUnits(Config config) throws NoSuchFieldException, IllegalAccessException
+    public static void parseUnits(Config config, URL url) throws NoSuchFieldException, IllegalAccessException
     {
-        Config.parseDurationUnits(config);
-        Config.parseMemUnits(config);
-        Config.parseRateUnits(config);
+        String content = Config.readStorageConfig(url);
+        Config.parseDurationUnits(config, content);
+        Config.parseMemUnits(config, content);
+        Config.parseRateUnits(config, content);
     }
 
-    private static void parseDurationUnits(Config config) throws NoSuchFieldException, IllegalAccessException
+    private static String readStorageConfig(URL url)
+     {
+         String content = "";
+
+         try
+         {
+             content = new String (Files.readAllBytes(Paths.get(String.valueOf(url).substring(5))));
+
+         }
+         catch (IOException e)
+         {
+             e.printStackTrace();
+         }
+
+         return content;
+     }
+
+    private static void parseDurationUnits(Config config, String contentStorageFile) throws NoSuchFieldException, IllegalAccessException
     {
 
         for (Map.Entry<String,String[]> entry : DURATION_UNITS_MAP.entrySet())
@@ -950,10 +991,16 @@ public class Config
                     throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
                                                      "Please check your units.", false);
             }
+
+            if(isBlank(entry.getKey(), contentStorageFile))
+            {
+                Field intField = Config.class.getField(entry.getValue()[0]);
+                intField.set (config, null);
+            }
         }
     }
 
-    private static void parseMemUnits(Config config) throws NoSuchFieldException, IllegalAccessException
+    private static void parseMemUnits(Config config, String contentStorageFile) throws NoSuchFieldException, IllegalAccessException
     {
 
         for (Map.Entry<String,String[]> entry : MEM_UNITS_MAP.entrySet())
@@ -1040,10 +1087,16 @@ public class Config
                     throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
                                                      "Please check your units.", false);
             }
+
+            if(isBlank(entry.getKey(), contentStorageFile))
+            {
+                Field intField = Config.class.getField(entry.getValue()[0]);
+                intField.set (config, null);
+            }
         }
     }
 
-    private static void parseRateUnits(Config config) throws NoSuchFieldException, IllegalAccessException
+    private static void parseRateUnits(Config config, String contentStorageFile) throws NoSuchFieldException, IllegalAccessException
     {
 
         for (Map.Entry<String,String[]> entry : RATE_UNITS_MAP.entrySet())
@@ -1062,7 +1115,6 @@ public class Config
                 value = "null";
             }
 
-            //logger.info("{} = {}", name, value);
             if(value.equals("null"))
                 continue;
 
@@ -1088,6 +1140,12 @@ public class Config
                 case "Mbps": field.set (config, Math.toIntExact(sourceUnit.toMbps(Integer.parseInt(matcher.group(1)))));break;
                 default: throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
                                                           "Please check your units.", false);
+            }
+
+	    if(isBlank(entry.getKey(), contentStorageFile))
+            {
+                 Field intField = Config.class.getField(entry.getValue()[0]);
+                 intField.set (config, null);
             }
         }
     }
@@ -1227,6 +1285,16 @@ public class Config
         public long toMbps(long d) {
             throw new AbstractMethodError();
         }
+    }
+
+    private static boolean isBlank(String property, String contentStorageFile)
+    {
+        Pattern p = Pattern.compile(String.format("%s%s *: *$", '^', property), Pattern.MULTILINE);
+        Matcher m = p.matcher(contentStorageFile);
+        if(m.find())
+             return true;
+
+        return false;
     }
 
     public static void log(Config config)
