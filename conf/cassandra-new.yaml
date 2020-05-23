@@ -374,7 +374,7 @@ snapshot_before_compaction: false
 # and the CommitLog is simply synced every commitlog_sync_period
 # milliseconds.
 commitlog_sync: periodic
-commitlog_sync_period: 10000ms
+#commitlog_sync_period: 10000ms
 
 # When in periodic commitlog mode, the number of milliseconds to block writes
 # while waiting for a slow disk flush to complete.
@@ -405,6 +405,21 @@ commitlog_segment_size: 32mb
 #   - class_name: LZ4Compressor
 #     parameters:
 #         -
+
+# Compression to apply to SSTables as they flush for compressed tables.
+# Note that tables without compression enabled do not respect this flag.
+#
+# As high ratio compressors like LZ4HC, Zstd, and Deflate can potentially
+# block flushes for too long, the default is to flush with a known fast
+# compressor in those cases. Options are:
+#
+# none : Flush without compressing blocks but while still doing checksums.
+# fast : Flush with a fast compressor. If the table is already using a
+#        fast compressor that compressor is used.
+# table: Always flush with the same compressor that the table uses. This
+#        was the pre 4.0 behavior.
+#
+# flush_compression: fast
 
 ############################################
 # Change-data-capture (CDC) space settings #
@@ -827,7 +842,7 @@ key_cache_save_period: 14400
 #
 # Default value is empty to make it "auto" (min(2.5% of Heap (in MB), 50MB)). Set to 0 to disable counter cache.
 # NOTE: if you perform counter deletes and rely on low gcgs, you should disable the counter cache.
-counter_cache_size_in_mb:
+counter_cache_size:
 
 # Duration in seconds after which Cassandra should
 # save the counter cache (keys only). Caches are saved to saved_caches_directory as

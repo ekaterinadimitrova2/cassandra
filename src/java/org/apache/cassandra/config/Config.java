@@ -67,25 +67,6 @@ public class Config
 
     public volatile String permissions_validity = "2000ms";
     public volatile int permissions_validity_in_ms = 2000;
-    /* KATE: below is a working example
-    public volatile int permissions_validity_2 = toMsInInt("2000ns");
-    public int toMsInInt(String value)
-    {
-        //parse the string field value
-        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
-
-        if (!matcher.find())
-        {
-            throw new ConfigurationException("Invalid yaml. A property has invalid format." +
-                                             "Please check your units.", false);
-        }
-
-        TimeUnit sourceUnit = getCustomTimeUnit(matcher.group(2), "permissions_validity", value);
-
-        return (int) sourceUnit.toMillis(Integer.parseInt(matcher.group(1)));
-    }
-    */
-
     public volatile int permissions_cache_max_entries = 1000;
     public volatile String permissions_update_interval = "-1";
     public volatile int permissions_update_interval_in_ms = -1;
@@ -900,6 +881,15 @@ public class Config
                 value = "null";
             }
 
+            Field field = Config.class.getField(DURATION_UNITS_MAP.get(name)[0]);
+            if (isBlank(entry.getKey(), contentStorageFile) &&
+                (field.getGenericType().getTypeName()=="long" || field.getGenericType().getTypeName()=="int"
+                 ||field.getGenericType().getTypeName()=="double" ))
+            {
+                Field intField = Config.class.getField(entry.getValue()[0]);
+                intField.set (config, null);
+            }
+
             if(value.equals("null"))
                 continue;
 
@@ -922,8 +912,6 @@ public class Config
             }
 
             TimeUnit sourceUnit = getCustomTimeUnit(matcher.group(2), name, value);
-
-            Field field = Config.class.getField(DURATION_UNITS_MAP.get(name)[0]);
 
             switch(DURATION_UNITS_MAP.get(name)[1])
             {
@@ -991,12 +979,6 @@ public class Config
                     throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
                                                      "Please check your units.", false);
             }
-
-            if(isBlank(entry.getKey(), contentStorageFile))
-            {
-                Field intField = Config.class.getField(entry.getValue()[0]);
-                intField.set (config, null);
-            }
         }
     }
 
@@ -1019,6 +1001,15 @@ public class Config
                 value = "null";
             }
 
+            Field field = Config.class.getField(MEM_UNITS_MAP.get(name)[0]);
+            if (isBlank(entry.getKey(), contentStorageFile) &&
+                (field.getGenericType().getTypeName()=="long" || field.getGenericType().getTypeName()=="int"
+                 ||field.getGenericType().getTypeName()=="double" ))
+            {
+                Field intField = Config.class.getField(entry.getValue()[0]);
+                intField.set (config, null);
+            }
+
             if(value.equals("null"))
                 continue;
 
@@ -1032,8 +1023,6 @@ public class Config
             }
 
             MemUnit sourceUnit = getCustomMemUnit(matcher.group(2), name, value);
-
-            Field field = Config.class.getField(MEM_UNITS_MAP.get(name)[0]);
 
             switch(MEM_UNITS_MAP.get(name)[1])
             {
@@ -1115,6 +1104,15 @@ public class Config
                 value = "null";
             }
 
+            Field field = Config.class.getField(RATE_UNITS_MAP.get(name)[0]);
+            if (isBlank(entry.getKey(), contentStorageFile) &&
+                (field.getGenericType().getTypeName()=="long" || field.getGenericType().getTypeName()=="int"
+                 ||field.getGenericType().getTypeName()=="double" ))
+            {
+                Field intField = Config.class.getField(entry.getValue()[0]);
+                intField.set (config, null);
+            }
+
             if(value.equals("null"))
                 continue;
 
@@ -1128,8 +1126,6 @@ public class Config
             }
 
             RateUnit sourceUnit = getCustomRateUnit(matcher.group(2), name, value);
-
-            Field field = Config.class.getField(RATE_UNITS_MAP.get(name)[0]);
 
             switch(RATE_UNITS_MAP.get(name)[1])
             {

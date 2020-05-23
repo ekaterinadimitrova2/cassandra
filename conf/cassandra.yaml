@@ -421,19 +421,6 @@ commitlog_segment_size: 32mb
 #
 # flush_compression: fast
 
-# any class that implements the SeedProvider interface and has a
-# constructor that takes a Map<String, String> of parameters will do.
-seed_provider:
-  # Addresses of hosts that are deemed contact points.
-  # Cassandra nodes use this list of hosts to find each other and learn
-  # the topology of the ring.  You must change this if you are running
-  # multiple nodes!
-  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
-    parameters:
-      # seeds is actually a comma-delimited list of addresses.
-      # Ex: "<ip1>,<ip2>,<ip3>"
-      - seeds: "127.0.0.1:7000"
-
 ############################################
 # Change-data-capture (CDC) space settings #
 ############################################
@@ -855,7 +842,7 @@ key_cache_save_period: 14400
 #
 # Default value is empty to make it "auto" (min(2.5% of Heap (in MB), 50MB)). Set to 0 to disable counter cache.
 # NOTE: if you perform counter deletes and rely on low gcgs, you should disable the counter cache.
-counter_cache_size_in_mb:
+counter_cache_size:
 
 # Duration in seconds after which Cassandra should
 # save the counter cache (keys only). Caches are saved to saved_caches_directory as
