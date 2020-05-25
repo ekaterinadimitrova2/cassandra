@@ -738,6 +738,9 @@ public class Config
     private static final Pattern TIME_UNITS_PATTERN =
     Pattern.compile(
     "(\\d+)(d|D|h|H|s|S|ms|MS|mS|Ms|us|US|uS|Us|µs|µS|ns|NS|nS|Nsm|M|m)");
+    private static final Pattern DOUBLE_TIME_UNITS_PATTERN =
+    Pattern.compile(
+    "(\\d+\\.\\d+)(d|D|h|H|s|S|ms|MS|mS|Ms|us|US|uS|Us|µs|µS|ns|NS|nS|Nsm|M|m)");
 
     /**
      * The Regexp used to parse the memory provided as String.
@@ -902,6 +905,35 @@ public class Config
                 continue;
             }
 
+            if(name.equals("commitlog_sync_batch_window") || name.equals("commitlog_sync_group_window"))
+            {
+                //parse the string field value
+                Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
+                if (!matcherDouble.find())
+                {
+                    throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
+                                                     "Please check your units.", false);
+                }
+
+                DoubleTimeUnit sourceUnitDouble = getCustomTimeUnitDouble(matcherDouble.group(2), name, value);
+
+                switch(DURATION_UNITS_MAP.get(name)[1])
+                {
+                    case "ms":
+                        field.set (config, sourceUnitDouble.toMillis(Double.parseDouble(matcherDouble.group(1))));
+                        break;
+                    case "s":
+                        field.set (config, sourceUnitDouble.toSeconds(Double.parseDouble(matcherDouble.group(1))));
+                        break;
+                    case "m":
+                        field.set (config, sourceUnitDouble.toMinutes(Double.parseDouble(matcherDouble.group(1))));
+                    default:
+                        logger.info("field.getGenericType().getTypeName() {}", field.getGenericType().getTypeName());
+                        throw new ConfigurationException("Not handled parameter type.");
+                }
+                continue;
+            }
+
             //parse the string field value
             Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
 
@@ -921,11 +953,6 @@ public class Config
                         case "long":
                         case "java.lang.Long": field.set (config, sourceUnit.toMillis(Long.parseLong(matcher.group(1))));
                             break;
-                        //Incorrectly time conversion in Integer and then  cast to double but those two conf parameters
-                        //are deprecated and not used.
-                        //So it doesn't matter really. But TimeUnit does not support double for time
-                        case "double": field.set (config, (double) sourceUnit.toMillis(Integer.parseInt(matcher.group(1))));
-                            break;
                         case "int":
                         case "java.lang.Integer": field.set (config, (int) sourceUnit.toMillis(Integer.parseInt(matcher.group(1))));
                             break;
@@ -939,11 +966,6 @@ public class Config
                     {
                         case "long":
                         case "java.lang.Long": field.set (config, sourceUnit.toSeconds(Long.parseLong(matcher.group(1))));
-                            break;
-                        //Incorrectly time conversion in Integer and then  cast to double but those two conf parameters
-                        //are deprecated and not used.
-                        //So it doesn't matter really. But TimeUnit does not support double for time
-                        case "double": field.set (config, (double) sourceUnit.toSeconds(Integer.parseInt(matcher.group(1))));
                             break;
                         case "int":
                         case "java.lang.Integer":
@@ -959,11 +981,6 @@ public class Config
                     {
                         case "long":
                         case "java.lang.Long": field.set (config, sourceUnit.toMinutes(Long.parseLong(matcher.group(1))));
-                            break;
-                        //Incorrectly time conversion in Integer and then  cast to double but those two conf parameters
-                        //are deprecated and not used.
-                        //So it doesn't matter really. But TimeUnit does not support double for time
-                        case "double": field.set (config, (double) sourceUnit.toMinutes(Integer.parseInt(matcher.group(1))));
                             break;
                         case "int":
                         case "java.lang.Integer":
@@ -1167,6 +1184,22 @@ public class Config
         return sourceUnit;
     }
 
+    private static final DoubleTimeUnit getCustomTimeUnitDouble(String unit, String fieldName, String fieldValue)
+    {
+        DoubleTimeUnit sourceUnit;
+
+        switch (unit.toLowerCase())
+        {
+            case "s":  sourceUnit = DoubleTimeUnit.SECONDS;     break;
+            case "m":  sourceUnit = DoubleTimeUnit.MINUTES;     break;
+            case "ms": sourceUnit = DoubleTimeUnit.MILLISECONDS; break;
+            default:
+                throw new IllegalStateException("Unexpected unit " + fieldName +":" + fieldValue );
+        }
+
+        return sourceUnit;
+    }
+
     private static final MemUnit getCustomMemUnit(String unit, String fieldName, String fieldValue)
     {
         MemUnit sourceUnit;
@@ -1279,6 +1312,94 @@ public class Config
             throw new AbstractMethodError();
         }
         public long toMbps(long d) {
+            throw new AbstractMethodError();
+        }
+    }
+
+    private enum DoubleTimeUnit
+    {
+        MILLISECONDS {
+            public double toMillis(double d)  { return d; }
+            public double toSeconds(double d) { return d/(C3/C2); }
+            public double toMinutes(double d) { return d/(C4/C2); }
+            public double convert(double d, DoubleTimeUnit u) { return u.toMillis(d); }
+            double excessNanos(double d, double m) { return 0; }
+        },
+        SECONDS {
+            public double toMillis(double d)  { return x(d, C3/C2, MAX/(C3/C2)); }
+            public double toSeconds(double d) { return d; }
+            public double toMinutes(double d) { return d/(C4/C3); }
+            public double convert(double d, DoubleTimeUnit u) { return u.toSeconds(d); }
+            double excessNanos(double d, double m) { return 0; }
+        },
+        MINUTES {
+            public double toMillis(double d)  { return x(d, C4/C2, MAX/(C4/C2)); }
+            public double toSeconds(double d) { return x(d, C4/C3, MAX/(C4/C3)); }
+            public double toMinutes(double d) { return d; }
+            public double convert(double d, DoubleTimeUnit u) { return u.toMinutes(d); }
+            double excessNanos(double d, double m) { return 0; }
+        };
+
+        // Handy constants for conversion methods
+        static final double C0 = 1L;
+        static final double C1 = C0 * 1000L;
+        static final double C2 = C1 * 1000L;
+        static final double C3 = C2 * 1000L;
+        static final double C4 = C3 * 60L;
+        static final double C5 = C4 * 60L;
+        static final double C6 = C5 * 24L;
+
+        static final double MAX = Double.MAX_VALUE;
+
+        /**
+         * Scale d by m, checking for overflow.
+         * This has a short name to make above code more readable.
+         */
+        static double x(double d, double m, double over)
+        {
+            if (d > over) return Double.MAX_VALUE;
+            if (d < -over) return Double.MIN_VALUE;
+            return d * m;
+        }
+
+        public double convert(double sourceDuration, DoubleTimeUnit sourceUnit) {
+            throw new AbstractMethodError();
+        }
+
+        /**
+         * Equivalent to <tt>MILLISECONDS.convert(duration, this)</tt>.
+         * @param duration the duration
+         * @return the converted duration,
+         * or <tt>Long.MIN_VALUE</tt> if conversion would negatively
+         * overflow, or <tt>Long.MAX_VALUE</tt> if it would positively overflow.
+         * @see #convert
+         */
+        public double toMillis(double duration) {
+            throw new AbstractMethodError();
+        }
+
+        /**
+         * Equivalent to <tt>SECONDS.convert(duration, this)</tt>.
+         * @param duration the duration
+         * @return the converted duration,
+         * or <tt>Long.MIN_VALUE</tt> if conversion would negatively
+         * overflow, or <tt>Long.MAX_VALUE</tt> if it would positively overflow.
+         * @see #convert
+         */
+        public double toSeconds(double duration) {
+            throw new AbstractMethodError();
+        }
+
+        /**
+         * Equivalent to <tt>MINUTES.convert(duration, this)</tt>.
+         * @param duration the duration
+         * @return the converted duration,
+         * or <tt>Long.MIN_VALUE</tt> if conversion would negatively
+         * overflow, or <tt>Long.MAX_VALUE</tt> if it would positively overflow.
+         * @see #convert
+         * @since 1.6
+         */
+        public double toMinutes(double duration) {
             throw new AbstractMethodError();
         }
     }
