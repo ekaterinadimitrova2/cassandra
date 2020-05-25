@@ -374,7 +374,7 @@ snapshot_before_compaction: false
 # and the CommitLog is simply synced every commitlog_sync_period
 # milliseconds.
 commitlog_sync: periodic
-#commitlog_sync_period: 10000ms
+commitlog_sync_period: 10000ms
 
 # When in periodic commitlog mode, the number of milliseconds to block writes
 # while waiting for a slow disk flush to complete.
