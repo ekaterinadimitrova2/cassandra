@@ -1084,7 +1084,6 @@ public class OutboundConnection
                 if (hasPending())
                 {
                     Promise<Result<MessagingSuccess>> result = new AsyncPromise<>(eventLoop);
-                    state = new Connecting(state.disconnected(), result, eventLoop.schedule(() -> attempt(result), max(100, retryRateMillis), MILLISECONDS));
                     state = new Connecting(state.disconnected(),
                                            result,
                                            eventLoop.schedule(() ->
