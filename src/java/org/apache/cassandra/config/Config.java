@@ -45,6 +45,7 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /**
  * A class that contains configuration properties for the cassandra node it runs within.
  *
