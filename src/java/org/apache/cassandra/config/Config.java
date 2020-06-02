@@ -983,30 +983,6 @@ public class Config
             if(name.equals("commitlog_sync_batch_window") || name.equals("commitlog_sync_group_window"))
             {
                 parseTypeDouble(name, value, config, field);
-                /*//parse the string field value
-                Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
-                if (!matcherDouble.find())
-                {
-                    throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
-                                                     "Please check your units.", false);
-                }
-
-                DoubleTimeUnit sourceUnitDouble = getCustomTimeUnitDouble(matcherDouble.group(2), name, value);
-
-                switch(DURATION_UNITS_MAP.get(name)[1])
-                {
-                    case "ms":
-                        field.set (config, sourceUnitDouble.toMillis(Double.parseDouble(matcherDouble.group(1))));
-                        break;
-                    case "s":
-                        field.set (config, sourceUnitDouble.toSeconds(Double.parseDouble(matcherDouble.group(1))));
-                        break;
-                    case "m":
-                        field.set (config, sourceUnitDouble.toMinutes(Double.parseDouble(matcherDouble.group(1))));
-                    default:
-                        logger.info("field.getGenericType().getTypeName() {}", field.getGenericType().getTypeName());
-                        throw new ConfigurationException("Not handled parameter type.");
-                }*/
                 continue;
             }
 
@@ -1079,10 +1055,16 @@ public class Config
     {
         //parse the string field value
         Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
+
         if (!matcherDouble.find())
         {
-            throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
-                                             "Please check your units.", false);
+            matcherDouble = TIME_UNITS_PATTERN.matcher(value);
+
+            if (!matcherDouble.find())
+            {
+                throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
+                                                 "Please check your units.", false);
+            }
         }
 
         DoubleTimeUnit sourceUnitDouble = getCustomTimeUnitDouble(matcherDouble.group(2), name, value);
