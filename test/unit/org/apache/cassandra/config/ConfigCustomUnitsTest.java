@@ -17,6 +17,7 @@
  */
 package org.apache.cassandra.config;
 
+import java.io.File;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -41,6 +42,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(OrderedJUnit4ClassRunner.class)
 public class ConfigCustomUnitsTest
 {
+    private final static String DEFAULT_CONFIGURATION = "cassandra.yaml";
+
     @BeforeClass
     public static void setupDatabaseDescriptor()
     {
@@ -131,10 +134,32 @@ public class ConfigCustomUnitsTest
         System.setProperty("cassandra.config.loader", testLoader.getClass().getName());
         config = DatabaseDescriptor.loadConfig();
 
-        System.setProperty("cassandra.config", "cassandra.yaml");
         String configUrl = System.getProperty("cassandra.config");
+
+        if (configUrl == null)
+            configUrl = DEFAULT_CONFIGURATION;
         URL url;
-        url = new URL(configUrl);
+        try
+        {
+            url = new URL(configUrl);
+            url.openStream().close(); // catches well-formed but bogus URLs
+        }
+        catch (Exception e)
+        {
+            ClassLoader loader = DatabaseDescriptor.class.getClassLoader();
+            url = loader.getResource(configUrl);
+            if (url == null)
+            {
+                String required = "file:" + File.separator + File.separator;
+                if (!configUrl.startsWith(required))
+                    throw new ConfigurationException(String.format(
+                    "Expecting URI in variable: [cassandra.config]. Found[%s]. Please prefix the file with [%s%s] for local " +
+                    "files and [%s<server>%s] for remote files. If you are executing this from an external tool, it needs " +
+                    "to set Config.setClientMode(true) to avoid loading configuration.",
+                    configUrl, required, File.separator, required, File.separator));
+                throw new ConfigurationException("Cannot locate " + configUrl + ".  If this is a local file, please confirm you've provided " + required + File.separator + " as a URI prefix.");
+            }
+        }
 
         Config.parseUnits(config, url);
 
