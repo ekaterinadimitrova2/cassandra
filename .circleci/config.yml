@@ -16,10 +16,13 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
+
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/distributed/**/*.java" > /tmp/all_java_unit_tests.txt
+
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/distributed/;;g" | grep "Test\.java$" | grep upgrade > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -91,10 +94,10 @@ jobs:
   j8_cqlsh-dtests-py2-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -124,14 +127,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -168,7 +174,7 @@ jobs:
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 25
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -178,10 +184,13 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
+
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/unit/**/*.java" > /tmp/all_java_unit_tests.txt
+
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/unit/;;g" | grep "Test\.java$"  > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -254,10 +263,10 @@ jobs:
   j8_cqlsh-dtests-py38-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -287,14 +296,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt
+
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -361,14 +373,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -436,14 +451,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -511,14 +529,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt
+
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -553,10 +574,10 @@ jobs:
   j8_cqlsh-dtests-py3-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -586,14 +607,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -627,10 +651,10 @@ jobs:
   j8_cqlsh-dtests-py2-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -660,14 +684,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -734,14 +761,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -776,10 +806,10 @@ jobs:
   j11_dtests-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 25
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -857,10 +887,10 @@ jobs:
   j8_dtests-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -945,12 +975,15 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             cd cassandra-dtest
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
+
             if [ -n 'RUN_STATIC_UPGRADE_MATRIX=true' ]; then
               export RUN_STATIC_UPGRADE_MATRIX=true
             fi
+
             echo "***Collected DTests (j8_upgradetests_without_vnodes)***"
             set -eo pipefail && ./run_dtests.py --execute-upgrade-tests --dtest-print-tests-only --dtest-print-tests-output=/tmp/all_dtest_tests_j8_upgradetests_without_vnodes_raw --cassandra-dir=../cassandra
             if [ -z '^upgrade_tests' ]; then
@@ -967,14 +1000,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_upgradetests_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_upgradetests_without_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'RUN_STATIC_UPGRADE_MATRIX=true' ]; then
               export RUN_STATIC_UPGRADE_MATRIX=true
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1056,7 +1092,7 @@ jobs:
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 25
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1066,10 +1102,13 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
+
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/unit/**/*.java" > /tmp/all_java_unit_tests.txt
+
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/unit/;;g" | grep "Test\.java$"  > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -1141,10 +1180,10 @@ jobs:
   j11_jvm_dtests:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 10
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1154,10 +1193,13 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
+
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/distributed/**/*.java" > /tmp/all_java_unit_tests.txt
+
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/distributed/;;g" | grep "Test\.java$" | grep -v upgrade > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -1344,14 +1386,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1386,10 +1431,10 @@ jobs:
   j8_dtests-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1477,14 +1522,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt
+
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1519,10 +1567,10 @@ jobs:
   j8_jvm_dtests:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 10
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1532,10 +1580,13 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
+
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/distributed/**/*.java" > /tmp/all_java_unit_tests.txt
+
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/distributed/;;g" | grep "Test\.java$" | grep -v upgrade > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -1687,10 +1738,10 @@ jobs:
   j8_cqlsh-dtests-py3-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1720,14 +1771,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt
+
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1761,10 +1815,10 @@ jobs:
   j8_cqlsh-dtests-py38-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 50
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1794,14 +1848,17 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt
+
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
+
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
+
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1925,10 +1982,10 @@ jobs:
   j11_dtests-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11:20200406
-    resource_class: medium
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 25
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -2019,10 +2076,13 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
+
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
+
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/unit/**/*.java" > /tmp/all_java_unit_tests.txt
+
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/unit/;;g" | grep "Test\.java$"  > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
