@@ -86,7 +86,6 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
     {
         for (int perUnitCount = 1; perUnitCount <= MAX_VNODE_COUNT; perUnitCount *= 4)
         {
-            testExistingCluster(perUnitCount, fixedTokenCount, new NoReplicationStrategy(), partitioner);
             testExistingCluster(perUnitCount, fixedTokenCount, new ZeroReplicationStrategy(), partitioner);
         }
     }
@@ -165,6 +164,9 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
             if (verifyMetrics)
             {
                 updateSummary(t, su, st, true);
+                // The limit for no-replication allocation is very tight when the cluster is created from new
+                // (up to 1/2*vn greater + some small error margin), but it is not that easy to fully fix a dc
+                // where half the nodes were randomly generated, so we allow some leeway there.
                 double maxExpected = 1.0 + tc.spreadExpectation() * strategy.spreadExpectation() / perUnitCount;
                 if (su.max > maxExpected)
                 {
