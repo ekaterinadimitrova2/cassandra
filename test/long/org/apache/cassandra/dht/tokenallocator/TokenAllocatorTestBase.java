@@ -124,7 +124,7 @@ abstract class TokenAllocatorTestBase
 
     public String mms(SummaryStatistics s)
     {
-        return String.format("max %.2f min %.2f stddev %.4f", s.getMax(), s.getMin(), s.getStandardDeviation());
+        return String.format("max %.4f min %.4f stddev %.4f", s.getMax(), s.getMin(), s.getStandardDeviation());
     }
 
     class Summary

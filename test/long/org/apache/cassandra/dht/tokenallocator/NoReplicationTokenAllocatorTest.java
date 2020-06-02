@@ -87,7 +87,6 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
         for (int perUnitCount = 1; perUnitCount <= MAX_VNODE_COUNT; perUnitCount *= 4)
         {
             testExistingCluster(perUnitCount, fixedTokenCount, new NoReplicationStrategy(), partitioner);
-            testExistingCluster(perUnitCount, fixedTokenCount, new ZeroReplicationStrategy(), partitioner);
         }
     }
 
