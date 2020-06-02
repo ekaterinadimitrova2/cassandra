@@ -64,10 +64,10 @@ class ReplicationAwareTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
             //However, at this point it is
             // important to start the cluster/datacenter with suitably varied token range sizes so that the algorithm
             // can maintain good balance for any number of nodes.
-            return generateRandomTokens(newUnit, numTokens);
+            return generateSplits(newUnit, numTokens);
         if (numTokens > sortedTokens.size())
             // Some of the heuristics below can't deal with this very unlikely case. Use splits for now, later allocations can fix any problems this may cause.
-            return generateRandomTokens(newUnit, numTokens);
+            return generateSplits(newUnit, numTokens);
 
         // ============= construct our initial token ring state =============
 
@@ -80,7 +80,7 @@ class ReplicationAwareTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
             // use random allocation.
             // This part of the code should only be reached via the RATATest. StrategyAdapter should disallow
             // token allocation in this case as the algorithm is not able to cover the behavior of NetworkTopologyStrategy.
-            return generateRandomTokens(newUnit, numTokens);
+            return generateSplits(newUnit, numTokens);
         }
 
         // initialise our new unit's state (with an idealised ownership)
@@ -138,23 +138,6 @@ class ReplicationAwareTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
         ImmutableList<Token> newTokens = ImmutableList.copyOf(unitToTokens.get(newUnit));
         TokenAllocatorDiagnostics.unitedAdded(this, numTokens, unitToTokens, sortedTokens, newTokens, newUnit);
         return newTokens;
-    }
-
-    private Collection<Token> generateRandomTokens(Unit newUnit, int numTokens)
-    {
-        Set<Token> tokens = new HashSet<>(numTokens);
-        while (tokens.size() < numTokens)
-        {
-            Token token = partitioner.getRandomToken();
-            if (!sortedTokens.containsKey(token))
-            {
-                tokens.add(token);
-                sortedTokens.put(token, newUnit);
-                unitToTokens.put(newUnit, token);
-            }
-        }
-        TokenAllocatorDiagnostics.randomTokensGenerated(this, numTokens, unitToTokens, sortedTokens, newUnit, tokens);
-        return tokens;
     }
 
     Collection<Token> generateSplits(Unit newUnit, int numTokens)
