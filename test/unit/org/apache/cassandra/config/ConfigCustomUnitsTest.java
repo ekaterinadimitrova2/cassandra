@@ -136,6 +136,7 @@ public class ConfigCustomUnitsTest
         String configUrl = System.getProperty("cassandra.config");
         URL url;
         url = new URL(configUrl);
+
         Config.parseUnits(config, url);
 
         assertEquals("6mb", config.commitlog_segment_size);
