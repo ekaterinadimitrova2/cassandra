@@ -17,6 +17,7 @@
  */
 package org.apache.cassandra.config;
 
+import java.io.File;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -41,6 +42,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(OrderedJUnit4ClassRunner.class)
 public class ConfigCustomUnitsTest
 {
+    private final static String DEFAULT_CONFIGURATION = "cassandra.yaml";
+
     @BeforeClass
     public static void setupDatabaseDescriptor()
     {
@@ -67,10 +70,10 @@ public class ConfigCustomUnitsTest
         assertEquals(500, config.slow_query_log_timeout_in_ms);
         assertEquals(2000, config.internode_tcp_connect_timeout_in_ms);
         assertEquals(30000, config.internode_tcp_user_timeout_in_ms);
-        assertEquals(0.0, config.commitlog_sync_batch_window_in_ms, 0);
+        assertEquals(1.0, config.commitlog_sync_batch_window_in_ms, 0);
         assertEquals(Double.NaN, config.commitlog_sync_group_window_in_ms,0);
         assertEquals(0, config.commitlog_sync_period_in_ms);
-        assertEquals(1, config.periodic_commitlog_sync_lag_block_in_ms, 0);
+        assertEquals(null, config.periodic_commitlog_sync_lag_block_in_ms);  //Integer
         assertEquals(250, config.cdc_free_space_check_interval_ms);
         assertEquals(100, config.dynamic_snitch_update_interval_in_ms);
         assertEquals(600000, config.dynamic_snitch_reset_interval_in_ms);
@@ -116,7 +119,7 @@ public class ConfigCustomUnitsTest
         assertEquals(null, config.counter_cache_size_in_mb);
         assertEquals(null, config.file_cache_size_in_mb);
         assertEquals(null, config.index_summary_capacity_in_mb);
-        assertEquals(null, config.prepared_statements_cache_size_mb);
+        assertEquals(String.valueOf(1), String.valueOf(config.prepared_statements_cache_size_mb));
         assertEquals(null, config.key_cache_size_in_mb);
         assertEquals(16, config.row_cache_size_in_mb);
 
@@ -129,11 +132,36 @@ public class ConfigCustomUnitsTest
         // Now try custom loader to validate the proper conversion of units
         ConfigurationLoader testLoader = new TestLoader();
         System.setProperty("cassandra.config.loader", testLoader.getClass().getName());
-
         config = DatabaseDescriptor.loadConfig();
+
         String configUrl = System.getProperty("cassandra.config");
+
+        if (configUrl == null)
+            configUrl = DEFAULT_CONFIGURATION;
         URL url;
-        url = new URL(configUrl);
+        try
+        {
+            url = new URL(configUrl);
+            url.openStream().close(); // catches well-formed but bogus URLs
+        }
+        catch (Exception e)
+        {
+            ClassLoader loader = DatabaseDescriptor.class.getClassLoader();
+            url = loader.getResource(configUrl);
+            if (url == null)
+            {
+                String required = "file:" + File.separator + File.separator;
+                if (!configUrl.startsWith(required))
+                    throw new ConfigurationException(String.format(
+                    "Expecting URI in variable: [cassandra.config]. Found[%s]. Please prefix the file with [%s%s] for local " +
+                    "files and [%s<server>%s] for remote files. If you are executing this from an external tool, it needs " +
+                    "to set Config.setClientMode(true) to avoid loading configuration.",
+                    configUrl, required, File.separator, required, File.separator));
+                throw new ConfigurationException("Cannot locate " + configUrl + ".  If this is a local file, please confirm you've provided " + required + File.separator + " as a URI prefix.");
+            }
+        }
+        
+
         Config.parseUnits(config, url);
 
         assertEquals("6mb", config.commitlog_segment_size);
@@ -147,6 +175,7 @@ public class ConfigCustomUnitsTest
         assertEquals(1, config.compaction_throughput_mb_per_sec);
         assertEquals(1, config.stream_throughput_outbound_megabits_per_sec);
     }
+
     public static class TestLoader implements ConfigurationLoader
     {
         public Config loadConfig() throws ConfigurationException
@@ -164,6 +193,7 @@ public class ConfigCustomUnitsTest
 
             return testConfig;
         }
+
     }
 };
 
