@@ -114,7 +114,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -283,7 +284,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -360,7 +362,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -438,7 +441,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -516,7 +520,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -594,7 +599,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -671,7 +677,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -748,7 +755,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -848,7 +856,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -907,7 +916,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -965,7 +975,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -1373,7 +1384,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -1451,7 +1463,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -1509,7 +1522,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -1758,7 +1772,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -1835,7 +1850,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
@@ -2024,7 +2040,8 @@ jobs:
             # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-            pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            #pip3 install --upgrade -r ~/cassandra-dtest/requirements.txt
+            pip3 install --exists-action w -r cassandra-dtest/requirements.txt
             pip3 uninstall -y cqlsh
             pip3 freeze
       - run:
