@@ -151,7 +151,7 @@ public class Config
     public Integer streaming_keep_alive_period_in_secs = 300; //5 minutes
 
     //Effective cassandra.yaml v.2.0 cross_node_timeout is renamed to internode_timeout
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean internode_timeout = true;
 
     public volatile String slow_query_log_timeout = "500ms";
@@ -501,7 +501,7 @@ public class Config
 
     //Effective cassandra.yaml v.2.0 otc_coalescing_strategy is renamed to
     //outbound_connection_coalescing_strategy
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public String outbound_connection_coalescing_strategy = "DISABLED";
 
     /*
@@ -512,12 +512,12 @@ public class Config
      */
     //Effective cassandra.yaml v.2.0 otc_coalescing_window_us is renamed to
     //outbound_connection_coalescing_window_us
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public static final int otc_coalescing_window_us_default = 200;
     public int outbound_connection_coalescing_window_us = otc_coalescing_window_us_default;
     //Effective cassandra.yaml v.2.0 otc_coalescing_enough_coalesced_messages is renamed to
     //outbound_connection_coalescing_enough_coalesced_messages
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public int outbound_connection_coalescing_enough_coalesced_messages = 8;
 
     public int windows_timer_interval = 0;
@@ -532,27 +532,27 @@ public class Config
 
     //Effective cassandra.yaml v.2.0 enable_user_defined_functions is renamed to
     //user_defined_functions_enabled
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean user_defined_functions_enabled = false;
 
     //Effective cassandra.yaml v.2.0 enable_scripted_user_defined_functions is renamed to
     //scripted_user_defined_functions_enabled
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean scripted_user_defined_functions_enabled = false;
 
     //Effective cassandra.yaml v.2.0 enable_materialized_views is renamed to
     //materialized_views_enabled
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean materialized_views_enabled = false;
 
     //Effective cassandra.yaml v.2.0 enable_transient_replication is renamed to
     //transient_replication_enabled
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean transient_replication_enabled = false;
 
     //Effective cassandra.yaml v.2.0 enable_sasi_indexes is renamed to
     //sasi_indexes_enabled
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean sasi_indexes_enabled = false;
 
     /**
@@ -566,7 +566,7 @@ public class Config
      */
     //Effective cassandra.yaml v.2.0 user_defined_functions_threads_enabled is renamed to
     //user_defined_functions_threads_enabled
-    //The old name is kept to keep backwards compatibility
+    //Backward compatibility available in v4 - CASSANDRA-15234-3
     public boolean user_defined_functions_threads_enabled = true;
     /**
      * Time in milliseconds after a warning will be emitted to the log and to the client that a UDF runs too long.
@@ -982,7 +982,8 @@ public class Config
 
             if(name.equals("commitlog_sync_batch_window") || name.equals("commitlog_sync_group_window"))
             {
-                //parse the string field value
+                parseTypeDouble(name, value, config, field);
+                /*//parse the string field value
                 Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
                 if (!matcherDouble.find())
                 {
@@ -1005,7 +1006,7 @@ public class Config
                     default:
                         logger.info("field.getGenericType().getTypeName() {}", field.getGenericType().getTypeName());
                         throw new ConfigurationException("Not handled parameter type.");
-                }
+                }*/
                 continue;
             }
 
@@ -1071,6 +1072,34 @@ public class Config
                     throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
                                                      "Please check your units.", false);
             }
+        }
+    }
+
+    static void parseTypeDouble(String name, String value, Config config, Field field) throws IllegalAccessException
+    {
+        //parse the string field value
+        Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
+        if (!matcherDouble.find())
+        {
+            throw new ConfigurationException("Invalid yaml. This property " + name + "=" + value + " has invalid format." +
+                                             "Please check your units.", false);
+        }
+
+        DoubleTimeUnit sourceUnitDouble = getCustomTimeUnitDouble(matcherDouble.group(2), name, value);
+
+        switch(DURATION_UNITS_MAP.get(name)[1])
+        {
+            case "ms":
+                field.set(config, sourceUnitDouble.toMillis(Double.parseDouble(matcherDouble.group(1))));
+                break;
+            case "s":
+                field.set(config, sourceUnitDouble.toSeconds(Double.parseDouble(matcherDouble.group(1))));
+                break;
+            case "m":
+                field.set(config, sourceUnitDouble.toMinutes(Double.parseDouble(matcherDouble.group(1))));
+            default:
+                logger.info("field.getGenericType().getTypeName() {}", field.getGenericType().getTypeName());
+                throw new ConfigurationException("Not handled parameter type.");
         }
     }
 
