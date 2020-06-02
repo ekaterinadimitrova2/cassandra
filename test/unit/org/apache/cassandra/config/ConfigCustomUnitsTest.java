@@ -129,7 +129,6 @@ public class ConfigCustomUnitsTest
         // Now try custom loader to validate the proper conversion of units
         ConfigurationLoader testLoader = new TestLoader();
         System.setProperty("cassandra.config.loader", testLoader.getClass().getName());
-
         config = DatabaseDescriptor.loadConfig();
 
         System.setProperty("cassandra.config", "cassandra.yaml");
