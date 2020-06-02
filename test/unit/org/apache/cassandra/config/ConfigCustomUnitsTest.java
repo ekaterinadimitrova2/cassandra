@@ -131,7 +131,8 @@ public class ConfigCustomUnitsTest
         System.setProperty("cassandra.config.loader", testLoader.getClass().getName());
 
         config = DatabaseDescriptor.loadConfig();
-        
+
+        System.setProperty("cassandra.config", "cassandra.yaml");
         String configUrl = System.getProperty("cassandra.config");
         URL url;
         url = new URL(configUrl);
