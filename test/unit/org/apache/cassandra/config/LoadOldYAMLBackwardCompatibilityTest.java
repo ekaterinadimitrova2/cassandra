@@ -15,22 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.cassandra.config;
 
-import java.net.URL;
+package org.apache.cassandra.config;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.apache.cassandra.OrderedJUnit4ClassRunner;
-import org.apache.cassandra.db.Keyspace;
-import org.apache.cassandra.exceptions.ConfigurationException;
+
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(OrderedJUnit4ClassRunner.class)
-public class LoadOldConfigFileBackwardCompatibilityTest
+public class LoadOldYAMLBackwardCompatibilityTest
 {
     @BeforeClass
     public static void setupDatabaseDescriptor()
@@ -41,7 +39,7 @@ public class LoadOldConfigFileBackwardCompatibilityTest
 
     // CASSANDRA-15234
     @Test
-    public void testConfigurationLoaderBackwardCompatibility() throws Exception
+    public void testConfigurationLoaderBackwardCompatibility()
     {
 
         Config config = DatabaseDescriptor.loadConfig();
@@ -80,8 +78,4 @@ public class LoadOldConfigFileBackwardCompatibilityTest
         assertEquals(-1, config.credentials_update_interval_in_ms);
         assertEquals(60, config.index_summary_resize_interval_in_minutes);
     }
-};
-
-
-
-
+}

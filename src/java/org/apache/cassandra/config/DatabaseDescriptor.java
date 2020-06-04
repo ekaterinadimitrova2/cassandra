@@ -2087,32 +2087,32 @@ public class DatabaseDescriptor
         conf.native_transport_port_ssl = port;
     }
 
-    public static int getNativeTransportMaxThreads()
+    public static int getMaxNativeTransportThreads()
     {
         return conf.max_native_transport_threads;
     }
 
-    public static void setNativeTransportMaxThreads(int max_threads)
+    public static void setMaxNativeTransportThreads(int max_threads)
     {
         conf.max_native_transport_threads = max_threads;
     }
 
-    public static int getNativeTransportMaxFrameSize()
+    public static int getMaxNativeTransportFrameSize()
     {
         return (int) ByteUnit.MEBI_BYTES.toBytes(conf.max_native_transport_frame_size_in_mb);
     }
 
-    public static long getNativeTransportMaxConcurrentConnections()
+    public static long getMaxNativeTransportConcurrentConnections()
     {
         return conf.max_native_transport_concurrent_connections;
     }
 
-    public static void setNativeTransportMaxConcurrentConnections(long nativeTransportMaxConcurrentConnections)
+    public static void setMaxNativeTransportConcurrentConnections(long nativeTransportMaxConcurrentConnections)
     {
         conf.max_native_transport_concurrent_connections = nativeTransportMaxConcurrentConnections;
     }
 
-    public static long getNativeTransportMaxConcurrentConnectionsPerIp()
+    public static long getMaxNativeTransportConcurrentConnectionsPerIp()
     {
         return conf.max_native_transport_concurrent_connections_per_ip;
     }
@@ -2744,22 +2744,22 @@ public class DatabaseDescriptor
         conf.user_defined_function_warn_timeout_in_ms = userDefinedFunctionWarnTimeout;
     }
 
-    public static boolean getEnableMaterializedViews()
+    public static boolean getMaterializedViewsEnabled()
     {
         return conf.materialized_views_enabled;
     }
 
-    public static void setEnableMaterializedViews(boolean enableMaterializedViews)
+    public static void setMaterializedViewsEnabled(boolean enableMaterializedViews)
     {
         conf.materialized_views_enabled = enableMaterializedViews;
     }
 
-    public static boolean getEnableSASIIndexes()
+    public static boolean getSASIIndexesEnabled()
     {
         return conf.sasi_indexes_enabled;
     }
 
-    public static void setEnableSASIIndexes(boolean enableSASIIndexes)
+    public static void setSASIIndexesEnabled(boolean enableSASIIndexes)
     {
         conf.sasi_indexes_enabled = enableSASIIndexes;
     }
