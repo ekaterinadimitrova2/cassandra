@@ -1,4 +1,7 @@
 4.0-alpha5
+ * Standaridize storage configuration parameters' names. Backward compatibility with the old names.
+  Add the possibility for the user to provide in the form of a suffix different units for Memory, Time, and Rate parameters, i.e.
+  commitlog_sync_period = 500ms/500s/500ns, etc.(CASSANDRA-15234-3)
  * Add completion_ratio column to sstable_tasks virtual table (CASANDRA-15759)
  * Add support for adding custom Verbs (CASSANDRA-15725)
  * Speed up entire-file-streaming file containment check and allow entire-file-streaming for all compaction strategies (CASSANDRA-15657,CASSANDRA-15783)

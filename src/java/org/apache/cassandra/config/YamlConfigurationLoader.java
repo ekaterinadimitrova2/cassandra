@@ -24,21 +24,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 
 import org.slf4j.Logger;
@@ -53,13 +49,6 @@ import org.yaml.snakeyaml.introspector.MissingProperty;
 import org.yaml.snakeyaml.introspector.Property;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
 
-import java.io.*;
-import java.nio.charset.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.io.*;
-
 public class YamlConfigurationLoader implements ConfigurationLoader
 {
     private static final Logger logger = LoggerFactory.getLogger(YamlConfigurationLoader.class);
@@ -71,7 +60,8 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     /**
      * Inspect the classpath to find storage configuration file
      */
-    private static URL getStorageConfigURL() throws ConfigurationException
+    @VisibleForTesting
+    public static URL getStorageConfigURL() throws ConfigurationException
     {
         String configUrl = System.getProperty("cassandra.config");
         if (configUrl == null)

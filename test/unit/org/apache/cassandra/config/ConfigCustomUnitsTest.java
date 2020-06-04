@@ -42,8 +42,6 @@ import static org.junit.Assert.assertEquals;
 @RunWith(OrderedJUnit4ClassRunner.class)
 public class ConfigCustomUnitsTest
 {
-    private final static String DEFAULT_CONFIGURATION = "cassandra.yaml";
-
     @BeforeClass
     public static void setupDatabaseDescriptor()
     {
@@ -134,33 +132,7 @@ public class ConfigCustomUnitsTest
         System.setProperty("cassandra.config.loader", testLoader.getClass().getName());
         config = DatabaseDescriptor.loadConfig();
 
-        String configUrl = System.getProperty("cassandra.config");
-
-        if (configUrl == null)
-            configUrl = DEFAULT_CONFIGURATION;
-        URL url;
-        try
-        {
-            url = new URL(configUrl);
-            url.openStream().close(); // catches well-formed but bogus URLs
-        }
-        catch (Exception e)
-        {
-            ClassLoader loader = DatabaseDescriptor.class.getClassLoader();
-            url = loader.getResource(configUrl);
-            if (url == null)
-            {
-                String required = "file:" + File.separator + File.separator;
-                if (!configUrl.startsWith(required))
-                    throw new ConfigurationException(String.format(
-                    "Expecting URI in variable: [cassandra.config]. Found[%s]. Please prefix the file with [%s%s] for local " +
-                    "files and [%s<server>%s] for remote files. If you are executing this from an external tool, it needs " +
-                    "to set Config.setClientMode(true) to avoid loading configuration.",
-                    configUrl, required, File.separator, required, File.separator));
-                throw new ConfigurationException("Cannot locate " + configUrl + ".  If this is a local file, please confirm you've provided " + required + File.separator + " as a URI prefix.");
-            }
-        }
-
+       URL url = YamlConfigurationLoader.getStorageConfigURL();
 
         Config.parseUnits(config, url);
 
@@ -174,6 +146,8 @@ public class ConfigCustomUnitsTest
         assertEquals(1024, config.column_index_size_in_kb);
         assertEquals(1, config.compaction_throughput_mb_per_sec);
         assertEquals(1, config.stream_throughput_outbound_megabits_per_sec);
+        assertEquals(5000.0, config.commitlog_sync_batch_window_in_ms,0);
+        assertEquals(5000.0, config.commitlog_sync_group_window_in_ms, 0);
     }
 
     public static class TestLoader implements ConfigurationLoader
@@ -190,10 +164,12 @@ public class ConfigCustomUnitsTest
             testConfig.column_index_size = "1MB";
             testConfig.compaction_throughput = "1000Kbps";
             testConfig.stream_throughput_outbound = "1000000bps";
+            //Double parameters could be written in two formats - \d+\.\d+ or \d+
+            testConfig.commitlog_sync_batch_window = "5s";
+            testConfig.commitlog_sync_group_window= "5.0s";
 
             return testConfig;
         }
-
     }
 };
 
