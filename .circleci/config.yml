@@ -16,13 +16,10 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
-
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/distributed/**/*.java" > /tmp/all_java_unit_tests.txt
-
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/distributed/;;g" | grep "Test\.java$" | grep upgrade > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -85,8 +82,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -94,10 +91,10 @@ jobs:
   j8_cqlsh-dtests-py2-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -127,17 +124,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -162,8 +156,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -174,7 +168,7 @@ jobs:
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 25
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -184,13 +178,10 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
-
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/unit/**/*.java" > /tmp/all_java_unit_tests.txt
-
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/unit/;;g" | grep "Test\.java$"  > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -253,8 +244,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -263,10 +254,10 @@ jobs:
   j8_cqlsh-dtests-py38-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -296,17 +287,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt
-
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -331,15 +319,15 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
       - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j11_cqlsh-dtests-py3-with-vnodes:
     docker:
-    - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
+      - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -373,17 +361,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -408,8 +393,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -417,7 +402,7 @@ jobs:
       - CASSANDRA_USE_JDK11: true
   j11_cqlsh-dtests-py3-no-vnodes:
     docker:
-    - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
+      - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -451,17 +436,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -486,8 +468,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -495,7 +477,7 @@ jobs:
       - CASSANDRA_USE_JDK11: true
   j11_cqlsh-dtests-py38-with-vnodes:
     docker:
-    - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
+      - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -529,17 +511,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt
-
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -564,8 +543,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -574,10 +553,10 @@ jobs:
   j8_cqlsh-dtests-py3-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -607,17 +586,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -642,8 +618,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -651,10 +627,10 @@ jobs:
   j8_cqlsh-dtests-py2-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -684,17 +660,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -719,15 +692,15 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
       - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j11_cqlsh-dtests-py2-with-vnodes:
     docker:
-    - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
+      - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -761,17 +734,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_with_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -796,8 +766,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -805,11 +775,11 @@ jobs:
       - CASSANDRA_USE_JDK11: true
   j11_dtests-with-vnodes:
     docker:
-    - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
-    resource_class: large
+      - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 25
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -877,8 +847,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -887,10 +857,10 @@ jobs:
   j8_dtests-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -936,8 +906,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -975,15 +945,12 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             cd cassandra-dtest
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
-
             if [ -n 'RUN_STATIC_UPGRADE_MATRIX=true' ]; then
               export RUN_STATIC_UPGRADE_MATRIX=true
             fi
-
             echo "***Collected DTests (j8_upgradetests_without_vnodes)***"
             set -eo pipefail && ./run_dtests.py --execute-upgrade-tests --dtest-print-tests-only --dtest-print-tests-output=/tmp/all_dtest_tests_j8_upgradetests_without_vnodes_raw --cassandra-dir=../cassandra
             if [ -z '^upgrade_tests' ]; then
@@ -1000,17 +967,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_upgradetests_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_upgradetests_without_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'RUN_STATIC_UPGRADE_MATRIX=true' ]; then
               export RUN_STATIC_UPGRADE_MATRIX=true
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1035,8 +999,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1080,8 +1044,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1092,7 +1056,7 @@ jobs:
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 25
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1102,13 +1066,10 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
-
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/unit/**/*.java" > /tmp/all_java_unit_tests.txt
-
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/unit/;;g" | grep "Test\.java$"  > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -1171,8 +1132,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1180,10 +1141,10 @@ jobs:
   j11_jvm_dtests:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 10
+    parallelism: 1
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1193,13 +1154,10 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
-
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/distributed/**/*.java" > /tmp/all_java_unit_tests.txt
-
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/distributed/;;g" | grep "Test\.java$" | grep -v upgrade > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -1262,8 +1220,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1343,8 +1301,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1386,17 +1344,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python2.7' ]; then
               export CQLSH_PYTHON=/usr/bin/python2.7
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1421,8 +1376,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1431,10 +1386,10 @@ jobs:
   j8_dtests-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1480,8 +1435,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1522,17 +1477,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j11_without_vnodes_final.txt
-
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1557,8 +1509,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1567,10 +1519,10 @@ jobs:
   j8_jvm_dtests:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 10
+    parallelism: 1
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1580,13 +1532,10 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
-
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/distributed/**/*.java" > /tmp/all_java_unit_tests.txt
-
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/distributed/;;g" | grep "Test\.java$" | grep -v upgrade > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -1649,8 +1598,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1729,8 +1678,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1738,10 +1687,10 @@ jobs:
   j8_cqlsh-dtests-py3-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1771,17 +1720,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_without_vnodes_final.txt
-
             source ~/env3.6/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.6' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.6
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1806,8 +1752,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1815,10 +1761,10 @@ jobs:
   j8_cqlsh-dtests-py38-with-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11-w-dependencies:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 50
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1848,17 +1794,14 @@ jobs:
           command: |
             echo "cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt"
             cat /tmp/split_dtest_tests_j8_with_vnodes_final.txt
-
             source ~/env3.8/bin/activate
             export PATH=$JAVA_HOME/bin:$PATH
             if [ -n 'CQLSH_PYTHON=/usr/bin/python3.8' ]; then
               export CQLSH_PYTHON=/usr/bin/python3.8
             fi
-
             java -version
             cd ~/cassandra-dtest
             mkdir -p /tmp/dtest
-
             echo "env: $(env)"
             echo "** done env"
             mkdir -p /tmp/results/dtests
@@ -1883,8 +1826,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1928,8 +1871,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1973,8 +1916,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -1982,10 +1925,10 @@ jobs:
   j11_dtests-no-vnodes:
     docker:
       - image: nastra/cassandra-testing-ubuntu1910-java11:20200603
-    resource_class: large
+    resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 25
+    parallelism: 4
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -2053,8 +1996,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -2076,13 +2019,10 @@ jobs:
             # reminder: this code (along with all the steps) is independently executed on every circle container
             # so the goal here is to get the circleci script to return the tests *this* container will run
             # which we do via the `circleci` cli tool.
-
             rm -fr ~/cassandra-dtest/upgrade_tests
             echo "***java tests***"
-
             # get all of our unit test filenames
             set -eo pipefail && circleci tests glob "$HOME/cassandra/test/unit/**/*.java" > /tmp/all_java_unit_tests.txt
-
             # split up the unit tests into groups based on the number of containers we have
             set -eo pipefail && circleci tests split --split-by=timings --timings-type=filename --index=${CIRCLE_NODE_INDEX} --total=${CIRCLE_NODE_TOTAL} /tmp/all_java_unit_tests.txt > /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt
             set -eo pipefail && cat /tmp/java_tests_${CIRCLE_NODE_INDEX}.txt | sed "s;^/home/cassandra/cassandra/test/unit/;;g" | grep "Test\.java$"  > /tmp/java_tests_${CIRCLE_NODE_INDEX}_final.txt
@@ -2145,8 +2085,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
@@ -2213,8 +2153,8 @@ jobs:
       - CASS_DRIVER_NO_EXTENSIONS: true
       - CASS_DRIVER_NO_CYTHON: true
       - CASSANDRA_SKIP_SYNC: true
-      - DTEST_REPO: git://github.com/ekaterinadimitrova2/cassandra-dtest.git
-      - DTEST_BRANCH: CASSANDRA-15234-3
+      - DTEST_REPO: git://github.com/apache/cassandra-dtest.git
+      - DTEST_BRANCH: master
       - CCM_MAX_HEAP_SIZE: 1024M
       - CCM_HEAP_NEWSIZE: 256M
       - JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
