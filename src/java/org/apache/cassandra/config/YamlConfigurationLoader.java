@@ -300,7 +300,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                 if(MAP_OLD_TO_NEW_PARAMETERS.containsKey(name))
                 {
                     isOldYAML = true;
-                    logger.warn("{} parameter has a new name. For more information, please refer to NEWS.txt", name);
+                    logger.info("{} parameter has a new name. For more information, please refer to NEWS.txt", name);
                 }
                 else
                 {
@@ -380,7 +380,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             }
             if (isOldYAML)
             {
-                logger.warn("You are using the old version of the Cassandra storage config YAML file." +
+                logger.info("You are using the old version of the Cassandra storage config YAML file." +
                                                  "Cassandra still provides backward compatibility but it is " +
                                                  "recommended to consider update. For a full list of changed names, " +
                                                  "please refer to NEWS.txt");
