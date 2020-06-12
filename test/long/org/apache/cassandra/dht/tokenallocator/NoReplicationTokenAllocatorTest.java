@@ -49,13 +49,16 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
         testNewCluster(new RandomPartitioner());
     }
 
+    boolean failed = false;
     private void testNewCluster(IPartitioner partitioner)
     {
+        failed = false;
         for (int perUnitCount = 1; perUnitCount <= MAX_VNODE_COUNT; perUnitCount *= 4)
         {
             testNewCluster(perUnitCount, fixedTokenCount, new NoReplicationStrategy(), partitioner);
             testNewCluster(perUnitCount, fixedTokenCount, new ZeroReplicationStrategy(), partitioner);
         }
+        Assert.assertFalse(failed);
     }
 
     public void testNewCluster(int perUnitCount, TokenCount tc, NoReplicationStrategy rs, IPartitioner partitioner)
@@ -84,11 +87,13 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
 
     private void testExistingCluster(IPartitioner partitioner)
     {
+        failed = false;
         for (int perUnitCount = 1; perUnitCount <= MAX_VNODE_COUNT; perUnitCount *= 4)
         {
             testExistingCluster(perUnitCount, fixedTokenCount, new NoReplicationStrategy(), partitioner);
             testExistingCluster(perUnitCount, fixedTokenCount, new ZeroReplicationStrategy(), partitioner);
         }
+        Assert.assertFalse(failed);
     }
 
     public NoReplicationTokenAllocator<Unit> randomWithTokenAllocator(NavigableMap<Token, Unit> map, NoReplicationStrategy rs,
@@ -183,7 +188,7 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
         {
             unitStat.addValue(wu.weight * size / t.tokensInUnits.get(wu.value.unit).size());
         }
-        su.update(unitStat);
+        su.update(unitStat, t.sortedUnits.size());
 
         SummaryStatistics tokenStat = new SummaryStatistics();
         for (PriorityQueue<TokenAllocatorBase.Weighted<TokenAllocatorBase.TokenInfo>> tokens : t.tokensInUnits.values())
@@ -193,7 +198,7 @@ public class NoReplicationTokenAllocatorTest extends TokenAllocatorTestBase
                 tokenStat.addValue(token.weight);
             }
         }
-        st.update(tokenStat);
+        st.update(tokenStat, t.sortedUnits.size());
 
         if (print)
         {
