@@ -153,6 +153,7 @@ class ReplicationAwareTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
     {
         Collection<Token> tokens = super.generateSplits(newUnit, numTokens);
         unitToTokens.putAll(newUnit, tokens);
+        TokenAllocatorDiagnostics.splitsGenerated(this, numTokens, unitToTokens, sortedTokens, newUnit, tokens);
         return tokens;
     }
 
@@ -563,16 +564,6 @@ class ReplicationAwareTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
         {
             return split.prev;
         }
-    }
-
-    static void dumpTokens(String lead, BaseTokenInfo<?, ?> tokens)
-    {
-        BaseTokenInfo<?, ?> token = tokens;
-        do
-        {
-            System.out.format("%s%s: rs %s rt %s size %.2e%n", lead, token, token.replicationStart, token.replicationThreshold, token.replicatedOwnership);
-            token = token.next;
-        } while (token != null && token != tokens);
     }
 }
 

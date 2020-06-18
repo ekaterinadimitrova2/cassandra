@@ -20,14 +20,12 @@ package org.apache.cassandra.dht.tokenallocator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -161,7 +159,8 @@ public class NoReplicationTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
         double spread = targetAverage * sizeCorrection * 2.0 / (2 * numTokens + 1);
 
         // The biggest target is assigned to the biggest existing node. This should result in better balance in
-        // the amount of data that needs to be streamed from the different sources to the new node.
+        // the amount of data that needs to be streamed
+        // from the different sources to the new node.
         double target = targetAverage + spread / 2;
 
         // This step intentionally divides by the count (rather than count - 1) because we also need to count the new
@@ -231,6 +230,13 @@ public class NoReplicationTokenAllocator<Unit> extends TokenAllocatorBase<Unit>
 
         TokenAllocatorDiagnostics.unitedAdded(this, numTokens, sortedUnits, sortedTokens, newTokens, newUnit);
         return newTokens;
+    }
+
+    Collection<Token> generateSplits(Unit newUnit, int numTokens)
+    {
+        Collection<Token> tokens = super.generateSplits(newUnit, numTokens);
+        TokenAllocatorDiagnostics.splitsGenerated(this, numTokens, sortedUnits, sortedTokens, newUnit, tokens);
+        return tokens;
     }
 
     /**
