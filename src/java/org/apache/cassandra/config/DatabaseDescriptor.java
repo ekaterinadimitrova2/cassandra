@@ -3060,7 +3060,7 @@ public class DatabaseDescriptor
         if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
         {
             throw new ConfigurationException(String.format("%s must be positive value < %d%s, but was %d",
-                                                           name, value.getUnit().convert(Integer.MAX_VALUE, DataStorageUnit.BYTES), value.getUnit()),
+                                                           name, value.getUnit().convert(Integer.MAX_VALUE, DataStorageUnit.BYTES), value.getUnit(), valueInBytes),
                                              false);
         }
     }
