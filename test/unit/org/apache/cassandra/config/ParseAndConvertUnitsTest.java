@@ -55,8 +55,8 @@ public class ParseAndConvertUnitsTest
         assertEquals(Duration.inMilliseconds(500), config.slow_query_log_timeout);
         assertEquals(Duration.inMilliseconds(2000), config.internode_tcp_connect_timeout);
         assertEquals(Duration.inMilliseconds(30000), config.internode_tcp_user_timeout);
-        assertNull(config.commitlog_sync_group_window);
-        assertNull(config.commitlog_sync_period);
+        assertEquals(Duration.inMilliseconds(0), config.commitlog_sync_group_window);
+        assertEquals(Duration.inMilliseconds(0), config.commitlog_sync_period);
         assertNull(config.periodic_commitlog_sync_lag_block);
         assertEquals(Duration.inMilliseconds(250), config.cdc_free_space_check_interval);
         assertEquals(Duration.inMilliseconds(100), config.dynamic_snitch_update_interval);
@@ -67,11 +67,11 @@ public class ParseAndConvertUnitsTest
         assertEquals(Duration.inSeconds(86400), config.tracetype_query_ttl);
         assertEquals(Duration.inSeconds(604800), config.tracetype_repair_ttl);
         assertEquals(Duration.inMilliseconds(2000), config.permissions_validity);
-        assertNull(config.permissions_update_interval);
+        assertEquals(Duration.inMilliseconds(0), config.permissions_update_interval);
         assertEquals(Duration.inMilliseconds(2000), config.roles_validity);
-        assertNull(config.roles_update_interval);
+        assertEquals(Duration.inMilliseconds(0),config.roles_update_interval);
         assertEquals(Duration.inMilliseconds(2000), config.credentials_validity);
-        assertNull(config.credentials_update_interval);
+        assertEquals(Duration.inMilliseconds(0), config.credentials_update_interval);
         assertEquals(Duration.inMinutes(60), config.index_summary_resize_interval);
 
         //Confirm space parameters were successfully parsed with the default values in cassandra.yaml
@@ -92,19 +92,19 @@ public class ParseAndConvertUnitsTest
         assertEquals(new DataStorage("5KB"), config.batch_size_warn_threshold);
         assertEquals(new DataStorage("50KB"), config.batch_size_fail_threshold);
         assertEquals(new DataStorage("100MB"), config.compaction_large_partition_warning_threshold);
-        assertEquals(null, config.commitlog_total_space);
+        assertNull(config.commitlog_total_space);
         assertEquals(new DataStorage("5MB"), config.commitlog_segment_size);
-        assertEquals(null, config.max_mutation_size); //not set explicitly in the default yaml, check the config; not set there too
+        assertNull(config.max_mutation_size); //not set explicitly in the default yaml, check the config; not set there too
         assertEquals(new DataStorage("0MB"), config.cdc_total_space);
         assertEquals(new DataStorage("1024KB"), config.hinted_handoff_throttle);
         assertEquals(new DataStorage("1024KB"), config.batchlog_replay_throttle);
         assertEquals(new DataStorage("10240KB"), config.trickle_fsync_interval);
         assertEquals(new DataStorage("50MB"), config.sstable_preemptive_open_interval);
-        assertEquals(null, config.counter_cache_size);
-        assertEquals(null, config.file_cache_size);
-        assertEquals(null, config.index_summary_capacity);
+        assertNull(config.counter_cache_size);
+        assertNull(config.file_cache_size);
+        assertNull(config.index_summary_capacity);
         assertEquals(new DataStorage("1MB"), config.prepared_statements_cache_size);
-        assertEquals(null, config.key_cache_size);
+        assertNull(config.key_cache_size);
         assertEquals(new DataStorage("16MB"), config.row_cache_size);
 
         //Confirm rate parameters were successfully parsed with the default values in cassandra.yaml

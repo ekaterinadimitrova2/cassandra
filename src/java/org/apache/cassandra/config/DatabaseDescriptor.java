@@ -378,7 +378,7 @@ public class DatabaseDescriptor
 
         if (conf.commitlog_sync == Config.CommitLogSync.batch)
         {
-            if (conf.commitlog_sync_period != null)
+            if (!conf.commitlog_sync_period.toString().equals("0ms"))
             {
                 throw new ConfigurationException("Batch sync specified, but commitlog_sync_period found.", false);
             }
@@ -386,11 +386,11 @@ public class DatabaseDescriptor
         }
         else if (conf.commitlog_sync == CommitLogSync.group)
         {
-            if (conf.commitlog_sync_group_window == null)
+            if (conf.commitlog_sync_group_window.toString().equals("0ms"))
             {
                 throw new ConfigurationException("Missing value for commitlog_sync_group_window.", false);
             }
-            else if (conf.commitlog_sync_period != null)
+            if (!conf.commitlog_sync_period.toString().equals("0ms"))
             {
                 throw new ConfigurationException("Group sync specified, but commitlog_sync_period found. Only specify commitlog_sync_group_window when using group sync", false);
             }
@@ -398,9 +398,13 @@ public class DatabaseDescriptor
         }
         else
         {
-            if (conf.commitlog_sync_period == null)
+            if (conf.commitlog_sync_period.toMilliseconds() <= 0)
             {
                 throw new ConfigurationException("Missing value for commitlog_sync_period.", false);
+            }
+            else if (!conf.commitlog_sync_batch_window.toString().equals("0ms"))
+            {
+                throw new ConfigurationException("commitlog_sync_period specified, but commitlog_sync_batch_window found.  Only specify commitlog_sync_period when using periodic sync.", false);
             }
             logger.debug("Syncing log with a period of {}", conf.commitlog_sync_period);
         }
@@ -730,12 +734,14 @@ public class DatabaseDescriptor
             throw new ConfigurationException("user_defined_function_warn_timeout_in_ms must not be negative", false);
 
         if (conf.user_defined_function_fail_timeout_in_ms < conf.user_defined_function_warn_timeout_in_ms)
-            throw new ConfigurationException("user_defined_function_warn_timeout_in_ms must less than user_defined_function_fail_timeout_in_ms", false);
+            throw new ConfigurationException("user_defined_function_warn_timeout must less than user_defined_function_fail_timeout", false);
 
         if (conf.commitlog_segment_size.toMegabytes() <= 0)
-            throw new ConfigurationException("commitlog_segment_size must be positive, but was " + conf.commitlog_segment_size, false);
+            throw new ConfigurationException("commitlog_segment_size must be positive, but was "
+                                             + conf.commitlog_segment_size.toString(), false);
         else if (conf.commitlog_segment_size.toMegabytes() >= 2048)
-            throw new ConfigurationException("commitlog_segment_size must be smaller than 2048 MB, but was " + conf.commitlog_segment_size, false);
+            throw new ConfigurationException("commitlog_segment_size must be smaller than 2048, but was "
+                                             + conf.commitlog_segment_size.toString(), false);
 
         if (conf.max_mutation_size == null)
             conf.max_mutation_size = DataStorage.inKilobytes(conf.commitlog_segment_size.toKilobytes() / 2);
@@ -1219,7 +1225,7 @@ public class DatabaseDescriptor
 
     public static int getPermissionsUpdateInterval()
     {
-        return conf.permissions_update_interval == null
+        return conf.permissions_update_interval.toString().equals("0ms")
              ? conf.permissions_validity.toMillisecondsAsInt()
              : conf.permissions_update_interval.toMillisecondsAsInt();
     }
@@ -1251,7 +1257,7 @@ public class DatabaseDescriptor
 
     public static int getRolesUpdateInterval()
     {
-        return conf.roles_update_interval == null
+        return conf.roles_update_interval.toString().equals("0ms")
              ? conf.roles_validity.toMillisecondsAsInt()
              : conf.roles_update_interval.toMillisecondsAsInt();
     }
@@ -1283,7 +1289,7 @@ public class DatabaseDescriptor
 
     public static int getCredentialsUpdateInterval()
     {
-        return conf.credentials_update_interval == null
+        return conf.credentials_update_interval.toString().equals("0ms")
                ? conf.credentials_validity.toMillisecondsAsInt()
                : conf.credentials_update_interval.toMillisecondsAsInt();
     }
@@ -1848,7 +1854,7 @@ public class DatabaseDescriptor
 
     public static int getMaxMutationSize()
     {
-        return conf.max_mutation_size.toKilobytesAsInt();
+        return conf.max_mutation_size.toBytesAsInt();
     }
 
     public static int getTombstoneWarnThreshold()
@@ -1876,7 +1882,7 @@ public class DatabaseDescriptor
      */
     public static int getCommitLogSegmentSize()
     {
-        return conf.commitlog_segment_size.toMegabytesAsInt();
+        return conf.commitlog_segment_size.toBytesAsInt();
     }
 
     public static void setCommitLogSegmentSize(int sizeMegabytes)

@@ -34,6 +34,22 @@ public interface Converter<Original, Current>
         }
     }
 
+    public static final class MillisDurationInDoubleConverter implements Converter<Double, Duration>
+    {
+
+        public Class<Double> getInputType()
+        {
+            return Double.class;
+        }
+
+        public Duration apply(Double value)
+        {
+            if (value == null)
+                return null;
+            return Duration.inMilliseconds((long)value.doubleValue());
+        }
+    }
+
     public static final class MillisDurationConverterCustom implements Converter<Long, Duration>
     {
         public Class<Long> getInputType()
@@ -43,9 +59,6 @@ public interface Converter<Original, Current>
 
         public Duration apply(Long value)
         {
-            if (value == -1)
-                value = null;
-
             if (value == null)
                 return null;
             return Duration.inMilliseconds(value.longValue());
@@ -61,9 +74,6 @@ public interface Converter<Original, Current>
 
         public Duration apply(Long value)
         {
-            if (value == -1)
-                value = null;
-
             if (value == null)
                 return null;
             return Duration.inSeconds(value.longValue());
@@ -79,9 +89,6 @@ public interface Converter<Original, Current>
 
         public DataStorage apply(Long value)
         {
-            if (value == -1)
-                value = null;
-
             if (value == null)
                 return null;
             return DataStorage.inMegabytes(value.longValue());
@@ -97,9 +104,6 @@ public interface Converter<Original, Current>
 
         public DataStorage apply(Long value)
         {
-            if (value == -1)
-                value = null;
-
             if (value == null)
                 return null;
             return DataStorage.inKilobytes(value.longValue());
@@ -115,9 +119,6 @@ public interface Converter<Original, Current>
 
         public DataStorage apply(Long value)
         {
-            if (value == -1)
-                value = null;
-
             if (value == null)
                 return null;
             return DataStorage.inBytes(value.longValue());
@@ -133,9 +134,6 @@ public interface Converter<Original, Current>
 
         public BitRate apply(Long value)
         {
-            if (value == -1)
-                value = null;
-
             if (value == null)
                 return null;
             return BitRate.inMegabitsPerSecond(value.longValue());

@@ -41,6 +41,12 @@ public final class DataStorage
 
     public DataStorage(String value)
     {
+        if(value == null || value.equals("null"))
+        {
+            quantity = 0;
+            unit = DataStorageUnit.MEGABYTES; // the unit doesn't really matter as 0 is 0 in all units
+            return;
+        }
         //parse the string field value
         Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
 
@@ -181,7 +187,7 @@ public final class DataStorage
         if (unit == other.unit)
             return quantity == other.quantity;
 
-        // Due to overflows we can only guaranty that the 2 storages are equals if we get the same results
+        // Due to overflows we can only guarantee that the 2 storages are equals if we get the same results
         // doing the convertion in both directions.
         return unit.convert(other.quantity, other.unit) == quantity && other.unit.convert(quantity, unit) == other.quantity;
     }
@@ -339,7 +345,7 @@ public final class DataStorage
          */
         private String symbol;
 
-        private DataStorageUnit(String symbol)
+        DataStorageUnit(String symbol)
         {
             this.symbol = symbol;
         }

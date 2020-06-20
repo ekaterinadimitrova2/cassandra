@@ -17,6 +17,10 @@
  */
 package org.apache.cassandra.config;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -35,26 +39,63 @@ public final class Duration
      * The Regexp used to parse the duration provided as String.
      */
     private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)([a-zA-Z]{1,2}|µs|µS)$"));
+    private static final Pattern DOUBLE_TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+\\.\\d+)([a-zA-Z]{1,2}|µs|µS)$"));
     
     private final long quantity;
 
     private final TimeUnit unit;
 
+    private static final String content = Duration.readStorageConfig(YamlConfigurationLoader.getStorageConfigURL());
+
     /**
      * 
      */
+
     public Duration(String value)
     {
-        //parse the string field value
-        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
+        isConfigFileValid();
 
-        if (!matcher.find())
+        if (value == null || value.equals("null"))
         {
-            throw new IllegalArgumentException("Invalid duration: " + value);
+            quantity = 0;
+            unit = TimeUnit.MILLISECONDS;
+            return;
         }
 
-        quantity = Long.parseLong(matcher.group(1));
-        unit = fromSymbol(matcher.group(2));
+        //parse the string field value
+        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
+        Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
+
+        if(matcher.find())
+        {
+            quantity = Long.parseLong(matcher.group(1));
+            unit = fromSymbol(matcher.group(2));
+        }
+        else if(matcherDouble.find())
+        {
+            quantity =(long) Double.parseDouble(matcherDouble.group(1));
+            unit = fromSymbol(matcherDouble.group(2));
+        }
+        else {
+            throw new IllegalArgumentException("Invalid duration: " + value);
+        }
+    }
+
+    private static String readStorageConfig(URL url)
+    {
+        String content = "";
+
+        try
+        {
+            content = new String (Files.readAllBytes(Paths.get(String.valueOf(url).substring(5))));
+
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return content;
     }
 
     private Duration(long quantity, TimeUnit unit)
@@ -66,6 +107,15 @@ public final class Duration
         this.unit = unit;
     }
 
+    private Duration(double quantity, TimeUnit unit)
+    {
+        if (quantity < 0)
+            throw new IllegalArgumentException("Duration must be positive");
+
+        this.quantity = (long) quantity;
+        this.unit = unit;
+    }
+
     /**
      * Creates a {@code Duration} of the specified amount of milliseconds.
      *
@@ -74,6 +124,15 @@ public final class Duration
      */
     public static Duration inMilliseconds(long milliseconds)
     {
+        isConfigFileValid();
+
+        return new Duration(milliseconds, TimeUnit.MILLISECONDS);
+    }
+
+    public static Duration inDoubleMilliseconds(double milliseconds)
+    {
+        isConfigFileValid();
+
         return new Duration(milliseconds, TimeUnit.MILLISECONDS);
     }
 
@@ -85,6 +144,8 @@ public final class Duration
      */
     public static Duration inSeconds(long seconds)
     {
+        isConfigFileValid();
+
         return new Duration(seconds, TimeUnit.SECONDS);
     }
 
@@ -96,7 +157,37 @@ public final class Duration
      */
     public static Duration inMinutes(long minutes)
     {
+        isConfigFileValid();
+
         return new Duration(minutes, TimeUnit.MINUTES);
+    }
+
+    private static void isConfigFileValid()
+    {
+        if (isBlank("commitlog_sync_period") || isBlank("commitlog_sync_period"))
+        {
+            throw new IllegalArgumentException("You should provide a value for commitlog_sync_period or comment it in " +
+                                               "order to get a default one");
+        }
+
+        if (isBlank("commitlog_sync_group_window") || isBlank("commitlog_sync_group_window"))
+        {
+            throw new IllegalArgumentException("You should provide a value for commitlog_sync_group_window or comment it in " +
+                                               "order to get a default one");
+        }
+
+        if (isBlank("commitlog_sync_batch_window") || isBlank("commitlog_sync_batch_window"))
+        {
+            throw new IllegalArgumentException("You should provide a value for commitlog_sync_batch_window or comment it in " +
+                                               "order to get a default one");
+        }
+    }
+
+    private static boolean isBlank(String property)
+    {
+        Pattern p = Pattern.compile(String.format("%s%s *: *$", '^', property), Pattern.MULTILINE);
+        Matcher m = p.matcher(Duration.content);
+        return m.find();
     }
 
     /**
@@ -215,7 +306,7 @@ public final class Duration
         if (unit == other.unit)
             return quantity == other.quantity;
 
-        // Due to overflows we can only guaranty that the 2 durations are equals if we get the same results
+        // Due to overflows we can only guarantee that the 2 durations are equal if we get the same results
         // doing the convertion in both directions.
         return unit.convert(other.quantity, other.unit) == quantity && other.unit.convert(quantity, unit) == other.quantity;
     }

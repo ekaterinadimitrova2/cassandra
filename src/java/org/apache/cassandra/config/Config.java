@@ -60,17 +60,17 @@ public class Config
     public volatile Duration permissions_validity = new Duration("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converter.MillisDurationConverterCustom.class, scheduledRemoveBy = "5.0")
-    public volatile Duration permissions_update_interval;
+    public volatile Duration permissions_update_interval = new Duration("null");
     @Replaces(oldName = "roles_validity_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
     public volatile Duration roles_validity = new Duration("2s");
     public volatile int roles_cache_max_entries = 1000;
     @Replaces(oldName = "roles_update_interval_in_ms", converter = Converter.MillisDurationConverterCustom.class, scheduledRemoveBy = "5.0")
-    public volatile Duration roles_update_interval;
+    public volatile Duration roles_update_interval= new Duration("null");
     @Replaces(oldName = "credentials_validity_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
     public volatile Duration credentials_validity = new Duration("2s");
     public volatile int credentials_cache_max_entries = 1000;
     @Replaces(oldName = "credentials_update_interval_in_ms", converter = Converter.MillisDurationConverterCustom.class, scheduledRemoveBy = "5.0")
-    public volatile Duration credentials_update_interval;
+    public volatile Duration credentials_update_interval= new Duration("null");
 
     /* Hashing strategy Random or OPHF */
     public String partitioner;
@@ -99,34 +99,32 @@ public class Config
     @Replaces(oldName = "native_transport_idle_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
     public volatile Duration native_transport_idle_timeout = new Duration("0ms");
 
-    @Replaces(oldName = "native_transport_idle_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration request_timeout = new Duration("10s");
+    @Replaces(oldName = "request_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
+    public volatile Duration request_timeout = new Duration("10000ms");
 
     @Replaces(oldName = "read_request_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration read_request_timeout = new Duration("5s");
+    public volatile Duration read_request_timeout = new Duration("5000ms");
 
     @Replaces(oldName = "range_request_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration range_request_timeout = new Duration("10s");
+    public volatile Duration range_request_timeout = new Duration("10000ms");
 
     @Replaces(oldName = "write_request_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration write_request_timeout = new Duration("2s");
+    public volatile Duration write_request_timeout = new Duration("2000ms");
 
     @Replaces(oldName = "counter_write_request_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration counter_write_request_timeout = new Duration("5s");
+    public volatile Duration counter_write_request_timeout = new Duration("5000ms");
 
     @Replaces(oldName = "cas_contention_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration cas_contention_timeout = new Duration("1s");
+    public volatile Duration cas_contention_timeout = new Duration("1000ms");
 
     @Replaces(oldName = "truncate_request_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public volatile Duration truncate_request_timeout = new Duration("60s");
+    public volatile Duration truncate_request_timeout = new Duration("60000ms");
 
     public Integer streaming_connections_per_host = 1;
     @Replaces(oldName = "streaming_keep_alive_period_in_secs", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
     public Duration streaming_keep_alive_period = new Duration("300s");
 
-    //Effective cassandra.yaml v.2.0 cross_node_timeout is renamed to internode_timeout
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "cross_node_timeout")
+    @Replaces(oldName = "cross_node_timeout", scheduledRemoveBy = "5.0")
     public boolean internode_timeout = true;
 
     @Replaces(oldName = "slow_query_log_timeout_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
@@ -179,7 +177,7 @@ public class Config
     public String broadcast_rpc_address;
     public boolean rpc_keepalive = true;
 
-    @Replaces(oldName = "internode_max_message_size_in_bytes")
+    @Replaces(oldName = "internode_max_message_size_in_bytes", scheduledRemoveBy = "5.0")
     public DataStorage internode_max_message_size;
 
     public int internode_socket_send_buffer_size_in_bytes = 0;
@@ -278,14 +276,15 @@ public class Config
     /**
      * @deprecated since 4.0 This value was near useless, and we're not using it anymore
      */
-    @Replaces(oldName = "commitlog_sync_batch_window_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public Duration commitlog_sync_batch_window;
-    @Replaces(oldName = "commitlog_sync_group_window_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public Duration commitlog_sync_group_window;
+    @Replaces(oldName = "commitlog_sync_batch_window_in_ms", converter = Converter.MillisDurationInDoubleConverter.class, scheduledRemoveBy = "5.0")
+    public Duration commitlog_sync_batch_window = new Duration("null");
+    @Replaces(oldName = "commitlog_sync_group_window_in_ms", converter = Converter.MillisDurationInDoubleConverter.class, scheduledRemoveBy = "5.0")
+    public Duration commitlog_sync_group_window = new Duration("null");
     @Replaces(oldName = "commitlog_sync_period_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
-    public Duration commitlog_sync_period;
+    public Duration commitlog_sync_period = new Duration("null");
     @Replaces(oldName = "commitlog_segment_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, scheduledRemoveBy = "5.0")
     public DataStorage commitlog_segment_size = new DataStorage("32mb");
+
     public ParameterizedClass commitlog_compression;
     public FlushCompression flush_compression = FlushCompression.fast;
     public int commitlog_max_compression_buffers_in_pool = 3;
@@ -303,6 +302,9 @@ public class Config
     public DataStorage cdc_total_space = new DataStorage("0MB");
     @Replaces(oldName = "cdc_free_space_check_interval_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
     public Duration cdc_free_space_check_interval = new Duration("250ms");
+
+    @Deprecated
+    public int commitlog_periodic_queue_size = -1;
 
     public String endpoint_snitch;
     public boolean dynamic_snitch = true;
@@ -395,9 +397,9 @@ public class Config
     public Duration gc_warn_threshold = new Duration("1s");
 
     // TTL for different types of trace events.
-    @Replaces(oldName = "gc_warn_threshold_in_ms", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
+    @Replaces(oldName = "tracetype_query_ttl_in_s", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
     public Duration tracetype_query_ttl = new Duration("1d");
-    @Replaces(oldName = "gc_warn_threshold_in_ms", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
+    @Replaces(oldName = "tracetype_repair_ttl_in_s", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
     public Duration tracetype_repair_ttl = new Duration("7d");
 
     /**
@@ -413,10 +415,7 @@ public class Config
      * {@link org.apache.cassandra.utils.CoalescingStrategies.CoalescingStrategy} by name.
      */
 
-    //Effective cassandra.yaml v.2.0 otc_coalescing_strategy is renamed to
-    //outbound_connection_coalescing_strategy
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "otc_coalescing_strategy")
+    @Replaces(oldName = "otc_coalescing_strategy", scheduledRemoveBy = "5.0")
     public String outbound_connection_coalescing_strategy = "DISABLED";
 
     /*
@@ -425,16 +424,12 @@ public class Config
      * maximum amount of time that will be waited as well as the interval at which messages must arrive on average
      * for coalescing to be enabled.
      */
-    //Effective cassandra.yaml v.2.0 otc_coalescing_window_us is renamed to
-    //outbound_connection_coalescing_window_us
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "otc_coalescing_window_us")
+
+    @Replaces(oldName = "otc_coalescing_window_us", scheduledRemoveBy = "5.0")
     public static final int otc_coalescing_window_us_default = 200;
     public int outbound_connection_coalescing_window_us = otc_coalescing_window_us_default;
-    //Effective cassandra.yaml v.2.0 otc_coalescing_enough_coalesced_messages is renamed to
-    //outbound_connection_coalescing_enough_coalesced_messages
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "outbound_connection_coalescing_enough_coalesced_messages")
+
+    @Replaces(oldName = "outbound_connection_coalescing_enough_coalesced_messages", scheduledRemoveBy = "5.0")
     public int outbound_connection_coalescing_enough_coalesced_messages = 8;
 
     public int windows_timer_interval = 0;
@@ -446,34 +441,19 @@ public class Config
     @Replaces(oldName = "prepared_statements_cache_size_mb", converter = Converter.MegabytesDataStorageConverter.class, scheduledRemoveBy = "5.0")
     public DataStorage prepared_statements_cache_size;
 
-    //Effective cassandra.yaml v.2.0 enable_user_defined_functions is renamed to
-    //user_defined_functions_enabled
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "enable_user_defined_functions")
+    @Replaces(oldName = "enable_user_defined_functions", scheduledRemoveBy = "5.0")
     public boolean user_defined_functions_enabled = false;
 
-    //Effective cassandra.yaml v.2.0 enable_scripted_user_defined_functions is renamed to
-    //scripted_user_defined_functions_enabled
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "enable_scripted_user_defined_functions")
+    @Replaces(oldName = "enable_scripted_user_defined_functions", scheduledRemoveBy = "5.0")
     public boolean scripted_user_defined_functions_enabled = false;
 
-    //Effective cassandra.yaml v.2.0 enable_materialized_views is renamed to
-    //materialized_views_enabled
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "enable_materialized_views")
+    @Replaces(oldName = "enable_materialized_views", scheduledRemoveBy = "5.0")
     public boolean materialized_views_enabled = false;
 
-    //Effective cassandra.yaml v.2.0 enable_transient_replication is renamed to
-    //transient_replication_enabled
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "enable_transient_replication")
+    @Replaces(oldName = "enable_transient_replication", scheduledRemoveBy = "5.0")
     public boolean transient_replication_enabled = false;
 
-    //Effective cassandra.yaml v.2.0 enable_sasi_indexes is renamed to
-    //sasi_indexes_enabled
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "enable_sasi_indexes")
+    @Replaces(oldName = "enable_sasi_indexes", scheduledRemoveBy = "5.0")
     public boolean sasi_indexes_enabled = false;
 
     /**
@@ -485,10 +465,7 @@ public class Config
      * When you disable async UDF execution, users MUST pay attention to read-timeouts since these may indicate
      * UDFs that run too long or forever - and this can destabilize the cluster.
      */
-    //Effective cassandra.yaml v.2.0 user_defined_functions_threads_enabled is renamed to
-    //user_defined_functions_threads_enabled
-    //Backward compatibility available in v4 - CASSANDRA-15234-3
-    @Replaces(oldName = "user_defined_functions_threads_enabled")
+    @Replaces(oldName = "user_defined_functions_threads_enabled", scheduledRemoveBy = "5.0")
     public boolean user_defined_functions_threads_enabled = true;
     /**
      * Time in milliseconds after a warning will be emitted to the log and to the client that a UDF runs too long.
