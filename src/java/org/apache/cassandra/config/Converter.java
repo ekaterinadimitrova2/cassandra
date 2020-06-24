@@ -80,6 +80,21 @@ public interface Converter<Original, Current>
         }
     }
 
+    public static final class MinutesDurationConverter implements Converter<Long, Duration>
+    {
+        public Class<Long> getInputType()
+        {
+            return Long.class;
+        }
+
+        public Duration apply(Long value)
+        {
+            if (value == null)
+                return null;
+            return Duration.inMinutes(value.longValue());
+        }
+    }
+
     public static final class MegabytesDataStorageConverter implements Converter<Long, DataStorage>
     {
         public Class<Long> getInputType()

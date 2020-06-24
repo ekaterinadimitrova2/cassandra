@@ -324,6 +324,7 @@ public class Config
     @Replaces(oldName = "batchlog_replay_throttle_in_kb", converter = Converter.KilobytesDataStorageConverter.class, scheduledRemoveBy = "5.0")
     public volatile DataStorage batchlog_replay_throttle = new DataStorage("1024KB");
     public int max_hints_delivery_threads = 2;
+    @Replaces(oldName = "hints_flush_period_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
     public Duration hints_flush_period = new Duration("10s");
     @Replaces(oldName = "max_hints_file_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, scheduledRemoveBy = "5.0")
     public DataStorage max_hints_file_size = new DataStorage("128mb");
@@ -389,6 +390,7 @@ public class Config
 
     @Replaces(oldName = "index_summary_capacity_in_mb", converter = Converter.MegabytesDataStorageConverter.class, scheduledRemoveBy = "5.0")
     public DataStorage index_summary_capacity;
+    @Replaces(oldName = "index_summary_resize_interval_in_minutes", converter = Converter.MinutesDurationConverter.class, scheduledRemoveBy = "5.0")
     public volatile Duration index_summary_resize_interval = new Duration("60m");
 
     @Replaces(oldName = "gc_log_threshold_in_ms", converter = Converter.MillisDurationConverter.class, scheduledRemoveBy = "5.0")
@@ -397,10 +399,10 @@ public class Config
     public Duration gc_warn_threshold = new Duration("1s");
 
     // TTL for different types of trace events.
-    @Replaces(oldName = "tracetype_query_ttl_in_s", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
-    public Duration tracetype_query_ttl = new Duration("1d");
-    @Replaces(oldName = "tracetype_repair_ttl_in_s", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
-    public Duration tracetype_repair_ttl = new Duration("7d");
+    @Replaces(oldName = "tracetype_query_ttl", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
+    public Duration tracetype_query_ttl = new Duration("86400s");
+    @Replaces(oldName = "tracetype_repair_ttl", converter = Converter.SecondsDurationConverter.class, scheduledRemoveBy = "5.0")
+    public Duration tracetype_repair_ttl = new Duration("604800s");
 
     /**
      * Maintain statistics on whether writes achieve the ideal consistency level
@@ -408,7 +410,7 @@ public class Config
      */
     public volatile ConsistencyLevel ideal_consistency_level = null;
 
-    /*
+    /*enable_legacy_ssl_storage_port
      * Strategy to use for coalescing messages in {@link OutboundConnections}.
      * Can be fixed, movingaverage, timehorizon, disabled. Setting is case and leading/trailing
      * whitespace insensitive. You can also specify a subclass of
