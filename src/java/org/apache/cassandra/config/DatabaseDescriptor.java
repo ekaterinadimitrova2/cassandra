@@ -377,7 +377,7 @@ public class DatabaseDescriptor
 
         if (conf.commitlog_sync == Config.CommitLogSync.batch)
         {
-            if (!conf.commitlog_sync_period.toString().equals("0ms"))
+            if (conf.commitlog_sync_period.toMilliseconds() != 0)
             {
                 throw new ConfigurationException("Batch sync specified, but commitlog_sync_period found.", false);
             }
@@ -385,11 +385,11 @@ public class DatabaseDescriptor
         }
         else if (conf.commitlog_sync == CommitLogSync.group)
         {
-            if (conf.commitlog_sync_group_window.toString().equals("0ms"))
+            if (conf.commitlog_sync_group_window.toMilliseconds() == 0)
             {
                 throw new ConfigurationException("Missing value for commitlog_sync_group_window.", false);
             }
-            if (!conf.commitlog_sync_period.toString().equals("0ms"))
+            if (conf.commitlog_sync_period.toMilliseconds() != 0)
             {
                 throw new ConfigurationException("Group sync specified, but commitlog_sync_period found. Only specify commitlog_sync_group_window when using group sync", false);
             }
@@ -1212,7 +1212,7 @@ public class DatabaseDescriptor
 
     public static int getPermissionsUpdateInterval()
     {
-        return conf.permissions_update_interval.toString().equals("0ms")
+        return conf.permissions_update_interval.toMilliseconds() == 0
              ? conf.permissions_validity.toMillisecondsAsInt()
              : conf.permissions_update_interval.toMillisecondsAsInt();
     }
@@ -1244,7 +1244,7 @@ public class DatabaseDescriptor
 
     public static int getRolesUpdateInterval()
     {
-        return conf.roles_update_interval.toString().equals("0ms")
+        return conf.roles_update_interval.toMilliseconds() == 0
              ? conf.roles_validity.toMillisecondsAsInt()
              : conf.roles_update_interval.toMillisecondsAsInt();
     }
@@ -1276,7 +1276,7 @@ public class DatabaseDescriptor
 
     public static int getCredentialsUpdateInterval()
     {
-        return conf.credentials_update_interval.toString().equals("0ms")
+        return conf.credentials_update_interval.toMilliseconds() == 0
                ? conf.credentials_validity.toMillisecondsAsInt()
                : conf.credentials_update_interval.toMillisecondsAsInt();
     }
