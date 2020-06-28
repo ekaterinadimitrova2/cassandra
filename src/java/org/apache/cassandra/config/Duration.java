@@ -257,6 +257,16 @@ public final class Duration
     }
 
     /**
+     * Returns the duration quantity.
+     *
+     * @return the duration quantity.
+     */
+    public String quantityToString()
+    {
+        return String.valueOf(quantity);
+    }
+
+    /**
      * Returns the symbol associated to the specified unit
      *
      * @param unit the time unit

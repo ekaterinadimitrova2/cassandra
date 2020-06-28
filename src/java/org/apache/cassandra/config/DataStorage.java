@@ -109,6 +109,16 @@ public final class DataStorage
     }
 
     /**
+     * Returns the data storage quantity.
+     *
+     * @return the data storage quantity.
+     */
+    public String quantityToString()
+    {
+        return String.valueOf(quantity);
+    }
+
+    /**
      * Returns the amount of data storage in bytes
      *
      * @return the amount of data storage in bytes

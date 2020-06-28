@@ -22,9 +22,11 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
@@ -33,12 +35,29 @@ import java.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.config.Config;
+import org.apache.cassandra.config.DataStorage;
+import org.apache.cassandra.config.Duration;
+import org.apache.cassandra.config.ParameterizedClass;
+import org.apache.cassandra.config.YamlConfigurationLoader;
 import org.apache.cassandra.distributed.api.Feature;
 import org.apache.cassandra.distributed.api.IInstanceConfig;
 import org.apache.cassandra.distributed.shared.NetworkTopology;
 import org.apache.cassandra.distributed.shared.Versions;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.locator.SimpleSeedProvider;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.composer.Composer;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.error.Mark;
+import org.yaml.snakeyaml.nodes.MappingNode;
+import org.yaml.snakeyaml.nodes.Node;
+import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.ScalarNode;
+import org.yaml.snakeyaml.nodes.SequenceNode;
+import org.yaml.snakeyaml.nodes.Tag;
+
+import static org.apache.cassandra.config.YamlConfigurationLoader.getReplacements;
 
 public class InstanceConfig implements IInstanceConfig
 {
@@ -98,22 +117,22 @@ public class InstanceConfig implements IInstanceConfig
                 .set("concurrent_reads", 2)
                 .set("memtable_flush_writers", 1)
                 .set("concurrent_compactors", 1)
-                .set("memtable_heap_space_in_mb", 10)
-                .set("commitlog_sync", "batch")
+                .set("memtable_heap_space", new DataStorage("10mb"))
+                .set("commitlog_sync", Config.CommitLogSync.batch)
                 .set("storage_port", storage_port)
                 .set("native_transport_port", native_transport_port)
                 .set("endpoint_snitch", DistributedTestSnitch.class.getName())
-                .set("seed_provider", new ParameterizedClass(SimpleSeedProvider.class.getName(),
-                        Collections.singletonMap("seeds", seedIp + ":" + seedPort)))
+                //.set("seed_provider", new ParameterizedClass(SimpleSeedProvider.class.getName(),
+                        //Collections.singletonMap("seeds", seedIp + ":" + seedPort)))
                 // required settings for dtest functionality
                 .set("diagnostic_events_enabled", true)
                 .set("auto_bootstrap", false)
                 // capacities that are based on `totalMemory` that should be fixed size
-                .set("index_summary_capacity_in_mb", 50l)
-                .set("counter_cache_size_in_mb", 50l)
-                .set("key_cache_size_in_mb", 50l)
+                .set("index_summary_capacity", new DataStorage("50mb"))
+                .set("counter_cache_size", new DataStorage("50mb"))
+                .set("key_cache_size", new DataStorage("50mb"));
                 // legacy parameters
-                .forceSet("commitlog_sync_batch_window_in_ms", 1.0);
+                //.forceSet("commitlog_sync_batch_window", new Duration("1.0ms"));
         this.featureFlags = EnumSet.noneOf(Feature.class);
     }
 
@@ -204,9 +223,55 @@ public class InstanceConfig implements IInstanceConfig
 
     public void propagate(Object writeToConfig, Map<Class<?>, Function<Object, Object>> mapping)
     {
-        for (Map.Entry<String, Object> e : params.entrySet())
-            propagate(writeToConfig, e.getKey(), e.getValue(), mapping);
+        /*for (Map.Entry<String, Object> e : params.entrySet())
+            propagate(writeToConfig, e.getKey(), e.getValue(), mapping);*/
+        Constructor constructor = new YamlConfigurationLoader.CustomConstructor(Config.class);
+        Map<Class<?>, Map<String, YamlConfigurationLoader.Replacement>> replacements = getReplacements(Config.class);
+        YamlConfigurationLoader.PropertiesChecker propertiesChecker = new YamlConfigurationLoader.PropertiesChecker(replacements);
+        constructor.setPropertyUtils(propertiesChecker);
+        constructor.setComposer(new Composer(null, null) {
+            public Node getSingleNode()
+            {
+                return toNode(params);
+            }
+        });
+        writeToConfig = constructor.getSingleData(Config.class);
     }
+
+    public static Node toNode(Object object)
+    {
+        if (object instanceof Map)
+        {
+            List<NodeTuple> values = new ArrayList<>();
+            for (Map.Entry<Object, Object> e : ((Map<Object, Object>) object).entrySet())
+            {
+                values.add(new NodeTuple(toNode(e.getKey()), toNode(e.getValue())));
+            }
+            return new MappingNode(FAKE_TAG, values, null);
+        }
+        else if (object instanceof Number || object instanceof String || object instanceof Boolean
+         || object instanceof DataStorage || object instanceof Duration || object instanceof Config.CommitLogSync)
+        {
+            return new ScalarNode(Tag.STR, object.toString(), FAKE_MARK, FAKE_MARK, '\'');
+        }
+        else if(object instanceof String[])
+        {
+            int size = ((String[])object).length;
+            Node values[] = new Node[size];
+            SequenceNode node = new SequenceNode(Tag.STR, Arrays.asList(values), false);
+
+            for (int i =0; i < size; i++)
+                values[i] = new ScalarNode(Tag.STR, ((String[])object)[i], FAKE_MARK, FAKE_MARK, '\'');
+
+            return node;
+        }
+        else
+        {
+            throw new UnsupportedOperationException("unexpected type found: given " + object.getClass());
+        }
+    }
+    private static final Tag FAKE_TAG = new Tag("ignore");
+    private static final Mark FAKE_MARK = new Mark("ignore", 0, 0, 0, "", 0);
 
     public void validate()
     {
@@ -255,6 +320,11 @@ public class InstanceConfig implements IInstanceConfig
     public Object get(String name)
     {
         return params.get(name);
+    }
+
+    public final Map<String, Object> getParams()
+    {
+        return params;
     }
 
     public int getInt(String name)

@@ -347,7 +347,7 @@ public class Instance extends IsolatedExecutor implements IInvokableInstance
                     System.setProperty("cassandra.consistent.simultaneousmoves.allow", "true");
                 }
 
-                mkdirs();
+                //mkdirs();
 
                 assert config.networkTopology().contains(config.broadcastAddress()) : String.format("Network topology %s doesn't contain the address %s",
                                                                                                     config.networkTopology(), config.broadcastAddress());

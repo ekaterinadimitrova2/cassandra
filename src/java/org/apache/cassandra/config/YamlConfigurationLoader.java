@@ -182,9 +182,9 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         return m.find();
     }
 
-    static class CustomConstructor extends Constructor
+    public static class CustomConstructor extends Constructor
     {
-        CustomConstructor(Class<?> theRoot)
+        public CustomConstructor(Class<?> theRoot)
         {
             super(theRoot);
 
@@ -230,7 +230,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * Utility class to check that there are no extra properties and that properties that are not null by default
      * are not set to null.
      */
-    private static class PropertiesChecker extends PropertyUtils
+    public static class PropertiesChecker extends PropertyUtils
     {
         private final Set<String> missingProperties = new HashSet<>();
 
@@ -426,7 +426,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         replacements.add(new Replacement(klass, oldName, oldType, newName, converter, scheduledRemoveBy));
     }
 
-    static final class Replacement
+    public static final class Replacement
     {
         public final Class<? extends Object> parent;
         public final String oldName;
