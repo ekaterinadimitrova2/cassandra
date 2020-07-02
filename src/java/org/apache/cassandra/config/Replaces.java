@@ -36,4 +36,6 @@ public @interface Replaces
     Class<? extends Converter> converter() default Converter.IdentityConverter.class;
 
     String scheduledRemoveBy() default "";
+
+    boolean deprecated() default false;
 }
