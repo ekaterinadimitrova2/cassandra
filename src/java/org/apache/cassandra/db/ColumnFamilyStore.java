@@ -129,7 +129,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     private static final ExecutorService flushExecutor = new JMXEnabledThreadPoolExecutor(DatabaseDescriptor.getFlushWriters(),
                                                                                           StageManager.KEEPALIVE,
                                                                                           TimeUnit.SECONDS,
-                                                                                          new LinkedBlockingQueue<Runnable>(),
+                                                                                          new LinkedBlockingQueue<>(),
                                                                                           new NamedThreadFactory("MemtableFlushWriter"),
                                                                                           "internal");
 
@@ -137,14 +137,14 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     private static final ExecutorService postFlushExecutor = new JMXEnabledThreadPoolExecutor(1,
                                                                                               StageManager.KEEPALIVE,
                                                                                               TimeUnit.SECONDS,
-                                                                                              new LinkedBlockingQueue<Runnable>(),
+                                                                                              new LinkedBlockingQueue<>(),
                                                                                               new NamedThreadFactory("MemtablePostFlush"),
                                                                                               "internal");
 
     private static final ExecutorService reclaimExecutor = new JMXEnabledThreadPoolExecutor(1,
                                                                                             StageManager.KEEPALIVE,
                                                                                             TimeUnit.SECONDS,
-                                                                                            new LinkedBlockingQueue<Runnable>(),
+                                                                                            new LinkedBlockingQueue<>(),
                                                                                             new NamedThreadFactory("MemtableReclaimMemory"),
                                                                                             "internal");
 
@@ -402,6 +402,11 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         data = new Tracker(initialMemtable, loadSSTables);
 
         Collection<SSTableReader> sstables = null;
+
+        // Note that this needs to happen before we load the first sstables, or the global sstable tracker will not
+        // be notified on the initial loading.
+        data.subscribe(StorageService.instance.sstablesTracker);
+
         // scan for sstables corresponding to this cf and load them
         if (data.loadsstables)
         {

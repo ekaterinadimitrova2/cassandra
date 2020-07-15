@@ -187,7 +187,7 @@ public class Tracker
     {
         addInitialSSTablesWithoutUpdatingSize(sstables);
         maybeFail(updateSizeTracking(emptySet(), sstables, null));
-        // no notifications or backup necessary
+        notifyAdded(sstables, true);
     }
 
     public void addInitialSSTablesWithoutUpdatingSize(Iterable<SSTableReader> sstables)
@@ -195,7 +195,7 @@ public class Tracker
         if (!isDummy())
             setupOnline(sstables);
         apply(updateLiveSet(emptySet(), sstables));
-        // no notifications or backup necessary
+        notifyAdded(sstables, true);
     }
 
     public void updateInitialSSTableSize(Iterable<SSTableReader> sstables)
@@ -207,7 +207,7 @@ public class Tracker
     {
         addInitialSSTables(sstables);
         maybeIncrementallyBackup(sstables);
-        notifyAdded(sstables);
+        notifyAdded(sstables, false);
     }
 
     /** (Re)initializes the tracker, purging all references. */
@@ -235,7 +235,7 @@ public class Tracker
 
     public Throwable dropSSTables(Throwable accumulate)
     {
-        return dropSSTables(Predicates.<SSTableReader>alwaysTrue(), OperationType.UNKNOWN, accumulate);
+        return dropSSTables(Predicates.alwaysTrue(), OperationType.UNKNOWN, accumulate);
     }
 
     /**
@@ -246,6 +246,7 @@ public class Tracker
         try (LogTransaction txnLogs = new LogTransaction(operationType, this))
         {
             Pair<View, View> result = apply(view -> {
+                assert view != null;
                 Set<SSTableReader> toremove = copyOf(filter(view.sstables, and(remove, notIn(view.compacting))));
                 return updateLiveSet(toremove, emptySet()).apply(view);
             });
@@ -266,7 +267,7 @@ public class Tracker
                     accumulate = updateSizeTracking(removed, emptySet(), accumulate);
                     accumulate = release(selfRefs(removed), accumulate);
                     // notifySSTablesChanged -> LeveledManifest.promote doesn't like a no-op "promotion"
-                    accumulate = notifySSTablesChanged(removed, Collections.<SSTableReader>emptySet(), txnLogs.type(), accumulate);
+                    accumulate = notifySSTablesChanged(removed, Collections.emptySet(), txnLogs.type(), accumulate);
                 }
             }
             catch (Throwable t)
@@ -290,12 +291,9 @@ public class Tracker
      */
     public void removeUnreadableSSTables(final File directory)
     {
-        maybeFail(dropSSTables(new Predicate<SSTableReader>()
-        {
-            public boolean apply(SSTableReader reader)
-            {
-                return reader.descriptor.directory.equals(directory);
-            }
+        maybeFail(dropSSTables(reader -> {
+            assert reader != null;
+            return reader.descriptor.directory.equals(directory);
         }, OperationType.UNKNOWN, null));
     }
 
@@ -365,7 +363,7 @@ public class Tracker
         Throwable fail;
         fail = updateSizeTracking(emptySet(), sstables, null);
         // TODO: if we're invalidated, should we notifyadded AND removed, or just skip both?
-        fail = notifyAdded(sstables, fail);
+        fail = notifyAdded(sstables, false, fail);
 
         if (!isDummy() && !cfstore.isValid())
             dropSSTables();
@@ -423,9 +421,9 @@ public class Tracker
         return accumulate;
     }
 
-    Throwable notifyAdded(Iterable<SSTableReader> added, Throwable accumulate)
+    Throwable notifyAdded(Iterable<SSTableReader> added, boolean isInitialSSTables, Throwable accumulate)
     {
-        INotification notification = new SSTableAddedNotification(added);
+        INotification notification = new SSTableAddedNotification(added, isInitialSSTables);
         for (INotificationConsumer subscriber : subscribers)
         {
             try
@@ -440,9 +438,9 @@ public class Tracker
         return accumulate;
     }
 
-    public void notifyAdded(Iterable<SSTableReader> added)
+    void notifyAdded(Iterable<SSTableReader> added, boolean isInitialSSTables)
     {
-        maybeFail(notifyAdded(added, null));
+        maybeFail(notifyAdded(added, isInitialSSTables, null));
     }
 
     public void notifySSTableRepairedStatusChanged(Collection<SSTableReader> repairStatusesChanged)
@@ -501,8 +499,6 @@ public class Tracker
     @VisibleForTesting
     public void removeUnsafe(Set<SSTableReader> toRemove)
     {
-        Pair<View, View> result = apply(view -> {
-            return updateLiveSet(toRemove, emptySet()).apply(view);
-        });
+        Pair<View, View> result = apply(view -> updateLiveSet(toRemove, emptySet()).apply(view));
     }
 }
