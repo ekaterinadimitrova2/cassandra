@@ -77,7 +77,7 @@ public class Mx4jTool
 
     private static String getAddress()
     {
-        String sAddress = SysPropertiesConfig.getSAddress();
+        String sAddress = SysPropertiesConfig.getMX4JAddress();
         if (StringUtils.isEmpty(sAddress))
             sAddress = FBUtilities.getBroadcastAddressAndPort().address.getHostAddress();
         return sAddress;
@@ -86,7 +86,7 @@ public class Mx4jTool
     private static int getPort()
     {
         int port = 8081;
-        String sPort = SysPropertiesConfig.getSPort();
+        String sPort = SysPropertiesConfig.getMX4JPort();
         if (StringUtils.isNotEmpty(sPort))
             port = Integer.parseInt(sPort);
         return port;

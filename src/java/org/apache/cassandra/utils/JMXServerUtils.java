@@ -29,7 +29,6 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
-import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -110,7 +109,7 @@ public class JMXServerUtils
         // Set the port used to create subsequent connections to exported objects over RMI. This simplifies
         // configuration in firewalled environments, but it can't be used in conjuction with SSL sockets.
         // See: CASSANDRA-7087
-        int rmiPort = SysPropertiesConfig.getRMiPort();
+        int rmiPort = SysPropertiesConfig.getRMIPort();
 
         // We create the underlying RMIJRMPServerImpl so that we can manually bind it to the registry,
         // rather then specifying a binding address in the JMXServiceURL and letting it be done automatically
@@ -166,7 +165,7 @@ public class JMXServerUtils
         }
         else
         {
-            String passwordFile = SysPropertiesConfig.getPasswordFile();
+            String passwordFile = SysPropertiesConfig.getJMXPasswordFile();
             if (passwordFile != null)
             {
                 // stash the password file location where JMXPluggableAuthenticator expects it
@@ -197,7 +196,7 @@ public class JMXServerUtils
         }
         else
         {
-            String accessFile = SysPropertiesConfig.getAccessFile();
+            String accessFile = SysPropertiesConfig.getJMXAccessFile();
             if (accessFile != null)
             {
                 env.put("jmx.remote.x.access.file", accessFile);
