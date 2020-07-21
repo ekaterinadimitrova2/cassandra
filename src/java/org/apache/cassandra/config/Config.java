@@ -241,7 +241,7 @@ public class Config
     public volatile Integer concurrent_compactors;
 
     @Replaces(oldName = "compaction_throughput_mb_per_sec", converter = Converter.MegabitsPerSecondBitRateConverter.class, deprecated = true)
-    public volatile BitRate compaction_throughput = new BitRate("16Mbps");
+    public volatile BitRate compaction_throughput = new BitRate("16MiB/s");
     @Replaces(oldName = "compaction_large_partition_warning_threshold_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
     public DataStorage compaction_large_partition_warning_threshold = new DataStorage("100MB");
     public DataStorage min_free_space_per_drive = new DataStorage("50MB");
@@ -249,9 +249,9 @@ public class Config
     public volatile int concurrent_materialized_view_builders = 1;
 
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converter.MegabitsPerSecondBitRateConverter.class, deprecated = true)
-    public volatile BitRate stream_throughput_outbound = new BitRate("200Mbps");
+    public volatile BitRate stream_throughput_outbound = new BitRate("200MiB/s");
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converter.MegabitsPerSecondBitRateConverter.class, deprecated = true)
-    public volatile BitRate inter_dc_stream_throughput_outbound = new BitRate("200Mbps");
+    public volatile BitRate inter_dc_stream_throughput_outbound = new BitRate("200MiB/s");
 
     public String[] data_file_directories = new String[0];
 
