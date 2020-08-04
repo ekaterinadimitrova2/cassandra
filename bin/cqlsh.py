@@ -351,6 +351,7 @@ class DecodeError(Exception):
     def __repr__(self):
         return '<%s %s>' % (self.__class__.__name__, self.message())
 
+
 def maybe_ensure_text(val):
     return ensure_text(val) if val else val
 
