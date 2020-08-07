@@ -1,18 +1,22 @@
 4.0-beta2
+ * Fix unicode chars error input (CASSANDRA-15990)
+ * Improve cassandra-stress logging when using a profile file that doesn't exist (CASSANDRA-14425)
+ * Improve logging for socket connection/disconnection (CASSANDRA-15980)
  * Throw FSWriteError upon write failures in order to apply DiskFailurePolicy (CASSANDRA-15928)
  * Forbid altering UDTs used in partition keys (CASSANDRA-15933)
  * Fix version parsing logic when upgrading from 3.0 (CASSANDRA-15973)
  * Optimize NoSpamLogger use in hot paths (CASSANDRA-15766)
  * Verify sstable components on startup (CASSANDRA-15945)
 Merged from 3.11:
+ * Fix short read protection for GROUP BY queries (CASSANDRA-15459)
  * stop_paranoid disk failure policy is ignored on CorruptSSTableException after node is up (CASSANDRA-15191)
  * Frozen RawTuple is not annotated with frozen in the toString method (CASSANDRA-15857)
 Merged from 3.0:
+ * Check for endpoint collision with hibernating nodes (CASSANDRA-14599)
  * Operational improvements and hardening for replica filtering protection (CASSANDRA-15907)
  * Fix empty/null json string representation (CASSANDRA-15896)
 Merged from 2.2:
  * Fix CQL parsing of collections when the column type is reversed (CASSANDRA-15814)
-
 
 4.0-beta1
  * Remove BackPressureStrategy (CASSANDRA-15375)
