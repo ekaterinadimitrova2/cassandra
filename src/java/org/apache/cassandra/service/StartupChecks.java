@@ -98,7 +98,8 @@ public class StartupChecks
                                                                       checkSystemKeyspaceState,
                                                                       checkDatacenter,
                                                                       checkRack,
-                                                                      checkLegacyAuthTables);
+                                                                      checkLegacyAuthTables,
+                                                                      checkLegacyCompactTables);
 
     public StartupChecks withDefaultTests()
     {
@@ -509,6 +510,35 @@ public class StartupChecks
         if (!existing.isEmpty())
             return Optional.of(String.format("Legacy auth tables %s in keyspace %s still exist and have not been properly migrated.",
                         Joiner.on(", ").join(existing), SchemaConstants.AUTH_KEYSPACE_NAME));
+        else
+            return Optional.empty();
+    };
+
+    public static final StartupCheck checkLegacyCompactTables = () ->
+    {
+        Optional<String> errMsg = checkLegacyCompactTablesMessage();
+        if (errMsg.isPresent())
+            throw new StartupException(StartupException.ERR_WRONG_CONFIG, errMsg.get());
+    };
+
+    @VisibleForTesting
+    static Optional<String> checkLegacyCompactTablesMessage()
+    {
+        return Optional.empty();
+        //KATE Think this part
+        List<String> existing = new ArrayList<>(SchemaConstants.LEGACY_AUTH_TABLES).stream().filter((legacyAuthTable) ->
+                                                                                                    {
+                                                                                                        UntypedResultSet result = QueryProcessor.executeOnceInternal(String.format("SELECT table_name FROM %s.%s WHERE keyspace_name='%s' AND table_name='%s'",
+                                                                                                                                                                                   SchemaConstants.SCHEMA_KEYSPACE_NAME,
+                                                                                                                                                                                   "tables",
+                                                                                                                                                                                   SchemaConstants.AUTH_KEYSPACE_NAME,
+                                                                                                                                                                                   legacyAuthTable));
+                                                                                                        return result != null && !result.isEmpty();
+                                                                                                    }).collect(Collectors.toList());
+
+        if (!existing.isEmpty())
+            return Optional.of(String.format("Legacy compact tables %s in keyspace %s still exist and have not been properly migrated.",
+                                             Joiner.on(", ").join(existing), SchemaConstants.AUTH_KEYSPACE_NAME));
         else
             return Optional.empty();
     };
