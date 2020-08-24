@@ -19,40 +19,74 @@ package org.apache.cassandra.schema;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.antlr.runtime.RecognitionException;
-import org.apache.cassandra.config.*;
-import org.apache.cassandra.cql3.*;
-import org.apache.cassandra.cql3.functions.*;
+import org.apache.cassandra.config.DatabaseDescriptor;
+import org.apache.cassandra.cql3.CQL3Type;
+import org.apache.cassandra.cql3.ColumnIdentifier;
+import org.apache.cassandra.cql3.FieldIdentifier;
+import org.apache.cassandra.cql3.Terms;
+import org.apache.cassandra.cql3.UntypedResultSet;
+import org.apache.cassandra.cql3.WhereClause;
+import org.apache.cassandra.cql3.functions.FunctionName;
+import org.apache.cassandra.cql3.functions.UDAggregate;
+import org.apache.cassandra.cql3.functions.UDFunction;
 import org.apache.cassandra.cql3.statements.schema.CreateTableStatement;
-import org.apache.cassandra.db.*;
+import org.apache.cassandra.db.ColumnFamilyStore;
+import org.apache.cassandra.db.DecoratedKey;
+import org.apache.cassandra.db.Digest;
+import org.apache.cassandra.db.Keyspace;
+import org.apache.cassandra.db.Mutation;
+import org.apache.cassandra.db.PartitionRangeReadCommand;
+import org.apache.cassandra.db.ReadCommand;
+import org.apache.cassandra.db.ReadExecutionController;
 import org.apache.cassandra.db.filter.ColumnFilter;
-import org.apache.cassandra.db.marshal.*;
-import org.apache.cassandra.db.partitions.*;
-import org.apache.cassandra.db.rows.*;
+import org.apache.cassandra.db.marshal.AbstractType;
+import org.apache.cassandra.db.marshal.AsciiType;
+import org.apache.cassandra.db.marshal.BytesType;
+import org.apache.cassandra.db.marshal.ReversedType;
+import org.apache.cassandra.db.marshal.UTF8Type;
+import org.apache.cassandra.db.marshal.UserType;
+import org.apache.cassandra.db.partitions.PartitionIterator;
+import org.apache.cassandra.db.partitions.PartitionUpdate;
+import org.apache.cassandra.db.partitions.UnfilteredPartitionIterator;
+import org.apache.cassandra.db.rows.Row;
+import org.apache.cassandra.db.rows.RowIterator;
+import org.apache.cassandra.db.rows.RowIterators;
+import org.apache.cassandra.db.rows.UnfilteredRowIterator;
 import org.apache.cassandra.exceptions.InvalidRequestException;
-import org.apache.cassandra.service.reads.SpeculativeRetryPolicy;
+import org.apache.cassandra.exceptions.StartupException;
 import org.apache.cassandra.schema.ColumnMetadata.ClusteringOrder;
 import org.apache.cassandra.schema.Keyspaces.KeyspacesDiff;
+import org.apache.cassandra.service.reads.SpeculativeRetryPolicy;
 import org.apache.cassandra.service.reads.repair.ReadRepairStrategy;
 import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.cassandra.utils.FBUtilities;
 
 import static java.lang.String.format;
-
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
-
+import static org.apache.cassandra.cql3.ColumnIdentifier.maybeQuote;
 import static org.apache.cassandra.cql3.QueryProcessor.executeInternal;
 import static org.apache.cassandra.cql3.QueryProcessor.executeOnceInternal;
 
@@ -855,6 +889,39 @@ public final class SchemaKeyspace
     static Keyspaces fetchNonSystemKeyspaces()
     {
         return fetchKeyspacesWithout(SchemaConstants.LOCAL_SYSTEM_KEYSPACE_NAMES);
+    }
+
+    public static void validateNonCompact() throws StartupException
+    {
+        String query = format("SELECT keyspace_name, table_name, flags FROM %s.%s", SchemaConstants.SCHEMA_KEYSPACE_NAME, TABLES);
+
+        String messages = "";
+        for (UntypedResultSet.Row row : query(query))
+        {
+            if (SchemaConstants.isLocalSystemKeyspace(row.getString("keyspace_name")))
+                continue;
+
+            Set<String> flags = row.getSet("flags", AsciiType.instance);
+            if (!TableMetadata.Flag.isLegacyCompactTable(TableMetadata.Flag.fromStringSet(flags)))
+            {
+                messages += String.format("ALTER TABLE %s.%s DROP COMPACT STORAGE;\n",
+                                          maybeQuote(row.getString("keyspace_name")),
+                                          maybeQuote(row.getString("table_name")));
+            }
+        }
+
+        if (!messages.isEmpty())
+        {
+            throw new StartupException(StartupException.ERR_OUTDATED_SCHEMA,
+                                       String.format("Compact Tables are not allowed in Cassandra starting with 4.0 version. " +
+                                                     "In order to migrate off Compact Storage, downgrade to the latest Cassandra version, " +
+                                                     "start the node with `-Dcassandra.commitlog.ignorereplayerrors=true` " +
+                                                     "passed on the command line or in jvm*-server.options, " +
+                                                     "and run the following commands: \n\n%s\n" +
+                                                     "Then restart the node with the new Cassandra version " +
+                                                     "without `-Dcassandra.commitlog.ignorereplayerrors=true`.",
+                                                     messages));
+        }
     }
 
     private static Keyspaces fetchKeyspacesWithout(Set<String> excludedKeyspaceNames)
