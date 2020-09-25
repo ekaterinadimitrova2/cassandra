@@ -22,6 +22,12 @@ j8_par_executor: &j8_par_executor
     #exec_resource_class: xlarge
   parallelism: 4
 
+j8_small_executor: &j8_small_executor
+  executor:
+    name: java8-executor
+    #exec_resource_class: xlarge
+  parallelism: 1
+
 j8_small_par_executor: &j8_small_par_executor
   executor:
     name: java8-executor
@@ -45,6 +51,12 @@ j11_par_executor: &j11_par_executor
     name: java11-executor
     #exec_resource_class: xlarge
   parallelism: 4
+
+j11_small_executor: &j11_small_executor
+  executor:
+    name: java11-executor
+    #exec_resource_class: xlarge
+  parallelism: 1
 
 j11_small_par_executor: &j11_small_par_executor
   executor:
