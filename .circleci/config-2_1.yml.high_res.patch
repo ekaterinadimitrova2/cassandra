@@ -1,4 +1,8 @@
-@@ -19,39 +19,51 @@ default_env_vars: &default_env_vars
+diff --git a/.circleci/config-2_1.yml b/.circleci/config-2_1.yml
+index ae5673c41c..292751b32d 100644
+--- a/.circleci/config-2_1.yml
++++ b/.circleci/config-2_1.yml
+@@ -19,50 +19,50 @@ default_env_vars: &default_env_vars
  j8_par_executor: &j8_par_executor
    executor:
      name: java8-executor
@@ -7,18 +11,20 @@
 +    exec_resource_class: xlarge
 +  parallelism: 100
  
+ j8_small_executor: &j8_small_executor
+   executor:
+     name: java8-executor
+-    #exec_resource_class: xlarge
++    exec_resource_class: medium
+   parallelism: 1
+ 
  j8_small_par_executor: &j8_small_par_executor
    executor:
      name: java8-executor
 -    #exec_resource_class: xlarge
+-  parallelism: 1
 +    exec_resource_class: xlarge
 +  parallelism: 5
-+
-+j8_small_executor: &j8_small_executor
-+  executor:
-+    name: java8-executor
-+    exec_resource_class: medium
-   parallelism: 1
  
  j8_medium_par_executor: &j8_medium_par_executor
    executor:
@@ -43,37 +49,104 @@
 +    exec_resource_class: xlarge
 +  parallelism: 100
  
--j11_small_par_executor: &j11_small_par_executor
-+j11_small_executor: &j11_small_executor
+ j11_small_executor: &j11_small_executor
    executor:
      name: java11-executor
 -    #exec_resource_class: xlarge
 +    exec_resource_class: medium
    parallelism: 1
  
-+j11_small_par_executor: &j11_small_par_executor
-+  executor:
-+    name: java11-executor
+ j11_small_par_executor: &j11_small_par_executor
+   executor:
+     name: java11-executor
+-    #exec_resource_class: xlarge
+-  parallelism: 1
 +    exec_resource_class: xlarge
 +  parallelism: 2
-+
+ 
  j8_with_dtests_jobs: &j8_with_dtests_jobs
    jobs:
-     - j8_build
-@@ -396,14 +408,14 @@ jobs:
-       - run_parallel_junit_tests
- 
-   j8_cqlshlib_tests:
--    <<: *j8_small_par_executor
-+    <<: *j8_small_executor
-     steps:
-       - attach_workspace:
-           at: /home/cassandra
-       - run_cqlshlib_tests
- 
-   j11_cqlshlib_tests:
--    <<: *j11_small_par_executor
-+    <<: *j11_small_executor
-     steps:
-       - attach_workspace:
-           at: /home/cassandra
+diff --git a/.circleci/config-2_1.yml.high_res.patch b/.circleci/config-2_1.yml.high_res.patch
+index 71a0dc3788..e69de29bb2 100644
+--- a/.circleci/config-2_1.yml.high_res.patch
++++ b/.circleci/config-2_1.yml.high_res.patch
+@@ -1,79 +0,0 @@
+-@@ -19,39 +19,51 @@ default_env_vars: &default_env_vars
+- j8_par_executor: &j8_par_executor
+-   executor:
+-     name: java8-executor
+--    #exec_resource_class: xlarge
+--  parallelism: 4
+-+    exec_resource_class: xlarge
+-+  parallelism: 100
+- 
+- j8_small_par_executor: &j8_small_par_executor
+-   executor:
+-     name: java8-executor
+--    #exec_resource_class: xlarge
+-+    exec_resource_class: xlarge
+-+  parallelism: 5
+-+
+-+j8_small_executor: &j8_small_executor
+-+  executor:
+-+    name: java8-executor
+-+    exec_resource_class: medium
+-   parallelism: 1
+- 
+- j8_medium_par_executor: &j8_medium_par_executor
+-   executor:
+-     name: java8-executor
+--    #exec_resource_class: xlarge
+--  parallelism: 1
+-+    exec_resource_class: xlarge
+-+  parallelism: 2
+- 
+- j8_seq_executor: &j8_seq_executor
+-   executor:
+-     name: java8-executor
+--    #exec_resource_class: xlarge
+-+    exec_resource_class: xlarge
+-   parallelism: 1 # sequential, single container tests: no parallelism benefits
+- 
+- j11_par_executor: &j11_par_executor
+-   executor:
+-     name: java11-executor
+--    #exec_resource_class: xlarge
+--  parallelism: 4
+-+    exec_resource_class: xlarge
+-+  parallelism: 100
+- 
+--j11_small_par_executor: &j11_small_par_executor
+-+j11_small_executor: &j11_small_executor
+-   executor:
+-     name: java11-executor
+--    #exec_resource_class: xlarge
+-+    exec_resource_class: medium
+-   parallelism: 1
+- 
+-+j11_small_par_executor: &j11_small_par_executor
+-+  executor:
+-+    name: java11-executor
+-+    exec_resource_class: xlarge
+-+  parallelism: 2
+-+
+- j8_with_dtests_jobs: &j8_with_dtests_jobs
+-   jobs:
+-     - j8_build
+-@@ -396,14 +408,14 @@ jobs:
+-       - run_parallel_junit_tests
+- 
+-   j8_cqlshlib_tests:
+--    <<: *j8_small_par_executor
+-+    <<: *j8_small_executor
+-     steps:
+-       - attach_workspace:
+-           at: /home/cassandra
+-       - run_cqlshlib_tests
+- 
+-   j11_cqlshlib_tests:
+--    <<: *j11_small_par_executor
+-+    <<: *j11_small_executor
+-     steps:
+-       - attach_workspace:
+-           at: /home/cassandra
