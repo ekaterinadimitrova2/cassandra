@@ -424,27 +424,10 @@ public final class SchemaKeyspace
 
     /**
      * Creates a PartitionUpdate from a partition containing some schema table content.
-     * This is mainly calling {@code PartitionUpdate.fromIterator} except for the fact that it deals with
-     * the problem described in #12236.
      */
     private static PartitionUpdate makeUpdateForSchema(UnfilteredRowIterator partition, ColumnFilter filter)
     {
-        // This method is used during schema migration tasks, and if cdc is disabled, we want to force excluding the
-        // 'cdc' column from the TABLES/VIEWS schema table because it is problematic if received by older nodes (see #12236
-        // and #12697). Otherwise though, we just simply "buffer" the content of the partition into a PartitionUpdate.
-        if (DatabaseDescriptor.isCDCEnabled() || !TABLES_WITH_CDC_ADDED.contains(partition.metadata().name))
-            return PartitionUpdate.fromIterator(partition, filter);
-
-        // We want to skip the 'cdc' column. A simple solution for that is based on the fact that
-        // 'PartitionUpdate.fromIterator()' will ignore any columns that are marked as 'fetched' but not 'queried'.
-        ColumnFilter.Builder builder = ColumnFilter.allRegularColumnsBuilder(partition.metadata());
-        for (ColumnMetadata column : filter.fetchedColumns())
-        {
-            if (!column.name.toString().equals("cdc"))
-                builder.add(column);
-        }
-
-        return PartitionUpdate.fromIterator(partition, builder.build());
+        return PartitionUpdate.fromIterator(partition, filter);
     }
 
     private static boolean isSystemKeyspaceSchemaPartition(DecoratedKey partitionKey)
