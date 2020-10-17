@@ -221,10 +221,8 @@ public final class Schema implements SchemaProvider
     @Override
     public void storeKeyspaceInstance(Keyspace keyspace)
     {
-        if (keyspaceInstances.containsKey(keyspace.getName()))
+        if (keyspaceInstances.putIfAbsent(keyspace.getName(), keyspace) != null)
             throw new IllegalArgumentException(String.format("Keyspace %s was already initialized.", keyspace.getName()));
-
-        keyspaceInstances.put(keyspace.getName(), keyspace);
     }
 
     /**
@@ -725,9 +723,12 @@ public final class Schema implements SchemaProvider
         keyspace.views.forEach(this::dropView);
         keyspace.tables.forEach(this::dropTable);
 
-        // remove the keyspace from the static instances.
-        Keyspace.clear(keyspace.name);
-        unload(keyspace);
+        synchronized (Keyspace.class)
+        {
+            Keyspace.clear(keyspace.name);
+            unload(keyspace);
+        }
+
         Keyspace.writeOrder.awaitNewBarrier();
 
         keyspace.functions.udas().forEach(this::notifyDropAggregate);
