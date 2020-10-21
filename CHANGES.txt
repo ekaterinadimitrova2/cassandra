@@ -1,4 +1,5 @@
 3.0.24:
+ * Refuse DROP COMPACT STORAGE if some 2.x sstables are in use (CASSANDRA-15897)
  * Fix serial read/non-applying CAS linearizability (CASSANDRA-12126)
  * Avoid potential NPE in JVMStabilityInspector (CASSANDRA-16294)
  * Improved check of num_tokens against the length of initial_token (CASSANDRA-14477)
