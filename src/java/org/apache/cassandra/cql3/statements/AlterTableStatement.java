@@ -293,6 +293,8 @@ public class AlterTableStatement extends SchemaAlteringStatement
                 if (!meta.isCompactTable())
                     throw new InvalidRequestException("Cannot DROP COMPACT STORAGE on table without COMPACT STORAGE");
 
+                validateCanDropCompactStorage();
+
                 cfm = meta.asNonCompact();
                 break;
             case OPTS:
