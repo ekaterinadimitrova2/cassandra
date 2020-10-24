@@ -19,6 +19,13 @@ package org.apache.cassandra.db;
 
 import java.util.Collection;
 
+import com.codahale.metrics.Counter;
+import com.codahale.metrics.Gauge;
+import com.codahale.metrics.Histogram;
+import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricRegistryListener;
+import com.codahale.metrics.Timer;
+import org.apache.cassandra.metrics.CassandraMetricsRegistry;
 import org.apache.cassandra.schema.KeyspaceParams;
 import org.apache.cassandra.utils.FBUtilities;
 import org.junit.BeforeClass;
@@ -33,7 +40,7 @@ import static org.junit.Assert.assertEquals;
 public class ColumnFamilyMetricTest
 {
     @BeforeClass
-    public static void defineSchema() throws Exception
+    public static void defineSchema()
     {
         SchemaLoader.prepareServer();
         SchemaLoader.createKeyspace("Keyspace1",
@@ -109,5 +116,84 @@ public class ColumnFamilyMetricTest
 
         // CASSANDRA-11117 - update with large timestamp delta should not overflow the histogram
         store.metric.colUpdateTimeDeltaHistogram.cf.getSnapshot().get999thPercentile();
+    }
+
+    @Test
+    public void testStartupRaceConditionOnMetricListeners()
+    {
+        // See CASSANDRA-
+        // Since the ColumnFamilyStore instance reference escapes during the construction
+        // we have a race condition and listeners can see an instance that is in an unknown state
+        // this test just check that all callbacks can access the data without throwing any exception.
+        registerMetricListener();
+        SchemaLoader.createKeyspace("Keyspace2",
+                                    KeyspaceParams.simple(1),
+                                    SchemaLoader.standardCFMD("Keyspace2", "Standard2"));
+    }
+
+    private void registerMetricListener()
+    {
+        CassandraMetricsRegistry.Metrics.addListener(new MetricRegistryListener()
+        {
+            @Override
+            public void onGaugeAdded(String name, Gauge<?> gauge)
+            {
+                gauge.getValue();
+            }
+
+            @Override
+            public void onGaugeRemoved(String name)
+            {
+
+            }
+
+            @Override
+            public void onCounterAdded(String name, Counter counter)
+            {
+                counter.getCount();
+            }
+
+            @Override
+            public void onCounterRemoved(String name)
+            {
+
+            }
+
+            @Override
+            public void onHistogramAdded(String name, Histogram histogram)
+            {
+                histogram.getCount();
+            }
+
+            @Override
+            public void onHistogramRemoved(String name)
+            {
+
+            }
+
+            @Override
+            public void onMeterAdded(String name, Meter meter)
+            {
+                meter.getCount();
+            }
+
+            @Override
+            public void onMeterRemoved(String name)
+            {
+
+            }
+
+            @Override
+            public void onTimerAdded(String name, Timer timer)
+            {
+                timer.getCount();
+            }
+
+            @Override
+            public void onTimerRemoved(String name)
+            {
+
+            }
+        });
     }
 }
