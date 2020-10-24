@@ -43,7 +43,8 @@ public class CacheMetrics
     /** Total number of cache misses */
     public final Meter misses;
     /** Total number of cache requests */
-    public final Metered requests;
+    public final Meter requests;
+    //public final Metered requests;
 
     /** all time cache hit rate */
     public final Gauge<Double> hitRate;
@@ -72,7 +73,8 @@ public class CacheMetrics
 
         hits = Metrics.meter(factory.createMetricName("Hits"));
         misses = Metrics.meter(factory.createMetricName("Misses"));
-        requests = Metrics.register(factory.createMetricName("Requests"), sumMeters(hits, misses));
+        //requests = Metrics.register(factory.createMetricName("Requests"), sumMeters(hits, misses));
+        requests = Metrics.meter(factory.createMetricName("Requests"));
 
         hitRate =
             Metrics.register(factory.createMetricName("HitRate"),
