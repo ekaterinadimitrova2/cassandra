@@ -39,7 +39,7 @@ import org.assertj.core.api.Assertions;
  * This class is to monitor the JMX compatability cross different versions, and relies on a gold set of metrics which
  * were generated following the instructions below.  These tests only check for breaking changes, so will ignore any
  * new metrics added in a release.  If the latest release is not finalized yet then the latest version might fail
- * if a unrelesed metric gets renamed, if this happens then the gold set should be updated for the latest version.
+ * if a unreleased metric gets renamed, if this happens then the gold set should be updated for the latest version.
  *
  * If a test fails for a previous version, then this means we have a JMX compatability regression, if the metric has
  * gone through proper deprecation then the metric can be excluded using the patterns used in other tests, if the metric

@@ -50,12 +50,14 @@ public class ChunkCacheMetrics extends CacheMetrics implements StatsCounter
     public void recordHits(int count)
     {
         hits.mark(count);
+        requests.mark(-requests.getCount());
     }
 
     @Override
     public void recordMisses(int count)
     {
         misses.mark(count);
+        requests.mark(count);
     }
 
     @Override
