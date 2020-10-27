@@ -4,6 +4,7 @@ Merged from 3.0:
  * Prevent invoking enable/disable gossip when not in NORMAL (CASSANDRA-16146)
 
 3.11.9
+ * Fix a race condition on ColumnFamilyStore and TableMetrics (CASSANDRA-16228)
  * Synchronize Keyspace instance store/clear (CASSANDRA-16210)
  * Fix ColumnFilter to avoid querying cells of unselected complex columns (CASSANDRA-15977)
  * Fix memory leak in CompressedChunkReader (CASSANDRA-15880)
