@@ -3,6 +3,7 @@
  * Throw BufferOverflowException from DataOutputBuffer for better visibility (CASSANDRA-16214)
 
 4.0-beta3
+ * Fix SSTableloader issue when restoring a table named backups (CASSANDRA-16235)
  * Segregate Network and Chunk Cache BufferPools and Recirculate Partially Freed Chunks (CASSANDRA-15229)
  * Fail truncation requests when they fail on a replica (CASSANDRA-16208)
  * Move compact storage validation earlier in startup process (CASSANDRA-16063)
