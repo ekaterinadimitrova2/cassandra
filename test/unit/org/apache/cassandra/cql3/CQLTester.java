@@ -483,7 +483,7 @@ public abstract class CQLTester
             if (store != null)
                 store.forceMajorCompaction();
         }
-        catch (InterruptedException | ExecutionException e)
+        catch (ExecutionException e)
         {
             throw new RuntimeException(e);
         }

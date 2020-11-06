@@ -17,15 +17,14 @@
  */
 package org.apache.cassandra.db;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,12 @@ import org.apache.cassandra.cql3.ColumnIdentifier;
 import org.apache.cassandra.db.marshal.BytesType;
 import org.apache.cassandra.db.marshal.SetType;
 import org.apache.cassandra.db.marshal.UTF8Type;
-import org.apache.cassandra.db.rows.*;
+import org.apache.cassandra.db.rows.BTreeRow;
+import org.apache.cassandra.db.rows.BufferCell;
+import org.apache.cassandra.db.rows.Cell;
+import org.apache.cassandra.db.rows.CellPath;
+import org.apache.cassandra.db.rows.Row;
+import org.apache.cassandra.db.rows.Rows;
 import org.apache.cassandra.utils.concurrent.OpOrder;
 import org.apache.cassandra.utils.memory.HeapAllocator;
 import org.apache.cassandra.utils.memory.NativeAllocator;
@@ -44,7 +48,11 @@ public class NativeCellTest
 {
 
     private static final Logger logger = LoggerFactory.getLogger(NativeCellTest.class);
-    private static final NativeAllocator nativeAllocator = new NativePool(Integer.MAX_VALUE, Integer.MAX_VALUE, 1f, null).newAllocator();
+    private static final NativeAllocator nativeAllocator = new NativePool(Integer.MAX_VALUE,
+                                                                          Integer.MAX_VALUE,
+                                                                          1f,
+                                                                          (minOwnershipRatio) -> CompletableFuture.completedFuture(true),
+                                                                          Integer.MAX_VALUE).newAllocator();
     private static final OpOrder.Group group = new OpOrder().start();
     private static Random rand;
 
@@ -57,7 +65,7 @@ public class NativeCellTest
     }
 
     @Test
-    public void testCells() throws IOException
+    public void testCells()
     {
         for (int run = 0 ; run < 1000 ; run++)
         {
@@ -158,9 +166,9 @@ public class NativeCellTest
         Assert.assertEquals(nrow.clustering(), brow.clustering());
 
         ClusteringComparator comparator = new ClusteringComparator(UTF8Type.instance);
-        Assert.assertTrue(comparator.compare(row.clustering(), nrow.clustering()) == 0);
-        Assert.assertTrue(comparator.compare(row.clustering(), brow.clustering()) == 0);
-        Assert.assertTrue(comparator.compare(nrow.clustering(), brow.clustering()) == 0);
+        Assert.assertEquals(0, comparator.compare(row.clustering(), nrow.clustering()));
+        Assert.assertEquals(0, comparator.compare(row.clustering(), brow.clustering()));
+        Assert.assertEquals(0, comparator.compare(nrow.clustering(), brow.clustering()));
     }
 
     private static Row clone(Row row, Row.Builder builder)

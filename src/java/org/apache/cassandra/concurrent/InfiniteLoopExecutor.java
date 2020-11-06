@@ -81,4 +81,9 @@ public class InfiniteLoopExecutor
         thread.join(unit.toMillis(time));
         return !thread.isAlive();
     }
+
+    public boolean isAlive()
+    {
+        return !thread.isAlive();
+    }
 }
