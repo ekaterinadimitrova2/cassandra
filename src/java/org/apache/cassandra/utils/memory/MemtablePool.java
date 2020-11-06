@@ -23,6 +23,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLongFieldUpdater;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 
 import com.codahale.metrics.Timer;
 import org.apache.cassandra.metrics.CassandraMetricsRegistry;
@@ -49,13 +50,15 @@ public abstract class MemtablePool
 
     MemtablePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, Runnable cleaner)
     {
+        Preconditions.checkArgument(cleaner != null, "Cleaner should not be null");
+
         this.onHeap = getSubPool(maxOnHeapMemory, cleanThreshold);
         this.offHeap = getSubPool(maxOffHeapMemory, cleanThreshold);
         this.cleaner = getCleaner(cleaner);
-        blockedOnAllocating = CassandraMetricsRegistry.Metrics.timer(new DefaultNameFactory("MemtablePool")
-                                                                         .createMetricName("BlockedOnAllocation"));
-        if (this.cleaner != null)
-            this.cleaner.start();
+        this.blockedOnAllocating = CassandraMetricsRegistry.Metrics.timer(new DefaultNameFactory("MemtablePool")
+                                                                          .createMetricName("BlockedOnAllocation"));
+
+        this.cleaner.start();
     }
 
     SubPool getSubPool(long limit, float cleanThreshold)
@@ -169,7 +172,7 @@ public abstract class MemtablePool
             maybeClean();
         }
 
-        void acquired(long size)
+        void acquired()
         {
             maybeClean();
         }
@@ -201,6 +204,11 @@ public abstract class MemtablePool
         public long used()
         {
             return allocated;
+        }
+
+        public long getReclaiming()
+        {
+            return reclaiming;
         }
 
         public float reclaimingRatio()

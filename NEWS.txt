@@ -42,7 +42,16 @@ restore snapshots created with the previous major version using the
 'sstableloader' tool. You can upgrade the file format of your snapshots
 using the provided 'sstableupgrade' tool.
 
-3.0.24
+3.11.9
+======
+Upgrading
+---------
+   - Custom compaction strategies must handle getting sstables added/removed notifications for
+     sstables already added/removed - see CASSANDRA-14103 for details. This has been a requirement
+     for correct operation since 3.11.0 due to an issue in CompactionStrategyManager.
+
+3.11.7
+>>>>>>> aef2d0f7ca... Review feedback
 ======
 
 Upgrading
