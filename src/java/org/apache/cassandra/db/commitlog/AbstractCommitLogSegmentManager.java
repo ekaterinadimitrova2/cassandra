@@ -18,14 +18,23 @@
 package org.apache.cassandra.db.commitlog;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BooleanSupplier;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.util.concurrent.*;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.Uninterruptibles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +42,14 @@ import net.nicoulaj.compilecommand.annotations.DontInline;
 import org.apache.cassandra.concurrent.NamedThreadFactory;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.Schema;
-import org.apache.cassandra.db.*;
+import org.apache.cassandra.db.ColumnFamilyStore;
+import org.apache.cassandra.db.Keyspace;
+import org.apache.cassandra.db.Mutation;
 import org.apache.cassandra.io.compress.BufferType;
 import org.apache.cassandra.io.util.SimpleCachedBufferPool;
-import org.apache.cassandra.utils.*;
+import org.apache.cassandra.utils.NoSpamLogger;
+import org.apache.cassandra.utils.Pair;
+import org.apache.cassandra.utils.WrappedRunnable;
 import org.apache.cassandra.utils.concurrent.WaitQueue;
 
 import static org.apache.cassandra.db.commitlog.CommitLogSegment.Allocation;
@@ -48,6 +61,7 @@ import static org.apache.cassandra.db.commitlog.CommitLogSegment.Allocation;
 public abstract class AbstractCommitLogSegmentManager
 {
     static final Logger logger = LoggerFactory.getLogger(AbstractCommitLogSegmentManager.class);
+    static final NoSpamLogger noSpamLogger = NoSpamLogger.getLogger(logger, 5, TimeUnit.SECONDS);
 
     /**
      * Segment that is ready to be used. The management thread fills this and blocks until consumed.
@@ -100,14 +114,15 @@ public abstract class AbstractCommitLogSegmentManager
         // The run loop for the manager thread
         Runnable runnable = new WrappedRunnable()
         {
-            public void runMayThrow() throws Exception
+            public void runMayThrow()
             {
                 while (!shutdown)
                 {
                     try
                     {
                         assert availableSegment == null;
-                        logger.trace("No segments in reserve; creating a fresh one");
+                        if (logger.isTraceEnabled())
+                            logger.trace("No segments in reserve; creating a fresh one");
                         availableSegment = createSegment();
                         if (shutdown)
                         {
@@ -473,7 +488,7 @@ public abstract class AbstractCommitLogSegmentManager
 
     private void discardAvailableSegment()
     {
-        CommitLogSegment next = null;
+        CommitLogSegment next;
         synchronized (this)
         {
             next = availableSegment;
@@ -519,7 +534,7 @@ public abstract class AbstractCommitLogSegmentManager
      *
      * @param flush Request that the sync operation flush the file to disk.
      */
-    public void sync(boolean flush) throws IOException
+    public void sync(boolean flush)
     {
         CommitLogSegment current = allocatingFrom;
         for (CommitLogSegment segment : getActiveSegments())
