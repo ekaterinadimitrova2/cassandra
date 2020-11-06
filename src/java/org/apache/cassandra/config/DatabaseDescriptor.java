@@ -147,7 +147,7 @@ public class DatabaseDescriptor
         String loaderClass = System.getProperty("cassandra.config.loader");
         ConfigurationLoader loader = loaderClass == null
                                      ? new YamlConfigurationLoader()
-                                   : FBUtilities.<ConfigurationLoader>construct(loaderClass, "configuration loading");
+                                   : FBUtilities.construct(loaderClass, "configuration loading");
         Config config = loader.loadConfig();
 
         if (!hasLoggedConfig)
@@ -210,7 +210,7 @@ public class DatabaseDescriptor
             }
             catch (UnknownHostException e)
             {
-                throw new ConfigurationException("Unknown listen_address '" + config.listen_address + "'", false);
+                throw new ConfigurationException("Unknown listen_address '" + config.listen_address + '\'', false);
             }
 
             if (listenAddress.isAnyLocalAddress())
@@ -230,7 +230,7 @@ public class DatabaseDescriptor
             }
             catch (UnknownHostException e)
             {
-                throw new ConfigurationException("Unknown broadcast_address '" + config.broadcast_address + "'", false);
+                throw new ConfigurationException("Unknown broadcast_address '" + config.broadcast_address + '\'', false);
             }
 
             if (broadcastAddress.isAnyLocalAddress())
@@ -271,7 +271,7 @@ public class DatabaseDescriptor
             }
             catch (UnknownHostException e)
             {
-                throw new ConfigurationException("Unknown broadcast_rpc_address '" + config.broadcast_rpc_address + "'", false);
+                throw new ConfigurationException("Unknown broadcast_rpc_address '" + config.broadcast_rpc_address + '\'', false);
             }
 
             if (broadcastRpcAddress.isAnyLocalAddress())
@@ -466,18 +466,14 @@ public class DatabaseDescriptor
         EndpointSnitchInfo.create();
 
         localDC = snitch.getDatacenter(FBUtilities.getBroadcastAddress());
-        localComparator = new Comparator<InetAddress>()
-        {
-            public int compare(InetAddress endpoint1, InetAddress endpoint2)
-            {
-                boolean local1 = localDC.equals(snitch.getDatacenter(endpoint1));
-                boolean local2 = localDC.equals(snitch.getDatacenter(endpoint2));
-                if (local1 && !local2)
-                    return -1;
-                if (local2 && !local1)
-                    return 1;
-                return 0;
-            }
+        localComparator = (endpoint1, endpoint2) -> {
+            boolean local1 = localDC.equals(snitch.getDatacenter(endpoint1));
+            boolean local2 = localDC.equals(snitch.getDatacenter(endpoint2));
+            if (local1 && !local2)
+                return -1;
+            if (local2 && !local1)
+                return 1;
+            return 0;
         };
 
         /* Request Scheduler setup */
@@ -530,7 +526,7 @@ public class DatabaseDescriptor
         if (conf.commitlog_total_space_in_mb == null)
         {
             int preferredSize = 8192;
-            int minSize = 0;
+            int minSize;
             try
             {
                 // use 1/4 of available space.  See discussion on #10013 and #10199
@@ -933,7 +929,7 @@ public class DatabaseDescriptor
 
     public static Collection<String> tokensFromString(String tokenString)
     {
-        List<String> tokens = new ArrayList<String>();
+        List<String> tokens = new ArrayList<>();
         if (tokenString != null)
             for (String token : tokenString.split(","))
                 tokens.add(token.replaceAll("^\\s+", "").replaceAll("\\s+$", ""));
@@ -1542,7 +1538,7 @@ public class DatabaseDescriptor
     public static File getSerializedCachePath(CacheService.CacheType cacheType, String version, String extension)
     {
         String name = cacheType.toString()
-                + (version == null ? "" : "-" + version + "." + extension);
+                + (version == null ? "" : '-' + version + '.' + extension);
         return new File(conf.saved_caches_directory, name);
     }
 
@@ -1767,14 +1763,17 @@ public class DatabaseDescriptor
 
     public static MemtablePool getMemtableAllocatorPool()
     {
-        long heapLimit = ((long) conf.memtable_heap_space_in_mb) << 20;
-        long offHeapLimit = ((long) conf.memtable_offheap_space_in_mb) << 20;
+        final long heapLimit = ((long) conf.memtable_heap_space_in_mb) << 20;
+        final long offHeapLimit = ((long) conf.memtable_offheap_space_in_mb) << 20;
+        final float cleaningThreshold = DatabaseDescriptor.getMemtableCleanupThreshold();
+        final MemtableCleaner cleaner = ColumnFamilyStore::flushLargestColumnFamily;
+        final int maxPendingTasks = Integer.getInteger(Config.PROPERTY_PREFIX + "max_pending_flushing_tasks", ColumnFamilyStore.getNumFlushWriters() * 2);
         switch (conf.memtable_allocation_type)
         {
             case unslabbed_heap_buffers:
-                return new HeapPool(heapLimit, conf.memtable_cleanup_threshold, new ColumnFamilyStore.FlushLargestColumnFamily());
+                return new HeapPool(heapLimit, cleaningThreshold, cleaner, maxPendingTasks);
             case heap_buffers:
-                return new SlabPool(heapLimit, 0, conf.memtable_cleanup_threshold, new ColumnFamilyStore.FlushLargestColumnFamily());
+                return new SlabPool(heapLimit, 0, cleaningThreshold, cleaner, maxPendingTasks);
             case offheap_buffers:
                 if (!FileUtils.isCleanerAvailable())
                 {

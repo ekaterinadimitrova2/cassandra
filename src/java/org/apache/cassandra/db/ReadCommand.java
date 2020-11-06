@@ -20,6 +20,10 @@ package org.apache.cassandra.db;
 import java.io.DataInput;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.db.filter.IDiskAtomFilter;
@@ -32,9 +36,13 @@ import org.apache.cassandra.net.MessagingService;
 import org.apache.cassandra.service.IReadCommand;
 import org.apache.cassandra.service.RowDataResolver;
 import org.apache.cassandra.service.pager.Pageable;
+import org.apache.cassandra.utils.NoSpamLogger;
 
 public abstract class ReadCommand implements IReadCommand, Pageable
 {
+    protected static final Logger logger = LoggerFactory.getLogger(ReadCommand.class);
+    protected static final NoSpamLogger noSpamLogger = NoSpamLogger.getLogger(logger, 5, TimeUnit.SECONDS);
+
     public enum Type
     {
         GET_BY_NAMES((byte)1),
@@ -42,7 +50,7 @@ public abstract class ReadCommand implements IReadCommand, Pageable
 
         public final byte serializedValue;
 
-        private Type(byte b)
+        Type(byte b)
         {
             this.serializedValue = b;
         }

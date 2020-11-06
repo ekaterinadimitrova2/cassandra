@@ -295,7 +295,7 @@ public abstract class CQLTester
             if (currentTable != null)
                 Keyspace.open(KEYSPACE).getColumnFamilyStore(currentTable).forceMajorCompaction();
         }
-        catch (InterruptedException | ExecutionException e)
+        catch (ExecutionException e)
         {
             throw new RuntimeException(e);
         }

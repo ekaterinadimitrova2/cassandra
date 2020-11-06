@@ -1,5 +1,6 @@
+<<<<<<< HEAD
 2.2.20
-
+ * Prevent unbounded number of pending flushing tasks (CASSANDRA-16261)
 
 2.2.19
  * Package tools/bin scripts as executable (CASSANDRA-16151)
