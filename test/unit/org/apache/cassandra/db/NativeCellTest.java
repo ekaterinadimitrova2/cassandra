@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -44,7 +45,11 @@ public class NativeCellTest
 {
 
     private static final Logger logger = LoggerFactory.getLogger(NativeCellTest.class);
-    private static final NativeAllocator nativeAllocator = new NativePool(Integer.MAX_VALUE, Integer.MAX_VALUE, 1f, null).newAllocator();
+    private static final NativeAllocator nativeAllocator = new NativePool(Integer.MAX_VALUE,
+                                                                          Integer.MAX_VALUE,
+                                                                          1f,
+                                                                          (minOwnershipRatio) -> CompletableFuture.completedFuture(true),
+                                                                          Integer.MAX_VALUE).newAllocator();
     private static final OpOrder.Group group = new OpOrder().start();
     private static Random rand;
 
@@ -57,7 +62,7 @@ public class NativeCellTest
     }
 
     @Test
-    public void testCells() throws IOException
+    public void testCells()
     {
         for (int run = 0 ; run < 1000 ; run++)
         {

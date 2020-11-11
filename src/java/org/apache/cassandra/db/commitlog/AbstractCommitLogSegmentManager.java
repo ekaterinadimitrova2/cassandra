@@ -18,7 +18,6 @@
 package org.apache.cassandra.db.commitlog;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -48,6 +47,7 @@ import static org.apache.cassandra.db.commitlog.CommitLogSegment.Allocation;
 public abstract class AbstractCommitLogSegmentManager
 {
     static final Logger logger = LoggerFactory.getLogger(AbstractCommitLogSegmentManager.class);
+    static final NoSpamLogger noSpamLogger = NoSpamLogger.getLogger(logger, 5, TimeUnit.SECONDS);
 
     /**
      * Segment that is ready to be used. The management thread fills this and blocks until consumed.
@@ -84,7 +84,7 @@ public abstract class AbstractCommitLogSegmentManager
     private Thread managerThread;
     protected final CommitLog commitLog;
     private volatile boolean shutdown;
-    private final BooleanSupplier managerThreadWaitCondition = () -> (availableSegment == null && !atSegmentBufferLimit()) || shutdown;
+    private final BooleanSupplier managerThreadWaitCondition = () -> (availableSegment == null && atSegmentBufferLimit()) || shutdown;
     private final WaitQueue managerThreadWaitQueue = new WaitQueue();
 
     private volatile SimpleCachedBufferPool bufferPool;
@@ -100,14 +100,16 @@ public abstract class AbstractCommitLogSegmentManager
         // The run loop for the manager thread
         Runnable runnable = new WrappedRunnable()
         {
-            public void runMayThrow() throws Exception
+            public void runMayThrow()
             {
                 while (!shutdown)
                 {
                     try
                     {
                         assert availableSegment == null;
-                        logger.trace("No segments in reserve; creating a fresh one");
+                        if (logger.isTraceEnabled())
+                            logger.trace("No segments in reserve; creating a fresh one");
+
                         availableSegment = createSegment();
                         if (shutdown)
                         {
@@ -120,7 +122,7 @@ public abstract class AbstractCommitLogSegmentManager
                         segmentPrepared.signalAll();
                         Thread.yield();
 
-                        if (availableSegment == null && !atSegmentBufferLimit())
+                        if (availableSegment == null && atSegmentBufferLimit())
                             // Writing threads need another segment now.
                             continue;
 
@@ -165,7 +167,7 @@ public abstract class AbstractCommitLogSegmentManager
 
     private boolean atSegmentBufferLimit()
     {
-        return CommitLogSegment.usesBufferPool(commitLog) && bufferPool.atLimit();
+        return !CommitLogSegment.usesBufferPool(commitLog) || !bufferPool.atLimit();
     }
 
     private void maybeFlushToReclaim()
@@ -436,7 +438,7 @@ public abstract class AbstractCommitLogSegmentManager
      */
     void awaitManagementTasksCompletion()
     {
-        if (availableSegment == null && !atSegmentBufferLimit())
+        if (availableSegment == null && atSegmentBufferLimit())
         {
             awaitAvailableSegment(allocatingFrom);
         }
@@ -473,7 +475,7 @@ public abstract class AbstractCommitLogSegmentManager
 
     private void discardAvailableSegment()
     {
-        CommitLogSegment next = null;
+        CommitLogSegment next;
         synchronized (this)
         {
             next = availableSegment;
@@ -519,7 +521,7 @@ public abstract class AbstractCommitLogSegmentManager
      *
      * @param flush Request that the sync operation flush the file to disk.
      */
-    public void sync(boolean flush) throws IOException
+    public void sync(boolean flush)
     {
         CommitLogSegment current = allocatingFrom;
         for (CommitLogSegment segment : getActiveSegments())

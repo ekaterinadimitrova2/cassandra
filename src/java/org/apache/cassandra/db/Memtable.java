@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.config.CFMetaData;
 import org.apache.cassandra.config.ColumnDefinition;
+import org.apache.cassandra.config.Config;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.SchemaConstants;
 import org.apache.cassandra.db.commitlog.CommitLog;
@@ -56,6 +57,7 @@ import org.apache.cassandra.utils.ObjectSizes;
 import org.apache.cassandra.utils.concurrent.OpOrder;
 import org.apache.cassandra.utils.memory.HeapPool;
 import org.apache.cassandra.utils.memory.MemtableAllocator;
+import org.apache.cassandra.utils.memory.MemtableCleaner;
 import org.apache.cassandra.utils.memory.MemtablePool;
 import org.apache.cassandra.utils.memory.NativePool;
 import org.apache.cassandra.utils.memory.SlabPool;
@@ -68,22 +70,26 @@ public class Memtable implements Comparable<Memtable>
 
     private static MemtablePool createMemtableAllocatorPool()
     {
-        long heapLimit = DatabaseDescriptor.getMemtableHeapSpaceInMb() << 20;
-        long offHeapLimit = DatabaseDescriptor.getMemtableOffheapSpaceInMb() << 20;
+        final long heapLimit = DatabaseDescriptor.getMemtableHeapSpaceInMb() << 20;
+        final long offHeapLimit = DatabaseDescriptor.getMemtableOffheapSpaceInMb() << 20;
+        final float cleaningThreshold = DatabaseDescriptor.getMemtableCleanupThreshold();
+        final MemtableCleaner cleaner = ColumnFamilyStore::flushLargestColumnFamily;
+        final int maxPendingTasks = Integer.getInteger(Config.PROPERTY_PREFIX + "max_pending_flushing_tasks", ColumnFamilyStore.getNumFlushWriters() * 2);
+
         switch (DatabaseDescriptor.getMemtableAllocationType())
         {
             case unslabbed_heap_buffers:
-                return new HeapPool(heapLimit, DatabaseDescriptor.getMemtableCleanupThreshold(), new ColumnFamilyStore.FlushLargestColumnFamily());
+                return new HeapPool(heapLimit, cleaningThreshold, cleaner, maxPendingTasks);
             case heap_buffers:
-                return new SlabPool(heapLimit, 0, DatabaseDescriptor.getMemtableCleanupThreshold(), new ColumnFamilyStore.FlushLargestColumnFamily());
+                return new SlabPool(heapLimit, 0, cleaningThreshold, cleaner, maxPendingTasks);
             case offheap_buffers:
                 if (!FileUtils.isCleanerAvailable)
                 {
                     throw new IllegalStateException("Could not free direct byte buffer: offheap_buffers is not a safe memtable_allocation_type without this ability, please adjust your config. This feature is only guaranteed to work on an Oracle JVM. Refusing to start.");
                 }
-                return new SlabPool(heapLimit, offHeapLimit, DatabaseDescriptor.getMemtableCleanupThreshold(), new ColumnFamilyStore.FlushLargestColumnFamily());
+                return new SlabPool(heapLimit, offHeapLimit, cleaningThreshold, cleaner, maxPendingTasks);
             case offheap_objects:
-                return new NativePool(heapLimit, offHeapLimit, DatabaseDescriptor.getMemtableCleanupThreshold(), new ColumnFamilyStore.FlushLargestColumnFamily());
+                return new NativePool(heapLimit, offHeapLimit, cleaningThreshold, cleaner, maxPendingTasks);
             default:
                 throw new AssertionError();
         }
