@@ -1794,6 +1794,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         return nowInSec - metadata.params.gcGraceSeconds;
     }
 
+    @SuppressWarnings("resource")
     public RefViewFragment selectAndReference(Function<View, Iterable<SSTableReader>> filter)
     {
         long failingSince = -1L;
