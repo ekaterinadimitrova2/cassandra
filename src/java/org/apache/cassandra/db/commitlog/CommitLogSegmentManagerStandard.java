@@ -21,6 +21,7 @@ package org.apache.cassandra.db.commitlog;
 import java.io.File;
 
 import org.apache.cassandra.db.Mutation;
+import org.apache.cassandra.db.monitoring.ApproximateTime;
 import org.apache.cassandra.io.util.FileUtils;
 
 public class CommitLogSegmentManagerStandard extends AbstractCommitLogSegmentManager
@@ -49,6 +50,7 @@ public class CommitLogSegmentManagerStandard extends AbstractCommitLogSegmentMan
     public CommitLogSegment.Allocation allocate(Mutation mutation, int size)
     {
         CommitLogSegment segment = allocatingFrom();
+        long start = ApproximateTime.currentTimeMillis();
 
         CommitLogSegment.Allocation alloc;
         while ( null == (alloc = segment.allocate(mutation, size)) )
@@ -57,6 +59,10 @@ public class CommitLogSegmentManagerStandard extends AbstractCommitLogSegmentMan
             advanceAllocatingFrom(segment);
             segment = allocatingFrom();
         }
+
+        long elapsed = ApproximateTime.currentTimeMillis() - start;
+        if (elapsed >= ApproximateTime.precision())
+            noSpamLogger.info("Took {} ms to get a commit log allocation", elapsed);
 
         return alloc;
     }
