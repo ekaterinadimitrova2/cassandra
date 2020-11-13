@@ -104,14 +104,16 @@ public abstract class AbstractCommitLogSegmentManager
         // The run loop for the manager thread
         Runnable runnable = new WrappedRunnable()
         {
-            public void runMayThrow() throws Exception
+            public void runMayThrow()
             {
                 while (!shutdown)
                 {
                     try
                     {
                         assert availableSegment == null;
-                        logger.trace("No segments in reserve; creating a fresh one");
+                        if (logger.isTraceEnabled())
+                            logger.trace("No segments in reserve; creating a fresh one");
+
                         availableSegment = createSegment();
                         if (shutdown)
                         {
@@ -482,7 +484,7 @@ public abstract class AbstractCommitLogSegmentManager
 
     private void discardAvailableSegment()
     {
-        CommitLogSegment next = null;
+        CommitLogSegment next;
         synchronized (this)
         {
             next = availableSegment;
@@ -531,7 +533,7 @@ public abstract class AbstractCommitLogSegmentManager
      *
      * @param flush Request that the sync operation flush the file to disk.
      */
-    public void sync(boolean flush) throws IOException
+    public void sync(boolean flush)
     {
         CommitLogSegment current = allocatingFrom;
         for (CommitLogSegment segment : getActiveSegments())
