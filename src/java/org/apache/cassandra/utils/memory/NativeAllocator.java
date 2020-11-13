@@ -40,7 +40,7 @@ import org.apache.cassandra.utils.concurrent.OpOrder;
  */
 public class NativeAllocator extends MemtableAllocator
 {
-    private final static int MAX_REGION_SIZE = 1 * 1024 * 1024;
+    private final static int MAX_REGION_SIZE = 1024 * 1024;
     private final static int MAX_CLONED_SIZE = 128 * 1024; // bigger than this don't go in the region
     private final static int MIN_REGION_SIZE = 8 * 1024;
 
