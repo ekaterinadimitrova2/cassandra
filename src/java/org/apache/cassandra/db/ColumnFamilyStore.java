@@ -211,11 +211,11 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     have that many flushes going at the same time.
     */
     private static final ThreadPoolExecutor flushExecutor = new JMXEnabledThreadPoolExecutor(DatabaseDescriptor.getFlushWriters(),
-                                                                                          StageManager.KEEPALIVE,
-                                                                                          TimeUnit.SECONDS,
-                                                                                          new LinkedBlockingQueue<>(),
-                                                                                          new NamedThreadFactory("MemtableFlushWriter"),
-                                                                                          "internal");
+                                                                                             StageManager.KEEPALIVE,
+                                                                                             TimeUnit.SECONDS,
+                                                                                             new LinkedBlockingQueue<>(),
+                                                                                             new NamedThreadFactory("MemtableFlushWriter"),
+                                                                                             "internal");
 
     private static final ThreadPoolExecutor [] perDiskflushExecutors = new ThreadPoolExecutor[DatabaseDescriptor.getAllDataFileLocations().length];
     static
@@ -2234,7 +2234,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         CacheService.instance.counterCache.put(CounterCacheKey.create(metadata.ksAndCFName, partitionKey, clustering, column, path), clockAndCount);
     }
 
-    public void forceMajorCompaction() throws ExecutionException
+    public void forceMajorCompaction()
     {
         forceMajorCompaction(false);
     }
