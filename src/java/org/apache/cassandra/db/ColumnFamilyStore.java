@@ -109,11 +109,11 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     have that many flushes going at the same time.
     */
     private static final ThreadPoolExecutor flushExecutor = new JMXEnabledThreadPoolExecutor(DatabaseDescriptor.getFlushWriters(),
-                                                                                          Stage.KEEP_ALIVE_SECONDS,
-                                                                                          TimeUnit.SECONDS,
-                                                                                          new LinkedBlockingQueue<>(),
-                                                                                          new NamedThreadFactory("MemtableFlushWriter"),
-                                                                                          "internal");
+                                                                                             Stage.KEEP_ALIVE_SECONDS,
+                                                                                             TimeUnit.SECONDS,
+                                                                                             new LinkedBlockingQueue<>(),
+                                                                                             new NamedThreadFactory("MemtableFlushWriter"),
+                                                                                             "internal");
 
     private static final ThreadPoolExecutor [] perDiskflushExecutors = new ThreadPoolExecutor[DatabaseDescriptor.getAllDataFileLocations().length];
 
@@ -2162,17 +2162,17 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         CacheService.instance.counterCache.put(CounterCacheKey.create(metadata(), partitionKey, clustering, column, path), clockAndCount);
     }
 
-    public void forceMajorCompaction() throws InterruptedException, ExecutionException
+    public void forceMajorCompaction()
     {
         forceMajorCompaction(false);
     }
 
-    public void forceMajorCompaction(boolean splitOutput) throws InterruptedException, ExecutionException
+    public void forceMajorCompaction(boolean splitOutput)
     {
         CompactionManager.instance.performMaximal(this, splitOutput);
     }
 
-    public void forceCompactionForTokenRange(Collection<Range<Token>> tokenRanges) throws ExecutionException, InterruptedException
+    public void forceCompactionForTokenRange(Collection<Range<Token>> tokenRanges)
     {
         CompactionManager.instance.forceCompactionForTokenRange(this, tokenRanges);
     }

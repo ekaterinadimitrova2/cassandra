@@ -136,7 +136,7 @@ public class MemtableCleanerThread<P extends MemtablePool> extends InfiniteLoopE
         this(new Clean<>(pool, cleaner, maxPendingTasks, cleanThreshold));
     }
 
-    // should ONLY be called when we really think it already needs cleaning
+    /** should ONLY be called when we really think it already needs cleaning */
     public void maybeClean()
     {
         trigger.run();
@@ -146,6 +146,6 @@ public class MemtableCleanerThread<P extends MemtablePool> extends InfiniteLoopE
     @VisibleForTesting
     public int numPendingTasks()
     {
-        return this.clean.numPendingTasks();
+        return clean.numPendingTasks();
     }
 }

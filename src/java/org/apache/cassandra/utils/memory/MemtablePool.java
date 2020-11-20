@@ -65,9 +65,9 @@ public abstract class MemtablePool
         return new SubPool(limit, cleanThreshold);
     }
 
-    MemtableCleanerThread<?> getCleaner(MemtableCleaner cleaner, int maxPendingTasks, float cleanThreshold)
+    MemtableCleanerThread<MemtablePool> getCleaner(MemtableCleaner cleaner, int maxPendingTasks, float cleanThreshold)
     {
-        return new MemtableCleanerThread(this, cleaner, maxPendingTasks, cleanThreshold);
+        return new MemtableCleanerThread<>(this, cleaner, maxPendingTasks, cleanThreshold);
     }
 
     @VisibleForTesting

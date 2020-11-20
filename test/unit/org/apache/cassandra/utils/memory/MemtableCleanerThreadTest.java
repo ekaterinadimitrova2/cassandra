@@ -46,7 +46,7 @@ public class MemtableCleanerThreadTest
     private static final long TIMEOUT_SECONDS = 5;
     private static final long TIMEOUT_MILLIS = TimeUnit.SECONDS.toMillis(TIMEOUT_SECONDS);
 
-    private static final double epsilon = 0.000001;
+    private static final double EPSILON = 0.000001;
 
     @Mock
     MemtablePool pool;
@@ -102,7 +102,7 @@ public class MemtableCleanerThreadTest
         final double cleanThreshold = 0.2;
         final AtomicReference<Double> ownershipRatio = new AtomicReference<>();
         CountDownLatch cleanerExecutedLatch = new CountDownLatch(1);
-        CompletableFuture fut = new CompletableFuture();
+        CompletableFuture<Boolean> fut = new CompletableFuture<>();
         AtomicBoolean needsCleaning = new AtomicBoolean(false);
 
         when(pool.needsCleaning()).thenAnswer(invocation -> needsCleaning.get());
@@ -126,7 +126,7 @@ public class MemtableCleanerThreadTest
         cleanerThread.maybeClean();
         cleanerExecutedLatch.await(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         assertEquals(0, cleanerExecutedLatch.getCount());
-        assertEquals(0., ownershipRatio.get(), epsilon);
+        assertEquals(0., ownershipRatio.get(), EPSILON);
         assertEquals(1, cleanerThread.numPendingTasks());
 
         // now complete the cleaning task
@@ -148,7 +148,7 @@ public class MemtableCleanerThreadTest
         AtomicBoolean needsCleaning = new AtomicBoolean(false);
 
         when(cleaner.clean(anyDouble())).thenAnswer(invocation -> {
-            CompletableFuture fut = new CompletableFuture();
+            CompletableFuture<Boolean> fut = new CompletableFuture<>();
             futures.add(fut);
             ownerhsipRatio.add(invocation.getArgument(0));
             needsCleaning.set(false);
@@ -167,7 +167,7 @@ public class MemtableCleanerThreadTest
         assertEquals(1, cleanerThread.numPendingTasks());
         assertEquals(1, futures.size());
         assertEquals(1, ownerhsipRatio.size());
-        assertEquals(0., ownerhsipRatio.get(0), epsilon);
+        assertEquals(0., ownerhsipRatio.get(0), EPSILON);
 
         // trigger cleaning again, the second task should be invoked but with the clean threshold as the ownership ratio
         cleanerLatch.set(new CountDownLatch(1));
@@ -178,7 +178,7 @@ public class MemtableCleanerThreadTest
         assertEquals(2, cleanerThread.numPendingTasks());
         assertEquals(2, futures.size());
         assertEquals(2, ownerhsipRatio.size());
-        assertEquals(cleanThreshold, ownerhsipRatio.get(1), epsilon);
+        assertEquals(cleanThreshold, ownerhsipRatio.get(1), EPSILON);
 
         // now complete the first task and make sure that the pending tasks are updated
         needsCleaning.set(false);
@@ -199,7 +199,7 @@ public class MemtableCleanerThreadTest
         final int maxPendingTasks = 1;
         final double cleanThreshold = 0.2;
         AtomicReference<CountDownLatch> cleanerLatch = new AtomicReference<>(new CountDownLatch(1));
-        AtomicReference<CompletableFuture> fut = new AtomicReference<>(new CompletableFuture());
+        AtomicReference<CompletableFuture<Boolean>> fut = new AtomicReference<>(new CompletableFuture<>());
         AtomicReference<Double> ownerhsipRatio = new AtomicReference<>();
         AtomicBoolean needsCleaning = new AtomicBoolean(false);
         AtomicInteger numTimeCleanerInvoked = new AtomicInteger(0);
@@ -221,14 +221,14 @@ public class MemtableCleanerThreadTest
         cleanerLatch.get().await(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         assertEquals(0, cleanerLatch.get().getCount());
         assertEquals(1, cleanerThread.numPendingTasks());
-        assertEquals(0, ownerhsipRatio.get(), epsilon);
+        assertEquals(0, ownerhsipRatio.get(), EPSILON);
         assertEquals(1, numTimeCleanerInvoked.get());
 
         // complete the cleaning task with an error, no other cleaning task should be invoked
         cleanerLatch.set(new CountDownLatch(1));
         ownerhsipRatio.set(null);
         CompletableFuture<Boolean> oldFut = fut.get();
-        fut.set(new CompletableFuture());
+        fut.set(new CompletableFuture<>());
         needsCleaning.set(false);
         oldFut.completeExceptionally(new RuntimeException("Test"));
         cleanerLatch.get().await(TIMEOUT_SECONDS, TimeUnit.SECONDS);
@@ -238,7 +238,7 @@ public class MemtableCleanerThreadTest
         // now trigger cleaning again and verify that a new task is invoked
         cleanerLatch.set(new CountDownLatch(1));
         ownerhsipRatio.set(null);
-        fut.set(new CompletableFuture());
+        fut.set(new CompletableFuture<>());
         needsCleaning.set(true);
         cleanerThread.maybeClean();
         cleanerLatch.get().await(TIMEOUT_SECONDS, TimeUnit.SECONDS);
@@ -249,7 +249,7 @@ public class MemtableCleanerThreadTest
         cleanerLatch.set(new CountDownLatch(1));
         ownerhsipRatio.set(null);
         oldFut = fut.get();
-        fut.set(new CompletableFuture());
+        fut.set(new CompletableFuture<>());
         needsCleaning.set(false);
         oldFut.complete(false);
         cleanerLatch.get().await(TIMEOUT_SECONDS, TimeUnit.SECONDS);
@@ -259,7 +259,7 @@ public class MemtableCleanerThreadTest
         // now trigger cleaning again and verify that a new task is invoked
         cleanerLatch.set(new CountDownLatch(1));
         ownerhsipRatio.set(null);
-        fut.set(new CompletableFuture());
+        fut.set(new CompletableFuture<>());
         needsCleaning.set(true);
         cleanerThread.maybeClean();
         cleanerLatch.get().await(TIMEOUT_SECONDS, TimeUnit.SECONDS);
