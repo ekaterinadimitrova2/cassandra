@@ -30,16 +30,16 @@ import org.apache.cassandra.utils.concurrent.OpOrder;
 
 public class NativeAllocatorTest
 {
-    ScheduledExecutorService exec;
-    OpOrder order;
-    OpOrder.Group group;
-    CountDownLatch canClean;
-    CountDownLatch isClean;
-    AtomicReference<NativeAllocator> allocatorRef;
-    AtomicReference<OpOrder.Barrier> barrier;
-    NativePool pool;
-    NativeAllocator allocator;
-    Runnable markBlocking;
+    private ScheduledExecutorService exec;
+    private OpOrder order;
+    private OpOrder.Group group;
+    private CountDownLatch canClean;
+    private CountDownLatch isClean;
+    private AtomicReference<NativeAllocator> allocatorRef;
+    private AtomicReference<OpOrder.Barrier> barrier;
+    private NativePool pool;
+    private NativeAllocator allocator;
+    private Runnable markBlocking;
 
     @Before
     public void setUp()
@@ -105,9 +105,9 @@ public class NativeAllocatorTest
             // confirm we cannot allocate negative
             boolean success = false;
             try
-                {
-                    allocator.offHeap().allocate(-10, group);
-                }
+            {
+                allocator.offHeap().allocate(-10, group);
+            }
             catch (AssertionError e)
             {
                 success = true;
@@ -124,37 +124,37 @@ public class NativeAllocatorTest
             // let the cleaner run, it will release 80 bytes
             canClean.countDown();
             try
-                {
-                    isClean.await(10L, TimeUnit.MILLISECONDS);
-                }
-                catch (InterruptedException e)
-                {
-                    throw new AssertionError();
-                }
-                Assert.assertEquals(0, isClean.getCount());
-                verifyUsedReclaiming(0, 0);
+            {
+                isClean.await(10L, TimeUnit.MILLISECONDS);
+            }
+            catch (InterruptedException e)
+            {
+                throw new AssertionError();
+            }
+            Assert.assertEquals(0, isClean.getCount());
+            verifyUsedReclaiming(0, 0);
 
-                // allocate, then set discarding, then allocated some more
-                allocator.allocate(30, group);
-                verifyUsedReclaiming(30, 0);
-                allocator.setDiscarding();
-                Assert.assertFalse(allocator.isLive());
-                verifyUsedReclaiming(30, 30);
-                allocator.allocate(50, group);
-                verifyUsedReclaiming(80, 80);
+            // allocate, then set discarding, then allocated some more
+            allocator.allocate(30, group);
+            verifyUsedReclaiming(30, 0);
+            allocator.setDiscarding();
+            Assert.assertFalse(allocator.isLive());
+            verifyUsedReclaiming(30, 30);
+            allocator.allocate(50, group);
+            verifyUsedReclaiming(80, 80);
 
-                // allocate above limit, check we block until "marked blocking"
-                exec.schedule(markBlocking, 10L, TimeUnit.MILLISECONDS);
-                allocator.allocate(30, group);
-                Assert.assertNotNull(barrier.get());
-                verifyUsedReclaiming(110, 110);
+            // allocate above limit, check we block until "marked blocking"
+            exec.schedule(markBlocking, 10L, TimeUnit.MILLISECONDS);
+            allocator.allocate(30, group);
+            Assert.assertNotNull(barrier.get());
+            verifyUsedReclaiming(110, 110);
 
-                // release everything
-                allocator.setDiscarded();
-                Assert.assertFalse(allocator.isLive());
-                verifyUsedReclaiming(0, 0);
-            };
-            exec.submit(test).get();
+            // release everything
+            allocator.setDiscarded();
+            Assert.assertFalse(allocator.isLive());
+            verifyUsedReclaiming(0, 0);
+        };
+        exec.submit(test).get();
     }
 }
 
