@@ -1315,7 +1315,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
                          largest.cfs, ratio(minOwnershipRatio), ratio(usedOnHeap, usedOffHeap), ratio(liveOnHeap, liveOffHeap),
                          ratio(flushingOnHeap, flushingOffHeap), ratio(thisOnHeap, thisOffHeap));
 
-            ListenableFuture<CommitLogPosition> flushFut = largest.cfs.switchMemtableIfCurrent(largest);
+            ListenableFuture<ReplayPosition> flushFut = largest.cfs.switchMemtableIfCurrent(largest);
             flushFut.addListener(() -> {
                 try
                 {

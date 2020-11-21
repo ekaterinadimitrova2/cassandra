@@ -1765,7 +1765,7 @@ public class DatabaseDescriptor
     {
         final long heapLimit = ((long) conf.memtable_heap_space_in_mb) << 20;
         final long offHeapLimit = ((long) conf.memtable_offheap_space_in_mb) << 20;
-        final float cleaningThreshold = DatabaseDescriptor.getMemtableCleanupThreshold();
+        final float cleaningThreshold = conf.memtable_cleanup_threshold;
         final MemtableCleaner cleaner = ColumnFamilyStore::flushLargestColumnFamily;
         final int maxPendingTasks = Integer.getInteger(Config.PROPERTY_PREFIX + "max_pending_flushing_tasks", ColumnFamilyStore.getNumFlushWriters() * 2);
         switch (conf.memtable_allocation_type)
