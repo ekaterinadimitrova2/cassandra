@@ -1326,7 +1326,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
                 {
                     ret.completeExceptionally(t);
                 }
-            }, MoreExecutors);
+            }, MoreExecutors.sameThreadExecutor());
         }
         else
         {
