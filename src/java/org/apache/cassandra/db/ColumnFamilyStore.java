@@ -18,19 +18,18 @@
 package org.apache.cassandra.db;
 
 import java.io.*;
-import java.lang.management.ManagementFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
-import javax.management.*;
 import javax.management.openmbean.*;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -88,26 +87,24 @@ import org.apache.cassandra.utils.memory.MemtableAllocator;
 
 import com.clearspring.analytics.stream.Counter;
 
-import static org.apache.cassandra.utils.ExecutorUtils.awaitTermination;
-import static org.apache.cassandra.utils.ExecutorUtils.shutdown;
 import static org.apache.cassandra.utils.Throwables.maybeFail;
 
 public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 {
     private static final Logger logger = LoggerFactory.getLogger(ColumnFamilyStore.class);
 
-    private static final ExecutorService flushExecutor = new JMXEnabledThreadPoolExecutor(DatabaseDescriptor.getFlushWriters(),
-                                                                                          StageManager.KEEPALIVE,
-                                                                                          TimeUnit.SECONDS,
-                                                                                          new LinkedBlockingQueue<Runnable>(),
-                                                                                          new NamedThreadFactory("MemtableFlushWriter"),
-                                                                                          "internal");
+    private static final ThreadPoolExecutor flushExecutor = new JMXEnabledThreadPoolExecutor(DatabaseDescriptor.getFlushWriters(),
+                                                                                             StageManager.KEEPALIVE,
+                                                                                             TimeUnit.SECONDS,
+                                                                                             new LinkedBlockingQueue<>(),
+                                                                                             new NamedThreadFactory("MemtableFlushWriter"),
+                                                                                             "internal");
 
     // post-flush executor is single threaded to provide guarantee that any flush Future on a CF will never return until prior flushes have completed
-    private static final ExecutorService postFlushExecutor = new JMXEnabledThreadPoolExecutor(1,
+    private static final ThreadPoolExecutor postFlushExecutor = new JMXEnabledThreadPoolExecutor(1,
                                                                                               StageManager.KEEPALIVE,
                                                                                               TimeUnit.SECONDS,
-                                                                                              new LinkedBlockingQueue<Runnable>(),
+                                                                                                 new LinkedBlockingQueue<>(),
                                                                                               new NamedThreadFactory("MemtablePostFlush"),
                                                                                               "internal");
 
@@ -115,26 +112,26 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     // to be able to show an error on following flushes instead of blindly continuing.
     private static volatile FSWriteError previousFlushFailure = null;
 
-    private static final ExecutorService reclaimExecutor = new JMXEnabledThreadPoolExecutor(1,
+    private static final ThreadPoolExecutor reclaimExecutor = new JMXEnabledThreadPoolExecutor(1,
                                                                                             StageManager.KEEPALIVE,
                                                                                             TimeUnit.SECONDS,
-                                                                                            new LinkedBlockingQueue<Runnable>(),
+                                                                                               new LinkedBlockingQueue<>(),
                                                                                             new NamedThreadFactory("MemtableReclaimMemory"),
                                                                                             "internal");
 
     private static final String[] COUNTER_NAMES = new String[]{"raw", "count", "error", "string"};
     private static final String[] COUNTER_DESCS = new String[]
-    { "partition key in raw hex bytes",
-      "value of this partition for given sampler",
-      "value is within the error bounds plus or minus of this",
-      "the partition key turned into a human readable format" };
+                                                  { "partition key in raw hex bytes",
+                                                    "value of this partition for given sampler",
+                                                    "value is within the error bounds plus or minus of this",
+                                                    "the partition key turned into a human readable format" };
     private static final CompositeType COUNTER_COMPOSITE_TYPE;
     private static final TabularType COUNTER_TYPE;
 
     private static final String[] SAMPLER_NAMES = new String[]{"cardinality", "partitions"};
     private static final String[] SAMPLER_DESCS = new String[]
-    { "cardinality of partitions",
-      "list of counter results" };
+                                                  { "cardinality of partitions",
+                                                    "list of counter results" };
 
     private static final String SAMPLING_RESULTS_NAME = "SAMPLING_RESULTS";
     private static final CompositeType SAMPLING_RESULT;
@@ -205,6 +202,10 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         ExecutorUtils.shutdownAndWait(timeout, unit, reclaimExecutor, postFlushExecutor, flushExecutor);
     }
 
+    public static int getNumFlushWriters()
+    {
+        return flushExecutor.getCorePoolSize();
+    }
 
     public void reload()
     {
@@ -238,7 +239,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
             logger.trace("scheduling flush in {} ms", period);
             WrappedRunnable runnable = new WrappedRunnable()
             {
-                protected void runMayThrow() throws Exception
+                protected void runMayThrow()
                 {
                     synchronized (data)
                     {
@@ -266,14 +267,10 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
     public static Runnable getBackgroundCompactionTaskSubmitter()
     {
-        return new Runnable()
-        {
-            public void run()
-            {
-                for (Keyspace keyspace : Keyspace.all())
-                    for (ColumnFamilyStore cfs : keyspace.getColumnFamilyStores())
-                        CompactionManager.instance.submitBackground(cfs);
-            }
+        return () -> {
+            for (Keyspace keyspace : Keyspace.all())
+                for (ColumnFamilyStore cfs : keyspace.getColumnFamilyStores())
+                    CompactionManager.instance.submitBackground(cfs);
         };
     }
 
@@ -375,15 +372,15 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
     @VisibleForTesting
     public ColumnFamilyStore(Keyspace keyspace,
-                              String columnFamilyName,
-                              IPartitioner partitioner,
-                              int generation,
-                              CFMetaData metadata,
-                              Directories directories,
-                              boolean loadSSTables,
-                              boolean registerBookkeeping)
+                             String columnFamilyName,
+                             IPartitioner partitioner,
+                             int generation,
+                             CFMetaData metadata,
+                             Directories directories,
+                             boolean loadSSTables,
+                             boolean registerBookkeeping)
     {
-        assert metadata != null : "null metadata for " + keyspace + ":" + columnFamilyName;
+        assert metadata != null : "null metadata for " + keyspace + ':' + columnFamilyName;
 
         this.keyspace = keyspace;
         name = columnFamilyName;
@@ -436,25 +433,21 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
             mbeanName = "org.apache.cassandra.db:type=" + type + ",keyspace=" + this.keyspace.getName() + ",columnfamily=" + name;
             MBeanWrapper.instance.registerMBean(this, mbeanName);
             logger.trace("retryPolicy for {} is {}", name, this.metadata.getSpeculativeRetry());
-            latencyCalculator = ScheduledExecutors.optionalTasks.scheduleWithFixedDelay(new Runnable()
-            {
-                public void run()
+            latencyCalculator = ScheduledExecutors.optionalTasks.scheduleWithFixedDelay(() -> {
+                SpeculativeRetry retryPolicy = ColumnFamilyStore.this.metadata.getSpeculativeRetry();
+                switch (retryPolicy.type)
                 {
-                    SpeculativeRetry retryPolicy = ColumnFamilyStore.this.metadata.getSpeculativeRetry();
-                    switch (retryPolicy.type)
-                    {
-                        case PERCENTILE:
-                            // get percentile in nanos
-                            sampleLatencyNanos = (long) (metric.coordinatorReadLatency.getSnapshot().getValue(retryPolicy.value));
-                            break;
-                        case CUSTOM:
-                            // convert to nanos, since configuration is in millisecond
-                            sampleLatencyNanos = (long) (retryPolicy.value * 1000d * 1000d);
-                            break;
-                        default:
-                            sampleLatencyNanos = Long.MAX_VALUE;
-                            break;
-                    }
+                    case PERCENTILE:
+                        // get percentile in nanos
+                        sampleLatencyNanos = (long) (metric.coordinatorReadLatency.getSnapshot().getValue(retryPolicy.value));
+                        break;
+                    case CUSTOM:
+                        // convert to nanos, since configuration is in millisecond
+                        sampleLatencyNanos = (long) (retryPolicy.value * 1000d * 1000d);
+                        break;
+                    default:
+                        sampleLatencyNanos = Long.MAX_VALUE;
+                        break;
                 }
             }, DatabaseDescriptor.getReadRpcTimeout(), DatabaseDescriptor.getReadRpcTimeout(), TimeUnit.MILLISECONDS);
         }
@@ -531,14 +524,14 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         // get the max generation number, to prevent generation conflicts
         Directories directories = new Directories(metadata);
         Directories.SSTableLister lister = directories.sstableLister().includeBackups(true);
-        List<Integer> generations = new ArrayList<Integer>();
+        List<Integer> generations = new ArrayList<>();
         for (Map.Entry<Descriptor, Set<Component>> entry : lister.list().entrySet())
         {
             Descriptor desc = entry.getKey();
             generations.add(desc.generation);
             if (!desc.isCompatible())
                 throw new RuntimeException(String.format("Incompatible SSTable found. Current version %s is unable to read file: %s. Please run upgradesstables.",
-                        desc.getFormat().getLatestVersion(), desc));
+                                                         desc.getFormat().getLatestVersion(), desc));
         }
         Collections.sort(generations);
         int value = (generations.size() > 0) ? (generations.get(generations.size() - 1)) : 0;
@@ -558,13 +551,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         clearEphemeralSnapshots(directories);
 
         // remove any left-behind SSTables from failed/stalled streaming
-        FileFilter filter = new FileFilter()
-        {
-            public boolean accept(File pathname)
-            {
-                return pathname.getPath().endsWith(StreamLockfile.FILE_EXT);
-            }
-        };
+        FileFilter filter = pathname -> pathname.getPath().endsWith(StreamLockfile.FILE_EXT);
         for (File dir : directories.getCFDirectories())
         {
             File[] lockfiles = dir.listFiles(filter);
@@ -608,13 +595,13 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         }
 
         // cleanup incomplete saved caches
-        Pattern tmpCacheFilePattern = Pattern.compile(metadata.ksName + "-" + metadata.cfName + "-(Key|Row)Cache.*\\.tmp$");
+        Pattern tmpCacheFilePattern = Pattern.compile(metadata.ksName + '-' + metadata.cfName + "-(Key|Row)Cache.*\\.tmp$");
         File dir = new File(DatabaseDescriptor.getSavedCachesLocation());
 
         if (dir.exists())
         {
             assert dir.isDirectory();
-            for (File file : dir.listFiles())
+            for (File file : Objects.requireNonNull(dir.listFiles()))
                 if (tmpCacheFilePattern.matcher(file.getName()).matches())
                     if (!file.delete())
                         logger.warn("could not delete {}", file.getAbsolutePath());
@@ -732,7 +719,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
      */
     public static synchronized void loadNewSSTables(String ksName, String cfName)
     {
-        /** ks/cf existence checks will be done by open and getCFS methods for us */
+        /* ks/cf existence checks will be done by open and getCFS methods for us */
         Keyspace keyspace = Keyspace.open(ksName);
         keyspace.getColumnFamilyStore(cfName).loadNewSSTables();
     }
@@ -744,7 +731,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     {
         logger.info("Loading new SSTables for {}/{}...", keyspace.getName(), name);
 
-        Set<Descriptor> currentDescriptors = new HashSet<Descriptor>();
+        Set<Descriptor> currentDescriptors = new HashSet<>();
         for (SSTableReader sstable : data.getView().sstables)
             currentDescriptors.add(sstable.descriptor);
         Set<SSTableReader> newSSTables = new HashSet<>();
@@ -761,8 +748,8 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
             if (!descriptor.isCompatible())
                 throw new RuntimeException(String.format("Can't open incompatible SSTable! Current version %s, found file: %s",
-                        descriptor.getFormat().getLatestVersion(),
-                        descriptor));
+                                                         descriptor.getFormat().getLatestVersion(),
+                                                         descriptor));
 
             // force foreign sstables to level 0
             try
@@ -833,7 +820,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     {
         ColumnFamilyStore cfs = Keyspace.open(ksName).getColumnFamilyStore(cfName);
 
-        Set<String> indexes = new HashSet<String>(Arrays.asList(idxNames));
+        Set<String> indexes = new HashSet<>(Arrays.asList(idxNames));
 
         Collection<SSTableReader> sstables = cfs.getSSTables();
 
@@ -901,7 +888,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         {
             if (previousFlushFailure != null)
                 throw new IllegalStateException("A flush previously failed with the error below. To prevent data loss, "
-                                              + "no flushes can be carried out until the node is restarted.",
+                                                + "no flushes can be carried out until the node is restarted.",
                                                 previousFlushFailure);
             logFlush();
             Flush flush = new Flush(false);
@@ -912,19 +899,13 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
             @SuppressWarnings("unchecked")
             ListenableFuture<ReplayPosition> future =
-                    // If either of the two tasks errors out, resulting future must also error out.
-                    // Combine the two futures and only return post-flush result after both have completed.
-                    // Note that flushTask will always yield null, but Futures.allAsList is
-                    // order preserving, which is why the transform function returns the result
-                    // from item 1 in it's input list (i.e. what was yielded by task).
-                    Futures.transform(Futures.allAsList(flushTask, task),
-                                      new Function<List<Object>, ReplayPosition>()
-                                      {
-                                          public ReplayPosition apply(List<Object> input)
-                                          {
-                                              return (ReplayPosition) input.get(1);
-                                          }
-                                      });
+            // If either of the two tasks errors out, resulting future must also error out.
+            // Combine the two futures and only return post-flush result after both have completed.
+            // Note that flushTask will always yield null, but Futures.allAsList is
+            // order preserving, which is why the transform function returns the result
+            // from item 1 in it's input list (i.e. what was yielded by task).
+            Futures.transform(Futures.allAsList(flushTask, task),
+                              (Function<List<Object>, ReplayPosition>) input -> (ReplayPosition) input.get(1));
             return future;
         }
     }
@@ -954,7 +935,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         }
 
         logger.debug("Enqueuing flush of {}: {}", name, String.format("%d (%.0f%%) on-heap, %d (%.0f%%) off-heap",
-                                                                     onHeapTotal, onHeapRatio * 100, offHeapTotal, offHeapRatio * 100));
+                                                                      onHeapTotal, onHeapRatio * 100, offHeapTotal, offHeapRatio * 100));
     }
 
 
@@ -1002,13 +983,9 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         // we grab the current memtable; once any preceding memtables have flushed, we know its
         // commitLogLowerBound has been set (as this it is set with the upper bound of the preceding memtable)
         final Memtable current = data.getView().getCurrentMemtable();
-        ListenableFutureTask<ReplayPosition> task = ListenableFutureTask.create(new Callable<ReplayPosition>()
-        {
-            public ReplayPosition call()
-            {
-                logger.debug("forceFlush requested but everything is clean in {}", name);
-                return current.getCommitLogLowerBound();
-            }
+        ListenableFutureTask<ReplayPosition> task = ListenableFutureTask.create(() -> {
+            logger.debug("forceFlush requested but everything is clean in {}", name);
+            return current.getCommitLogLowerBound();
         });
         postFlushExecutor.execute(task);
         return task;
@@ -1049,11 +1026,11 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
             writeBarrier.await();
 
-            /**
-             * we can flush 2is as soon as the barrier completes, as they will be consistent with (or ahead of) the
-             * flushed memtables and CL position, which is as good as we can guarantee.
-             * TODO: SecondaryIndex should support setBarrier(), so custom implementations can co-ordinate exactly
-             * with CL as we do with memtables/CFS-backed SecondaryIndexes.
+            /*
+              we can flush 2is as soon as the barrier completes, as they will be consistent with (or ahead of) the
+              flushed memtables and CL position, which is as good as we can guarantee.
+              TODO: SecondaryIndex should support setBarrier(), so custom implementations can co-ordinate exactly
+              with CL as we do with memtables/CFS-backed SecondaryIndexes.
              */
 
             if (flushSecondaryIndexes)
@@ -1109,18 +1086,20 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
         private Flush(boolean truncate)
         {
+            if (logger.isTraceEnabled())
+                logger.trace("Creating flush task {}@{}", hashCode(), name);
             // if true, we won't flush, we'll just wait for any outstanding writes, switch the memtable, and discard
             this.truncate = truncate;
 
             metric.pendingFlushes.inc();
-            /**
-             * To ensure correctness of switch without blocking writes, run() needs to wait for all write operations
-             * started prior to the switch to complete. We do this by creating a Barrier on the writeOrdering
-             * that all write operations register themselves with, and assigning this barrier to the memtables,
-             * after which we *.issue()* the barrier. This barrier is used to direct write operations started prior
-             * to the barrier.issue() into the memtable we have switched out, and any started after to its replacement.
-             * In doing so it also tells the write operations to update the commitLogUpperBound of the memtable, so
-             * that we know the CL position we are dirty to, which can be marked clean when we complete.
+            /*
+              To ensure correctness of switch without blocking writes, run() needs to wait for all write operations
+              started prior to the switch to complete. We do this by creating a Barrier on the writeOrdering
+              that all write operations register themselves with, and assigning this barrier to the memtables,
+              after which we *.issue()* the barrier. This barrier is used to direct write operations started prior
+              to the barrier.issue() into the memtable we have switched out, and any started after to its replacement.
+              In doing so it also tells the write operations to update the commitLogUpperBound of the memtable, so
+              that we know the CL position we are dirty to, which can be marked clean when we complete.
              */
             writeBarrier = keyspace.writeOrder.newBarrier();
 
@@ -1146,14 +1125,25 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
             // replay positions have also completed, i.e. the memtables are done and ready to flush
             writeBarrier.issue();
             postFlush = new PostFlush(!truncate, writeBarrier, commitLogUpperBound.get(), memtables, readers);
+
+            if (logger.isTraceEnabled())
+                logger.trace("Created flush task {}@{}", hashCode(), name);
         }
 
         public void run()
         {
+            if (logger.isTraceEnabled())
+                logger.trace("Flush task {}@{} starts executing, waiting on barrier", hashCode(), name);
+
+            long start = System.nanoTime();
+
             // mark writes older than the barrier as blocking progress, permitting them to exceed our memory limit
             // if they are stuck waiting on it, then wait for them all to complete
             writeBarrier.markBlocking();
             writeBarrier.await();
+
+            if (logger.isTraceEnabled())
+                logger.trace("Flush task for task {}@{} waited {} ms at the barrier", hashCode(), name, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start));
 
             // mark all memtables as flushing, removing them from the live memtable list, and
             // remove any memtables that are already clean from the set we need to flush
@@ -1190,9 +1180,15 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
                     readers.add(reader);
                 }
 
+                if (logger.isTraceEnabled())
+                    logger.trace("Flush task {}@{} signaling post flush task", hashCode(), name);
+
                 // signal the post-flush we've done our work
                 // Note: This should not be done in case of error. Read more below.
                 postFlush.latch.countDown();
+
+                if (logger.isTraceEnabled())
+                    logger.trace("Flush task task {}@{} finished", hashCode(), name);
             }
             catch (FSWriteError e)
             {
@@ -1220,7 +1216,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
             readBarrier.issue();
             reclaimExecutor.execute(new WrappedRunnable()
             {
-                public void runMayThrow() throws InterruptedException, ExecutionException
+                public void runMayThrow()
                 {
                     readBarrier.await();
                     memtable.setDiscarded();
@@ -1265,61 +1261,89 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
      * Finds the largest memtable, as a percentage of *either* on- or off-heap memory limits, and immediately
      * queues it for flushing. If the memtable selected is flushed before this completes, no work is done.
      */
-    public static class FlushLargestColumnFamily implements Runnable
+    public static CompletableFuture<Boolean> flushLargestColumnFamily(double minOwnershipRatio)
     {
-        public void run()
+        float largestRatio = 0f;
+        Memtable largest = null;
+        float liveOnHeap = 0, liveOffHeap = 0;
+        for (ColumnFamilyStore cfs : ColumnFamilyStore.all())
         {
-            float largestRatio = 0f;
-            Memtable largest = null;
-            float liveOnHeap = 0, liveOffHeap = 0;
-            for (ColumnFamilyStore cfs : ColumnFamilyStore.all())
+            // we take a reference to the current main memtable for the CF prior to snapping its ownership ratios
+            // to ensure we have some ordering guarantee for performing the switchMemtableIf(), i.e. we will only
+            // swap if the memtables we are measuring here haven't already been swapped by the time we try to swap them
+            Memtable current = cfs.getTracker().getView().getCurrentMemtable();
+
+            // find the total ownership ratio for the memtable and all SecondaryIndexes owned by this CF,
+            // both on- and off-heap, and select the largest of the two ratios to weight this CF
+            float onHeap = 0f, offHeap = 0f;
+            onHeap += current.getAllocator().onHeap().ownershipRatio();
+            offHeap += current.getAllocator().offHeap().ownershipRatio();
+
+            for (SecondaryIndex index : cfs.indexManager.getIndexes())
             {
-                // we take a reference to the current main memtable for the CF prior to snapping its ownership ratios
-                // to ensure we have some ordering guarantee for performing the switchMemtableIf(), i.e. we will only
-                // swap if the memtables we are measuring here haven't already been swapped by the time we try to swap them
-                Memtable current = cfs.getTracker().getView().getCurrentMemtable();
-
-                // find the total ownership ratio for the memtable and all SecondaryIndexes owned by this CF,
-                // both on- and off-heap, and select the largest of the two ratios to weight this CF
-                float onHeap = 0f, offHeap = 0f;
-                onHeap += current.getAllocator().onHeap().ownershipRatio();
-                offHeap += current.getAllocator().offHeap().ownershipRatio();
-
-                for (SecondaryIndex index : cfs.indexManager.getIndexes())
+                if (index.getIndexCfs() != null)
                 {
-                    if (index.getIndexCfs() != null)
-                    {
-                        MemtableAllocator allocator = index.getIndexCfs().getTracker().getView().getCurrentMemtable().getAllocator();
-                        onHeap += allocator.onHeap().ownershipRatio();
-                        offHeap += allocator.offHeap().ownershipRatio();
-                    }
+                    MemtableAllocator allocator = index.getIndexCfs().getTracker().getView().getCurrentMemtable().getAllocator();
+                    onHeap += allocator.onHeap().ownershipRatio();
+                    offHeap += allocator.offHeap().ownershipRatio();
                 }
-
-                float ratio = Math.max(onHeap, offHeap);
-                if (ratio > largestRatio)
-                {
-                    largest = current;
-                    largestRatio = ratio;
-                }
-
-                liveOnHeap += onHeap;
-                liveOffHeap += offHeap;
             }
 
-            if (largest != null)
+            float ratio = Math.max(onHeap, offHeap);
+            if (ratio > largestRatio)
             {
-                float usedOnHeap = Memtable.MEMORY_POOL.onHeap.usedRatio();
-                float usedOffHeap = Memtable.MEMORY_POOL.offHeap.usedRatio();
-                float flushingOnHeap = Memtable.MEMORY_POOL.onHeap.reclaimingRatio();
-                float flushingOffHeap = Memtable.MEMORY_POOL.offHeap.reclaimingRatio();
-                float thisOnHeap = largest.getAllocator().onHeap().ownershipRatio();
-                float thisOffHeap = largest.getAllocator().onHeap().ownershipRatio();
-                logger.debug("Flushing largest {} to free up room. Used total: {}, live: {}, flushing: {}, this: {}",
-                            largest.cfs, ratio(usedOnHeap, usedOffHeap), ratio(liveOnHeap, liveOffHeap),
-                            ratio(flushingOnHeap, flushingOffHeap), ratio(thisOnHeap, thisOffHeap));
-                largest.cfs.switchMemtableIfCurrent(largest);
+                largest = current;
+                largestRatio = ratio;
             }
+
+            liveOnHeap += onHeap;
+            liveOffHeap += offHeap;
         }
+
+        CompletableFuture<Boolean> ret = new CompletableFuture<>();
+        double liveRatio = Math.max(liveOnHeap, liveOffHeap);
+
+        if (largest != null && liveRatio >= minOwnershipRatio)
+        {
+            float usedOnHeap = Memtable.MEMORY_POOL.onHeap.usedRatio();
+            float usedOffHeap = Memtable.MEMORY_POOL.offHeap.usedRatio();
+            float flushingOnHeap = Memtable.MEMORY_POOL.onHeap.reclaimingRatio();
+            float flushingOffHeap = Memtable.MEMORY_POOL.offHeap.reclaimingRatio();
+            float thisOnHeap = largest.getAllocator().onHeap().ownershipRatio();
+            float thisOffHeap = largest.getAllocator().offHeap().ownershipRatio();
+            logger.debug("Flushing largest {} to free up room, min ratio {}. Used total: {}, live: {}, flushing: {}, this: {}",
+                         largest.cfs, ratio(minOwnershipRatio), ratio(usedOnHeap, usedOffHeap), ratio(liveOnHeap, liveOffHeap),
+                         ratio(flushingOnHeap, flushingOffHeap), ratio(thisOnHeap, thisOffHeap));
+
+            ListenableFuture<ReplayPosition> flushFut = largest.cfs.switchMemtableIfCurrent(largest);
+            flushFut.addListener(() -> {
+                try
+                {
+                    flushFut.get();
+                    ret.complete(true);
+                }
+                catch (Throwable t)
+                {
+                    ret.completeExceptionally(t);
+                }
+            }, MoreExecutors.sameThreadExecutor());
+        }
+        else
+        {
+            if (largest == null)
+                logger.debug("Flushing of largest memtable, not done, no memtable found");
+            else if (liveRatio < minOwnershipRatio)
+                logger.debug("Flushing of largest memtable, not done, max live ratio {} less than min ratio {}", ratio(liveRatio), ratio(minOwnershipRatio));
+
+            ret.complete(false);
+        }
+
+        return ret;
+    }
+
+    private static String ratio(double val)
+    {
+        return String.format("%.2f", val);
     }
 
     private static String ratio(float onHeap, float offHeap)
@@ -1464,14 +1488,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
 
         List<SSTableReader> sortedByFirst = Lists.newArrayList(sstables);
-        Collections.sort(sortedByFirst, new Comparator<SSTableReader>()
-        {
-            @Override
-            public int compare(SSTableReader o1, SSTableReader o2)
-            {
-                return o1.first.compareTo(o2.first);
-            }
-        });
+        Collections.sort(sortedByFirst, Comparator.comparing(o -> o.first));
         List<Interval<RowPosition, SSTableReader>> intervals = new ArrayList<>();
         DecoratedKey first = null, last = null;
         /*
@@ -1499,13 +1516,13 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
                 }
                 else
                 {
-                    intervals.add(Interval.<RowPosition, SSTableReader>create(first, last));
+                    intervals.add(Interval.create(first, last));
                     first = sstable.first;
                     last = sstable.last;
                 }
             }
         }
-        intervals.add(Interval.<RowPosition, SSTableReader>create(first, last));
+        intervals.add(Interval.create(first, last));
         SSTableIntervalTree tree = data.getView().intervalTree;
         Set<SSTableReader> results = new HashSet<>();
 
@@ -1648,7 +1665,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         SecondaryIndex index = null;
         if (metadata.cfName.contains(Directories.SECONDARY_INDEX_NAME_SEPARATOR))
         {
-            String[] parts = metadata.cfName.split("\\" + Directories.SECONDARY_INDEX_NAME_SEPARATOR, 2);
+            String[] parts = metadata.cfName.split('\\' + Directories.SECONDARY_INDEX_NAME_SEPARATOR, 2);
             ColumnFamilyStore parentCfs = keyspace.getColumnFamilyStore(parts[0]);
             index = parentCfs.indexManager.getIndexByName(metadata.cfName);
             assert index != null;
@@ -1736,7 +1753,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     private ColumnFamily getThroughCache(UUID cfId, QueryFilter filter)
     {
         assert isRowCacheEnabled()
-               : String.format("Row cache is not enabled on table [" + name + "]");
+        : "Row cache is not enabled on table [" + name + ']';
 
         RowCacheKey key = new RowCacheKey(metadata.ksAndCFName, filter.key);
 
@@ -1895,7 +1912,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     {
         assert name.equals(filter.getColumnFamilyName()) : filter.getColumnFamilyName();
 
-        ColumnFamily result = null;
+        ColumnFamily result;
 
         long start = System.nanoTime();
         try
@@ -1961,26 +1978,14 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     public Set<SSTableReader> getUnrepairedSSTables()
     {
         Set<SSTableReader> unRepairedSSTables = new HashSet<>(getSSTables());
-        Iterator<SSTableReader> sstableIterator = unRepairedSSTables.iterator();
-        while(sstableIterator.hasNext())
-        {
-            SSTableReader sstable = sstableIterator.next();
-            if (sstable.isRepaired())
-                sstableIterator.remove();
-        }
+        unRepairedSSTables.removeIf(SSTableReader::isRepaired);
         return unRepairedSSTables;
     }
 
     public Set<SSTableReader> getRepairedSSTables()
     {
         Set<SSTableReader> repairedSSTables = new HashSet<>(getSSTables());
-        Iterator<SSTableReader> sstableIterator = repairedSSTables.iterator();
-        while(sstableIterator.hasNext())
-        {
-            SSTableReader sstable = sstableIterator.next();
-            if (!sstable.isRepaired())
-                sstableIterator.remove();
-        }
+        repairedSSTables.removeIf(sstable -> !sstable.isRepaired());
         return repairedSSTables;
     }
 
@@ -2015,7 +2020,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     {
         View view = data.getView();
         List<SSTableReader> sstables = view.intervalTree.isEmpty()
-                                       ? Collections.<SSTableReader>emptyList()
+                                       ? Collections.emptyList()
                                        : filter.apply(view);
         return new ViewFragment(sstables, view.getAllMemtables());
     }
@@ -2028,12 +2033,9 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     public Function<View, List<SSTableReader>> viewFilter(final DecoratedKey key)
     {
         assert !key.isMinimum();
-        return new Function<View, List<SSTableReader>>()
-        {
-            public List<SSTableReader> apply(View view)
-            {
-                return compactionStrategyWrapper.filterSSTablesForReads(view.intervalTree.search(key));
-            }
+        return view -> {
+            assert view != null;
+            return compactionStrategyWrapper.filterSSTablesForReads(view.intervalTree.search(key));
         };
     }
 
@@ -2044,17 +2046,14 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     public Function<View, List<SSTableReader>> viewFilter(final AbstractBounds<RowPosition> rowBounds)
     {
         assert !AbstractBounds.strictlyWrapsAround(rowBounds.left, rowBounds.right);
-        return new Function<View, List<SSTableReader>>()
-        {
-            public List<SSTableReader> apply(View view)
-            {
-                // Note that View.sstablesInBounds always includes it's bound while rowBounds may not. This is ok however
-                // because the fact we restrict the sstables returned by this function is an optimization in the first
-                // place and the returned sstables will (almost) never cover *exactly* rowBounds anyway. It's also
-                // *very* unlikely that a sstable is included *just* because we consider one of the bound inclusively
-                // instead of exclusively, so the performance impact is negligible in practice.
-                return view.sstablesInBounds(rowBounds.left, rowBounds.right);
-            }
+        return view -> {
+            // Note that View.sstablesInBounds always includes it's bound while rowBounds may not. This is ok however
+            // because the fact we restrict the sstables returned by this function is an optimization in the first
+            // place and the returned sstables will (almost) never cover *exactly* rowBounds anyway. It's also
+            // *very* unlikely that a sstable is included *just* because we consider one of the bound inclusively
+            // instead of exclusively, so the performance impact is negligible in practice.
+            assert view != null;
+            return view.sstablesInBounds(rowBounds.left, rowBounds.right);
         };
     }
 
@@ -2065,28 +2064,25 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     public Function<View, List<SSTableReader>> viewFilter(final Collection<AbstractBounds<RowPosition>> rowBoundsCollection, final boolean includeRepaired)
     {
         assert AbstractBounds.noneStrictlyWrapsAround(rowBoundsCollection);
-        return new Function<View, List<SSTableReader>>()
-        {
-            public List<SSTableReader> apply(View view)
+        return view -> {
+            Set<SSTableReader> sstables = Sets.newHashSet();
+            for (AbstractBounds<RowPosition> rowBounds : rowBoundsCollection)
             {
-                Set<SSTableReader> sstables = Sets.newHashSet();
-                for (AbstractBounds<RowPosition> rowBounds : rowBoundsCollection)
+                // Note that View.sstablesInBounds always includes it's bound while rowBounds may not. This is ok however
+                // because the fact we restrict the sstables returned by this function is an optimization in the first
+                // place and the returned sstables will (almost) never cover *exactly* rowBounds anyway. It's also
+                // *very* unlikely that a sstable is included *just* because we consider one of the bound inclusively
+                // instead of exclusively, so the performance impact is negligible in practice.
+                assert view != null;
+                for (SSTableReader sstable : view.sstablesInBounds(rowBounds.left, rowBounds.right))
                 {
-                    // Note that View.sstablesInBounds always includes it's bound while rowBounds may not. This is ok however
-                    // because the fact we restrict the sstables returned by this function is an optimization in the first
-                    // place and the returned sstables will (almost) never cover *exactly* rowBounds anyway. It's also
-                    // *very* unlikely that a sstable is included *just* because we consider one of the bound inclusively
-                    // instead of exclusively, so the performance impact is negligible in practice.
-                    for (SSTableReader sstable : view.sstablesInBounds(rowBounds.left, rowBounds.right))
-                    {
-                        if (includeRepaired || !sstable.isRepaired())
-                            sstables.add(sstable);
-                    }
+                    if (includeRepaired || !sstable.isRepaired())
+                        sstables.add(sstable);
                 }
-
-                logger.trace("ViewFilter for {}/{} sstables", sstables.size(), getSSTables().size());
-                return ImmutableList.copyOf(sstables);
             }
+
+            logger.trace("ViewFilter for {}/{} sstables", sstables.size(), getSSTables().size());
+            return ImmutableList.copyOf(sstables);
         };
     }
 
@@ -2129,19 +2125,19 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     public CompositeData finishLocalSampling(String sampler, int count) throws OpenDataException
     {
         SamplerResult<ByteBuffer> samplerResults = metric.samplers.get(Sampler.valueOf(sampler))
-                .finishSampling(count);
+                                                                  .finishSampling(count);
         TabularDataSupport result = new TabularDataSupport(COUNTER_TYPE);
         for (Counter<ByteBuffer> counter : samplerResults.topK)
         {
             byte[] key = counter.getItem().array();
             result.put(new CompositeDataSupport(COUNTER_COMPOSITE_TYPE, COUNTER_NAMES, new Object[] {
-                    Hex.bytesToHex(key), // raw
-                    counter.getCount(),  // count
-                    counter.getError(),  // error
-                    metadata.getKeyValidator().getString(ByteBuffer.wrap(key)) })); // string
+            Hex.bytesToHex(key), // raw
+            counter.getCount(),  // count
+            counter.getError(),  // error
+            metadata.getKeyValidator().getString(ByteBuffer.wrap(key)) })); // string
         }
         return new CompositeDataSupport(SAMPLING_RESULT, SAMPLER_NAMES, new Object[]{
-                samplerResults.cardinality, result});
+        samplerResults.cardinality, result});
     }
 
     public void cleanupCache()
@@ -2179,9 +2175,9 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     }
 
     /**
-      * Iterate over a range of rows and columns from memtables/sstables.
-      *
-      * @param range The range of keys and columns within those keys to fetch
+     * Iterate over a range of rows and columns from memtables/sstables.
+     *
+     * @param range The range of keys and columns within those keys to fetch
      */
     @SuppressWarnings("resource")
     private AbstractScanIterator getSequentialIterator(final DataRange range, long now)
@@ -2346,7 +2342,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     public List<Row> filter(AbstractScanIterator rowIterator, ExtendedFilter filter)
     {
         logger.trace("Filtering {} for rows matching {}", rowIterator, filter);
-        List<Row> rows = new ArrayList<Row>();
+        List<Row> rows = new ArrayList<>();
         int columnsCount = 0;
         int total = 0, matched = 0;
         boolean ignoreTombstonedPartitions = filter.ignoreTombstonedPartitions();
@@ -2696,20 +2692,20 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         CacheService.instance.counterCache.put(CounterCacheKey.create(metadata.ksAndCFName, partitionKey, cellName), clockAndCount);
     }
 
-    public void forceMajorCompaction() throws InterruptedException, ExecutionException
+    public void forceMajorCompaction()
     {
         forceMajorCompaction(false);
     }
 
 
-    public void forceMajorCompaction(boolean splitOutput) throws InterruptedException, ExecutionException
+    public void forceMajorCompaction(boolean splitOutput)
     {
         CompactionManager.instance.performMaximal(this, splitOutput);
     }
 
     public static Iterable<ColumnFamilyStore> all()
     {
-        List<Iterable<ColumnFamilyStore>> stores = new ArrayList<Iterable<ColumnFamilyStore>>(Schema.instance.getKeyspaces().size());
+        List<Iterable<ColumnFamilyStore>> stores = new ArrayList<>(Schema.instance.getKeyspaces().size());
         for (Keyspace keyspace : Keyspace.all())
         {
             stores.add(keyspace.getColumnFamilyStores());
@@ -2752,15 +2748,11 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     {
         for (final ColumnFamilyStore cfs : concatWithIndexes())
         {
-            cfs.runWithCompactionsDisabled(new Callable<Void>()
-            {
-                public Void call()
-                {
-                    cfs.data.reset(new Memtable(new AtomicReference<>(ReplayPosition.NONE), cfs));
-                    cfs.getCompactionStrategy().shutdown();
-                    cfs.getCompactionStrategy().startup();
-                    return null;
-                }
+            cfs.runWithCompactionsDisabled((Callable<Void>) () -> {
+                cfs.data.reset(new Memtable(new AtomicReference<>(ReplayPosition.NONE), cfs));
+                cfs.getCompactionStrategy().shutdown();
+                cfs.getCompactionStrategy().startup();
+                return null;
             }, true);
         }
     }
@@ -2823,25 +2815,21 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
                 now = Math.max(now, sstable.maxDataAge);
         truncatedAt = now;
 
-        Runnable truncateRunnable = new Runnable()
-        {
-            public void run()
-            {
-                logger.debug("Discarding sstable data for truncated CF + indexes");
-                data.notifyTruncated(truncatedAt);
+        Runnable truncateRunnable = () -> {
+            logger.debug("Discarding sstable data for truncated CF + indexes");
+            data.notifyTruncated(truncatedAt);
 
-                if (takeSnapshot)
-                    snapshot(Keyspace.getTimestampedSnapshotName(name));
+            if (takeSnapshot)
+                snapshot(Keyspace.getTimestampedSnapshotName(name));
 
-                discardSSTables(truncatedAt);
+            discardSSTables(truncatedAt);
 
-                for (SecondaryIndex index : indexManager.getIndexes())
-                    index.truncateBlocking(truncatedAt);
+            for (SecondaryIndex index : indexManager.getIndexes())
+                index.truncateBlocking(truncatedAt);
 
-                SystemKeyspace.saveTruncationRecord(ColumnFamilyStore.this, truncatedAt, replayAfter);
-                logger.trace("cleaning out row cache");
-                invalidateCaches();
-            }
+            SystemKeyspace.saveTruncationRecord(ColumnFamilyStore.this, truncatedAt, replayAfter);
+            logger.trace("cleaning out row cache");
+            invalidateCaches();
         };
 
         runWithCompactionsDisabled(Executors.callable(truncateRunnable), true);
@@ -2896,18 +2884,14 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
     public LifecycleTransaction markAllCompacting(final OperationType operationType)
     {
-        Callable<LifecycleTransaction> callable = new Callable<LifecycleTransaction>()
-        {
-            public LifecycleTransaction call() throws Exception
-            {
-                assert data.getCompacting().isEmpty() : data.getCompacting();
-                Iterable<SSTableReader> sstables = getPermittedToCompactSSTables();
-                sstables = AbstractCompactionStrategy.filterSuspectSSTables(sstables);
-                sstables = ImmutableList.copyOf(sstables);
-                LifecycleTransaction modifier = data.tryModify(sstables, operationType);
-                assert modifier != null: "something marked things compacting while compactions are disabled";
-                return modifier;
-            }
+        Callable<LifecycleTransaction> callable = () -> {
+            assert data.getCompacting().isEmpty() : data.getCompacting();
+            Iterable<SSTableReader> sstables = getPermittedToCompactSSTables();
+            sstables = AbstractCompactionStrategy.filterSuspectSSTables(sstables);
+            sstables = ImmutableList.copyOf(sstables);
+            LifecycleTransaction modifier = data.tryModify(sstables, operationType);
+            assert modifier != null: "something marked things compacting while compactions are disabled";
+            return modifier;
         };
 
         return runWithCompactionsDisabled(callable, false);
@@ -3006,7 +2990,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
         if (maxThreshold == 0 || minThreshold == 0)
             throw new RuntimeException("Disabling compaction by setting min_compaction_threshold or max_compaction_threshold to 0 " +
-                    "is deprecated, set the compaction strategy option 'enabled' to 'false' instead or use the nodetool command 'disableautocompaction'.");
+                                       "is deprecated, set the compaction strategy option 'enabled' to 'false' instead or use the nodetool command 'disableautocompaction'.");
     }
 
     // End JMX get/set.
@@ -3047,7 +3031,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
     public List<String> getBuiltIndexes()
     {
-       return indexManager.getBuiltIndexes();
+        return indexManager.getBuiltIndexes();
     }
 
     public int getUnleveledSSTables()
@@ -3166,33 +3150,26 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
     // returns the "canonical" version of any current sstable, i.e. if an sstable is being replaced and is only partially
     // visible to reads, this sstable will be returned as its original entirety, and its replacement will not be returned
     // (even if it completely replaces it)
-    public static final Function<View, List<SSTableReader>> CANONICAL_SSTABLES = new Function<View, List<SSTableReader>>()
-    {
-        public List<SSTableReader> apply(View view)
-        {
-            List<SSTableReader> sstables = new ArrayList<>();
-            for (SSTableReader sstable : view.compacting)
-                if (sstable.openReason != SSTableReader.OpenReason.EARLY)
-                    sstables.add(sstable);
-            for (SSTableReader sstable : view.sstables)
-                if (!view.compacting.contains(sstable) && sstable.openReason != SSTableReader.OpenReason.EARLY)
-                    sstables.add(sstable);
-            return sstables;
-        }
+    public static final Function<View, List<SSTableReader>> CANONICAL_SSTABLES = view -> {
+        List<SSTableReader> sstables = new ArrayList<>();
+        assert view != null;
+        for (SSTableReader sstable : view.compacting)
+            if (sstable.openReason != SSTableReader.OpenReason.EARLY)
+                sstables.add(sstable);
+        for (SSTableReader sstable : view.sstables)
+            if (!view.compacting.contains(sstable) && sstable.openReason != SSTableReader.OpenReason.EARLY)
+                sstables.add(sstable);
+        return sstables;
     };
 
-    public static final Function<View, List<SSTableReader>> UNREPAIRED_SSTABLES = new Function<View, List<SSTableReader>>()
-    {
-        public List<SSTableReader> apply(View view)
+    public static final Function<View, List<SSTableReader>> UNREPAIRED_SSTABLES = view -> {
+        List<SSTableReader> sstables = new ArrayList<>();
+        for (SSTableReader sstable : Objects.requireNonNull(CANONICAL_SSTABLES.apply(view)))
         {
-            List<SSTableReader> sstables = new ArrayList<>();
-            for (SSTableReader sstable : CANONICAL_SSTABLES.apply(view))
-            {
-                if (!sstable.isRepaired())
-                    sstables.add(sstable);
-            }
-            return sstables;
+            if (!sstable.isRepaired())
+                sstables.add(sstable);
         }
+        return sstables;
     };
 
     /**

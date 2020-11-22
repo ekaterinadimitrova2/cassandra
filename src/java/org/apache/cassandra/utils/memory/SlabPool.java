@@ -22,9 +22,9 @@ public class SlabPool extends MemtablePool
 {
     final boolean allocateOnHeap;
 
-    public SlabPool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanupThreshold, Runnable cleaner)
+    public SlabPool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanupThreshold, MemtableCleaner cleaner, int maxPendingTasks)
     {
-        super(maxOnHeapMemory, maxOffHeapMemory, cleanupThreshold, cleaner);
+        super(maxOnHeapMemory, maxOffHeapMemory, cleanupThreshold, cleaner, maxPendingTasks);
         this.allocateOnHeap = maxOffHeapMemory == 0;
     }
 

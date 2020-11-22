@@ -246,12 +246,12 @@ public class Memtable implements Comparable<Memtable>
     public String contents()
     {
         StringBuilder builder = new StringBuilder();
-        builder.append("{");
+        builder.append('{');
         for (Map.Entry<RowPosition, AtomicBTreeColumns> entry : rows.entrySet())
         {
             builder.append(entry.getKey()).append(": ").append(entry.getValue()).append(", ");
         }
-        builder.append("}");
+        builder.append('}');
         return builder.toString();
     }
 
@@ -413,7 +413,7 @@ public class Memtable implements Comparable<Memtable>
                                                      .commitLogLowerBound(commitLogLowerBound.get())
                                                      .commitLogUpperBound(commitLogUpperBound.get());
         return SSTableWriter.create(Descriptor.fromFilename(filename), (long) rows.size(), ActiveRepairService.UNREPAIRED_SSTABLE, cfs.metadata, cfs.partitioner, sstableMetadataCollector);
-    }
+   }
 
     private static int estimateRowOverhead(final int count)
     {
