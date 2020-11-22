@@ -1101,7 +1101,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
               In doing so it also tells the write operations to update the commitLogUpperBound of the memtable, so
               that we know the CL position we are dirty to, which can be marked clean when we complete.
              */
-            writeBarrier = Keyspace.writeOrder.newBarrier();
+            writeBarrier = keyspace.writeOrder.newBarrier();
 
             // submit flushes for the memtable for any indexed sub-cfses, and our own
             AtomicReference<ReplayPosition> commitLogUpperBound = new AtomicReference<>();
@@ -1326,7 +1326,7 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
                 {
                     ret.completeExceptionally(t);
                 }
-            }, MoreExecutors.directExecutor());
+            }, MoreExecutors);
         }
         else
         {
