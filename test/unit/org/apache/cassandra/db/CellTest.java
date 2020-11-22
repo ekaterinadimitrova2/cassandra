@@ -22,6 +22,7 @@ package org.apache.cassandra.db;
 
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Test;
 
@@ -36,7 +37,11 @@ public class CellTest
 {
 
     private static final OpOrder order = new OpOrder();
-    private static NativeAllocator allocator = new NativePool(Integer.MAX_VALUE, Integer.MAX_VALUE, 1f, null).newAllocator();
+    private static final NativeAllocator allocator = new NativePool(Integer.MAX_VALUE,
+                                                                    Integer.MAX_VALUE,
+                                                                    1f,
+                                                                    (minOwnershipRatio) -> CompletableFuture.completedFuture(true),
+                                                                    Integer.MAX_VALUE).newAllocator();
 
     @Test
     public void testConflictingTypeEquality()

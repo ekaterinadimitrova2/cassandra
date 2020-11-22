@@ -25,6 +25,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Assert;
@@ -57,8 +58,11 @@ import static org.apache.cassandra.utils.ByteBufferUtil.bytes;
 
 public class NativeCellTest
 {
-
-    private static final NativeAllocator nativeAllocator = new NativePool(Integer.MAX_VALUE, Integer.MAX_VALUE, 1f, null).newAllocator();
+    private static final NativeAllocator nativeAllocator = new NativePool(Integer.MAX_VALUE,
+                                                                          Integer.MAX_VALUE,
+                                                                          1f,
+                                                                          (minOwnershipRatio) -> CompletableFuture.completedFuture(true),
+                                                                          Integer.MAX_VALUE).newAllocator();
     private static final OpOrder.Group group = new OpOrder().start();
 
     static class Name
@@ -84,7 +88,7 @@ public class NativeCellTest
                           {
                               new Name(simpleDense(bytes("a")), new SimpleDenseCellNameType(UTF8Type.instance)),
                               new Name(simpleSparse(new ColumnIdentifier("a", true)), new SimpleSparseCellNameType(UTF8Type.instance)),
-                              new Name(compositeDense(bytes("a"), bytes("b")), new CompoundDenseCellNameType(Arrays.<AbstractType<?>>asList(UTF8Type.instance, UTF8Type.instance))),
+                              new Name(compositeDense(bytes("a"), bytes("b")), new CompoundDenseCellNameType(Arrays.asList(UTF8Type.instance, UTF8Type.instance))),
                               new Name(compositeSparse(bytess("b", "c"), new ColumnIdentifier("a", true), false), new CompoundSparseCellNameType(Arrays.<AbstractType<?>>asList(UTF8Type.instance, UTF8Type.instance))),
                               new Name(compositeSparse(bytess("b", "c"), new ColumnIdentifier("a", true), true), new CompoundSparseCellNameType(Arrays.<AbstractType<?>>asList(UTF8Type.instance, UTF8Type.instance))),
                               new Name(simpleDense(huge('a', 40000)), new SimpleDenseCellNameType(UTF8Type.instance)),
@@ -274,7 +278,7 @@ public class NativeCellTest
 
         ByteArrayInputStream bufIn = new ByteArrayInputStream(serialized, 0, serialized.length);
         Cell deserialized = test.type.columnSerializer().deserialize(new DataInputStream(bufIn));
-        Assert.assertTrue(buf.equals(deserialized));
+        Assert.assertEquals(buf, deserialized);
 
     }
 

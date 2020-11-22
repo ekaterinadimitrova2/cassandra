@@ -279,16 +279,10 @@ public abstract class CQLTester
 
     public void compact()
     {
-        try
-        {
-            String currentTable = currentTable();
-            if (currentTable != null)
-                Keyspace.open(KEYSPACE).getColumnFamilyStore(currentTable).forceMajorCompaction();
-        }
-        catch (ExecutionException e)
-        {
-            throw new RuntimeException(e);
-        }
+        String currentTable = currentTable();
+        if (currentTable != null)
+            Keyspace.open(KEYSPACE).getColumnFamilyStore(currentTable).forceMajorCompaction();
+
     }
 
     public void cleanupCache()
