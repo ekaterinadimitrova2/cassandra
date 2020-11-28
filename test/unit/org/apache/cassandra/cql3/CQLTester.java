@@ -471,16 +471,9 @@ public abstract class CQLTester
 
     public void compact()
     {
-        try
-        {
-            ColumnFamilyStore store = getCurrentColumnFamilyStore();
-            if (store != null)
-                store.forceMajorCompaction();
-        }
-        catch (InterruptedException | ExecutionException e)
-        {
-            throw new RuntimeException(e);
-        }
+         ColumnFamilyStore store = getCurrentColumnFamilyStore();
+         if (store != null)
+             store.forceMajorCompaction();
     }
 
     public void disableCompaction()
