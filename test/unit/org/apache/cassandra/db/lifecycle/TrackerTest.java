@@ -86,14 +86,14 @@ public class TrackerTest
         List<SSTableReader> readers = ImmutableList.of(MockSchema.sstable(0, true, cfs), MockSchema.sstable(1, cfs), MockSchema.sstable(2, cfs));
         tracker.addInitialSSTables(copyOf(readers));
         Assert.assertNull(tracker.tryModify(ImmutableList.of(MockSchema.sstable(0, cfs)), OperationType.COMPACTION));
-        try (LifecycleTransaction txn = tracker.tryModify(readers.get(0), OperationType.COMPACTION);)
+        try (LifecycleTransaction txn = tracker.tryModify(readers.get(0), OperationType.COMPACTION))
         {
             Assert.assertNotNull(txn);
             Assert.assertNull(tracker.tryModify(readers.get(0), OperationType.COMPACTION));
             Assert.assertEquals(1, txn.originals().size());
             Assert.assertTrue(txn.originals().contains(readers.get(0)));
         }
-        try (LifecycleTransaction txn = tracker.tryModify(Collections.<SSTableReader>emptyList(), OperationType.COMPACTION);)
+        try (LifecycleTransaction txn = tracker.tryModify(Collections.emptyList(), OperationType.COMPACTION);)
         {
             Assert.assertNotNull(txn);
             Assert.assertEquals(0, txn.originals().size());
@@ -108,15 +108,11 @@ public class TrackerTest
         final Tracker tracker = new Tracker(null, false);
         final View resultView = ViewTest.fakeView(0, 0, cfs);
         final AtomicInteger count = new AtomicInteger();
-        tracker.apply(new Predicate<View>()
-        {
-            public boolean apply(View view)
-            {
-                // confound the CAS by swapping the view, and check we retry
-                if (count.incrementAndGet() < 3)
-                    tracker.view.set(ViewTest.fakeView(0, 0, cfs));
-                return true;
-            }
+        tracker.apply(view -> {
+            // confound the CAS by swapping the view, and check we retry
+            if (count.incrementAndGet() < 3)
+                tracker.view.set(ViewTest.fakeView(0, 0, cfs));
+            return true;
         }, new Function<View, View>()
         {
             @Nullable
@@ -130,13 +126,9 @@ public class TrackerTest
 
         count.set(0);
         // check that if the predicate returns false, we stop immediately and return null
-        Assert.assertNull(tracker.apply(new Predicate<View>()
-        {
-            public boolean apply(View view)
-            {
-                count.incrementAndGet();
-                return false;
-            }
+        Assert.assertNull(tracker.apply((Predicate<View>) view -> {
+            count.incrementAndGet();
+            return false;
         }, null));
         Assert.assertEquals(1, count.get());
         Assert.assertEquals(resultView, tracker.getView());

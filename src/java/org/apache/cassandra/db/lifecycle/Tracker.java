@@ -187,7 +187,6 @@ public class Tracker
     {
         addInitialSSTablesWithoutUpdatingSize(sstables);
         maybeFail(updateSizeTracking(emptySet(), sstables, null));
-        notifyAdded(sstables, true);
     }
 
     public void addInitialSSTablesWithoutUpdatingSize(Iterable<SSTableReader> sstables)
@@ -195,7 +194,6 @@ public class Tracker
         if (!isDummy())
             setupOnline(sstables);
         apply(updateLiveSet(emptySet(), sstables));
-        notifyAdded(sstables, true);
     }
 
     public void updateInitialSSTableSize(Iterable<SSTableReader> sstables)
@@ -284,7 +282,6 @@ public class Tracker
         return accumulate;
     }
 
-
     /**
      * Removes every SSTable in the directory from the Tracker's view.
      * @param directory the unreadable directory, possibly with SSTables in it, but not necessarily.
@@ -296,8 +293,6 @@ public class Tracker
             return reader.descriptor.directory.equals(directory);
         }, OperationType.UNKNOWN, null));
     }
-
-
 
     // FLUSHING
 
