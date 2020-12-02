@@ -20,6 +20,7 @@ package org.apache.cassandra.db;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -56,6 +57,7 @@ import org.apache.cassandra.service.ClientWarn;
 import org.apache.cassandra.tracing.Tracing;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.cassandra.utils.FBUtilities;
+import org.apache.cassandra.utils.NoSpamLogger;
 import org.apache.cassandra.utils.Pair;
 
 /**
@@ -68,6 +70,7 @@ public abstract class ReadCommand extends MonitorableImpl implements ReadQuery
 {
     private static final int TEST_ITERATION_DELAY_MILLIS = Integer.parseInt(System.getProperty("cassandra.test.read_iteration_delay_ms", "0"));
     protected static final Logger logger = LoggerFactory.getLogger(ReadCommand.class);
+    protected static final NoSpamLogger noSpamLogger = NoSpamLogger.getLogger(logger, 5, TimeUnit.SECONDS);
     public static final IVersionedSerializer<ReadCommand> serializer = new Serializer();
 
     // For READ verb: will either dispatch on 'serializer' for 3.0 or 'legacyReadCommandSerializer' for earlier version.
@@ -580,7 +583,7 @@ public abstract class ReadCommand extends MonitorableImpl implements ReadQuery
                         liveRows, tombstones,
                         (warnTombstones ? " (see tombstone_warn_threshold)" : ""));
             }
-        };
+        }
 
         return Transformation.apply(iter, new MetricRecording());
     }
@@ -610,10 +613,10 @@ public abstract class ReadCommand extends MonitorableImpl implements ReadQuery
 
         private boolean maybeAbort()
         {
-            /**
-             * The value returned by ApproximateTime.currentTimeMillis() is updated only every
-             * {@link ApproximateTime.CHECK_INTERVAL_MS}, by default 10 millis. Since MonitorableImpl
-             * relies on ApproximateTime, we don't need to check unless the approximate time has elapsed.
+            /*
+              The value returned by ApproximateTime.currentTimeMillis() is updated only every
+              {@link ApproximateTime.CHECK_INTERVAL_MS}, by default 10 millis. Since MonitorableImpl
+              relies on ApproximateTime, we don't need to check unless the approximate time has elapsed.
              */
             if (lastChecked == ApproximateTime.currentTimeMillis())
                 return false;
