@@ -10,6 +10,10 @@ and run the command-line ``cassandra`` to start. The option is set from the ``ca
 
 The ``-D`` option specifies the start-up parameters in both the command line and ``cassandra-env.sh`` file. The following options are available:
 
+``cassandra.max_pending_flushing_tasks``
+----------------------------------
+A property to put a cap on the maximum number of flushing tasks that can be enqueued by the memtable cleaner thread. See CASSANDRA-16261 for details.
+
 ``cassandra.auto_bootstrap=false``
 ----------------------------------
 Facilitates setting auto_bootstrap to false on initial set-up of the cluster. The next time you start the cluster, you do not need to change the ``cassandra.yaml`` file on each node to revert to true, the default value.
