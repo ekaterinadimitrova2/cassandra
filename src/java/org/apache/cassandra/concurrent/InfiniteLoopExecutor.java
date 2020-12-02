@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.annotations.VisibleForTesting;
+
 public class InfiniteLoopExecutor
 {
     private static final Logger logger = LoggerFactory.getLogger(InfiniteLoopExecutor.class);
@@ -82,6 +84,7 @@ public class InfiniteLoopExecutor
         return !thread.isAlive();
     }
 
+    @VisibleForTesting
     public boolean isAlive()
     {
         return this.thread.isAlive();
