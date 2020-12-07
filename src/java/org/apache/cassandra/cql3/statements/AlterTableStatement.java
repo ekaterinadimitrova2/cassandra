@@ -359,12 +359,12 @@ public class AlterTableStatement extends SchemaAlteringStatement
     /**
      * Throws if DROP COMPACT STORAGE cannot be used (yet) because the cluster is not sufficiently upgraded. To be able
      * to use DROP COMPACT STORAGE, we need to ensure that no pre-3.0 sstables exists in the cluster, as we won't be
-     * able to read them anymore once COMPACT STORAGE is dropped (see CASSANDRA-15897). In practice, his method checks
+     * able to read them anymore once COMPACT STORAGE is dropped (see CASSANDRA-15897). In practice, this method checks
      * 3 things:
-     *   1) that all nodes are on 3.0+. We need this because 2.x nodes didn't advertise their sstable versions.
+     *   1) that all nodes are on 3.0+. We need this because 2.x nodes don't advertise their sstable versions.
      *   2) for 3.0+, we use the new (CASSANDRA-15897) sstables versions set gossiped by all nodes to ensure all
      *      sstables have been upgraded cluster-wise.
-     *   3) if the cluster still has some 3.0 nodes that predates CASSANDRA-15897, we will not have the sstable versions
+     *   3) if the cluster still has some 3.0 nodes that predate CASSANDRA-15897, we will not have the sstable versions
      *      for them. In that case, we also refuse DROP COMPACT (even though it may well be safe at this point) and ask
      *      the user to upgrade all nodes.
      */

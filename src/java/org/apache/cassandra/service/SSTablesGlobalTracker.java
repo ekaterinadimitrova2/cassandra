@@ -64,11 +64,11 @@ public class SSTablesGlobalTracker implements INotificationConsumer
      * overwhelmingly be on the "current" version, we special case said current version (makes things cheaper without
      * too much complexity here). Those are `sstablesForCurrentVersion` and `sstablesForOtherVersions`.
      *
-     * This would be sufficient if we could guarantee that for any sstable, we only ever 1 addition notification and 1
-     * corresponding remove notification. But sstables can have complex lifecycles and relying on this property could
-     * be fragile. As a matter of fact, at the time of this writing, the removal notification is sometimes fired twice
-     * for the same sstable. To keep this component more resilient, we also maintain the set of all sstables for which
-     * we've received an addition, which allows us to ignore removals for sstables we don't know.
+     * This would be sufficient if we could guarantee that for any sstable, we only ever have 1 addition notification
+     * and 1 corresponding remove notification. But sstables can have complex lifecycles and relying on this property
+     * could be fragile. As a matter of fact, at the time of this writing, the removal notification is sometimes fired
+     * twice for the same sstable. To keep this component more resilient, we also maintain the set of all sstables for
+     * which we've received an addition, which allows us to ignore removals for sstables we don't know.
      *
      * Concurrency handling: the 'allSSTables' set handles concurrency directly as it is updated in all cases. The rest
      * of the data structures of this class are only updated together within a synchronized block when handling new
@@ -117,8 +117,8 @@ public class SSTablesGlobalTracker implements INotificationConsumer
     /**
      * Unregister a subscriber from this tracker.
      *
-     * @param subscriber the subscriber to unregister. If this subscriber is notregistered, this method does nothing.
-     * @return whether the subscriber was unregister (so whether it was registered subscriber of this tracker).
+     * @param subscriber the subscriber to unregister. If this subscriber is not registered, this method does nothing.
+     * @return whether the subscriber was unregistered (so whether it was registered subscriber of this tracker).
      */
     public boolean unregister(INotificationConsumer subscriber)
     {
@@ -144,13 +144,17 @@ public class SSTablesGlobalTracker implements INotificationConsumer
     @VisibleForTesting
     boolean handleSSTablesChange(Iterable<Descriptor> removed, Iterable<Descriptor> added)
     {
-        // We collect changes to 'sstablesForCurrentVersion' and 'sstablesForOtherVersions' as delta first, and then
-        // apply those delta within a synchronized block below. The goal being to reduce the work done in that
-        // synchronized block.
+        /*
+         We collect changes to 'sstablesForCurrentVersion' and 'sstablesForOtherVersions' as delta first, and then
+         apply those delta within a synchronized block below. The goal being to reduce the work done in that
+         synchronized block.
+        */
         int currentDelta = 0;
         Map<VersionAndType, Integer> othersDelta = null;
-        // Note: we deal with removes first as if a notification both removes and adds, it's a compaction and while
-        // it should never remove and add the same descriptor in practice, doing the remove first is more logical.
+        /*
+         Note: we deal with removes first as if a notification both removes and adds, it's a compaction and while
+         it should never remove and add the same descriptor in practice, doing the remove first is more logical.
+        */
         for (Descriptor desc  : removed)
         {
             if (!allSSTables.remove(desc))
@@ -177,8 +181,10 @@ public class SSTablesGlobalTracker implements INotificationConsumer
         if (currentDelta == 0 && (othersDelta == null || othersDelta.isEmpty()))
             return false;
 
-        // Set to true if the set of versions in use is changed by this update. That is, if a version having no
-        // version prior now has some, or if the count for some version reaches 0.
+        /*
+         Set to true if the set of versions in use is changed by this update. That is, if a version having no
+         version prior now has some, or if the count for some version reaches 0.
+        */
         boolean triggerUpdate;
         synchronized (this)
         {
@@ -193,8 +199,10 @@ public class SSTablesGlobalTracker implements INotificationConsumer
                 {
                     VersionAndType version = entry.getKey();
                     int delta = entry.getValue();
-                    // Updates the count, removing the version if it reaches 0 (note: we could use Map#compute for this,
-                    // but we wouldn't be able to modify `triggerUpdate` without making it an Object, so we don't bother).
+                    /*
+                     Updates the count, removing the version if it reaches 0 (note: we could use Map#compute for this,
+                     but we wouldn't be able to modify `triggerUpdate` without making it an Object, so we don't bother).
+                    */
                     Integer oldValue = sstablesForOtherVersions.get(version);
                     int newValue = oldValue == null ? delta : oldValue + delta;
                     newValue = sanitizeSSTablesCount(newValue, version);
@@ -227,8 +235,10 @@ public class SSTablesGlobalTracker implements INotificationConsumer
         if (sstableCount >= 0)
             return sstableCount;
 
-        // This shouldn't happen and indicate a bug either in the tracking of this class, or on the passed notification.
-        // That said, it's not worth bringing the node down, so we log the problem but otherwise "correct" it.
+        /*
+         This shouldn't happen and indicate a bug either in the tracking of this class, or on the passed notification.
+         That said, it's not worth bringing the node down, so we log the problem but otherwise "correct" it.
+        */
         noSpamLogger.error("Invalid state while handling sstables change notification: the number of sstables for " +
                            "version {} was computed to {}. This indicate a bug and please report it, but it should " +
                            "not have adverse consequences.", version, sstableCount, new RuntimeException());

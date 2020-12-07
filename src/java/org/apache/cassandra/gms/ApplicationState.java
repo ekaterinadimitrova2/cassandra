@@ -22,7 +22,7 @@ package org.apache.cassandra.gms;
  *
  * <p><b>Important Note:</b> Gossip uses the ordinal of this enum in the messages it exchanges, so values in that enum
  * should <i>not</i> be re-ordered or removed. The end of this enum should also always include some "padding" so that
- * if newer versions adds new states, old nodes that don't know about those new state don't "break" deserializing those
+ * if newer versions add new states, old nodes that don't know about those new states don't "break" deserializing those
  * states.
  */
 public enum ApplicationState

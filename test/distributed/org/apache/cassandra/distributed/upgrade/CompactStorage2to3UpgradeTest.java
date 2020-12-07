@@ -33,6 +33,10 @@ import org.apache.cassandra.distributed.shared.Versions;
 import static org.apache.cassandra.distributed.shared.AssertUtils.assertRows;
 import static org.apache.cassandra.distributed.shared.AssertUtils.row;
 import static org.junit.Assert.assertEquals;
+import static org.apache.cassandra.distributed.api.Feature.GOSSIP;
+import static org.apache.cassandra.distributed.api.Feature.NATIVE_PROTOCOL;
+import static org.apache.cassandra.distributed.api.Feature.NETWORK;
+
 
 public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
 {
@@ -54,7 +58,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
             for (int i = 0; i < cluster.size(); i++)
             {
                 int nodeNum = i + 1;
-                System.out.println(String.format("****** node %s: %s", nodeNum, cluster.get(nodeNum).config()));
+                System.out.printf("****** node %s: %s%n", nodeNum, cluster.get(nodeNum).config());
             }
         })
         .runAfterNodeUpgrade(((cluster, node) -> {
@@ -88,7 +92,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
             for (int i = 0; i < cluster.size(); i++)
             {
                 int nodeNum = i + 1;
-                System.out.println(String.format("****** node %s: %s", nodeNum, cluster.get(nodeNum).config()));
+                System.out.printf("****** node %s: %s%n", nodeNum, cluster.get(nodeNum).config());
             }
         })
         .runAfterNodeUpgrade(((cluster, node) -> {
@@ -159,11 +163,12 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
                                     KEYSPACE, table, partitions - 8, rowsPerPartition - 3),
 
                     });
+
                 }).runAfterClusterUpgrade(cluster ->
                 {
                     for (int i = 1; i <= cluster.size(); i++)
                     {
-                        NodeToolResult result = cluster.get(1).nodetoolResult("upgradesstables");
+                        NodeToolResult result = cluster.get(i).nodetoolResult("upgradesstables");
                         assertEquals("upgrade sstables failed for node " + i, 0, result.getRc());
                     }
 
@@ -200,6 +205,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
         new TestCase()
                 .nodes(2)
                 .upgrade(Versions.Major.v22, Versions.Major.v30)
+                .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL))
                 .setup(cluster -> {
                     cluster.schemaChange(String.format(
                             "CREATE TABLE %s.%s (key int, c1 int, c2 int, c3 int, PRIMARY KEY (key, c1, c2)) WITH COMPACT STORAGE",
@@ -221,11 +227,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
 
                 })
                 .runAfterClusterUpgrade(cluster -> {
-                    for (int i = 1; i <= cluster.size(); i++)
-                    {
-                        NodeToolResult result = cluster.get(1).nodetoolResult("upgradesstables");
-                        assertEquals("upgrade sstables failed for node " + i, 0, result.getRc());
-                    }
+                    cluster.forEach(n -> n.nodetoolResult("upgradesstables", KEYSPACE).asserts().success());
 
                     // drop compact storage on only one node before performing writes
                     IMessageFilters.Filter filter = cluster.verbs().allVerbs().to(2).drop();

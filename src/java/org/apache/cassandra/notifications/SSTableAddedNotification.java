@@ -23,7 +23,7 @@ import org.apache.cassandra.io.sstable.format.SSTableReader;
 public class SSTableAddedNotification implements INotification
 {
     public final Iterable<SSTableReader> added;
-    /** {@code true} if the addition corresponds to the {@link ColumnFamilyStore} initialization, that if the sstables
+    /** {@code true} if the addition corresponds to the {@link ColumnFamilyStore} initialization, then the sstables
      * are those loaded at startup. */
     public final boolean isInitialization;
 
