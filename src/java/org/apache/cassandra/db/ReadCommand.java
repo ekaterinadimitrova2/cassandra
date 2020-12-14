@@ -20,7 +20,6 @@ package org.apache.cassandra.db;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -53,8 +52,6 @@ import org.apache.cassandra.schema.UnknownIndexException;
 import org.apache.cassandra.service.ClientWarn;
 import org.apache.cassandra.tracing.Tracing;
 import org.apache.cassandra.utils.ByteBufferUtil;
-import org.apache.cassandra.utils.FBUtilities;
-import org.apache.cassandra.utils.NoSpamLogger;
 import org.apache.cassandra.utils.Pair;
 
 /**
@@ -66,7 +63,6 @@ import org.apache.cassandra.utils.Pair;
 public abstract class ReadCommand implements ReadQuery
 {
     protected static final Logger logger = LoggerFactory.getLogger(ReadCommand.class);
-    protected static final NoSpamLogger noSpamLogger = NoSpamLogger.getLogger(logger, 5, TimeUnit.SECONDS);
     public static final IVersionedSerializer<ReadCommand> serializer = new Serializer();
 
     // For READ verb: will either dispatch on 'serializer' for 3.0 or 'legacyReadCommandSerializer' for earlier version.

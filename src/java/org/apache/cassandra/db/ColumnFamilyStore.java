@@ -235,11 +235,6 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         ExecutorUtils.shutdownAndWait(timeout, unit, reclaimExecutor, postFlushExecutor, flushExecutor);
     }
 
-    public static int getNumFlushWriters()
-    {
-        return flushExecutor.getCorePoolSize();
-    }
-
     public void reload()
     {
         // metadata object has been mutated directly. make all the members jibe with new settings.
@@ -1141,97 +1136,61 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
     /**
      * Finds the largest memtable, as a percentage of *either* on- or off-heap memory limits, and immediately
-     * queues it for flushing.
-     *
-     *  @param minOwnershipRatio The minimum quantity of memory that should be cleaned. If the live memory used by
-     *                           memtables is less than this ratio, then no memtable will be flushed.
-     *
-     * @return a future which completes when the flushing operation has completed. The value of the future is true
-     *         if a flushing was scheduled, false otherwise. If the flush operation completes with an exception,
-     *         then the future is completed exceptionally. If when trying to flush the memtable selected, this memtable
-     *         is no longer the current one, this probably means another thread scheduled it already for flushing, and
-     *         in this case the future will complete when the current flushing operation completes, see
-     *         {@link this#switchMemtableIfCurrent(Memtable)} and {@link this#waitForFlushes()}.
+     * queues it for flushing. If the memtable selected is flushed before this completes, no work is done.
      */
-    public static CompletableFuture<Boolean> flushLargestColumnFamily(double minOwnershipRatio)
+    public static class FlushLargestColumnFamily implements Runnable
     {
-        float largestRatio = 0f;
-        Memtable largest = null;
-        float liveOnHeap = 0, liveOffHeap = 0;
-        for (ColumnFamilyStore cfs : ColumnFamilyStore.all())
+        public void run()
         {
-            // we take a reference to the current main memtable for the CF prior to snapping its ownership ratios
-            // to ensure we have some ordering guarantee for performing the switchMemtableIf(), i.e. we will only
-            // swap if the memtables we are measuring here haven't already been swapped by the time we try to swap them
-            Memtable current = cfs.getTracker().getView().getCurrentMemtable();
-
-            // find the total ownership ratio for the memtable and all SecondaryIndexes owned by this CF,
-            // both on- and off-heap, and select the largest of the two ratios to weight this CF
-            float onHeap = 0f, offHeap = 0f;
-            onHeap += current.getAllocator().onHeap().ownershipRatio();
-            offHeap += current.getAllocator().offHeap().ownershipRatio();
-
-            for (ColumnFamilyStore indexCfs : cfs.indexManager.getAllIndexColumnFamilyStores())
+            float largestRatio = 0f;
+            Memtable largest = null;
+            float liveOnHeap = 0, liveOffHeap = 0;
+            for (ColumnFamilyStore cfs : ColumnFamilyStore.all())
             {
-                MemtableAllocator allocator = indexCfs.getTracker().getView().getCurrentMemtable().getAllocator();
-                onHeap += allocator.onHeap().ownershipRatio();
-                offHeap += allocator.offHeap().ownershipRatio();
+                // we take a reference to the current main memtable for the CF prior to snapping its ownership ratios
+                // to ensure we have some ordering guarantee for performing the switchMemtableIf(), i.e. we will only
+                // swap if the memtables we are measuring here haven't already been swapped by the time we try to swap them
+                Memtable current = cfs.getTracker().getView().getCurrentMemtable();
+
+                // find the total ownership ratio for the memtable and all SecondaryIndexes owned by this CF,
+                // both on- and off-heap, and select the largest of the two ratios to weight this CF
+                float onHeap = 0f, offHeap = 0f;
+                onHeap += current.getAllocator().onHeap().ownershipRatio();
+                offHeap += current.getAllocator().offHeap().ownershipRatio();
+
+                for (ColumnFamilyStore indexCfs : cfs.indexManager.getAllIndexColumnFamilyStores())
+                {
+                    MemtableAllocator allocator = indexCfs.getTracker().getView().getCurrentMemtable().getAllocator();
+                    onHeap += allocator.onHeap().ownershipRatio();
+                    offHeap += allocator.offHeap().ownershipRatio();
+                }
+
+                float ratio = Math.max(onHeap, offHeap);
+                if (ratio > largestRatio)
+                {
+                    largest = current;
+                    largestRatio = ratio;
+                }
+
+                liveOnHeap += onHeap;
+                liveOffHeap += offHeap;
             }
 
-            float ratio = Math.max(onHeap, offHeap);
-            if (ratio > largestRatio)
+            if (largest != null)
             {
-                largest = current;
-                largestRatio = ratio;
+                float usedOnHeap = Memtable.MEMORY_POOL.onHeap.usedRatio();
+                float usedOffHeap = Memtable.MEMORY_POOL.offHeap.usedRatio();
+                float flushingOnHeap = Memtable.MEMORY_POOL.onHeap.reclaimingRatio();
+                float flushingOffHeap = Memtable.MEMORY_POOL.offHeap.reclaimingRatio();
+                float thisOnHeap = largest.getAllocator().onHeap().ownershipRatio();
+                float thisOffHeap = largest.getAllocator().offHeap().ownershipRatio();
+                logger.debug("Flushing largest {} to free up room. Used total: {}, live: {}, flushing: {}, this: {}",
+                             largest.cfs, ratio(usedOnHeap, usedOffHeap), ratio(liveOnHeap, liveOffHeap),
+                             ratio(flushingOnHeap, flushingOffHeap), ratio(thisOnHeap, thisOffHeap));
+
+                largest.cfs.switchMemtableIfCurrent(largest);
             }
-
-            liveOnHeap += onHeap;
-            liveOffHeap += offHeap;
         }
-        CompletableFuture<Boolean> ret = new CompletableFuture<>();
-        double liveRatio = Math.max(liveOnHeap, liveOffHeap);
-
-        if (largest != null && liveRatio >= minOwnershipRatio)
-        {
-            float usedOnHeap = Memtable.MEMORY_POOL.onHeap.usedRatio();
-            float usedOffHeap = Memtable.MEMORY_POOL.offHeap.usedRatio();
-            float flushingOnHeap = Memtable.MEMORY_POOL.onHeap.reclaimingRatio();
-            float flushingOffHeap = Memtable.MEMORY_POOL.offHeap.reclaimingRatio();
-            float thisOnHeap = largest.getAllocator().onHeap().ownershipRatio();
-            float thisOffHeap = largest.getAllocator().offHeap().ownershipRatio();
-            logger.debug("Flushing largest {} to free up room, min ratio {}. Used total: {}, live: {}, flushing: {}, this: {}",
-                         largest.cfs, ratio(minOwnershipRatio), ratio(usedOnHeap, usedOffHeap), ratio(liveOnHeap, liveOffHeap),
-                         ratio(flushingOnHeap, flushingOffHeap), ratio(thisOnHeap, thisOffHeap));
-
-            ListenableFuture<ReplayPosition> flushFut = largest.cfs.switchMemtableIfCurrent(largest);
-            flushFut.addListener(() -> {
-                try
-                {
-                    flushFut.get();
-                    ret.complete(true);
-                }
-                catch (Throwable t)
-                {
-                    ret.completeExceptionally(t);
-                }
-            }, MoreExecutors.directExecutor());
-        }
-        else
-        {
-            if (largest == null)
-                logger.debug("Flushing of largest memtable, not done, no memtable found");
-            else if (liveRatio < minOwnershipRatio)
-                logger.debug("Flushing of largest memtable, not done, max live ratio {} less than min ratio {}", ratio(liveRatio), ratio(minOwnershipRatio));
-
-            ret.complete(false);
-        }
-
-        return ret;
-    }
-
-    private static String ratio(double val)
-    {
-        return String.format("%.2f", val);
     }
 
     private static String ratio(float onHeap, float offHeap)

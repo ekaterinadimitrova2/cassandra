@@ -51,7 +51,7 @@ public class NativeAllocatorTest
         isClean = new CountDownLatch(1);
         allocatorRef = new AtomicReference<>();
         barrier = new AtomicReference<>();
-        pool = new NativePool(1, 100, 0.75f, (minOwnershipRatio) -> {
+        pool = new NativePool(1, 100, 0.75f, () -> {
             try
             {
                 canClean.await();
@@ -65,9 +65,7 @@ public class NativeAllocatorTest
                 allocatorRef.get().offHeap().released(80);
                 isClean.countDown();
             }
-
-            return CompletableFuture.completedFuture(true);
-        }, Integer.MAX_VALUE);
+        });
         allocator = new NativeAllocator(pool);
         allocatorRef.set(allocator);
         markBlocking = () -> {
@@ -89,8 +87,6 @@ public class NativeAllocatorTest
     public void testBookKeeping() throws ExecutionException, InterruptedException
     {
         final Runnable test = () -> {
-            Assert.assertTrue(allocator.isLive());
-
             // allocate normal, check accounted and not cleaned
             allocator.allocate(10, group);
             verifyUsedReclaiming(10, 0);

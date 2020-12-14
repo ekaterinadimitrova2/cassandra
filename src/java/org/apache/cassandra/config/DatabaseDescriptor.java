@@ -2020,17 +2020,14 @@ public class DatabaseDescriptor
 
     public static MemtablePool getMemtableAllocatorPool()
     {
-        final long heapLimit = ((long) conf.memtable_heap_space_in_mb) << 20;
-        final long offHeapLimit = ((long) conf.memtable_offheap_space_in_mb) << 20;
-        final float cleaningThreshold = conf.memtable_cleanup_threshold;
-        final MemtableCleaner cleaner = ColumnFamilyStore::flushLargestColumnFamily;
-        final int maxPendingTasks = Integer.getInteger(Config.PROPERTY_PREFIX + "max_pending_flushing_tasks", ColumnFamilyStore.getNumFlushWriters() * 2);
+        long heapLimit = ((long) conf.memtable_heap_space_in_mb) << 20;
+        long offHeapLimit = ((long) conf.memtable_offheap_space_in_mb) << 20;
         switch (conf.memtable_allocation_type)
         {
             case unslabbed_heap_buffers:
-                return new HeapPool(heapLimit, cleaningThreshold, cleaner, maxPendingTasks);
+                return new HeapPool(heapLimit, conf.memtable_cleanup_threshold, new ColumnFamilyStore.FlushLargestColumnFamily());
             case heap_buffers:
-                return new SlabPool(heapLimit, 0, cleaningThreshold, cleaner, maxPendingTasks);
+                return new SlabPool(heapLimit, 0, conf.memtable_cleanup_threshold, new ColumnFamilyStore.FlushLargestColumnFamily());
             case offheap_buffers:
                 throw new ConfigurationException("offheap_buffers are not available in 3.0. They will be re-introduced in a future release, see https://issues.apache.org/jira/browse/CASSANDRA-9472 for details");
 

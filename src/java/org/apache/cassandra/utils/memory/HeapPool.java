@@ -24,9 +24,9 @@ import org.apache.cassandra.utils.concurrent.OpOrder;
 
 public class HeapPool extends MemtablePool
 {
-    public HeapPool(long maxOnHeapMemory, float cleanupThreshold, MemtableCleaner cleaner, int maxPendingTasks)
+    public HeapPool(long maxOnHeapMemory, float cleanupThreshold, Runnable cleaner)
     {
-        super(maxOnHeapMemory, 0, cleanupThreshold, cleaner, maxPendingTasks);
+        super(maxOnHeapMemory, 0, cleanupThreshold, cleaner);
     }
 
     public boolean needToCopyOnHeap()

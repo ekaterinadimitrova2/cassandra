@@ -20,8 +20,9 @@ package org.apache.cassandra.utils.memory;
 
 public class NativePool extends MemtablePool
 {
-    public NativePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, MemtableCleaner cleaner, int maxPendingTasks)    {
-        super(maxOnHeapMemory, maxOffHeapMemory, cleanThreshold, cleaner, maxPendingTasks);
+    public NativePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, Runnable cleaner)
+    {
+        super(maxOnHeapMemory, maxOffHeapMemory, cleanThreshold, cleaner);
     }
 
     @Override

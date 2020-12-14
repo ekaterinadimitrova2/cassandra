@@ -48,15 +48,16 @@ public abstract class MemtablePool
 
     final WaitQueue hasRoom = new WaitQueue();
 
-    MemtablePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, MemtableCleaner cleaner, int maxPendingTasks)
+    MemtablePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, Runnable cleaner)
     {
         Preconditions.checkArgument(cleaner != null, "Cleaner should not be null");
 
         this.onHeap = getSubPool(maxOnHeapMemory, cleanThreshold);
         this.offHeap = getSubPool(maxOffHeapMemory, cleanThreshold);
-        this.cleaner = getCleaner(cleaner, maxPendingTasks, cleanThreshold);
+        this.cleaner = getCleaner(cleaner);
         this.blockedOnAllocating = CassandraMetricsRegistry.Metrics.timer(new DefaultNameFactory("MemtablePool")
-                                                                         .createMetricName("BlockedOnAllocation"));
+                                                                          .createMetricName("BlockedOnAllocation"));
+
         this.cleaner.start();
     }
 
@@ -65,9 +66,9 @@ public abstract class MemtablePool
         return new SubPool(limit, cleanThreshold);
     }
 
-    MemtableCleanerThread<MemtablePool> getCleaner(MemtableCleaner cleaner, int maxPendingTasks, float cleanThreshold)
+    MemtableCleanerThread<?> getCleaner(Runnable cleaner)
     {
-        return new MemtableCleanerThread<>(this, cleaner, maxPendingTasks, cleanThreshold);
+        return cleaner == null ? null : new MemtableCleanerThread<>(this, cleaner);
     }
 
     public abstract boolean needToCopyOnHeap();
@@ -79,17 +80,6 @@ public abstract class MemtablePool
     }
 
     public abstract MemtableAllocator newAllocator();
-
-    boolean needsCleaning()
-    {
-        return onHeap.needsCleaning() || offHeap.needsCleaning();
-    }
-
-    @Override
-    public String toString()
-    {
-        return String.format("Memory used %.2f/%.2f", onHeap.usedRatio(), offHeap.usedRatio());
-    }
 
     /**
      * Note the difference between acquire() and allocate(); allocate() makes more resources available to all owners,
@@ -128,8 +118,8 @@ public abstract class MemtablePool
 
         void maybeClean()
         {
-            if (needsCleaning())
-                cleaner.maybeClean();
+            if (needsCleaning() && cleaner != null)
+                cleaner.trigger();
         }
 
         private boolean updateNextClean()
@@ -207,8 +197,8 @@ public abstract class MemtablePool
                 return;
 
             reclaimingUpdater.addAndGet(this, -size);
-            if (updateNextClean())
-                cleaner.maybeClean();
+            if (updateNextClean() && cleaner != null)
+                cleaner.trigger();
         }
 
         public long used()
