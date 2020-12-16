@@ -18,6 +18,8 @@
  */
 package org.apache.cassandra.utils.memory;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.cassandra.concurrent.InfiniteLoopExecutor;
 import org.apache.cassandra.utils.concurrent.WaitQueue;
 
@@ -27,8 +29,11 @@ import org.apache.cassandra.utils.concurrent.WaitQueue;
  */
 public class MemtableCleanerThread<P extends MemtablePool> extends InfiniteLoopExecutor
 {
-    private static class Clean<P extends MemtablePool> implements InterruptibleRunnable
+    public static class Clean<P extends MemtablePool> implements InterruptibleRunnable
     {
+        /** This is incremented when a cleaner is invoked and decremented when a cleaner has completed */
+        final static AtomicInteger numPendingTasks = new AtomicInteger(0);
+
         /** The pool we're cleaning */
         final P pool;
 
@@ -49,15 +54,23 @@ public class MemtableCleanerThread<P extends MemtablePool> extends InfiniteLoopE
             return pool.onHeap.needsCleaning() || pool.offHeap.needsCleaning();
         }
 
+        /** Return the number of pending tasks */
+        public static int numPendingTasks()
+        {
+            return numPendingTasks.get();
+        }
+
         @Override
         public void run() throws InterruptedException
         {
             if (needsCleaning())
             {
                 cleaner.run();
+                numPendingTasks.decrementAndGet();
             }
             else
             {
+                numPendingTasks.incrementAndGet();
                 final WaitQueue.Signal signal = wait.register();
                 if (!needsCleaning())
                     signal.await();
@@ -68,6 +81,7 @@ public class MemtableCleanerThread<P extends MemtablePool> extends InfiniteLoopE
     }
 
     private final Runnable trigger;
+
     private MemtableCleanerThread(Clean<P> clean)
     {
         super(clean.pool.getClass().getSimpleName() + "Cleaner", clean);
