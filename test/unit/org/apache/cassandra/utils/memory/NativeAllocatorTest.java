@@ -65,6 +65,7 @@ public class NativeAllocatorTest
                 allocatorRef.get().offHeap().released(80);
                 isClean.countDown();
             }
+            return CompletableFuture.completedFuture(true);
         });
         allocator = new NativeAllocator(pool);
         allocatorRef.set(allocator);

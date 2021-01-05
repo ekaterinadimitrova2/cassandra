@@ -27,6 +27,7 @@ public class MemtableFlushMetrics
     private static final MetricNameFactory factory = new DefaultNameFactory("MemtableFlush");
 
     /** Total number of pending flushing tasks */
+    //This metric is tested with MemtableCleanerThreadTest
     public Gauge<Long> numPendingTasks;
 
     public MemtableFlushMetrics()

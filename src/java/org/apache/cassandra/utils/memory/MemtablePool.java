@@ -48,7 +48,7 @@ public abstract class MemtablePool
 
     final WaitQueue hasRoom = new WaitQueue();
 
-    MemtablePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, Runnable cleaner)
+    MemtablePool(long maxOnHeapMemory, long maxOffHeapMemory, float cleanThreshold, MemtableCleaner cleaner)
     {
         Preconditions.checkArgument(cleaner != null, "Cleaner should not be null");
 
@@ -66,7 +66,7 @@ public abstract class MemtablePool
         return new SubPool(limit, cleanThreshold);
     }
 
-    MemtableCleanerThread<?> getCleaner(Runnable cleaner)
+    MemtableCleanerThread<?> getCleaner(MemtableCleaner cleaner)
     {
         return cleaner == null ? null : new MemtableCleanerThread<>(this, cleaner);
     }
@@ -80,6 +80,11 @@ public abstract class MemtablePool
     }
 
     public abstract MemtableAllocator newAllocator();
+
+    public boolean needsCleaning()
+    {
+        return onHeap.needsCleaning() || offHeap.needsCleaning();
+    }
 
     /**
      * Note the difference between acquire() and allocate(); allocate() makes more resources available to all owners,
