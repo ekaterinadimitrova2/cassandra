@@ -120,6 +120,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
         new TestCase()
                 .nodes(2)
                 .upgrade(Versions.Major.v22, Versions.Major.v30)
+                .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL))
                 .setup(cluster -> {
                     cluster.schemaChange(String.format(
                             "CREATE TABLE %s.%s (key int, c1 int, c2 int, c3 int, PRIMARY KEY (key, c1, c2)) WITH COMPACT STORAGE",
@@ -171,6 +172,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
                         NodeToolResult result = cluster.get(i).nodetoolResult("upgradesstables");
                         assertEquals("upgrade sstables failed for node " + i, 0, result.getRc());
                     }
+                    Thread.sleep(600);
 
                     // make sure the results are the same after upgrade and upgrade sstables but before dropping compact storage
                     recorder.validateResults(cluster, 1);
@@ -224,11 +226,10 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
                                                               KEYSPACE, table, i, j), ConsistencyLevel.ALL);
                         }
                     }
-
                 })
                 .runAfterClusterUpgrade(cluster -> {
                     cluster.forEach(n -> n.nodetoolResult("upgradesstables", KEYSPACE).asserts().success());
-
+                    Thread.sleep(500);
                     // drop compact storage on only one node before performing writes
                     IMessageFilters.Filter filter = cluster.verbs().allVerbs().to(2).drop();
                     cluster.schemaChange(String.format("ALTER TABLE %s.%s DROP COMPACT STORAGE", KEYSPACE, table), 1);
@@ -264,7 +265,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
                             KEYSPACE, table, 8, 1, 3), ConsistencyLevel.ALL);
 
                     coordinator.execute(String.format("DELETE FROM %s.%s WHERE key = %d and c1 = %d and c2 > 1",
-                                                      KEYSPACE, table, 6, 2, 4), ConsistencyLevel.ALL);
+                                                      KEYSPACE, table, 6, 2), ConsistencyLevel.ALL);
 
                     ResultsRecorder recorder = new ResultsRecorder();
                     runQueries(coordinator, recorder, new String[] {
