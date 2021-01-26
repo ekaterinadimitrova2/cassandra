@@ -49,6 +49,11 @@ public class DefaultNameFactory implements MetricNameFactory
         return new CassandraMetricsRegistry.MetricName(GROUP_NAME, type, metricName, scope, createDefaultMBeanName(type, metricName, scope));
     }
 
+    protected String getScope()
+    {
+        return scope;
+    }
+
     protected static String createDefaultMBeanName(String type, String name, String scope)
     {
         final StringBuilder nameBuilder = new StringBuilder();

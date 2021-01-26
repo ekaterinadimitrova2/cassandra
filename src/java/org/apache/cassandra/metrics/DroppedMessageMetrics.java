@@ -17,10 +17,11 @@
  */
 package org.apache.cassandra.metrics;
 
+import com.google.common.collect.ImmutableMap;
+
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.Timer;
 
-import org.apache.cassandra.net.MessagingService;
 import org.apache.cassandra.net.Verb;
 
 import static org.apache.cassandra.metrics.CassandraMetricsRegistry.Metrics;
@@ -42,6 +43,56 @@ public class DroppedMessageMetrics
     public DroppedMessageMetrics(Verb verb)
     {
         this(new DefaultNameFactory("DroppedMessage", verb.toString()));
+    }
+
+    public DroppedMessageMetrics(DefaultNameFactory factory)
+    {
+        String currentScope = factory.getScope();
+        // backward compatibility for request metrics which names have changed in 4.0 as part of CASSANDRA-15066
+        ImmutableMap<String, String> requestVerbsAlias = ImmutableMap.<String, String>builder()
+                                                         .put("BATCH_REMOVE_REQ", "BATCH_REMOVE")
+                                                         .put("BATCH_STORE_REQ", "BATCH_STORE")
+                                                         .put("COUNTER_MUTATION_REQ", "COUNTER_MUTATION")
+                                                         .put("HINT_REQ", "HINT")
+                                                         .put("MUTATION_REQ", "MUTATION")
+                                                         .put("RANGE_REQ", "RANGE_SLICE")
+                                                         .put("READ_REQ", "READ")
+                                                         .put("READ_REPAIR_REQ", "READ_REPAIR")
+                                                         .put("REQUEST_RSP", "REQUEST_RESPONSE")
+                                                         .build();
+
+        if (requestVerbsAlias.containsKey(currentScope))
+        {
+            dropped = Metrics.meter(factory.createMetricName("Dropped"),
+                                    new DroppedMessageMetrics.ScopeAliasMetricNameFactory()
+                                    .createMetricName("Dropped", requestVerbsAlias.get(currentScope)));
+            internalDroppedLatency = Metrics.timer(factory.createMetricName("InternalDroppedLatency"),
+                                                   new DroppedMessageMetrics.ScopeAliasMetricNameFactory()
+                                                   .createMetricName("InternalDroppedLatency", requestVerbsAlias.get(currentScope)));
+            crossNodeDroppedLatency = Metrics.timer(factory.createMetricName("CrossNodeDroppedLatency"),
+                                                    new DroppedMessageMetrics.ScopeAliasMetricNameFactory()
+                                                    .createMetricName("CrossNodeDroppedLatency", requestVerbsAlias.get(currentScope)));
+        }
+        else
+        {
+            dropped = Metrics.meter(factory.createMetricName("Dropped"));
+            internalDroppedLatency = Metrics.timer(factory.createMetricName("InternalDroppedLatency"));
+            crossNodeDroppedLatency = Metrics.timer(factory.createMetricName("CrossNodeDroppedLatency"));
+        }
+    }
+
+    static class ScopeAliasMetricNameFactory
+    {
+        public CassandraMetricsRegistry.MetricName createMetricName(String metricName, String aliasScope)
+        {
+            String groupName = CASClientWriteRequestMetrics.class.getPackage().getName();
+            String mbeanName = groupName + ':' +
+                               "type=" + "DroppedMessage" +
+                               ",scope=" + aliasScope +
+                               ",name=" + metricName;
+
+            return new CassandraMetricsRegistry.MetricName(groupName, "DroppedMessage", metricName, aliasScope, mbeanName);
+        }
     }
 
     public DroppedMessageMetrics(MetricNameFactory factory)
