@@ -81,7 +81,7 @@ public class SSTablesGlobalTracker implements INotificationConsumer
     private int sstablesForCurrentVersion;
     private final Map<VersionAndType, Integer> sstablesForOtherVersions = new HashMap<>();
 
-    private Set<VersionAndType> versionsInUse = Collections.emptySet();
+    private volatile ImmutableSet<VersionAndType> versionsInUse = ImmutableSet.of();
 
     private final Set<INotificationConsumer> subscribers = new CopyOnWriteArraySet<>();
 
@@ -178,7 +178,7 @@ public class SSTablesGlobalTracker implements INotificationConsumer
                 othersDelta = update(othersDelta, version, +1);
         }
 
-        if (currentDelta == 0 && (othersDelta == null || othersDelta.isEmpty()))
+        if (currentDelta == 0 && (othersDelta == null))
             return false;
 
         /*
@@ -189,7 +189,7 @@ public class SSTablesGlobalTracker implements INotificationConsumer
         synchronized (this)
         {
             triggerUpdate = (currentDelta > 0 && sstablesForCurrentVersion == 0)
-                            || (currentDelta < 0 && sstablesForCurrentVersion == -currentDelta);
+                            || (currentDelta < 0 && sstablesForCurrentVersion <= -currentDelta);
             sstablesForCurrentVersion += currentDelta;
             sstablesForCurrentVersion = sanitizeSSTablesCount(sstablesForCurrentVersion, currentVersion);
 
@@ -215,13 +215,12 @@ public class SSTablesGlobalTracker implements INotificationConsumer
             }
 
             if (triggerUpdate)
-                versionsInUse = computeVersionsInUse();
+                versionsInUse = computeVersionsInUse(sstablesForCurrentVersion, currentVersion, sstablesForOtherVersions);
         }
         return triggerUpdate;
     }
 
-    // Not thread-safe, but only called within a synchronized block.
-    private Set<VersionAndType> computeVersionsInUse()
+    private static ImmutableSet<VersionAndType> computeVersionsInUse(int sstablesForCurrentVersion, VersionAndType currentVersion, Map<VersionAndType, Integer> sstablesForOtherVersions)
     {
         ImmutableSet.Builder<VersionAndType> builder = ImmutableSet.builder();
         if (sstablesForCurrentVersion > 0)

@@ -42,7 +42,6 @@ import org.apache.cassandra.db.view.View;
 import org.apache.cassandra.exceptions.*;
 import org.apache.cassandra.gms.ApplicationState;
 import org.apache.cassandra.gms.Gossiper;
-import org.apache.cassandra.io.sstable.format.SSTableReader;
 import org.apache.cassandra.io.sstable.format.VersionAndType;
 import org.apache.cassandra.net.MessagingService;
 import org.apache.cassandra.schema.IndexMetadata;
@@ -141,8 +140,8 @@ public class AlterTableStatement extends SchemaAlteringStatement
                         break;
                     }
 
-                    throw new InvalidRequestException(format("Compact value type can only be changed to BytesType, but %s was given.",
-                                                             validator.getType()));
+                    throw new InvalidRequestException(String.format("Compact value type can only be changed to BytesType, but %s was given.",
+                                                                    validator.getType()));
                 }
                 else
                 {
@@ -169,9 +168,9 @@ public class AlterTableStatement extends SchemaAlteringStatement
                     {
                         case PARTITION_KEY:
                         case CLUSTERING:
-                            throw new InvalidRequestException(format("Invalid column name %s because it conflicts with a PRIMARY KEY part", columnName));
+                            throw new InvalidRequestException(String.format("Invalid column name %s because it conflicts with a PRIMARY KEY part", columnName));
                         default:
-                            throw new InvalidRequestException(format("Invalid column name %s because it conflicts with an existing column", columnName));
+                            throw new InvalidRequestException(String.format("Invalid column name %s because it conflicts with an existing column", columnName));
                     }
                 }
 
@@ -194,7 +193,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                     if (droppedColumn.kind != toAdd.kind)
                     {
                         String message =
-                            format("Cannot re-add previously dropped column '%s' of kind %s, incompatible with previous kind %s",
+                            String.format("Cannot re-add previously dropped column '%s' of kind %s, incompatible with previous kind %s",
                                           columnName,
                                           toAdd.kind,
                                           droppedColumn.kind == null ? "UNKNOWN" : droppedColumn.kind);
@@ -206,7 +205,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                     if (!type.isValueCompatibleWith(droppedColumn.type))
                     {
                         String message =
-                            format("Cannot re-add previously dropped column '%s' of type %s, incompatible with previous type %s",
+                            String.format("Cannot re-add previously dropped column '%s' of type %s, incompatible with previous type %s",
                                           columnName,
                                           type.asCQL3Type(),
                                           droppedColumn.type.asCQL3Type());
@@ -215,7 +214,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
 
                     // Cannot re-add a dropped counter column. See #7831.
                     if (meta.isCounter())
-                        throw new InvalidRequestException(format("Cannot re-add previously dropped counter column %s", columnName));
+                        throw new InvalidRequestException(String.format("Cannot re-add previously dropped counter column %s", columnName));
                 }
 
                 cfm.addColumnDefinition(toAdd);
@@ -243,7 +242,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                     throw new InvalidRequestException("Cannot drop columns from a non-CQL3 table");
 
                 if (def == null)
-                    throw new InvalidRequestException(format("Column %s was not found in table %s", columnName, columnFamily()));
+                    throw new InvalidRequestException(String.format("Column %s was not found in table %s", columnName, columnFamily()));
 
                 cfm = meta.copy();
 
@@ -251,7 +250,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                 {
                     case PARTITION_KEY:
                     case CLUSTERING:
-                        throw new InvalidRequestException(format("Cannot drop PRIMARY KEY part %s", columnName));
+                        throw new InvalidRequestException(String.format("Cannot drop PRIMARY KEY part %s", columnName));
                     case REGULAR:
                     case STATIC:
                         ColumnDefinition toDelete = null;
@@ -277,7 +276,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                     ColumnFamilyStore store = Keyspace.openAndGetStore(cfm);
                     Set<IndexMetadata> dependentIndexes = store.indexManager.getDependentIndexes(def);
                     if (!dependentIndexes.isEmpty())
-                        throw new InvalidRequestException(format("Cannot drop column %s because it has " +
+                        throw new InvalidRequestException(String.format("Cannot drop column %s because it has " +
                                                                  "dependent secondary indexes (%s)",
                                                                  def,
                                                                  dependentIndexes.stream()
@@ -286,7 +285,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                 }
 
                 if (!Iterables.isEmpty(views))
-                    throw new InvalidRequestException(format("Cannot drop column %s on base table %s with materialized views.",
+                    throw new InvalidRequestException(String.format("Cannot drop column %s on base table %s with materialized views.",
                                                              columnName.toString(),
                                                              columnFamily()));
                 break;
@@ -428,7 +427,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
 
     public String toString()
     {
-        return format("AlterTableStatement(name=%s, type=%s, column=%s, validator=%s)",
+        return String.format("AlterTableStatement(name=%s, type=%s, column=%s, validator=%s)",
                              cfName,
                              oType,
                              rawColumnName,

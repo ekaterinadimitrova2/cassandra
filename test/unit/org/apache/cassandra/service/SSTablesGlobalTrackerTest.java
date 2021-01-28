@@ -19,6 +19,7 @@
 package org.apache.cassandra.service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -56,16 +57,19 @@ public class SSTablesGlobalTrackerTest
     public void testUpdates()
     {
         qt().forAll(lists().of(updates()).ofSizeBetween(0, MAX_UPDATES_PER_GEN),
-                   sstableFormatTypes())
+                    sstableFormatTypes())
             .checkAssert((updates, formatType) -> {
                 SSTablesGlobalTracker tracker = new SSTablesGlobalTracker(formatType);
                 Set<Descriptor> all = new HashSet<>();
+                Set<VersionAndType> previous = Collections.emptySet();
                 for (Update update : updates)
                 {
                     update.applyTo(all);
-                    tracker.handleSSTablesChange(update.removed, update.added);
+                    boolean triggerUpdate = tracker.handleSSTablesChange(update.removed, update.added);
                     Set<VersionAndType> expectedInUse = versionAndTypes(all);
                     assertEquals(expectedInUse, tracker.versionsInUse());
+                    assertEquals(!expectedInUse.equals(previous), triggerUpdate);
+                    previous = expectedInUse;
                 }
             });
     }

@@ -32,7 +32,7 @@ import org.apache.cassandra.io.sstable.Descriptor;
  * its {@link Descriptor}). In particular, while {@link Version} contains its {{@link SSTableFormat}}, you cannot get
  * the {{@link SSTableFormat.Type}} from that.
  */
-public class VersionAndType
+public final class VersionAndType
 {
     private static final Splitter splitOnDash = Splitter.on('-').omitEmptyStrings().trimResults();
 

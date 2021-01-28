@@ -18,13 +18,13 @@
 
 package org.apache.cassandra.service;
 
-import java.util.Set;
+import com.google.common.collect.ImmutableSet;
 
 import org.apache.cassandra.io.sstable.format.VersionAndType;
 import org.apache.cassandra.notifications.INotification;
 
 /**
- * Notification trriggered by a {@link SSTablesGlobalTracker} when the set of sstables versions in use on this node
+ * Notification triggered by a {@link SSTablesGlobalTracker} when the set of sstables versions in use on this node
  * changes.
  *
  * <p>The notification includes the set of sstable versions in use when the notification is triggered (so the result
@@ -32,19 +32,14 @@ import org.apache.cassandra.notifications.INotification;
  */
 public class SSTablesVersionsInUseChangeNotification implements INotification
 {
-    private final Set<VersionAndType> versionsInUse;
+    /**
+     * The set of all sstable versions in use on this node at the time of this notification.
+     */
+    public final ImmutableSet<VersionAndType> versionsInUse;
 
-    SSTablesVersionsInUseChangeNotification(Set<VersionAndType> versionsInUse)
+    SSTablesVersionsInUseChangeNotification(ImmutableSet<VersionAndType> versionsInUse)
     {
         this.versionsInUse = versionsInUse;
-    }
-
-    /**
-     * The set of all sstable versions on use on this node at the time of this notification.
-     */
-    public Set<VersionAndType> versionsInUse()
-    {
-        return versionsInUse;
     }
 
     @Override
