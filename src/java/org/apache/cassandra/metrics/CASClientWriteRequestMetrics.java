@@ -42,7 +42,7 @@ public class CASClientWriteRequestMetrics extends CASClientRequestMetrics
         mutationSize = Metrics.histogram(factory.createMetricName("MutationSizeHistogram"), false);
         // scope for this metric was changed in 4.0; adding backward compatibility
         conditionNotMet = Metrics.counter(factory.createMetricName("ConditionNotMet"),
-                                          new ScopeAliasMetricNameFactory().createMetricName("ConditionNotMet"));
+                                          DefaultNameFactory.createMetricName("ClientRequest", "ConditionNotMet", "CASRead"));
     }
 
     public void release()
@@ -50,20 +50,6 @@ public class CASClientWriteRequestMetrics extends CASClientRequestMetrics
         super.release();
         Metrics.remove(factory.createMetricName("ConditionNotMet"));
         Metrics.remove(factory.createMetricName("MutationSizeHistogram"),
-                       new ScopeAliasMetricNameFactory().createMetricName("ConditionNotMet"));
-    }
-
-    static class ScopeAliasMetricNameFactory implements MetricNameFactory
-    {
-        @Override
-        public CassandraMetricsRegistry.MetricName createMetricName(String metricName)
-        {
-            String groupName = CASClientWriteRequestMetrics.class.getPackage().getName();
-            String mbeanName = groupName + ':' +
-                               "type=" + "ClientRequest" +
-                               ",scope=CASRead" +
-                               ",name=" + metricName;
-            return new CassandraMetricsRegistry.MetricName(groupName, "ClientRequest", metricName, "CASRead", mbeanName);
-        }
+                       DefaultNameFactory.createMetricName("ClientRequest", "ConditionNotMet", "CASRead"));
     }
 }

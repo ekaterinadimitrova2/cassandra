@@ -64,34 +64,17 @@ public class DroppedMessageMetrics
         if (requestVerbsAlias.containsKey(currentScope))
         {
             dropped = Metrics.meter(factory.createMetricName("Dropped"),
-                                    new DroppedMessageMetrics.ScopeAliasMetricNameFactory()
-                                    .createMetricName("Dropped", requestVerbsAlias.get(currentScope)));
+                                    DefaultNameFactory.createMetricName("DroppedMessage", "Dropped", requestVerbsAlias.get(currentScope)));
             internalDroppedLatency = Metrics.timer(factory.createMetricName("InternalDroppedLatency"),
-                                                   new DroppedMessageMetrics.ScopeAliasMetricNameFactory()
-                                                   .createMetricName("InternalDroppedLatency", requestVerbsAlias.get(currentScope)));
+                                                   DefaultNameFactory.createMetricName("DroppedMessage", "InternalDroppedLatency", requestVerbsAlias.get(currentScope)));
             crossNodeDroppedLatency = Metrics.timer(factory.createMetricName("CrossNodeDroppedLatency"),
-                                                    new DroppedMessageMetrics.ScopeAliasMetricNameFactory()
-                                                    .createMetricName("CrossNodeDroppedLatency", requestVerbsAlias.get(currentScope)));
+                                                    DefaultNameFactory.createMetricName("DroppedMessage", "CrossNodeDroppedLatency", requestVerbsAlias.get(currentScope)));
         }
         else
         {
             dropped = Metrics.meter(factory.createMetricName("Dropped"));
             internalDroppedLatency = Metrics.timer(factory.createMetricName("InternalDroppedLatency"));
             crossNodeDroppedLatency = Metrics.timer(factory.createMetricName("CrossNodeDroppedLatency"));
-        }
-    }
-
-    static class ScopeAliasMetricNameFactory
-    {
-        public CassandraMetricsRegistry.MetricName createMetricName(String metricName, String aliasScope)
-        {
-            String groupName = CASClientWriteRequestMetrics.class.getPackage().getName();
-            String mbeanName = groupName + ':' +
-                               "type=" + "DroppedMessage" +
-                               ",scope=" + aliasScope +
-                               ",name=" + metricName;
-
-            return new CassandraMetricsRegistry.MetricName(groupName, "DroppedMessage", metricName, aliasScope, mbeanName);
         }
     }
 
