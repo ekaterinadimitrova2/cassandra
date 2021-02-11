@@ -48,8 +48,8 @@ public class CASClientWriteRequestMetrics extends CASClientRequestMetrics
     public void release()
     {
         super.release();
-        Metrics.remove(factory.createMetricName("ConditionNotMet"));
-        Metrics.remove(factory.createMetricName("MutationSizeHistogram"),
+        Metrics.remove(factory.createMetricName("ConditionNotMet"),
                        DefaultNameFactory.createMetricName("ClientRequest", "ConditionNotMet", "CASRead"));
+        Metrics.remove(factory.createMetricName("MutationSizeHistogram"));
     }
 }
