@@ -433,7 +433,12 @@ public class Tracker
 
     Throwable notifyAdded(Iterable<SSTableReader> added, boolean isInitialSSTables, Throwable accumulate)
     {
-        INotification notification = new SSTableAddedNotification(added, isInitialSSTables);
+        INotification notification;
+        if (!isInitialSSTables)
+            notification = new SSTableAddedNotification(added);
+        else
+            notification = new SSTableAddedDuringInitializationNotification(added);
+
         for (INotificationConsumer subscriber : subscribers)
         {
             try
