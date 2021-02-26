@@ -186,17 +186,12 @@ public class Tracker
 
     public void addInitialSSTables(Iterable<SSTableReader> sstables)
     {
-        addInitialSSTablesWithoutUpdatingSize(sstables);
-        maybeFail(updateSizeTracking(emptySet(), sstables, null));
-        // no notifications or backup necessary
+        addSSTablesInternal(sstables, true, false, true);
     }
 
     public void addInitialSSTablesWithoutUpdatingSize(Iterable<SSTableReader> sstables)
     {
-        if (!isDummy())
-            setupOnline(sstables);
-        apply(updateLiveSet(emptySet(), sstables));
-        // no notifications or backup necessary
+        addSSTablesInternal(sstables, true, false, false);
     }
 
     public void updateInitialSSTableSize(Iterable<SSTableReader> sstables)
@@ -206,9 +201,22 @@ public class Tracker
 
     public void addSSTables(Iterable<SSTableReader> sstables)
     {
-        addInitialSSTables(sstables);
-        maybeIncrementallyBackup(sstables);
-        notifyAdded(sstables);
+        addSSTablesInternal(sstables, false, true, true);
+    }
+
+    private void addSSTablesInternal(Iterable<SSTableReader> sstables,
+                                     boolean isInitialSSTables,
+                                     boolean maybeIncrementallyBackup,
+                                     boolean updateSize)
+    {
+        if (!isDummy())
+            setupOnline(sstables);
+        apply(updateLiveSet(emptySet(), sstables));
+        if(updateSize)
+            maybeFail(updateSizeTracking(emptySet(), sstables, null));
+        if (maybeIncrementallyBackup)
+            maybeIncrementallyBackup(sstables);
+        notifyAdded(sstables, isInitialSSTables);
     }
 
     /** (Re)initializes the tracker, purging all references. */
@@ -371,7 +379,7 @@ public class Tracker
         notifyDiscarded(memtable);
 
         // TODO: if we're invalidated, should we notifyadded AND removed, or just skip both?
-        fail = notifyAdded(sstables, memtable, fail);
+        fail = notifyAdded(sstables, false, memtable, fail);
 
         if (!isDummy() && !cfstore.isValid())
             dropSSTables();
@@ -429,9 +437,14 @@ public class Tracker
         return accumulate;
     }
 
-    Throwable notifyAdded(Iterable<SSTableReader> added, Memtable memtable, Throwable accumulate)
+    Throwable notifyAdded(Iterable<SSTableReader> added, boolean isInitialSSTables, Memtable memtable, Throwable accumulate)
     {
-        INotification notification = new SSTableAddedNotification(added, memtable);
+        INotification notification;
+        if (!isInitialSSTables)
+            notification = new SSTableAddedNotification(added, memtable);
+        else
+            notification = new SSTableAddedDuringInitializationNotification(added);
+
         for (INotificationConsumer subscriber : subscribers)
         {
             try
@@ -446,9 +459,9 @@ public class Tracker
         return accumulate;
     }
 
-    public void notifyAdded(Iterable<SSTableReader> added)
+    void notifyAdded(Iterable<SSTableReader> added, boolean isInitialSSTables)
     {
-        maybeFail(notifyAdded(added, null, null));
+        maybeFail(notifyAdded(added, isInitialSSTables, null, null));
     }
 
     public void notifySSTableRepairedStatusChanged(Collection<SSTableReader> repairStatusesChanged)

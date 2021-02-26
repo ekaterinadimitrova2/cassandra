@@ -17,6 +17,7 @@
  */
 package org.apache.cassandra.cql3.statements.schema;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,6 +39,11 @@ import org.apache.cassandra.cql3.QualifiedName;
 import org.apache.cassandra.db.Keyspace;
 import org.apache.cassandra.db.marshal.AbstractType;
 
+import org.apache.cassandra.exceptions.InvalidRequestException;
+import org.apache.cassandra.gms.ApplicationState;
+import org.apache.cassandra.gms.Gossiper;
+import org.apache.cassandra.locator.InetAddressAndPort;
+import org.apache.cassandra.net.MessagingService;
 import org.apache.cassandra.schema.ColumnMetadata;
 import org.apache.cassandra.schema.IndexMetadata;
 import org.apache.cassandra.schema.KeyspaceMetadata;
@@ -48,11 +54,13 @@ import org.apache.cassandra.schema.TableParams;
 import org.apache.cassandra.schema.ViewMetadata;
 import org.apache.cassandra.schema.Views;
 import org.apache.cassandra.service.ClientState;
+import org.apache.cassandra.service.StorageService;
 import org.apache.cassandra.service.reads.repair.ReadRepairStrategy;
 import org.apache.cassandra.transport.Event.SchemaChange;
 import org.apache.cassandra.transport.Event.SchemaChange.Change;
 import org.apache.cassandra.transport.Event.SchemaChange.Target;
 
+import static java.lang.String.format;
 import static java.lang.String.join;
 
 import static com.google.common.collect.Iterables.isEmpty;
@@ -68,7 +76,7 @@ public abstract class AlterTableStatement extends AlterSchemaStatement
         this.tableName = tableName;
     }
 
-    public Keyspaces apply(Keyspaces schema)
+    public Keyspaces apply(Keyspaces schema) throws UnknownHostException
     {
         KeyspaceMetadata keyspace = schema.getNullable(keyspaceName);
 
@@ -103,10 +111,10 @@ public abstract class AlterTableStatement extends AlterSchemaStatement
 
     public String toString()
     {
-        return String.format("%s (%s, %s)", getClass().getSimpleName(), keyspaceName, tableName);
+        return format("%s (%s, %s)", getClass().getSimpleName(), keyspaceName, tableName);
     }
 
-    abstract KeyspaceMetadata apply(KeyspaceMetadata keyspace, TableMetadata table);
+    abstract KeyspaceMetadata apply(KeyspaceMetadata keyspace, TableMetadata table) throws UnknownHostException;
 
     /**
      * ALTER TABLE <table> ALTER <column> TYPE <newtype>;
@@ -409,12 +417,53 @@ public abstract class AlterTableStatement extends AlterSchemaStatement
             super(keyspaceName, tableName);
         }
 
-        public KeyspaceMetadata apply(KeyspaceMetadata keyspace, TableMetadata table)
+        public KeyspaceMetadata apply(KeyspaceMetadata keyspace, TableMetadata table) throws UnknownHostException
         {
             if (!table.isCompactTable())
                 throw AlterTableStatement.ire("Cannot DROP COMPACT STORAGE on table without COMPACT STORAGE");
 
+            validateCanDropCompactStorage();
+
             return keyspace.withSwapped(keyspace.tables.withSwapped(table.withSwapped(ImmutableSet.of(TableMetadata.Flag.COMPOUND))));
+        }
+
+        /**
+         * Throws if DROP COMPACT STORAGE cannot be used (yet) because the cluster is not sufficiently upgraded. To be able
+         * to use DROP COMPACT STORAGE, we need to ensure that no pre-3.0 sstables exists in the cluster, as we won't be
+         * able to read them anymore once COMPACT STORAGE is dropped (see CASSANDRA-15897). In practice, this method checks
+         * 3 things:
+         *   1) that all nodes are on 3.0+. We need this because 2.x nodes don't advertise their sstable versions.
+         *   2) for 3.0+, we use the new (CASSANDRA-15897) sstables versions set gossiped by all nodes to ensure all
+         *      sstables have been upgraded cluster-wise.
+         *   3) if the cluster still has some 3.0 nodes that predate CASSANDRA-15897, we will not have the sstable versions
+         *      for them. In that case, we also refuse DROP COMPACT (even though it may well be safe at this point) and ask
+         *      the user to upgrade all nodes.
+         */
+        private void validateCanDropCompactStorage() throws UnknownHostException
+        {
+            Set<InetAddressAndPort> before3 = new HashSet<>();
+            Set<InetAddressAndPort> preC15897nodes = new HashSet<>();
+            for (InetAddressAndPort node : StorageService.instance.getTokenMetadata().getAllEndpoints())
+            {
+                if (MessagingService.instance().getVersion(node.toString()) < MessagingService.VERSION_30)
+                {
+                    before3.add(node);
+                    continue;
+                }
+
+                String sstableVersionsString = Gossiper.instance.getApplicationState(node, ApplicationState.SSTABLE_VERSIONS);
+                if (sstableVersionsString == null)
+                    preC15897nodes.add(node);
+            }
+
+            if (!before3.isEmpty())
+                throw new InvalidRequestException(format("Cannot DROP COMPACT STORAGE as some nodes in the cluster (%s) " +
+                                                         "are not on 3.0+ yet. Please upgrade those nodes and run " +
+                                                         "`upgradesstables` before retrying.", before3));
+            if (!preC15897nodes.isEmpty())
+                throw new InvalidRequestException(format("Cannot guarantee that DROP COMPACT STORAGE is safe as some nodes " +
+                                                         "in the cluster (%s) do not have https://issues.apache.org/jira/browse/CASSANDRA-15897. " +
+                                                         "Please upgrade those nodes and retry.", preC15897nodes));
         }
     }
 
