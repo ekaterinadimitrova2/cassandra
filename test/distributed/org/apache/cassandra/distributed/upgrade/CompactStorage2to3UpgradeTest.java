@@ -229,7 +229,7 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
                 })
                 .runAfterClusterUpgrade(cluster -> {
                     cluster.forEach(n -> n.nodetoolResult("upgradesstables", KEYSPACE).asserts().success());
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                     // drop compact storage on only one node before performing writes
                     IMessageFilters.Filter filter = cluster.verbs().allVerbs().to(2).drop();
                     cluster.schemaChange(String.format("ALTER TABLE %s.%s DROP COMPACT STORAGE", KEYSPACE, table), 1);
