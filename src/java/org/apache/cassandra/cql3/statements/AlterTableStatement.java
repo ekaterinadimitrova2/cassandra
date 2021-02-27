@@ -399,12 +399,11 @@ public class AlterTableStatement extends SchemaAlteringStatement
 
             try
             {
-                // Note: 'storeRows' is basically a marker for 3.0+ sstables.
                 boolean has2xSStables = onComma.splitToList(sstableVersionsString)
                                                .stream()
                                                .map(VersionAndType::fromString)
                                                .map(VersionAndType::toString)
-                                               .anyMatch(v -> v.compareTo("big-ma")>=0);
+                                               .anyMatch(v -> v.compareTo("big-ma")<=0);
                 if (has2xSStables)
                     with2xSStables.add(node);
             }
