@@ -125,7 +125,7 @@ public class CompactionStrategyManager implements INotificationConsumer
 
     private volatile CompactionParams params;
     private DiskBoundaries currentBoundaries;
-    private volatile boolean enabled = true;
+    private volatile boolean enabled;
     private volatile boolean isActive = true;
 
     /*

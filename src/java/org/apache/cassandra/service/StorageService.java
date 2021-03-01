@@ -959,6 +959,17 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
             Gossiper.instance.start(SystemKeyspace.incrementAndGetGeneration(), appStates); // needed for node-ring gathering.
             gossipActive = true;
 
+            sstablesTracker.register((notification, o) -> {
+                if (!(notification instanceof SSTablesVersionsInUseChangeNotification))
+                    return;
+
+                Set<VersionAndType> versions = ((SSTablesVersionsInUseChangeNotification)notification).versionsInUse;
+                logger.debug("Updating local sstables version in Gossip to {}", versions);
+
+                Gossiper.instance.addLocalApplicationState(ApplicationState.SSTABLE_VERSIONS,
+                                                           valueFactory.sstableVersions(versions));
+            });
+
             // gossip snitch infos (local DC and rack)
             gossipSnitchInfo();
             // gossip Schema.emptyVersion forcing immediate check for schema updates (see MigrationManager#maybeScheduleSchemaPull)

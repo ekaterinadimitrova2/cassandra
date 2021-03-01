@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.io.sstable.Descriptor;
 import org.apache.cassandra.io.sstable.format.SSTableFormat;
 import org.apache.cassandra.io.sstable.format.VersionAndType;
@@ -110,11 +109,7 @@ public class SSTablesGlobalTrackerTest
 
     private Gen<SSTableFormat.Type> sstableFormatTypes()
     {
-        // We remap LEGACY format to BIG as is not used in real life and will not work properly because the
-        // SSTableFormat.Type.validate() method never returns it.
-        return Generate.enumValues(SSTableFormat.Type.class)
-                       //.map(t -> t == SSTableFormat.Type.LEGACY ? SSTableFormat.Type.BIG : t);
-                       .map(t -> t);
+        return Generate.enumValues(SSTableFormat.Type.class);
     }
 
     private Gen<String> sstableVersionString()

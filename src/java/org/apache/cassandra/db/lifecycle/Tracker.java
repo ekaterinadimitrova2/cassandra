@@ -107,7 +107,7 @@ public class Tracker
 
     Pair<View, View> apply(Function<View, View> function)
     {
-        return apply(Predicates.<View>alwaysTrue(), function);
+        return apply(Predicates.alwaysTrue(), function);
     }
 
     Throwable apply(Function<View, View> function, Throwable accumulate)
@@ -244,7 +244,7 @@ public class Tracker
 
     public Throwable dropSSTables(Throwable accumulate)
     {
-        return dropSSTables(Predicates.<SSTableReader>alwaysTrue(), OperationType.UNKNOWN, accumulate);
+        return dropSSTables(Predicates.alwaysTrue(), OperationType.UNKNOWN, accumulate);
     }
 
     /**
@@ -275,7 +275,7 @@ public class Tracker
                     accumulate = updateSizeTracking(removed, emptySet(), accumulate);
                     accumulate = release(selfRefs(removed), accumulate);
                     // notifySSTablesChanged -> LeveledManifest.promote doesn't like a no-op "promotion"
-                    accumulate = notifySSTablesChanged(removed, Collections.<SSTableReader>emptySet(), txnLogs.type(), accumulate);
+                    accumulate = notifySSTablesChanged(removed, Collections.emptySet(), txnLogs.type(), accumulate);
                 }
             }
             catch (Throwable t)
@@ -299,13 +299,7 @@ public class Tracker
      */
     public void removeUnreadableSSTables(final File directory)
     {
-        maybeFail(dropSSTables(new Predicate<SSTableReader>()
-        {
-            public boolean apply(SSTableReader reader)
-            {
-                return reader.descriptor.directory.equals(directory);
-            }
-        }, OperationType.UNKNOWN, null));
+        maybeFail(dropSSTables(reader -> reader.descriptor.directory.equals(directory), OperationType.UNKNOWN, null));
     }
 
 
@@ -443,7 +437,7 @@ public class Tracker
         if (!isInitialSSTables)
             notification = new SSTableAddedNotification(added, memtable);
         else
-            notification = new SSTableAddedDuringInitializationNotification(added);
+            notification = new InitialSSTableAddedNotification(added);
 
         for (INotificationConsumer subscriber : subscribers)
         {
@@ -542,8 +536,6 @@ public class Tracker
     @VisibleForTesting
     public void removeUnsafe(Set<SSTableReader> toRemove)
     {
-        Pair<View, View> result = apply(view -> {
-            return updateLiveSet(toRemove, emptySet()).apply(view);
-        });
+        Pair<View, View> result = apply(view -> updateLiveSet(toRemove, emptySet()).apply(view));
     }
 }

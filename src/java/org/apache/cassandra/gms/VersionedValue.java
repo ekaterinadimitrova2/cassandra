@@ -33,7 +33,6 @@ import org.apache.cassandra.db.TypeSizes;
 import org.apache.cassandra.dht.IPartitioner;
 import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.io.IVersionedSerializer;
-import org.apache.cassandra.io.sstable.format.Version;
 import org.apache.cassandra.io.sstable.format.VersionAndType;
 import org.apache.cassandra.io.util.DataInputPlus;
 import org.apache.cassandra.io.util.DataOutputPlus;
@@ -113,7 +112,7 @@ public class VersionedValue implements Comparable<VersionedValue>
     @Override
     public String toString()
     {
-        return "Value(" + value + "," + version + ")";
+        return "Value(" + value + ',' + version + ')';
     }
 
     public byte[] toBytes()

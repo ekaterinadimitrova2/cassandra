@@ -34,18 +34,18 @@ public class VersionAndTypeTest
     public void testInvalidInputs()
     {
         assertThatThrownBy(() -> VersionAndType.fromString(" ")).isInstanceOf(IllegalArgumentException.class)
-                                                   .hasMessageContaining("should be of the form 'big-bc'");
+                                                                .hasMessageContaining("should be of the form 'big-bc'");
         assertThatThrownBy(() -> VersionAndType.fromString("mcc-")).isInstanceOf(IllegalArgumentException.class)
-                                                               .hasMessageContaining("should be of the form 'big-bc'");
+                                                                   .hasMessageContaining("should be of the form 'big-bc'");
         assertThatThrownBy(() -> VersionAndType.fromString("mcc-d")).isInstanceOf(IllegalArgumentException.class)
-                                                               .hasMessageContaining("No Type constant mcc");
-        assertThatThrownBy(() -> VersionAndType.fromString("mcc-d-")).isInstanceOf(IllegalArgumentException.class)
                                                                     .hasMessageContaining("No Type constant mcc");
+        assertThatThrownBy(() -> VersionAndType.fromString("mcc-d-")).isInstanceOf(IllegalArgumentException.class)
+                                                                     .hasMessageContaining("No Type constant mcc");
         assertThatThrownBy(() -> VersionAndType.fromString("mcc")).isInstanceOf(IllegalArgumentException.class)
-                                                               .hasMessageContaining("should be of the form 'big-bc'");
+                                                                  .hasMessageContaining("should be of the form 'big-bc'");
         assertThatThrownBy(() -> VersionAndType.fromString("-")).isInstanceOf(IllegalArgumentException.class)
-                                                               .hasMessageContaining("should be of the form 'big-bc'");
+                                                                .hasMessageContaining("should be of the form 'big-bc'");
         assertThatThrownBy(() -> VersionAndType.fromString("--")).isInstanceOf(IllegalArgumentException.class)
-                                                               .hasMessageContaining("should be of the form 'big-bc'");
+                                                                 .hasMessageContaining("should be of the form 'big-bc'");
     }
 }
