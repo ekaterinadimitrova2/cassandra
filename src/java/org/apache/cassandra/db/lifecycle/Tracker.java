@@ -442,7 +442,7 @@ public class Tracker
         if (!isInitialSSTables)
             notification = new SSTableAddedNotification(added);
         else
-            notification = new SSTableAddedDuringInitializationNotification(added);
+            notification = new InitialSSTableAddedNotification(added);
 
         for (INotificationConsumer subscriber : subscribers)
         {

@@ -402,8 +402,7 @@ public class AlterTableStatement extends SchemaAlteringStatement
                 boolean has2xSStables = onComma.splitToList(sstableVersionsString)
                                                .stream()
                                                .map(VersionAndType::fromString)
-                                               .map(VersionAndType::toString)
-                                               .anyMatch(v -> v.compareTo("big-ma")<=0);
+                                               .anyMatch(v -> !v.version().storeRows());
                 if (has2xSStables)
                     with2xSStables.add(node);
             }

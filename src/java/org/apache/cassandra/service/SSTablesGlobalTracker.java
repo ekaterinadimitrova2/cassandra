@@ -39,7 +39,7 @@ import org.apache.cassandra.io.sstable.format.SSTableFormat;
 import org.apache.cassandra.io.sstable.format.VersionAndType;
 import org.apache.cassandra.notifications.INotification;
 import org.apache.cassandra.notifications.INotificationConsumer;
-import org.apache.cassandra.notifications.SSTableAddedDuringInitializationNotification;
+import org.apache.cassandra.notifications.InitialSSTableAddedNotification;
 import org.apache.cassandra.notifications.SSTableAddedNotification;
 import org.apache.cassandra.notifications.SSTableDeletingNotification;
 import org.apache.cassandra.notifications.SSTableListChangedNotification;
@@ -249,10 +249,10 @@ public class SSTablesGlobalTracker implements INotificationConsumer
     {
         if (notification instanceof SSTableAddedNotification)
             return Iterables.transform(((SSTableAddedNotification)notification).added, s -> s.descriptor);
-        else if (notification instanceof SSTableListChangedNotification)
+        if (notification instanceof SSTableListChangedNotification)
             return Iterables.transform(((SSTableListChangedNotification)notification).added, s -> s.descriptor);
-        else if (notification instanceof SSTableAddedDuringInitializationNotification)
-            return Iterables.transform(((SSTableAddedDuringInitializationNotification)notification).added, s -> s.descriptor);
+        if (notification instanceof InitialSSTableAddedNotification)
+            return Iterables.transform(((InitialSSTableAddedNotification)notification).added, s -> s.descriptor);
         else
             return Collections.emptyList();
     }
@@ -261,7 +261,7 @@ public class SSTablesGlobalTracker implements INotificationConsumer
     {
         if (notification instanceof SSTableDeletingNotification)
             return Collections.singletonList(((SSTableDeletingNotification)notification).deleting.descriptor);
-        else if (notification instanceof SSTableListChangedNotification)
+        if (notification instanceof SSTableListChangedNotification)
             return Iterables.transform(((SSTableListChangedNotification)notification).removed, s -> s.descriptor);
         else
             return Collections.emptyList();

@@ -431,7 +431,6 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
         data.subscribe(StorageService.instance.sstablesTracker);
 
         Collection<SSTableReader> sstables = null;
-
         // scan for sstables corresponding to this cf and load them
         if (data.loadsstables)
         {
