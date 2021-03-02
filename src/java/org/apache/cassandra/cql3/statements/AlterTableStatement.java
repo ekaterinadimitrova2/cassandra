@@ -277,17 +277,17 @@ public class AlterTableStatement extends SchemaAlteringStatement
                     Set<IndexMetadata> dependentIndexes = store.indexManager.getDependentIndexes(def);
                     if (!dependentIndexes.isEmpty())
                         throw new InvalidRequestException(String.format("Cannot drop column %s because it has " +
-                                                                 "dependent secondary indexes (%s)",
-                                                                 def,
-                                                                 dependentIndexes.stream()
+                                                                        "dependent secondary indexes (%s)",
+                                                                        def,
+                                                                        dependentIndexes.stream()
                                                                                         .map(i -> i.name)
                                                                                         .collect(Collectors.joining(","))));
                 }
 
                 if (!Iterables.isEmpty(views))
                     throw new InvalidRequestException(String.format("Cannot drop column %s on base table %s with materialized views.",
-                                                             columnName.toString(),
-                                                             columnFamily()));
+                                                                    columnName.toString(),
+                                                                    columnFamily()));
                 break;
             case DROP_COMPACT_STORAGE:
                 if (!meta.isCompactTable())

@@ -246,7 +246,6 @@ public class CompactionStrategyManager implements INotificationConsumer
         if (notification instanceof SSTableAddedNotification)
         {
             SSTableAddedNotification flushedNotification = (SSTableAddedNotification) notification;
-
             for (SSTableReader sstable : flushedNotification.added)
             {
                 if (sstable.isRepaired())

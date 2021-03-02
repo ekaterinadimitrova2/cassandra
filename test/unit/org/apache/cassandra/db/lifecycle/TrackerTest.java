@@ -157,7 +157,7 @@ public class TrackerTest
         Assert.assertEquals(3, tracker.view.get().sstables.size());
         Assert.assertEquals(1, listener.senders.size());
         Assert.assertEquals(1, listener.received.size());
-        Assert.assertTrue(listener.received.get(0) instanceof SSTableAddedDuringInitializationNotification);
+        Assert.assertTrue(listener.received.get(0) instanceof InitialSSTableAddedNotification);
 
         for (SSTableReader reader : readers)
             Assert.assertTrue(reader.isKeyCacheSetup());
@@ -244,7 +244,7 @@ public class TrackerTest
             Assert.assertEquals(1, tracker.getView().sstables.size());
             Assert.assertEquals(4, listener.received.size());
             Assert.assertEquals(tracker, listener.senders.get(0));
-            Assert.assertTrue(listener.received.get(0) instanceof SSTableAddedDuringInitializationNotification);
+            Assert.assertTrue(listener.received.get(0) instanceof InitialSSTableAddedNotification);
             Assert.assertTrue(listener.received.get(1) instanceof SSTableDeletingNotification);
             Assert.assertTrue(listener.received.get(2) instanceof  SSTableDeletingNotification);
             Assert.assertTrue(listener.received.get(3) instanceof SSTableListChangedNotification);
