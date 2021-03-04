@@ -49,7 +49,6 @@ public enum ApplicationState
     // We added SSTABLE_VERSIONS in CASSANDRA-15897 in 3.0, and at the time, 3 more ApplicationState had been added
     // to newer versions, so we skipped the first 3 of our original padding to ensure SSTABLE_VERSIONS can preserve
     // its ordinal accross versions.
-    X3,
     /**
      * The set of sstable versions on this node. This will usually be only the "current" sstable format (the one with
      * which new sstables are written), but may contain more on newly upgraded nodes before `upgradesstable` has been

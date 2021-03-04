@@ -199,7 +199,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         upgradeInProgressPossible = false;
         return new ExpiringMemoizingSupplier.Memoized<>(null);
     };
-    
+
     private final Supplier<CassandraVersion> upgradeFromVersionMemoized = ExpiringMemoizingSupplier.memoizeWithExpiration(upgradeFromVersionSupplier, 1, TimeUnit.MINUTES);
 
     @VisibleForTesting
