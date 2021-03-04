@@ -449,15 +449,15 @@ public abstract class AlterTableStatement extends AlterSchemaStatement
          */
         private void validateCanDropCompactStorage() throws UnknownHostException
         {
-            Set<InetAddressAndPort> before3 = new HashSet<>();
+            Set<InetAddressAndPort> before4 = new HashSet<>();
             Set<InetAddressAndPort> preC15897nodes = new HashSet<>();
             Set<InetAddressAndPort> with2xSStables = new HashSet<>();
             Splitter onComma = Splitter.on(',').omitEmptyStrings().trimResults();
             for (InetAddressAndPort node : StorageService.instance.getTokenMetadata().getAllEndpoints())
             {
-                if (MessagingService.instance().getVersion(node.toString()) < MessagingService.VERSION_30)
+                if (MessagingService.instance().getVersion(node.toString()) < MessagingService.VERSION_40)
                 {
-                    before3.add(node);
+                    before4.add(node);
                     continue;
                 }
 
@@ -489,10 +489,10 @@ public abstract class AlterTableStatement extends AlterSchemaStatement
                 }
             }
 
-            if (!before3.isEmpty())
+            if (!before4.isEmpty())
                 throw new InvalidRequestException(format("Cannot DROP COMPACT STORAGE as some nodes in the cluster (%s) " +
-                                                         "are not on 3.0+ yet. Please upgrade those nodes and run " +
-                                                         "`upgradesstables` before retrying.", before3));
+                                                         "are not on 4.0+ yet. Please upgrade those nodes and run " +
+                                                         "`upgradesstables` before retrying.", before4));
             if (!preC15897nodes.isEmpty())
                 throw new InvalidRequestException(format("Cannot guarantee that DROP COMPACT STORAGE is safe as some nodes " +
                                                          "in the cluster (%s) do not have https://issues.apache.org/jira/browse/CASSANDRA-15897. " +
