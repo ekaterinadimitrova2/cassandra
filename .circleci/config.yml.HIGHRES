@@ -76,7 +76,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -154,7 +153,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -246,7 +244,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -325,7 +322,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -403,7 +399,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -482,7 +477,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -561,7 +555,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -640,7 +633,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -718,7 +710,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -796,7 +787,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -878,7 +868,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -938,7 +927,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -997,7 +985,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_upgradetests_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1043,7 +1030,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1135,7 +1121,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1227,7 +1212,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1309,7 +1293,6 @@ jobs:
         - cassandra
         - .m2
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1388,7 +1371,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1426,7 +1408,6 @@ jobs:
     - store_test_results:
         path: /tmp/cassandra/pylib
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1486,7 +1467,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1564,7 +1544,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1657,7 +1636,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1738,7 +1716,6 @@ jobs:
         - cassandra
         - .m2
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1816,7 +1793,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1894,7 +1870,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j8_with_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -1940,7 +1915,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -2032,7 +2006,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -2069,7 +2042,6 @@ jobs:
     - store_test_results:
         path: /tmp/cassandra/pylib
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -2115,7 +2087,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -2196,7 +2167,6 @@ jobs:
         path: ~/cassandra-dtest/logs
         destination: dtest_j11_without_vnodes_logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -2289,7 +2259,6 @@ jobs:
         path: /tmp/cassandra/build/test/logs
         destination: logs
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
@@ -2364,7 +2333,6 @@ jobs:
         paths:
         - dtest_jars
     environment:
-    - JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     - ANT_HOME: /usr/share/ant
     - LANG: en_US.UTF-8
     - KEEP_TEST_DIR: true
