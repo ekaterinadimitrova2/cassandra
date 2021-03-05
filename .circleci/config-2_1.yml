@@ -1,6 +1,7 @@
 version: 2.1
 
 default_env_vars: &default_env_vars
+    JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
     ANT_HOME: /usr/share/ant
     LANG: en_US.UTF-8
     KEEP_TEST_DIR: true
@@ -106,6 +107,12 @@ j8_with_dtests_jobs: &j8_with_dtests_jobs
     - start_utests_fqltool:
         type: approval
     - utests_fqltool:
+        requires:
+          - start_utests_fqltool
+          - j8_build
+    - start_utests_system_keyspace_directory:
+        type: approval
+    - utests_system_keyspace_directory:
         requires:
           - start_utests_fqltool
           - j8_build
@@ -454,6 +461,16 @@ jobs:
           at: /home/cassandra
       - run_junit_tests:
           target: fqltool-test
+
+  utests_system_keyspace_directory:
+    <<: *j8_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - create_junit_containers
+      - log_environment
+      - run_parallel_junit_tests:
+          target: testclasslist-system-keyspace-directory
 
   j8_dtests-with-vnodes:
     <<: *j8_par_executor
