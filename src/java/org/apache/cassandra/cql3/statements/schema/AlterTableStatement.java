@@ -455,7 +455,7 @@ public abstract class AlterTableStatement extends AlterSchemaStatement
             Splitter onComma = Splitter.on(',').omitEmptyStrings().trimResults();
             for (InetAddressAndPort node : StorageService.instance.getTokenMetadata().getAllEndpoints())
             {
-                if (MessagingService.instance().getVersion(node.toString()) < MessagingService.VERSION_40)
+                if (MessagingService.instance().getVersion(node.toString(false)) < MessagingService.VERSION_40)
                 {
                     before4.add(node);
                     continue;
