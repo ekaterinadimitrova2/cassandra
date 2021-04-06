@@ -84,6 +84,7 @@ import org.apache.cassandra.repair.*;
 import org.apache.cassandra.repair.messages.RepairOption;
 import org.apache.cassandra.schema.CompactionParams.TombstoneOption;
 import org.apache.cassandra.schema.KeyspaceMetadata;
+import org.apache.cassandra.schema.ReplicationParams;
 import org.apache.cassandra.schema.SchemaKeyspace;
 import org.apache.cassandra.service.paxos.CommitVerbHandler;
 import org.apache.cassandra.service.paxos.PrepareVerbHandler;
@@ -2996,6 +2997,15 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         return Schema.instance.getVersion().toString();
     }
 
+    public String getKeyspaceReplicationInfo(String keyspaceName)
+    {
+        Keyspace keyspaceInstance = Schema.instance.getKeyspaceInstance(keyspaceName);
+        if (keyspaceInstance == null)
+            throw new IllegalArgumentException(); // ideally should never happen
+        ReplicationParams replicationParams = keyspaceInstance.getMetadata().params.replication;
+        return replicationParams.klass.getSimpleName() + " " + replicationParams.options.toString();
+    }
+
     public List<String> getLeavingNodes()
     {
         return stringify(tokenMetadata.getLeavingEndpoints());
@@ -4733,7 +4743,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
             // wait for miscellaneous tasks like sstable and commitlog segment deletion
             ScheduledExecutors.nonPeriodicTasks.shutdown();
             if (!ScheduledExecutors.nonPeriodicTasks.awaitTermination(1, MINUTES))
-                logger.warn("Failed to wait for non periodic tasks to shutdown");
+                logger.warn("Unable to terminate non-periodic tasks within 1 minute.");
 
             ColumnFamilyStore.shutdownPostFlushExecutor();
             setMode(Mode.DRAINED, !isFinalShutdown);
