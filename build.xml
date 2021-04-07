@@ -718,7 +718,6 @@
         <dependency groupId="org.openjdk.jmh" artifactId="jmh-core" scope="test"/>
         <dependency groupId="org.openjdk.jmh" artifactId="jmh-generator-annprocess" scope="test"/>
         <dependency groupId="net.ju-n.compile-command-annotations" artifactId="compile-command-annotations" scope="test"/>
-        <dependency groupId="org.apache.ant" artifactId="ant-junit" version="1.9.7" scope="test"/>
         <!-- adding this dependency is necessary for assertj. When updating assertj, need to also update the version of
              this that the new assertj's `assertj-parent-pom` depends on. -->
         <dependency groupId="org.junit" artifactId="junit-bom" type="pom" scope="test"/>
