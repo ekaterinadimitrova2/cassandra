@@ -267,14 +267,12 @@
         <pathelement location="${build.classes.main}" />
         <fileset dir="${build.dir.lib}">
             <include name="**/*.jar" />
-            <exclude name="**/ant-*.jar"/>
         </fileset>
     </path>
     <path id="cassandra.classpath.test">
         <file file="${build.dir}/${final.name}.jar"/> <!-- we need the jar for tests and benchmarks (multi-version jar) -->
         <fileset dir="${build.dir.lib}">
             <include name="**/*.jar" />
-            <exclude name="**/ant-*.jar"/>
         </fileset>
         <fileset dir="${test.lib}/jars">
             <include name="**/*.jar" />
