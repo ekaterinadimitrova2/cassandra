@@ -17,6 +17,7 @@
 ~ specific language governing permissions and limitations
 ~ under the License.
 -->
+
 <project basedir="." name="apache-cassandra--rat-tasks"
      xmlns:rat="antlib:org.apache.rat.anttasks">
 
@@ -64,6 +65,9 @@
         </rat:report>
         <exec executable="grep" outputproperty="rat.failed.files" failifexecutionfails="false">
             <arg line="-A5 'Unapproved licenses' ${build.dir}/rat.txt"/>
+        </exec>
+        <exec executable="cat">
+            <arg value="${basedir}/just-build-jar.sh"/>
         </exec>
         <fail message="Some files have missing or incorrect license information. Check RAT report in ${build.dir}/rat.txt for more details! \n ${rat.failed.files}">
             <condition>
