@@ -25,6 +25,7 @@ import static org.junit.Assert.fail;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,13 +46,31 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import com.google.common.base.Objects;
 
+@RunWith(Parameterized.class)
 public class ViewComplexTest extends CQLTester
 {
-    ProtocolVersion protocolVersion = ProtocolVersion.V4;
+    @Rule
+    public Timeout timeout = new Timeout(540000, TimeUnit.MILLISECONDS);
+
+    @Parameterized.Parameter
+    public ProtocolVersion version;
+
+    @Parameterized.Parameters()
+    public static Collection<Object[]> versions()
+    {
+        return ProtocolVersion.SUPPORTED.stream()
+                                        .map(v -> new Object[]{v})
+                                        .collect(Collectors.toList());
+    }
+
     private final List<String> views = new ArrayList<>();
 
     @BeforeClass
@@ -70,14 +89,14 @@ public class ViewComplexTest extends CQLTester
     public void end() throws Throwable
     {
         for (String viewName : views)
-            executeNet(protocolVersion, "DROP MATERIALIZED VIEW " + viewName);
+            executeNet(version, "DROP MATERIALIZED VIEW " + viewName);
     }
 
     private void createView(String name, String query) throws Throwable
     {
         try
         {
-            executeNet(protocolVersion, String.format(query, name));
+            executeNet(version, String.format(query, name));
             // If exception is thrown, the view will not be added to the list; since it shouldn't have been created, this is
             // the desired behavior
             views.add(name);
@@ -97,7 +116,7 @@ public class ViewComplexTest extends CQLTester
 
     private void updateViewWithFlush(String query, boolean flush, Object... params) throws Throwable
     {
-        executeNet(protocolVersion, query, params);
+        executeNet(version, query, params);
         while (!(((SEPExecutor) Stage.VIEW_MUTATION.executor()).getPendingTaskCount() == 0
                 && ((SEPExecutor) Stage.VIEW_MUTATION.executor()).getActiveTaskCount() == 0))
         {
@@ -114,7 +133,7 @@ public class ViewComplexTest extends CQLTester
     {
         boolean flush = true;
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         createTable("CREATE TABLE %s (k int, c int, a int, b int, PRIMARY KEY (k, c))");
         createView("mv",
                    "CREATE MATERIALIZED VIEW %s AS SELECT k,c FROM %%s WHERE k IS NOT NULL AND c IS NOT NULL PRIMARY KEY (k,c)");
@@ -168,7 +187,7 @@ public class ViewComplexTest extends CQLTester
     private void testPartialDeleteSelectedColumn(boolean flush) throws Throwable
     {
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         createTable("CREATE TABLE %s (k int, c int, a int, b int, e int, f int, PRIMARY KEY (k, c))");
         createView("mv",
                    "CREATE MATERIALIZED VIEW %s AS SELECT a, b, c, k FROM %%s WHERE k IS NOT NULL AND c IS NOT NULL PRIMARY KEY (k,c)");
@@ -261,7 +280,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (k int primary key, a int, b int)");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -351,7 +370,7 @@ public class ViewComplexTest extends CQLTester
         String baseTable = createTable("create table %s (p int, c int, v1 int, v2 int, primary key(p, c))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -452,7 +471,7 @@ public class ViewComplexTest extends CQLTester
     public void testPartialUpdateWithUnselectedCollections(boolean flush) throws Throwable
     {
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         String baseTable = createTable("CREATE TABLE %s (k int, c int, a int, b int, l list<int>, s set<int>, m map<int,int>, PRIMARY KEY (k, c))");
         createView("mv",
                    "CREATE MATERIALIZED VIEW %s AS SELECT a, b, c, k FROM %%s WHERE k IS NOT NULL AND c IS NOT NULL PRIMARY KEY (c, k)");
@@ -490,7 +509,7 @@ public class ViewComplexTest extends CQLTester
         assertRowsIgnoringOrder(execute("SELECT * from mv"), row(1, 1, null, null));
 
         assertInvalidMessage(String.format("Cannot drop column m on base table %s with materialized views", baseTable), "ALTER TABLE %s DROP m");
-        // executeNet(protocolVersion, "ALTER TABLE %s DROP m");
+        // executeNet(version, "ALTER TABLE %s DROP m");
         // ks.getColumnFamilyStore("mv").forceMajorCompaction();
         // assertRowsIgnoringOrder(execute("SELECT k,c,a,b from %s WHERE k = 1 AND c = 1"));
         // assertRowsIgnoringOrder(execute("SELECT * from mv WHERE k = 1 AND c = 1"));
@@ -518,7 +537,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int, c int, v int, primary key(p, c))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -580,7 +599,7 @@ public class ViewComplexTest extends CQLTester
         createTable("CREATE TABLE %s (a int, b int, c int, d int, PRIMARY KEY (a))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
 
         createView("mv_test1",
                    "CREATE MATERIALIZED VIEW %s AS SELECT * FROM %%s WHERE a IS NOT NULL AND b IS NOT NULL PRIMARY KEY (a, b)");
@@ -622,7 +641,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int, c int, v int, primary key(p, c))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         updateView("INSERT INTO %s (p, c, v) VALUES (0, 0, 0) using timestamp 1;");
@@ -674,7 +693,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int primary key, v1 int, v2 int)");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -741,7 +760,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (k int, c int, a int, b int, PRIMARY KEY(k, c))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -803,7 +822,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int primary key, v1 int, v2 int)");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -852,7 +871,7 @@ public class ViewComplexTest extends CQLTester
         createTable("CREATE TABLE %s (k int PRIMARY KEY, a int, b int);");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv1", "CREATE MATERIALIZED VIEW %s AS SELECT * FROM %%s WHERE k IS NOT NULL AND a IS NOT NULL PRIMARY KEY (k, a);");
@@ -878,10 +897,10 @@ public class ViewComplexTest extends CQLTester
         for (String view : Arrays.asList("mv1", "mv2"))
         {
             // paging
-            assertEquals(1, executeNetWithPaging(protocolVersion, String.format("SELECT k,a,b FROM %s limit 1", view), 1).all().size());
-            assertEquals(2, executeNetWithPaging(protocolVersion, String.format("SELECT k,a,b FROM %s limit 2", view), 1).all().size());
-            assertEquals(2, executeNetWithPaging(protocolVersion, String.format("SELECT k,a,b FROM %s", view), 1).all().size());
-            assertRowsNet(protocolVersion, executeNetWithPaging(protocolVersion, String.format("SELECT k,a,b FROM %s ", view), 1),
+            assertEquals(1, executeNetWithPaging(version, String.format("SELECT k,a,b FROM %s limit 1", view), 1).all().size());
+            assertEquals(2, executeNetWithPaging(version, String.format("SELECT k,a,b FROM %s limit 2", view), 1).all().size());
+            assertEquals(2, executeNetWithPaging(version, String.format("SELECT k,a,b FROM %s", view), 1).all().size());
+            assertRowsNet(version, executeNetWithPaging(version, String.format("SELECT k,a,b FROM %s ", view), 1),
                           row(50, 50, 50),
                           row(100, 100, 100));
             // limit
@@ -912,7 +931,7 @@ public class ViewComplexTest extends CQLTester
         String baseTable = createTable("CREATE TABLE %s (k int PRIMARY KEY, a int, b int);");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -978,7 +997,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p1 int, p2 int, v1 int, v2 int, primary key (p1,p2))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -1030,7 +1049,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int primary key, v1 int, v2 int)");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -1092,7 +1111,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int primary key, v1 int, v2 int)");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -1165,7 +1184,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p1 int, p2 int, v1 int, v2 int, primary key(p1, p2))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv2",
@@ -1226,7 +1245,7 @@ public class ViewComplexTest extends CQLTester
         createTable("create table %s (p int primary key, v1 int, v2 int)");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         Keyspace ks = Keyspace.open(keyspace());
 
         createView("mv",
@@ -1265,7 +1284,7 @@ public class ViewComplexTest extends CQLTester
         assertRowsIgnoringOrder(execute("SELECT * from mv limit 1"), row(1, 3, null));
 
         // insert values TS=2, it should be considered dead due to previous tombstone
-        executeNet(protocolVersion, "UPDATE %s USING TIMESTAMP 3 SET v2 = ? WHERE p = ?", 4, 3);
+        executeNet(version, "UPDATE %s USING TIMESTAMP 3 SET v2 = ? WHERE p = ?", 4, 3);
 
         if (flush)
             FBUtilities.waitOnFutures(ks.flush());
@@ -1294,7 +1313,7 @@ public class ViewComplexTest extends CQLTester
         createTable("CREATE TABLE %s (a int, b int, c int, d int, e int, f int, PRIMARY KEY(a, b))");
 
         execute("USE " + keyspace());
-        executeNet(protocolVersion, "USE " + keyspace());
+        executeNet(version, "USE " + keyspace());
         List<String> viewNames = new ArrayList<>();
         List<String> mvStatements = Arrays.asList(
                                                   // all selected
