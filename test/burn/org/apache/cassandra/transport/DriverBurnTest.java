@@ -185,12 +185,22 @@ public class DriverBurnTest extends CQLTester
     }
 
     @Test
-    public void measureSmallV5() throws Throwable
+    public void measureSmallV6() throws Throwable
     {
         perfTest(new SizeCaps(10, 20, 5, 10),
                  new SizeCaps(10, 20, 5, 10),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
+                        .withPort(nativePort));
+    }
+
+    @Test
+    public void measureSmallV5() throws Throwable
+    {
+        perfTest(new SizeCaps(10, 20, 5, 10),
+                 new SizeCaps(10, 20, 5, 10),
+                 Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
+                        .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
                         .withPort(nativePort));
     }
 
@@ -205,12 +215,22 @@ public class DriverBurnTest extends CQLTester
     }
 
     @Test
-    public void measureLargeV5() throws Throwable
+    public void measureLargeV6() throws Throwable
     {
         perfTest(new SizeCaps(1000, 2000, 5, 150),
                  new SizeCaps(1000, 2000, 5, 150),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
+                        .withPort(nativePort));
+    }
+
+    @Test
+    public void measureLargeV5() throws Throwable
+    {
+        perfTest(new SizeCaps(1000, 2000, 5, 150),
+                 new SizeCaps(1000, 2000, 5, 150),
+                 Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
+                        .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
                         .withPort(nativePort));
     }
 
@@ -225,12 +245,23 @@ public class DriverBurnTest extends CQLTester
     }
 
     @Test
-    public void measureSmallV5ithCompression() throws Throwable
+    public void measureSmallV6WithCompression() throws Throwable
     {
         perfTest(new SizeCaps(10, 20, 5, 10),
                  new SizeCaps(10, 20, 5, 10),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
+                        .withCompression(ProtocolOptions.Compression.LZ4)
+                        .withPort(nativePort));
+    }
+
+    @Test
+    public void measureSmallV5WithCompression() throws Throwable
+    {
+        perfTest(new SizeCaps(10, 20, 5, 10),
+                 new SizeCaps(10, 20, 5, 10),
+                 Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
+                        .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
                         .withCompression(ProtocolOptions.Compression.LZ4)
                         .withPort(nativePort));
     }
@@ -247,12 +278,23 @@ public class DriverBurnTest extends CQLTester
     }
 
     @Test
-    public void measureLargeV5WithCompression() throws Throwable
+    public void measureLargeV6WithCompression() throws Throwable
     {
         perfTest(new SizeCaps(1000, 2000, 5, 150),
                  new SizeCaps(1000, 2000, 5, 150),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
+                        .withCompression(ProtocolOptions.Compression.LZ4)
+                        .withPort(nativePort));
+    }
+
+    @Test
+    public void measureLargeV5WithCompression() throws Throwable
+    {
+        perfTest(new SizeCaps(1000, 2000, 5, 150),
+                 new SizeCaps(1000, 2000, 5, 150),
+                 Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
+                        .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
                         .withCompression(ProtocolOptions.Compression.LZ4)
                         .withPort(nativePort));
     }

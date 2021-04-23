@@ -40,7 +40,7 @@ import org.apache.cassandra.utils.FBUtilities;
 
 public class ViewFilteringTest extends CQLTester
 {
-    ProtocolVersion protocolVersion = ProtocolVersion.V4;
+    ProtocolVersion protocolVersion = getDefaultVersion();
     private final List<String> views = new ArrayList<>();
 
     @BeforeClass

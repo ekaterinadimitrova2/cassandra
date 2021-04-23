@@ -231,7 +231,7 @@ public class QueryPagerTest
     }
 
     @Test
-    public void namesQueryTest() throws Exception
+    public void namesQueryTest()
     {
         QueryPager pager = namesQuery("k0", "c1", "c5", "c7", "c8").getPager(null, ProtocolVersion.CURRENT);
 
@@ -243,16 +243,16 @@ public class QueryPagerTest
     }
 
     @Test
-    public void sliceQueryTest() throws Exception
+    public void sliceQueryTest()
     {
         sliceQueryTest(false, ProtocolVersion.V3);
         sliceQueryTest(true,  ProtocolVersion.V3);
 
-        sliceQueryTest(false, ProtocolVersion.V4);
-        sliceQueryTest(true,  ProtocolVersion.V4);
+        sliceQueryTest(false, ProtocolVersion.CURRENT);
+        sliceQueryTest(true,  ProtocolVersion.CURRENT);
     }
 
-    public void sliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion) throws Exception
+    public void sliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
     {
         ReadCommand command = sliceQuery("k0", "c1", "c8", 10);
         QueryPager pager = command.getPager(null, protocolVersion);
@@ -277,16 +277,16 @@ public class QueryPagerTest
     }
 
     @Test
-    public void reversedSliceQueryTest() throws Exception
+    public void reversedSliceQueryTest()
     {
         reversedSliceQueryTest(false, ProtocolVersion.V3);
         reversedSliceQueryTest(true,  ProtocolVersion.V3);
 
-        reversedSliceQueryTest(false, ProtocolVersion.V4);
-        reversedSliceQueryTest(true,  ProtocolVersion.V4);
+        reversedSliceQueryTest(false, ProtocolVersion.CURRENT);
+        reversedSliceQueryTest(true,  ProtocolVersion.CURRENT);
     }
 
-    public void reversedSliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion) throws Exception
+    public void reversedSliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
     {
         ReadCommand command = sliceQuery("k0", "c1", "c8", true, 10);
         QueryPager pager = command.getPager(null, protocolVersion);
@@ -311,16 +311,16 @@ public class QueryPagerTest
     }
 
     @Test
-    public void multiQueryTest() throws Exception
+    public void multiQueryTest()
     {
         multiQueryTest(false, ProtocolVersion.V3);
         multiQueryTest(true,  ProtocolVersion.V3);
 
-        multiQueryTest(false, ProtocolVersion.V4);
-        multiQueryTest(true,  ProtocolVersion.V4);
+        multiQueryTest(false, ProtocolVersion.CURRENT);
+        multiQueryTest(true,  ProtocolVersion.CURRENT);
     }
 
-    public void multiQueryTest(boolean testPagingState, ProtocolVersion protocolVersion) throws Exception
+    public void multiQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
     {
         ReadQuery command = new SinglePartitionReadCommand.Group(new ArrayList<SinglePartitionReadCommand>()
         {{
@@ -350,16 +350,16 @@ public class QueryPagerTest
     }
 
     @Test
-    public void rangeNamesQueryTest() throws Exception
+    public void rangeNamesQueryTest()
     {
         rangeNamesQueryTest(false, ProtocolVersion.V3);
         rangeNamesQueryTest(true,  ProtocolVersion.V3);
 
-        rangeNamesQueryTest(false, ProtocolVersion.V4);
-        rangeNamesQueryTest(true,  ProtocolVersion.V4);
+        rangeNamesQueryTest(false, ProtocolVersion.CURRENT);
+        rangeNamesQueryTest(true,  ProtocolVersion.CURRENT);
     }
 
-    public void rangeNamesQueryTest(boolean testPagingState, ProtocolVersion protocolVersion) throws Exception
+    public void rangeNamesQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
     {
         ReadCommand command = rangeNamesQuery("k0", "k5", 100, "c1", "c4", "c8");
         QueryPager pager = command.getPager(null, protocolVersion);
@@ -380,16 +380,16 @@ public class QueryPagerTest
     }
 
     @Test
-    public void rangeSliceQueryTest() throws Exception
+    public void rangeSliceQueryTest()
     {
         rangeSliceQueryTest(false, ProtocolVersion.V3);
         rangeSliceQueryTest(true,  ProtocolVersion.V3);
 
-        rangeSliceQueryTest(false, ProtocolVersion.V4);
-        rangeSliceQueryTest(true,  ProtocolVersion.V4);
+        rangeSliceQueryTest(false, ProtocolVersion.CURRENT);
+        rangeSliceQueryTest(true,  ProtocolVersion.CURRENT);
     }
 
-    public void rangeSliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion) throws Exception
+    public void rangeSliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
     {
         ReadCommand command = rangeSliceQuery("k1", "k5", 100, "c1", "c7");
         QueryPager pager = command.getPager(null, protocolVersion);
@@ -435,7 +435,7 @@ public class QueryPagerTest
     }
 
     @Test
-    public void SliceQueryWithTombstoneTest() throws Exception
+    public void SliceQueryWithTombstoneTest()
     {
         // Testing for the bug of #6748
         String keyspace = "cql_keyspace";
@@ -459,7 +459,7 @@ public class QueryPagerTest
     }
 
     @Test
-    public void pagingReversedQueriesWithStaticColumnsTest() throws Exception
+    public void pagingReversedQueriesWithStaticColumnsTest()
     {
         // There was a bug in paging for reverse queries when the schema includes static columns in
         // 2.1 & 2.2. This was never a problem in 3.0, so this test just guards against regressions
@@ -475,7 +475,7 @@ public class QueryPagerTest
         queryAndVerifyCells(table, true, "k0");
     }
 
-    private void queryAndVerifyCells(TableMetadata table, boolean reversed, String key) throws Exception
+    private void queryAndVerifyCells(TableMetadata table, boolean reversed, String key)
     {
         ClusteringIndexFilter rowfilter = new ClusteringIndexSliceFilter(Slices.ALL, reversed);
         ReadCommand command = SinglePartitionReadCommand.create(table, nowInSec, Util.dk(key), ColumnFilter.all(table), rowfilter);

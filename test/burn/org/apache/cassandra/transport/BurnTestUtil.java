@@ -78,7 +78,7 @@ public class BurnTestUtil
                                                         10,
                                                         null,
                                                         null,
-                                                        ProtocolVersion.V4,
+                                                        ProtocolVersion.CURRENT,
                                                         "KEYSPACE");
 
         return new QueryMessage(Integer.toString(idx), queryOptions);

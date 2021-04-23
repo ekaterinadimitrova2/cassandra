@@ -45,11 +45,12 @@ public class ClientWarningsTest extends CQLTester
     }
 
     @Test
-    public void testUnloggedBatchWithProtoV4() throws Exception
+    public void testUnloggedBatchWithLatestProto() throws Exception
     {
         createTable("CREATE TABLE %s (pk int PRIMARY KEY, v text)");
 
-        try (SimpleClient client = new SimpleClient(nativeAddr.getHostAddress(), nativePort, ProtocolVersion.V4))
+        // v4 and higher
+        try (SimpleClient client = new SimpleClient(nativeAddr.getHostAddress(), nativePort, getDefaultVersion()))
         {
             client.connect(false);
 
@@ -64,11 +65,12 @@ public class ClientWarningsTest extends CQLTester
     }
 
     @Test
-    public void testLargeBatchWithProtoV4() throws Exception
+    public void testLargeBatchWithLatestProto() throws Exception
     {
         createTable("CREATE TABLE %s (pk int PRIMARY KEY, v text)");
 
-        try (SimpleClient client = new SimpleClient(nativeAddr.getHostAddress(), nativePort, ProtocolVersion.V4))
+        // v4 and higher
+        try (SimpleClient client = new SimpleClient(nativeAddr.getHostAddress(), nativePort, getDefaultVersion()))
         {
             client.connect(false);
 
