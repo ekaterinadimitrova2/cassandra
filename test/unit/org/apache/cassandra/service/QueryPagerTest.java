@@ -25,6 +25,7 @@ import java.util.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import org.apache.cassandra.*;
 import org.apache.cassandra.cql3.statements.schema.CreateTableStatement;
@@ -233,7 +234,13 @@ public class QueryPagerTest
     @Test
     public void namesQueryTest()
     {
-        QueryPager pager = namesQuery("k0", "c1", "c5", "c7", "c8").getPager(null, ProtocolVersion.CURRENT);
+        for(ProtocolVersion protocolVersion : ProtocolVersion.SUPPORTED)
+            namesQueryTest(protocolVersion);
+    }
+
+    public void namesQueryTest(ProtocolVersion protocolVersion)
+    {
+        QueryPager pager = namesQuery("k0", "c1", "c5", "c7", "c8").getPager(null, protocolVersion);
 
         assertFalse(pager.isExhausted());
         List<FilteredPartition> partition = query(pager, 5, 4);
@@ -245,11 +252,11 @@ public class QueryPagerTest
     @Test
     public void sliceQueryTest()
     {
-        sliceQueryTest(false, ProtocolVersion.V3);
-        sliceQueryTest(true,  ProtocolVersion.V3);
-
-        sliceQueryTest(false, ProtocolVersion.CURRENT);
-        sliceQueryTest(true,  ProtocolVersion.CURRENT);
+        for(ProtocolVersion protocolVersion : ProtocolVersion.SUPPORTED)
+        {
+            sliceQueryTest(false, protocolVersion);
+            sliceQueryTest(true, protocolVersion);
+        }
     }
 
     public void sliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
@@ -279,11 +286,11 @@ public class QueryPagerTest
     @Test
     public void reversedSliceQueryTest()
     {
-        reversedSliceQueryTest(false, ProtocolVersion.V3);
-        reversedSliceQueryTest(true,  ProtocolVersion.V3);
-
-        reversedSliceQueryTest(false, ProtocolVersion.CURRENT);
-        reversedSliceQueryTest(true,  ProtocolVersion.CURRENT);
+        for(ProtocolVersion protocolVersion : ProtocolVersion.SUPPORTED)
+        {
+            reversedSliceQueryTest(false, protocolVersion);
+            reversedSliceQueryTest(true, protocolVersion);
+        }
     }
 
     public void reversedSliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
@@ -313,11 +320,11 @@ public class QueryPagerTest
     @Test
     public void multiQueryTest()
     {
-        multiQueryTest(false, ProtocolVersion.V3);
-        multiQueryTest(true,  ProtocolVersion.V3);
-
-        multiQueryTest(false, ProtocolVersion.CURRENT);
-        multiQueryTest(true,  ProtocolVersion.CURRENT);
+        for(ProtocolVersion protocolVersion : ProtocolVersion.SUPPORTED)
+        {
+            multiQueryTest(false, protocolVersion);
+            multiQueryTest(true, protocolVersion);
+        }
     }
 
     public void multiQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
@@ -352,11 +359,11 @@ public class QueryPagerTest
     @Test
     public void rangeNamesQueryTest()
     {
-        rangeNamesQueryTest(false, ProtocolVersion.V3);
-        rangeNamesQueryTest(true,  ProtocolVersion.V3);
-
-        rangeNamesQueryTest(false, ProtocolVersion.CURRENT);
-        rangeNamesQueryTest(true,  ProtocolVersion.CURRENT);
+        for(ProtocolVersion protocolVersion : ProtocolVersion.SUPPORTED)
+        {
+            rangeNamesQueryTest(false, protocolVersion);
+            rangeNamesQueryTest(true, protocolVersion);
+        }
     }
 
     public void rangeNamesQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
@@ -382,11 +389,11 @@ public class QueryPagerTest
     @Test
     public void rangeSliceQueryTest()
     {
-        rangeSliceQueryTest(false, ProtocolVersion.V3);
-        rangeSliceQueryTest(true,  ProtocolVersion.V3);
-
-        rangeSliceQueryTest(false, ProtocolVersion.CURRENT);
-        rangeSliceQueryTest(true,  ProtocolVersion.CURRENT);
+        for(ProtocolVersion protocolVersion : ProtocolVersion.SUPPORTED)
+        {
+            rangeSliceQueryTest(false, protocolVersion);
+            rangeSliceQueryTest(true, protocolVersion);
+        }
     }
 
     public void rangeSliceQueryTest(boolean testPagingState, ProtocolVersion protocolVersion)
@@ -437,6 +444,12 @@ public class QueryPagerTest
     @Test
     public void SliceQueryWithTombstoneTest()
     {
+        for(ProtocolVersion version : ProtocolVersion.SUPPORTED)
+            SliceQueryWithTombstoneTest(version);
+    }
+
+    public void SliceQueryWithTombstoneTest(ProtocolVersion protocolVersion)
+    {
         // Testing for the bug of #6748
         String keyspace = "cql_keyspace";
         String table = "table2";
@@ -448,7 +461,7 @@ public class QueryPagerTest
 
         ReadCommand command = SinglePartitionReadCommand.create(cfs.metadata(), nowInSec, Util.dk("k0"), Slice.ALL);
 
-        QueryPager pager = command.getPager(null, ProtocolVersion.CURRENT);
+        QueryPager pager = command.getPager(null, protocolVersion);
 
         for (int i = 0; i < 5; i++)
         {

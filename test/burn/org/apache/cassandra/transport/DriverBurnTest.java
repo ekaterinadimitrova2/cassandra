@@ -33,7 +33,6 @@ import org.junit.Test;
 
 import com.datastax.driver.core.*;
 import io.netty.buffer.ByteBuf;
-import org.apache.cassandra.config.EncryptionOptions;
 import org.apache.cassandra.cql3.CQLTester;
 import org.apache.cassandra.service.NativeTransportService;
 import org.apache.cassandra.service.QueryState;
@@ -191,7 +190,8 @@ public class DriverBurnTest extends CQLTester
                  new SizeCaps(10, 20, 5, 10),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V6);
     }
 
     @Test
@@ -201,7 +201,8 @@ public class DriverBurnTest extends CQLTester
                  new SizeCaps(10, 20, 5, 10),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V5);
     }
 
     @Test
@@ -211,7 +212,8 @@ public class DriverBurnTest extends CQLTester
                  new SizeCaps(10, 20, 5, 10),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V4);
     }
 
     @Test
@@ -221,7 +223,8 @@ public class DriverBurnTest extends CQLTester
                  new SizeCaps(1000, 2000, 5, 150),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V6);
     }
 
     @Test
@@ -231,7 +234,8 @@ public class DriverBurnTest extends CQLTester
                  new SizeCaps(1000, 2000, 5, 150),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V5);
     }
 
     @Test
@@ -241,7 +245,8 @@ public class DriverBurnTest extends CQLTester
                  new SizeCaps(1000, 2000, 5, 150),
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V4);
     }
 
     @Test
@@ -252,7 +257,8 @@ public class DriverBurnTest extends CQLTester
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
                         .withCompression(ProtocolOptions.Compression.LZ4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V6);
     }
 
     @Test
@@ -263,7 +269,8 @@ public class DriverBurnTest extends CQLTester
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
                         .withCompression(ProtocolOptions.Compression.LZ4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V5);
     }
 
     @Test
@@ -274,7 +281,8 @@ public class DriverBurnTest extends CQLTester
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V4)
                         .withCompression(ProtocolOptions.Compression.LZ4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V4);
     }
 
     @Test
@@ -285,7 +293,8 @@ public class DriverBurnTest extends CQLTester
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .allowBetaProtocolVersion()
                         .withCompression(ProtocolOptions.Compression.LZ4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V6);
     }
 
     @Test
@@ -296,7 +305,8 @@ public class DriverBurnTest extends CQLTester
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V5)
                         .withCompression(ProtocolOptions.Compression.LZ4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V5);
     }
 
     @Test
@@ -307,18 +317,19 @@ public class DriverBurnTest extends CQLTester
                  Cluster.builder().addContactPoint(nativeAddr.getHostAddress())
                         .withProtocolVersion(com.datastax.driver.core.ProtocolVersion.V4)
                         .withCompression(ProtocolOptions.Compression.LZ4)
-                        .withPort(nativePort));
+                        .withPort(nativePort),
+                 ProtocolVersion.V4);
     }
 
-    public void perfTest(SizeCaps requestCaps, SizeCaps responseCaps, Cluster.Builder builder) throws Throwable
+    public void perfTest(SizeCaps requestCaps, SizeCaps responseCaps, Cluster.Builder builder, ProtocolVersion version) throws Throwable
     {
         SimpleStatement request = generateQueryStatement(0, requestCaps);
         ResultMessage.Rows response = generateRows(0, responseCaps);
-        QueryMessage requestMessage = generateQueryMessage(0, requestCaps);
-        Envelope message = requestMessage.encode(ProtocolVersion.V4);
+        QueryMessage requestMessage = generateQueryMessage(0, requestCaps, version);
+        Envelope message = requestMessage.encode(version);
         int requestSize = message.body.readableBytes();
         message.release();
-        message = response.encode(ProtocolVersion.V4);
+        message = response.encode(version);
         int responseSize = message.body.readableBytes();
         message.release();
         Message.Type.QUERY.unsafeSetCodec(new Message.Codec<QueryMessage>() {
