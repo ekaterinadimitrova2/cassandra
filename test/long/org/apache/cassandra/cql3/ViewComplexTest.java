@@ -57,9 +57,6 @@ import com.google.common.base.Objects;
 @RunWith(Parameterized.class)
 public class ViewComplexTest extends CQLTester
 {
-    @Rule
-    public Timeout timeout = new Timeout(540000, TimeUnit.MILLISECONDS);
-
     @Parameterized.Parameter
     public ProtocolVersion version;
 
