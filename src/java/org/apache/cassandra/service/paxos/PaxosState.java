@@ -24,6 +24,9 @@ import java.util.concurrent.locks.Lock;
 
 import com.google.common.util.concurrent.Striped;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.cassandra.schema.TableMetadata;
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.db.*;
@@ -32,6 +35,7 @@ import org.apache.cassandra.utils.UUIDGen;
 
 public class PaxosState
 {
+    protected static final Logger logger = LoggerFactory.getLogger(PaxosState.class);
     private static final Striped<Lock> LOCKS = Striped.lazyWeakLock(DatabaseDescriptor.getConcurrentWriters() * 1024);
 
     private final Commit promised;
@@ -71,12 +75,14 @@ public class PaxosState
                 PaxosState state = SystemKeyspace.loadPaxosState(toPrepare.update.partitionKey(), toPrepare.update.metadata(), nowInSec);
                 if (toPrepare.isAfter(state.promised))
                 {
+                    logger.debug("KATE DEBUG: Promising ballot {}", toPrepare.ballot);
                     Tracing.trace("Promising ballot {}", toPrepare.ballot);
                     SystemKeyspace.savePaxosPromise(toPrepare);
                     return new PrepareResponse(true, state.accepted, state.mostRecentCommit);
                 }
                 else
                 {
+                    logger.debug("KATE DEBUG: Promise rejected; {} is not sufficiently newer than {}", toPrepare, state.promised);
                     Tracing.trace("Promise rejected; {} is not sufficiently newer than {}", toPrepare, state.promised);
                     // return the currently promised ballot (not the last accepted one) so the coordinator can make sure it uses newer ballot next time (#5667)
                     return new PrepareResponse(false, state.promised, state.mostRecentCommit);
@@ -107,12 +113,14 @@ public class PaxosState
                 PaxosState state = SystemKeyspace.loadPaxosState(proposal.update.partitionKey(), proposal.update.metadata(), nowInSec);
                 if (proposal.hasBallot(state.promised.ballot) || proposal.isAfter(state.promised))
                 {
+                    logger.debug("KATE DEBUG: Accepting proposal {}", proposal);
                     Tracing.trace("Accepting proposal {}", proposal);
                     SystemKeyspace.savePaxosProposal(proposal);
                     return true;
                 }
                 else
                 {
+                    logger.debug("KATE DEBUG: Rejecting proposal for {} because inProgress is now {}", proposal, state.promised);
                     Tracing.trace("Rejecting proposal for {} because inProgress is now {}", proposal, state.promised);
                     return false;
                 }
@@ -142,12 +150,14 @@ public class PaxosState
             // don't want to perform the mutation and potentially resurrect truncated data
             if (UUIDGen.unixTimestamp(proposal.ballot) >= SystemKeyspace.getTruncatedAt(proposal.update.metadata().id))
             {
+                logger.debug("KATE DEBUG: Committing proposal {}", proposal);
                 Tracing.trace("Committing proposal {}", proposal);
                 Mutation mutation = proposal.makeMutation();
                 Keyspace.open(mutation.getKeyspaceName()).apply(mutation, true);
             }
             else
             {
+                logger.debug("KATE DEBUG: Not committing proposal {} as ballot timestamp predates last truncation time", proposal);
                 Tracing.trace("Not committing proposal {} as ballot timestamp predates last truncation time", proposal);
             }
             // We don't need to lock, we're just blindly updating

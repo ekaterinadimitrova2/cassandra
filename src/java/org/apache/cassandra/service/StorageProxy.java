@@ -462,6 +462,7 @@ public class StorageProxy implements StorageProxyMBean
                     return null;
 
                 Commit proposal = Commit.newProposal(ballot, proposalPair.left);
+                logger.debug("KATE DEBUG: CAS precondition is met; proposing client-requested updates for {}", ballot);
                 Tracing.trace("CAS precondition is met; proposing client-requested updates for {}", ballot);
                 if (proposePaxos(proposal, replicaPlan, true, queryStartNanoTime))
                 {
@@ -473,12 +474,19 @@ public class StorageProxy implements StorageProxyMBean
                         commitPaxos(proposal, consistencyForCommit, true, queryStartNanoTime);
                     RowIterator result = proposalPair.right;
                     if (result != null)
+                    {
+                        logger.debug("KATE DEBUG: CAS did not apply");
                         Tracing.trace("CAS did not apply");
+                    }
                     else
+                    {
+                        logger.debug("KATE DEBUG: CAS applied successfully");
                         Tracing.trace("CAS applied successfully");
+                    }
                     return result;
                 }
 
+                logger.debug("KATE DEBUG: Paxos proposal not accepted (pre-empted by a higher ballot)");
                 Tracing.trace("Paxos proposal not accepted (pre-empted by a higher ballot)");
                 contentions++;
                 Uninterruptibles.sleepUninterruptibly(ThreadLocalRandom.current().nextInt(100), TimeUnit.MILLISECONDS);
@@ -541,11 +549,13 @@ public class StorageProxy implements StorageProxyMBean
             // prepare
             try
             {
+                logger.debug("KATE DEBUG: Preparing {}", ballot);
                 Tracing.trace("Preparing {}", ballot);
                 Commit toPrepare = Commit.newPrepare(key, metadata, ballot);
                 summary = preparePaxos(toPrepare, paxosPlan, queryStartNanoTime);
                 if (!summary.promised)
                 {
+                    logger.debug("KATE DEBUG: Some replicas have already promised a higher ballot than ours; aborting");
                     Tracing.trace("Some replicas have already promised a higher ballot than ours; aborting");
                     contentions++;
                     // sleep a random amount to give the other proposer a chance to finish
@@ -576,6 +586,7 @@ public class StorageProxy implements StorageProxyMBean
                 // doing is more efficient, so we do so.
                 if (!inProgress.update.isEmpty() && inProgress.isAfter(mostRecent))
                 {
+                    logger.debug("KATE DEBUG: Finishing incomplete paxos round {}", inProgress);
                     Tracing.trace("Finishing incomplete paxos round {}", inProgress);
                     casMetrics.unfinishedCommit.inc();
                     Commit refreshedInProgress = Commit.newProposal(ballot, inProgress.update);
@@ -585,6 +596,7 @@ public class StorageProxy implements StorageProxyMBean
                     }
                     else
                     {
+                        logger.debug("KATE DEBUG: Some replicas have already promised a higher ballot than ours; aborting");
                         Tracing.trace("Some replicas have already promised a higher ballot than ours; aborting");
                         // sleep a random amount to give the other proposer a chance to finish
                         contentions++;
@@ -601,6 +613,7 @@ public class StorageProxy implements StorageProxyMBean
                 Iterable<InetAddressAndPort> missingMRC = summary.replicasMissingMostRecentCommit(metadata, nowInSec);
                 if (Iterables.size(missingMRC) > 0)
                 {
+                    logger.debug("KATE DEBUG: Some replicas have already promised a higher ballot than ours; aborting");
                     Tracing.trace("Repairing replicas that missed the most recent commit");
                     sendCommit(mostRecent, missingMRC);
                     // TODO: provided commits don't invalid the prepare we just did above (which they don't), we could just wait
@@ -675,6 +688,7 @@ public class StorageProxy implements StorageProxyMBean
         {
             if (replica.isSelf())
             {
+                logger.debug("KATE DEBUG: I am the replica for commit proposal {}", proposal);
                 PAXOS_PROPOSE_REQ.stage.execute(() -> {
                     try
                     {
@@ -689,6 +703,7 @@ public class StorageProxy implements StorageProxyMBean
             }
             else
             {
+                logger.debug("KATE DEBUG: Endpoint {} the replica for commit proposal {}", replica.endpoint(), proposal);
                 MessagingService.instance().sendWithCallback(message, replica.endpoint(), callback);
             }
         }
