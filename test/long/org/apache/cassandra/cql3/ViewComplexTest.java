@@ -45,8 +45,8 @@ import org.apache.cassandra.utils.FBUtilities;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
@@ -57,6 +57,9 @@ import com.google.common.base.Objects;
 @RunWith(Parameterized.class)
 public class ViewComplexTest extends CQLTester
 {
+    @ClassRule
+    public static Timeout classTimeout = new Timeout(20, TimeUnit.MINUTES);
+
     @Parameterized.Parameter
     public ProtocolVersion version;
 
