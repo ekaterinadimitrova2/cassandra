@@ -59,7 +59,7 @@ public class HintedHandoffAddRemoveNodesTest extends TestBaseImpl
             
             cluster.get(4).shutdown().get();
             
-            // Write data using the second node as the coordinator...
+            // Write data using the second node as2  the coordinator...
             populate(cluster, "decom_hint_test", 2, 0, 128, ConsistencyLevel.ONE);
             Long totalHints = countTotalHints(cluster);
             // ...and verify that we've accumulated hints intended for node 4, which is down.
