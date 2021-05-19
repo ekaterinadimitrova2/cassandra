@@ -22,11 +22,14 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -49,6 +52,10 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class InsertUpdateIfConditionTest extends CQLTester
 {
+    // Locally runs in 1m but on CI can timeout. See CASSANDRA-16670
+    @ClassRule
+    public static Timeout classTimeout = new Timeout(10, TimeUnit.MINUTES);
+
     @Parameterized.Parameter(0)
     public String clusterMinVersion;
 
