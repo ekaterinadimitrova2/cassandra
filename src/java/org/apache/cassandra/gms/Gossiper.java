@@ -38,6 +38,8 @@ import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ListenableFutureTask;
 import com.google.common.util.concurrent.Uninterruptibles;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 import org.apache.cassandra.concurrent.JMXEnabledSingleThreadExecutor;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.net.NoPayload;
@@ -1296,19 +1298,28 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     {
         checkProperThreadForStateMutation();
         EndpointState localEpState = endpointStateMap.get(ep);
+        logger.debug(ExceptionUtils.getStackTrace(new Throwable()));
         if (!isDeadState(epState))
         {
             if (localEpState != null)
+            {
+                logger.debug("KATE {}", ExceptionUtils.getStackTrace(new Throwable()));
                 logger.info("Node {} has restarted, now UP", ep);
+            }
             else
+            {
+                logger.debug("KATE {}", ExceptionUtils.getStackTrace(new Throwable()));
                 logger.info("Node {} is now part of the cluster", ep);
+            }
         }
         if (logger.isTraceEnabled())
             logger.trace("Adding endpoint state for {}", ep);
         endpointStateMap.put(ep, epState);
 
         if (localEpState != null)
-        {   // the node restarted: it is up to the subscriber to take whatever action is necessary
+        {
+            logger.debug("KATE {}",  ExceptionUtils.getStackTrace(new Throwable()));
+            // the node restarted: it is up to the subscriber to take whatever action is necessary
             for (IEndpointStateChangeSubscriber subscriber : subscribers)
                 subscriber.onRestart(ep, localEpState);
         }

@@ -19,6 +19,10 @@
 package org.apache.cassandra.gms;
 
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.cassandra.diag.DiagnosticEventService;
 import org.apache.cassandra.gms.GossiperEvent.GossiperEventType;
 import org.apache.cassandra.locator.InetAddressAndPort;
@@ -29,6 +33,7 @@ import org.apache.cassandra.locator.InetAddressAndPort;
 final class GossiperDiagnostics
 {
     private static final DiagnosticEventService service = DiagnosticEventService.instance();
+    private static final Logger logger = LoggerFactory.getLogger(GossiperDiagnostics.class);
 
     private GossiperDiagnostics()
     {
@@ -96,6 +101,8 @@ final class GossiperDiagnostics
 
     static void majorStateChangeHandled(Gossiper gossiper, InetAddressAndPort addr, EndpointState state)
     {
+        logger.debug("KATE diagnostics major state change handled");
+        logger.debug("KATE {}", ExceptionUtils.getStackTrace(new Throwable()));
         if (isEnabled(GossiperEventType.MAJOR_STATE_CHANGE_HANDLED))
             service.publish(new GossiperEvent(GossiperEventType.MAJOR_STATE_CHANGE_HANDLED, gossiper, addr, null, state));
     }
