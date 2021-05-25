@@ -58,6 +58,8 @@ public class HintedHandoffAddRemoveNodesTest extends TestBaseImpl
             cluster.schemaChange(withKeyspace("CREATE TABLE %s.decom_hint_test (key int PRIMARY KEY, value int)"));
             
             cluster.get(4).shutdown().get();
+            // Wait for gossip to exchange a few messages so that node2 is aware of node 4 being down before we insert data
+            Thread.sleep(10000);
             
             // Write data using the second node as  the coordinator...
             populate(cluster, "decom_hint_test", 2, 0, 128, ConsistencyLevel.ONE);
