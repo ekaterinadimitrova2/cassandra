@@ -2487,6 +2487,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
     private void notifyDown(InetAddressAndPort endpoint)
     {
+        logger.debug("KATE: notify that I am down!");
         for (IEndpointLifecycleSubscriber subscriber : lifecycleSubscribers)
             subscriber.onDown(endpoint);
     }

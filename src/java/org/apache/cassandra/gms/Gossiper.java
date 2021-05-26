@@ -493,6 +493,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     {
         runInGossipStageBlocking(() -> {
             EndpointState epState = endpointStateMap.get(endpoint);
+            logger.debug("KATE: heartbeatstate {}, isAlive: {}", epState.getHeartBeatState(), epState.isAlive());
             if (epState == null)
                 return;
 
