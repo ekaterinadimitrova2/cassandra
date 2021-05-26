@@ -447,7 +447,10 @@ public final class MessagingService extends MessagingServiceMBeanImpl
             callbacks.shutdownGracefully();
             List<Future<Void>> closing = new ArrayList<>();
             for (OutboundConnections pool : channelManagers.values())
+            {
                 closing.add(pool.close(true));
+                logger.debug("KATE Closing connections");
+            }
 
             long deadline = System.nanoTime() + units.toNanos(timeout);
             maybeFail(() -> new FutureCombiner(closing).get(timeout, units),
