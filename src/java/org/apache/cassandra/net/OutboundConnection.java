@@ -35,6 +35,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.util.concurrent.Uninterruptibles;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1147,6 +1148,7 @@ public class OutboundConnection
                         });
                         ++successfulConnections;
 
+                        logger.debug("KATE {}", ExceptionUtils.getStackTrace(new Throwable()));
                         logger.info("{} successfully connected, version = {}, framing = {}, encryption = {}",
                                     id(true),
                                     success.messagingVersion,
