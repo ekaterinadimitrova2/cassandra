@@ -3134,7 +3134,7 @@ public class DatabaseDescriptor
     
     public static AuditLogOptions getAuditLoggingOptions()
     {
-        return conf.audit_logging_options;
+        return new AuditLogOptions.Builder(conf.audit_logging_options).build();
     }
 
     public static void setAuditLoggingOptions(AuditLogOptions auditLoggingOptions)
