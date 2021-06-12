@@ -18,7 +18,6 @@
 
 package org.apache.cassandra.cql3;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static java.lang.String.format;
@@ -154,7 +153,6 @@ public class PasswordObfuscatorTest
     {
         assertEquals(format("BEGIN BATCH \n" +
                             "    CREATE ROLE alice1 WITH PASSWORD%s",
-                            PasswordObfuscator.OBFUSCATION_TOKEN,
                             PasswordObfuscator.OBFUSCATION_TOKEN),
                      obfuscator.obfuscate("BEGIN BATCH \n" +
                                           "    CREATE ROLE alice1 WITH PASSWORD = 'alice123' and LOGIN = true; \n" +

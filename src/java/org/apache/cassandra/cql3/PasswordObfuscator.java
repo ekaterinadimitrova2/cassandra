@@ -23,7 +23,7 @@ package org.apache.cassandra.cql3;
  */
 public class PasswordObfuscator
 {
-    public static final String OBFUSCATION_TOKEN = "*******";
+    public static final String OBFUSCATION_TOKEN = " *******";
     private static final String PASSWORD_TOKEN = "password";
 
     public String obfuscate(String sourceString)

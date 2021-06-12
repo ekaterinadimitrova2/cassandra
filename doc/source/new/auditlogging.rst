@@ -89,7 +89,8 @@ Audit logging does not log:
 
 1. Configuration changes made in ``cassandra.yaml``
 2. Nodetool Commands
-3. Passwords mentioned as part of DCL statements. Passwords are instead obfuscated as *******
+3. Passwords mentioned as part of DCL statements. Instead everything after the appearance of the word password in DCL
+statements is obfuscated as *******
 
 Limitations
 ^^^^^^^^^^^

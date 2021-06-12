@@ -81,7 +81,6 @@ public class QueryEvents
     {
         try
         {
-
             final String possiblyObfuscatedQuery = listeners.size() > 0 ? possiblyObfuscateQuery(statement, query) : query;
             for (Listener listener : listeners)
                 listener.querySuccess(statement, possiblyObfuscatedQuery, options, state, queryTime, response);
