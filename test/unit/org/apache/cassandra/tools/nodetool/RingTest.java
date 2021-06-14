@@ -19,6 +19,7 @@
 package org.apache.cassandra.tools.nodetool;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,6 +42,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(OrderedJUnit4ClassRunner.class)
 public class RingTest extends CQLTester
 {
+    private static final Pattern PATTERN = Pattern.compile("\\R");
     private static String token;
 
     @BeforeClass
@@ -57,23 +59,27 @@ public class RingTest extends CQLTester
     @Test
     public void testRingOutput()
     {
-        final HostStatWithPort host = new HostStatWithPort(null, FBUtilities.getBroadcastAddressAndPort(),
-                                                           false, null);
+        final HostStatWithPort host = new HostStatWithPort(null,
+                                                           FBUtilities.getBroadcastAddressAndPort(),
+                                                           false,
+                                                           null);
         validateRingOutput(host.ipOrDns(false),
-                            "ring");
-        Arrays.asList("-pp", "--print-port").forEach(arg -> {
-            validateRingOutput(host.ipOrDns(true),
-                               "-pp", "ring");
-        });
+                           "ring");
+        Arrays.asList("-pp", "--print-port").forEach(arg -> validateRingOutput(host.ipOrDns(true),
+                                                                               "-pp",
+                                                                               "ring"));
 
-        final HostStatWithPort hostResolved = new HostStatWithPort(null, FBUtilities.getBroadcastAddressAndPort(),
-                                                                   true, null);
-        Arrays.asList("-r", "--resolve-ip").forEach(arg -> {
-            validateRingOutput(hostResolved.ipOrDns(false),
-                               "ring", "-r");
-        });
+        final HostStatWithPort hostResolved = new HostStatWithPort(null,
+                                                                   FBUtilities.getBroadcastAddressAndPort(),
+                                                                   true,
+                                                                   null);
+        Arrays.asList("-r", "--resolve-ip").forEach(arg -> validateRingOutput(hostResolved.ipOrDns(false),
+                                                                              "ring",
+                                                                              "-r"));
         validateRingOutput(hostResolved.ipOrDns(true),
-                            "-pp", "ring", "-r");
+                           "-pp",
+                           "ring",
+                           "-r");
     }
 
     private void validateRingOutput(String hostForm, String... args)
@@ -88,7 +94,7 @@ public class RingTest extends CQLTester
          127.0.0.1       rack1       Up     Normal  45.71 KiB       100.00%             4652409154190094022
 
          */
-        String[] lines = nodetool.getStdout().split("\\R");
+        String[] lines = PATTERN.split(nodetool.getStdout());
         assertThat(lines[1].trim(), endsWith(SimpleSnitch.DATA_CENTER_NAME));
         assertThat(lines[3], matchesPattern("Address *Rack *Status *State *Load *Owns *Token *"));
         String hostRing = lines[lines.length-4].trim(); // this command has a couple extra newlines and an empty error message at the end. Not messing with it.
