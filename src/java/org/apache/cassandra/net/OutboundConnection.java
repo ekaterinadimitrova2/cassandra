@@ -822,7 +822,12 @@ public class OutboundConnection
                         logger.debug("KATE: messageSize={}", messageSize);
 
                         if (sending.length() != sendingBytes + messageSize)
+                        {
+                            logger.debug("KATE: sending.length()={}", sending.length());
+                            logger.debug("KATE: sendingBytes={}", sendingBytes);
+                            logger.debug("KATE: messageSize={}", messageSize);
                             throw new InvalidSerializedSizeException(next.verb(), messageSize, sending.length() - sendingBytes);
+                        }
 
                         canonicalSize += canonicalSize(next);
                         sendingCount += 1;
