@@ -978,6 +978,7 @@ public class OutboundConnection
         @SuppressWarnings({ "resource", "RedundantSuppression" }) // make eclipse warnings go away
         boolean doRun(Established established)
         {
+            logger.debug("KATE, large message do run");
             Message<?> send = queue.tryPoll(approxTime.now(), this::execute);
             if (send == null)
                 return false;
@@ -986,6 +987,7 @@ public class OutboundConnection
             try
             {
                 int messageSize = send.serializedSize(established.messagingVersion);
+                logger.debug("KATE messageSize:{}", messageSize);
                 out = new AsyncMessageOutputPlus(established.channel, DEFAULT_BUFFER_SIZE, messageSize, established.payloadAllocator);
                 // actual message size for this version is larger than permitted maximum
                 if (messageSize > DatabaseDescriptor.getInternodeMaxMessageSizeInBytes())
@@ -994,6 +996,8 @@ public class OutboundConnection
                 Tracing.instance.traceOutgoingMessage(send, messageSize, established.settings.connectTo);
                 Message.serializer.serialize(send, out, established.messagingVersion);
 
+                logger.debug("KATE out.position():{}", out.position());
+                logger.debug("KATE messageSize:{}", messageSize);
                 if (out.position() != messageSize)
                     throw new InvalidSerializedSizeException(send.verb(), messageSize, out.position());
 
