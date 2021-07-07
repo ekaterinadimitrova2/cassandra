@@ -128,6 +128,7 @@ Merged from 2.2:
  * Fix SELECT JSON output for empty blobs (CASSANDRA-15435)
  * In-JVM DTest: Set correct internode message version for upgrade test (CASSANDRA-15371)
  * In-JVM DTest: Support NodeTool in dtest (CASSANDRA-15429)
+ * Race condition when setting bootstrap flags: fixed issue (CASSANDRA-14878)
 
 
 3.0.19
