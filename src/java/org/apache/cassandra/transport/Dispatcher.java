@@ -85,7 +85,7 @@ public class Dispatcher
         connection.requests.inc();
         Message.Response response = request.execute(qstate, queryStartNanoTime);
         response.setStreamId(request.getStreamId());
-        response.setWarnings(ClientWarn.instance.getWarnings());
+        response.setWarnings(ClientWarn.instance.getAndClearWarnings());
         response.attach(connection);
         connection.applyStateTransition(request.type, response.type);
         return response;

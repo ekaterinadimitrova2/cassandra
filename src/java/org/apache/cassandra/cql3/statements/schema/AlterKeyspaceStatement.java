@@ -86,7 +86,7 @@ public final class AlterKeyspaceStatement extends AlterSchemaStatement
 
         int newNumWarnings = ClientWarn.instance.numWarnings();
         if (newNumWarnings > previousNumWarnings)
-            clientWarnings.addAll(ClientWarn.instance.getWarnings().subList(previousNumWarnings, newNumWarnings));
+            clientWarnings.addAll(ClientWarn.instance.getAndClearWarnings().subList(previousNumWarnings, newNumWarnings));
 
         return res;
     }

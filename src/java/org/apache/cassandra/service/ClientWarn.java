@@ -19,6 +19,8 @@ package org.apache.cassandra.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import io.netty.util.concurrent.FastThreadLocal;
 import org.apache.cassandra.concurrent.ExecutorLocal;
@@ -56,17 +58,23 @@ public class ClientWarn implements ExecutorLocal<ClientWarn.State>
         warnLocal.set(new State());
     }
 
-    public List<String> getWarnings()
+    public List<String> getAndClearWarnings()
     {
         State state = warnLocal.get();
-        if (state == null || state.warnings.isEmpty())
+        if (state == null)
             return null;
-        return state.warnings;
+
+        ArrayList<String> tmp = new ArrayList<>(state.warnings.size());
+        state.warnings.drainTo(tmp);
+        if (tmp.isEmpty())
+            return null;
+
+        return tmp;
     }
 
     public int numWarnings()
     {
-        return getWarnings() == null ? 0 : getWarnings().size();
+        return getAndClearWarnings() == null ? 0 : getAndClearWarnings().size();
     }
 
     public void resetWarnings()
@@ -76,7 +84,7 @@ public class ClientWarn implements ExecutorLocal<ClientWarn.State>
 
     public static class State
     {
-        private final List<String> warnings = new ArrayList<>();
+        private final BlockingQueue<String> warnings = new LinkedBlockingQueue<>();
 
         private void add(String warning)
         {
