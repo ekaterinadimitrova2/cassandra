@@ -224,7 +224,7 @@ public class UFSecurityTest extends CQLTester
                                               "LANGUAGE JAVA\n" +
                                               "AS 'long t=System.currentTimeMillis()+110; while (t>System.currentTimeMillis()) { }; return 0d;'");
                 execute("SELECT " + fName + "(dval) FROM %s WHERE key=1");
-                List<String> warnings = ClientWarn.instance.getWarnings();
+                List<String> warnings = ClientWarn.instance.getAndClearWarnings();
                 Assert.assertNotNull(warnings);
                 Assert.assertFalse(warnings.isEmpty());
                 ClientWarn.instance.resetWarnings();

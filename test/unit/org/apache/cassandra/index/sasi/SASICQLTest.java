@@ -94,7 +94,7 @@ public class SASICQLTest extends CQLTester
 
         ClientWarn.instance.captureWarnings();
         createIndex("CREATE CUSTOM INDEX ON %s (v) USING 'org.apache.cassandra.index.sasi.SASIIndex'");
-        List<String> warnings = ClientWarn.instance.getWarnings();
+        List<String> warnings = ClientWarn.instance.getAndClearWarnings();
 
         Assert.assertNotNull(warnings);
         Assert.assertEquals(1, warnings.size());
