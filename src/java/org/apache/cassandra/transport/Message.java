@@ -351,6 +351,7 @@ public abstract class Message
                     if (tracingId != null)
                         messageSize += CBUtil.sizeOfUUID(tracingId);
                     List<String> warnings = ((Response)message).getWarnings();
+                    warnings = warnings != null && warnings.isEmpty() ? null : warnings;
                     if (warnings != null)
                     {
                         if (version.isSmallerThan(ProtocolVersion.V4))
@@ -686,7 +687,7 @@ public abstract class Message
                 logger.trace("Received: {}, v={}", request, connection.getVersion());
                 response = request.execute(qstate, queryStartNanoTime);
                 response.setStreamId(request.getStreamId());
-                response.setWarnings(ClientWarn.instance.getWarnings());
+                response.setWarnings(ClientWarn.instance.getAndClearWarnings());
                 response.attach(connection);
                 connection.applyStateTransition(request.type, response.type);
             }
