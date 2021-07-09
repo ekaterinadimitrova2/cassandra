@@ -481,6 +481,6 @@ public class NetworkTopologyStrategyTest
         
         ClientWarn.instance.captureWarnings();
         strategy.maybeWarnOnOptions();
-        assertTrue(ClientWarn.instance.getWarnings().stream().anyMatch(s -> s.contains("Your replication factor")));
+        assertTrue(ClientWarn.instance.getAndClearWarnings().stream().anyMatch(s -> s.contains("Your replication factor")));
     }
 }

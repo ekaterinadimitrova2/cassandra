@@ -45,7 +45,7 @@ public class RowUtil
             String[] names = getColumnNames(rows.result.metadata.names);
             Object[][] results = toObjects(rows);
             
-            // Warnings may be null here, due to ClientWarn#getWarnings() handling of empty warning lists.
+            // Warnings may be null here, due to ClientWarn#getAndClearWarnings() handling of empty warning lists.
             List<String> warnings = res.getWarnings();
 
             return new SimpleQueryResult(names, results, warnings == null ? Collections.emptyList() : warnings);

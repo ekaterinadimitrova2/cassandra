@@ -349,7 +349,7 @@ public class SimpleStrategyTest
         
         ClientWarn.instance.captureWarnings();
         strategy.maybeWarnOnOptions();
-        assertTrue(ClientWarn.instance.getWarnings().stream().anyMatch(s -> s.contains("Your replication factor")));
+        assertTrue(ClientWarn.instance.getAndClearWarnings().stream().anyMatch(s -> s.contains("Your replication factor")));
     }
 
     private AbstractReplicationStrategy getStrategy(String keyspaceName, TokenMetadata tmd, IEndpointSnitch snitch)

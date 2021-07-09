@@ -317,6 +317,7 @@ public abstract class Message
                 if (tracingId != null)
                     messageSize += CBUtil.sizeOfUUID(tracingId);
                 List<String> warnings = message.getWarnings();
+                warnings = warnings != null && warnings.isEmpty() ? null : warnings;
                 if (warnings != null)
                 {
                     if (version.isSmallerThan(ProtocolVersion.V4))
@@ -329,6 +330,7 @@ public abstract class Message
                         throw new ProtocolException("Must not send frame with CUSTOM_PAYLOAD flag for native protocol version < 4");
                     messageSize += CBUtil.sizeOfBytesMap(customPayload);
                 }
+
                 body = CBUtil.allocator.buffer(messageSize);
                 if (tracingId != null)
                 {

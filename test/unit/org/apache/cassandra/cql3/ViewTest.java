@@ -526,7 +526,7 @@ public class ViewTest extends ViewAbstractTest
         execute("CREATE MATERIALIZED VIEW " + viewName +
                 " AS SELECT * FROM %s WHERE k IS NOT NULL AND v IS NOT NULL PRIMARY KEY (v, k)");
         views.add(viewName);
-        List<String> warnings = ClientWarn.instance.getWarnings();
+        List<String> warnings = ClientWarn.instance.getAndClearWarnings();
 
         Assert.assertNotNull(warnings);
         Assert.assertEquals(1, warnings.size());
