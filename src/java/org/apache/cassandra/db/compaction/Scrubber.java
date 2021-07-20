@@ -155,9 +155,12 @@ public class Scrubber implements Closeable
 
     private String keyString(DecoratedKey key)
     {
+        if (key == null)
+            return "(unknown)";
+
         try
         {
-            return cfs.metadata.getKeyValidator().getString(key.getKey());
+            return cfs.metadata().partitionKeyType.getString(key.getKey());
         }
         catch (Exception e)
         {
@@ -190,8 +193,8 @@ public class Scrubber implements Closeable
                 if (scrubInfo.isStopRequested())
                     throw new CompactionInterruptedException(scrubInfo.getCompactionInfo());
 
-                long rowStart = dataFile.getFilePointer();
-                outputHandler.debug("Reading row at " + rowStart);
+                long partitionStart = dataFile.getFilePointer();
+                outputHandler.debug("Reading row at " + partitionStart);
 
                 DecoratedKey key = null;
                 try
@@ -284,7 +287,7 @@ public class Scrubber implements Closeable
 
             if (!outOfOrder.isEmpty())
             {
-                // out of order partitions/rows, but no bad partition/rows found - we can keep our repairedAt time
+                // out of order partitions/rows, but no bad partition found - we can keep our repairedAt time
                 long repairedAt = badPartitions > 0 ? ActiveRepairService.UNREPAIRED_SSTABLE : sstable.getSSTableMetadata().repairedAt;
                 SSTableReader newInOrderSstable;
                 try (SSTableWriter inOrderWriter = CompactionManager.createWriter(cfs, destination, expectedBloomFilterSize, repairedAt, metadata.pendingRepair, metadata.isTransient, sstable, transaction))
@@ -445,7 +448,7 @@ public class Scrubber implements Closeable
 
         if (isCommutative && !skipCorrupted)
         {
-            outputHandler.warn(String.format("An error occurred while scrubbing the row with partition '%s'.  Skipping corrupt " +
+            outputHandler.warn(String.format("An error occurred while scrubbing the partition with key '%s'.  Skipping corrupt " +
                                              "data in counter tables will result in undercounts for the affected " +
                                              "counters (see CASSANDRA-2759 for more details), so by default the scrub will " +
                                              "stop at this point.  If you would like to skip the row anyway and continue " +
