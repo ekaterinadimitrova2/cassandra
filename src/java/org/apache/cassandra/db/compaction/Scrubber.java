@@ -229,7 +229,7 @@ public class Scrubber implements Closeable
                         throw new IOError(new IOException("Impossible partition size (greater than file length): " + dataSizeFromIndex));
 
                     if (indexFile != null && dataStart != dataStartFromIndex)
-                        outputHandler.warn(String.format("Data file partition position %d differs from index file row position %d", dataStart, dataStartFromIndex));
+                        outputHandler.warn(String.format("Data file partition position %d differs from index file partition position %d", dataStart, dataStartFromIndex));
 
                     if (tryAppend(prevKey, key, writer))
                         prevKey = key;
@@ -276,7 +276,7 @@ public class Scrubber implements Closeable
 
             if (!outOfOrder.isEmpty())
             {
-                // out of order rows, but no bad partitions/rows found - we can keep our repairedAt time
+                // out of order partitions/rows, but no bad partition found - we can keep our repairedAt time
                 long repairedAt = badPartitions > 0 ? ActiveRepairService.UNREPAIRED_SSTABLE : sstable.getSSTableMetadata().repairedAt;
                 SSTableReader newInOrderSstable;
                 try (SSTableWriter inOrderWriter = CompactionManager.createWriter(cfs, destination, expectedBloomFilterSize, repairedAt, sstable, transaction))
@@ -436,10 +436,10 @@ public class Scrubber implements Closeable
 
         if (isCommutative && !skipCorrupted)
         {
-            outputHandler.warn(String.format("An error occurred while scrubbing the row with partition '%s'.  Skipping corrupt " +
+            outputHandler.warn(String.format("An error occurred while scrubbing the partition with key '%s'.  Skipping corrupt " +
                                              "data in counter tables will result in undercounts for the affected " +
                                              "counters (see CASSANDRA-2759 for more details), so by default the scrub will " +
-                                             "stop at this point.  If you would like to skip the row anyway and continue " +
+                                             "stop at this point.  If you would like to skip the partition anyway and continue " +
                                              "scrubbing, re-run the scrub with the --skip-corrupted option.",
                                              keyString(key)));
             throw new IOError(th);
