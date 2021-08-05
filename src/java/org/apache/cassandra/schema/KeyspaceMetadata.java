@@ -27,6 +27,9 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.CqlBuilder;
 import org.apache.cassandra.cql3.SchemaElement;
@@ -50,6 +53,7 @@ import static com.google.common.collect.Iterables.any;
  */
 public final class KeyspaceMetadata implements SchemaElement
 {
+    private static final Logger logger = LoggerFactory.getLogger(KeyspaceMetadata.class);
     public enum Kind
     {
         REGULAR, VIRTUAL
@@ -303,8 +307,18 @@ public final class KeyspaceMetadata implements SchemaElement
                                                     name));
         }
 
-        params.validate(name);
-
+        try
+        {
+            params.validate(name);
+        }
+        catch (ConfigurationException e)
+        {
+            // Prevent failing initialization due to invalid replication options
+            if (StorageService.instance.isStarting())
+                logger.warn("Invalid replication strategy options during startup: {}", e.getMessage());
+            else
+                throw e;
+        }
         tablesAndViews().forEach(TableMetadata::validate);
 
         Set<String> indexNames = new HashSet<>();
