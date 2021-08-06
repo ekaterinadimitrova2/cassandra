@@ -17,6 +17,9 @@
  */
 package org.apache.cassandra.hints;
 
+import java.time.Duration;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -30,9 +33,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.datastax.driver.core.utils.MoreFutures;
 import org.apache.cassandra.SchemaLoader;
+import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.net.NoPayload;
 import org.apache.cassandra.schema.TableMetadata;
@@ -48,6 +53,9 @@ import org.apache.cassandra.net.MockMessagingService;
 import org.apache.cassandra.net.MockMessagingSpy;
 import org.apache.cassandra.schema.KeyspaceParams;
 import org.apache.cassandra.service.StorageService;
+import org.awaitility.Awaitility;
+import org.jboss.byteman.contrib.bmunit.BMRule;
+import org.jboss.byteman.contrib.bmunit.BMUnitRunner;
 
 import static org.apache.cassandra.Util.dk;
 import static org.apache.cassandra.net.Verb.HINT_REQ;
@@ -56,6 +64,7 @@ import static org.apache.cassandra.net.MockMessagingService.verb;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(BMUnitRunner.class)
 public class HintsServiceTest
 {
     private static final String KEYSPACE = "hints_service_test";
@@ -180,6 +189,30 @@ public class HintsServiceTest
         InputPosition dispatchOffset = store.getDispatchOffset(descriptor);
         assertTrue(dispatchOffset != null);
         assertTrue(((ChecksummedDataInput.Position) dispatchOffset).sourcePosition > 0);
+    }
+
+    @Test
+    @BMRule(name = "Delay delivering hints",
+    targetClass = "DispatchHintsTask",
+    targetMethod = "run",
+    action = "Thread.sleep(DatabaseDescriptor.getHintsFlushPeriodInMS() * 3L)")
+    public void testListPendingHints() throws InterruptedException, ExecutionException
+    {
+        HintsService.instance.resumeDispatch();
+        MockMessagingSpy spy = sendHintsAndResponses(20000, -1);
+        Awaitility.await("For the hints file to flush")
+                  .atMost(Duration.ofMillis(DatabaseDescriptor.getHintsFlushPeriodInMS() * 2L))
+                  .until(() -> !HintsService.instance.getPendingHints().isEmpty());
+
+        List<PendingHintsInfo> pendingHints = HintsService.instance.getPendingHintsInfo();
+        assertEquals(1, pendingHints.size());
+        PendingHintsInfo info = pendingHints.get(0);
+        assertEquals(StorageService.instance.getLocalHostUUID(), info.hostId);
+        assertEquals(1, info.totalFiles);
+        assertEquals(info.oldestTimestamp, info.newestTimestamp); // there is 1 descriptor with only 1 timestamp
+
+        spy.interceptMessageOut(20000).get();
+        assertEquals(Collections.emptyList(), HintsService.instance.getPendingHints());
     }
 
     private MockMessagingSpy sendHintsAndResponses(int noOfHints, int noOfResponses)
