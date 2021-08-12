@@ -110,7 +110,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -284,7 +284,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -404,7 +404,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -524,7 +524,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -621,7 +621,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -695,7 +695,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -810,7 +810,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -872,7 +872,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -980,7 +980,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1054,7 +1054,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1116,7 +1116,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1224,7 +1224,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1398,7 +1398,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1492,7 +1492,7 @@ jobs:
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.ViewTest
     - REPEATED_UTEST_METHODS: testFunctionInWhereClause
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 5
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
