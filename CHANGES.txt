@@ -1,4 +1,6 @@
 4.1
+ * Background schedule to clean up orphaned hints files (CASSANDRA-16815)
+ * Modify SecondaryIndexManager#indexPartition() to retrieve only columns for which indexes are actually being built (CASSANDRA-16776)
  * Batch the token metadata update to improve the speed (CASSANDRA-15291)
  * Reduce the log level on "expected" repair exceptions (CASSANDRA-16775)
  * Make JMXTimer expose attributes using consistent time unit (CASSANDRA-16760)
@@ -10,6 +12,7 @@
  * Add a system property to set hostId if not yet initialized (CASSANDRA-14582)
  * GossiperTest.testHasVersion3Nodes didn't take into account trunk version changes, fixed to rely on latest version (CASSANDRA-16651)
 Merged from 4.0:
+ * ArrayClustering.unsharedHeapSize does not include the data so undercounts the heap size (CASSANDRA-16845)
  * Improve help, doc and error messages about sstabledump -k and -x arguments (CASSANDRA-16818)
  * Add repaired/unrepaired bytes back to nodetool (CASSANDRA-15282)
  * Upgrade lz4-java to 1.8.0 to add RH6 support back (CASSANDRA-16753)
@@ -24,6 +27,7 @@ Merged from 3.11:
  * Enable tombstone compactions when unchecked_tombstone_compaction is set in TWCS (CASSANDRA-14496)
  * Read only the required SSTables for single partition queries (CASSANDRA-16737)
 Merged from 3.0:
+ * Use JMX to validate nodetool --jobs parameter (CASSANDRA-16104)
  * Handle properly UnsatisfiedLinkError in NativeLibrary#getProcessID() (CASSANDRA-16578)
  * Remove mutation data from error log message (CASSANDRA-16817)
  * Binary releases no longer bundle the apidocs (javadoc) (CASSANDRA-16557)
