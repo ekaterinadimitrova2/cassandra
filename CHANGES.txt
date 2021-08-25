@@ -1,4 +1,18 @@
+3.0.26:
+ * Fix incorrect error message in LegacyLayout (CASSANDRA-15136)
+ * Use JMX to validate nodetool --jobs parameter (CASSANDRA-16104)
+ * Handle properly UnsatisfiedLinkError in NativeLibrary#getProcessID() (CASSANDRA-16578)
+ * Remove mutation data from error log message (CASSANDRA-16817)
+
+
 3.0.25:
+ * Binary releases no longer bundle the apidocs (javadoc) (CASSANDRA-16557)
+ * Migrate dependency handling from maven-ant-tasks to resolver-ant-tasks, removing lib/ directory from version control (CASSANDRA-16557)
+ * Don't allow seeds to replace without using unsafe (CASSANDRA-14463)
+ * Calculate time remaining correctly for all compaction types in compactionstats (CASSANDRA-14701)
+ * Receipt of gossip shutdown notification updates TokenMetadata (CASSANDRA-16796)
+ * Count bloom filter misses correctly (CASSANDRA-12922)
+ * Reject token() in MV WHERE clause (CASSANDRA-13464)
  * Ensure java executable is on the path (CASSANDRA-14325)
  * Make speculative retry parameter case-insensitive for backward compatibility with 2.1 (CASSANDRA-16467)
  * Push digest mismatch exceptions to trace (CASSANDRA-14900)
