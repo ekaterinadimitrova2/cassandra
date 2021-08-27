@@ -18,6 +18,7 @@
 
 package org.apache.cassandra.db;
 
+import org.apache.cassandra.db.marshal.ByteArrayAccessor;
 import org.apache.cassandra.utils.ObjectSizes;
 
 public class ArrayClustering extends AbstractArrayClusteringPrefix implements Clustering<byte[]>
@@ -31,11 +32,15 @@ public class ArrayClustering extends AbstractArrayClusteringPrefix implements Cl
 
     public long unsharedHeapSize()
     {
+        if (this == ByteArrayAccessor.factory.clustering() || this == ByteArrayAccessor.factory.staticClustering())
+            return 0;
         return EMPTY_SIZE + ObjectSizes.sizeOfArray(values) + values.length;
     }
 
     public long unsharedHeapSizeExcludingData()
     {
+        if (this == ByteArrayAccessor.factory.clustering() || this == ByteArrayAccessor.factory.staticClustering())
+            return 0;
         return EMPTY_SIZE + ObjectSizes.sizeOfArray(values);
     }
 
