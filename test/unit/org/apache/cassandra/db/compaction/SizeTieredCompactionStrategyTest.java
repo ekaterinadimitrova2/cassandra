@@ -92,11 +92,11 @@ public class SizeTieredCompactionStrategyTest
     @Test
     public void testGetBuckets()
     {
-        List<Pair<String, Long>> pairs = new ArrayList<Pair<String, Long>>();
+        List<Pair<String, Long>> pairs = new ArrayList<>();
         String[] strings = { "a", "bbbb", "cccccccc", "cccccccc", "bbbb", "a" };
         for (String st : strings)
         {
-            Pair<String, Long> pair = Pair.create(st, new Long(st.length()));
+            Pair<String, Long> pair = Pair.create(st, (long) st.length());
             pairs.add(pair);
         }
 
@@ -116,7 +116,7 @@ public class SizeTieredCompactionStrategyTest
         String[] strings2 = { "aaa", "bbbbbbbb", "aaa", "bbbbbbbb", "bbbbbbbb", "aaa" };
         for (String st : strings2)
         {
-            Pair<String, Long> pair = Pair.create(st, new Long(st.length()));
+            Pair<String, Long> pair = Pair.create(st, (long) st.length());
             pairs.add(pair);
         }
 
@@ -137,7 +137,7 @@ public class SizeTieredCompactionStrategyTest
         String[] strings3 = { "aaa", "bbbbbbbb", "aaa", "bbbbbbbb", "bbbbbbbb", "aaa" };
         for (String st : strings3)
         {
-            Pair<String, Long> pair = Pair.create(st, new Long(st.length()));
+            Pair<String, Long> pair = Pair.create(st, (long) st.length());
             pairs.add(pair);
         }
 
@@ -145,8 +145,9 @@ public class SizeTieredCompactionStrategyTest
         assertEquals(1, buckets.size());
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
-    public void testPrepBucket() throws Exception
+    public void testPrepBucket()
     {
         String ksname = KEYSPACE1;
         String cfname = "Standard1";

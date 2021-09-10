@@ -204,7 +204,7 @@ public class LongBTreeTest
                             {
                                 Map<Integer, Integer> update = new LinkedHashMap<>();
                                 for (Integer i : selection.testKeys)
-                                    update.put(i, new Integer(i));
+                                    update.put(i, Integer.valueOf(i));
 
                                 CountingFunction function;
                                 Object[] original = selection.testAsSet.tree();
