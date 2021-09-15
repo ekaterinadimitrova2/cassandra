@@ -34,6 +34,8 @@ import org.apache.cassandra.*;
 import org.apache.cassandra.config.*;
 import org.apache.cassandra.cql3.*;
 import org.apache.cassandra.cql3.statements.*;
+import org.apache.cassandra.db.commitlog.CommitLog;
+import org.apache.cassandra.db.commitlog.CommitLogPosition;
 import org.apache.cassandra.db.marshal.*;
 import org.apache.cassandra.exceptions.*;
 import org.apache.cassandra.index.sasi.*;
@@ -687,5 +689,42 @@ public class ColumnFamilyStoreCQLHelperTest extends CQLTester
         "\tPRIMARY KEY (key, column1))\n" +
         "\tWITH ID = " + cfs.metadata.cfId + "\n" +
         "\tAND COMPACT STORAGE"));
+    }
+
+    @Test
+    public void testIndexCFSFlush() throws Throwable
+    {
+        createTable("CREATE TABLE %s (key text PRIMARY KEY, value text)");
+        createIndex("CREATE INDEX ON %s(value)");
+
+        int i;
+        for (i = 0; i < 100; ++i)
+        {
+            // Note: using strings instead of ints to add just a little bit of non-sequentiality in the insertions
+            execute("INSERT INTO %s (key, value) VALUES (?, ?)", "" + i, "" + (999 - i));
+        }
+
+        CommitLogPosition mid = CommitLog.instance.getCurrentPosition();
+        for (; i < 200; ++i)
+            execute("INSERT INTO %s (key, value) VALUES (?, ?)", "" + i, "" + (999 - i));
+
+        // Try to flush just the index
+        ColumnFamilyStore cfs = getCurrentColumnFamilyStore();
+        ColumnFamilyStore index = cfs.indexManager.getAllIndexColumnFamilyStores().iterator().next();
+        index.forceBlockingFlush();
+
+        // DB-3292
+        assertTrue(
+        // This should either result in a base table flush (as done in Cassandra 4.1+)...
+        0 == cfs.getTracker().getView().liveMemtables
+             .stream()
+             .mapToLong(Memtable::getLiveDataSize)
+             .sum()
+        // or the commit log region for the base table must remain marked as dirty, because the corresponding
+        // data in the base table still isn't flushed (as done by versions before 4.1).
+        || CommitLog.instance.segmentManager.getActiveSegments()
+                                            .stream()
+                                            .anyMatch(segment -> segment.contains(mid)
+                                                                 && segment.getDirtyCFIDs().contains(cfs.metadata.cfId)));
     }
 }

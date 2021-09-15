@@ -1040,7 +1040,9 @@ public class ColumnFamilyStore implements ColumnFamilyStoreMBean
 
             CommitLogPosition commitLogUpperBound = CommitLogPosition.NONE;
             // If a flush errored out but the error was ignored, make sure we don't discard the commit log.
-            if (flushFailure == null && !memtables.isEmpty())
+            // We mustn't do this when we are flushing only an index table either, as this would also mark the data in
+            // the base table as flushed (index tables share IDs with the base).
+            if (flushFailure == null && !memtables.isEmpty() && !isIndex())
             {
                 Memtable memtable = memtables.get(0);
                 commitLogUpperBound = memtable.getCommitLogUpperBound();
