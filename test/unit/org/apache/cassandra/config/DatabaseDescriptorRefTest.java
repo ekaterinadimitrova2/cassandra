@@ -176,6 +176,7 @@ public class DatabaseDescriptorRefTest
     static final Set<String> checkedClasses = new HashSet<>(Arrays.asList(validClasses));
 
     @Test
+    @SuppressWarnings({"DynamicRegexReplaceableByCompiledPattern", "UseOfSystemOutOrSystemErr"})
     public void testDatabaseDescriptorRef() throws Throwable
     {
         PrintStream out = System.out;
@@ -256,7 +257,7 @@ public class DatabaseDescriptorRefTest
 
         assertEquals("thread started", threadCount, threads.getThreadCount());
 
-        Class cDatabaseDescriptor = Class.forName("org.apache.cassandra.config.DatabaseDescriptor", true, cl);
+        Class<?> databaseDescriptorClass = Class.forName("org.apache.cassandra.config.DatabaseDescriptor", true, cl);
 
         for (String methodName : new String[]{
             "clientInitialization",
@@ -272,14 +273,23 @@ public class DatabaseDescriptorRefTest
             // starts "REQUEST-SCHEDULER" thread via RoundRobinScheduler
         })
         {
-            Method method = cDatabaseDescriptor.getDeclaredMethod(methodName);
+            Method method = databaseDescriptorClass.getDeclaredMethod(methodName);
             method.invoke(null);
 
-            if ("clientInitialization".equals(methodName) &&
-                threadCount + 2 == threads.getThreadCount())
+            if ("clientInitialization".equals(methodName))
             {
-                // ignore the "AsyncAppender-Worker-ASYNC" and "logback-1" threads
-                threadCount = threadCount + 2;
+                for (ThreadInfo threadInfo : threads.getThreadInfo(threads.getAllThreadIds()))
+                {
+                    // Logback AsyncAppender thread needs to be ignored
+                    if (threadInfo.getThreadName().equals("AsyncAppender-Worker-ASYNC"))
+                        threadCount++;
+                    // Logback basic threads need to be ignored
+                    if (threadInfo.getThreadName().matches("logback-\\d+"))
+                        threadCount++;
+                    // Dynamic Attach thread needs to be ignored, generally it is spawned by IDE
+                    if (threadInfo.getThreadName().equals("Attach Listener"))
+                        threadCount++;
+                }
             }
 
             if (threadCount != threads.getThreadCount())
@@ -300,7 +310,7 @@ public class DatabaseDescriptorRefTest
             StringBuilder sb = new StringBuilder();
             for (Pair<String, Exception> violation : new ArrayList<>(violations))
                 sb.append("\n\n")
-                  .append("VIOLATION: ").append(violation.left).append("\n")
+                  .append("VIOLATION: ").append(violation.left).append('\n')
                   .append(Throwables.getStackTraceAsString(violation.right));
             String msg = sb.toString();
             err.println(msg);
