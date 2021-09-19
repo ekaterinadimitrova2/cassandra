@@ -176,7 +176,7 @@ public class DatabaseDescriptorRefTest
     static final Set<String> checkedClasses = new HashSet<>(Arrays.asList(validClasses));
 
     @Test
-    @SuppressWarnings({"DynamicRegexReplaceableByCompiledPattern", "UseOfSystemOutOrSystemErr"})
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
     public void testDatabaseDescriptorRef() throws Throwable
     {
         PrintStream out = System.out;
@@ -259,6 +259,14 @@ public class DatabaseDescriptorRefTest
 
         Class<?> databaseDescriptorClass = Class.forName("org.apache.cassandra.config.DatabaseDescriptor", true, cl);
 
+        // Some additional threads might be spawned during DatabaseDescriptor intialization:
+        // AsyncAppender-Worker-ASYNC - Logback-related thread
+        // logback-1                  - Logback-related thread
+        // Attach Listener            - Dynamic Attach thread, generally it is spawned by IDE
+        // The purpose of this test is to ensure no threads are spawned for the below methods, but not during
+        // DatabaseDescriptor intialization, that's why we simply ignore them by updating threadCount to the actual number
+        threadCount = threads.getThreadCount();
+
         for (String methodName : new String[]{
             "clientInitialization",
             "applyAddressConfig",
@@ -275,22 +283,6 @@ public class DatabaseDescriptorRefTest
         {
             Method method = databaseDescriptorClass.getDeclaredMethod(methodName);
             method.invoke(null);
-
-            if ("clientInitialization".equals(methodName))
-            {
-                for (ThreadInfo threadInfo : threads.getThreadInfo(threads.getAllThreadIds()))
-                {
-                    // Logback AsyncAppender thread needs to be ignored
-                    if (threadInfo.getThreadName().equals("AsyncAppender-Worker-ASYNC"))
-                        threadCount++;
-                    // Logback basic threads need to be ignored
-                    if (threadInfo.getThreadName().matches("logback-\\d+"))
-                        threadCount++;
-                    // Dynamic Attach thread needs to be ignored, generally it is spawned by IDE
-                    if (threadInfo.getThreadName().equals("Attach Listener"))
-                        threadCount++;
-                }
-            }
 
             if (threadCount != threads.getThreadCount())
             {
