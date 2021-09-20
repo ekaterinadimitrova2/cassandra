@@ -35,6 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Throwables;
 import org.junit.Test;
@@ -176,7 +177,7 @@ public class DatabaseDescriptorRefTest
     static final Set<String> checkedClasses = new HashSet<>(Arrays.asList(validClasses));
 
     @Test
-    @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
+    @SuppressWarnings({"DynamicRegexReplaceableByCompiledPattern", "UseOfSystemOutOrSystemErr"})
     public void testDatabaseDescriptorRef() throws Throwable
     {
         PrintStream out = System.out;
@@ -184,6 +185,7 @@ public class DatabaseDescriptorRefTest
 
         ThreadMXBean threads = ManagementFactory.getThreadMXBean();
         int threadCount = threads.getThreadCount();
+        List<Long> existingThreadids = Arrays.stream(threads.getAllThreadIds()).boxed().collect(Collectors.toList());
 
         ClassLoader delegate = Thread.currentThread().getContextClassLoader();
 
@@ -259,13 +261,27 @@ public class DatabaseDescriptorRefTest
 
         Class<?> databaseDescriptorClass = Class.forName("org.apache.cassandra.config.DatabaseDescriptor", true, cl);
 
-        // Some additional threads might be spawned during DatabaseDescriptor intialization:
-        // AsyncAppender-Worker-ASYNC - Logback-related thread
-        // logback-1                  - Logback-related thread
-        // Attach Listener            - Dynamic Attach thread, generally it is spawned by IDE
-        // The purpose of this test is to ensure no threads are spawned for the below methods, but not during
-        // DatabaseDescriptor intialization, that's why we simply ignore them by updating threadCount to the actual number
-        threadCount = threads.getThreadCount();
+        // During DatabaseDescriptor instantiation some threads are spawned. We need to take them into account in
+        // threadCount variable, otherwise they will be considered as new threads spawned by methods below. There is a
+        // trick: in case of multiple runs of this test in the same JVM the number of such threads will be multiplied by
+        // the number of runs. That's because DatabaseDescriptor is instantiated via a different class loader. So in
+        // order to keep calculation logic correct, we ignore existing threads that were spawned during the previous
+        // runs and change threadCount variable for the new threads only (if they have some specific names).
+        for (ThreadInfo threadInfo : threads.getThreadInfo(threads.getAllThreadIds()))
+        {
+            // All existing threads have been already taken into account in threadCount variable, so we ignore them
+            if (existingThreadids.contains(threadInfo.getThreadId()))
+                continue;
+            // Logback AsyncAppender thread needs to be taken into account
+            if (threadInfo.getThreadName().equals("AsyncAppender-Worker-ASYNC"))
+                threadCount++;
+            // Logback basic threads need to be taken into account
+            if (threadInfo.getThreadName().matches("logback-\\d+"))
+                threadCount++;
+            // Dynamic Attach thread needs to be taken into account, generally it is spawned by IDE
+            if (threadInfo.getThreadName().equals("Attach Listener"))
+                threadCount++;
+        }
 
         for (String methodName : new String[]{
             "clientInitialization",
