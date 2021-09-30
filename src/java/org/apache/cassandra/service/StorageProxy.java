@@ -995,11 +995,13 @@ public class StorageProxy implements StorageProxyMBean
                         {
                             mutation.apply(writeCommitLog);
                             nonLocalMutations.remove(mutation);
-                            cleanup.ackMutation();
+                            // won't trigger cleanup
+                            cleanup.decrement();
                         }
                         catch (Exception exc)
                         {
-                            logger.error("Error applying local view update to keyspace {}: {}", mutation.getKeyspaceName(), mutation);
+                            logger.error("Error applying local view update: Mutation (keyspace {}, tables {}, partition key {})",
+                                         mutation.getKeyspaceName(), mutation.getTableIds(), mutation.key());
                             throw exc;
                         }
                     }
@@ -1967,12 +1969,19 @@ public class StorageProxy implements StorageProxyMBean
     {
         private final ReadCommand command;
         private final ReadCallback handler;
+        private final boolean trackRepairedStatus;
 
         public LocalReadRunnable(ReadCommand command, ReadCallback handler)
+        {
+            this(command, handler, false);
+        }
+
+        public LocalReadRunnable(ReadCommand command, ReadCallback handler, boolean trackRepairedStatus)
         {
             super(Verb.READ_REQ);
             this.command = command;
             this.handler = handler;
+            this.trackRepairedStatus = trackRepairedStatus;
         }
 
         protected void runMayThrow()
@@ -1982,10 +1991,10 @@ public class StorageProxy implements StorageProxyMBean
                 command.setMonitoringTime(approxCreationTimeNanos, false, verb.expiresAfterNanos(), DatabaseDescriptor.getSlowQueryTimeout(NANOSECONDS));
 
                 ReadResponse response;
-                try (ReadExecutionController executionController = command.executionController();
-                     UnfilteredPartitionIterator iterator = command.executeLocally(executionController))
+                try (ReadExecutionController controller = command.executionController(trackRepairedStatus);
+                     UnfilteredPartitionIterator iterator = command.executeLocally(controller))
                 {
-                    response = command.createResponse(iterator);
+                    response = command.createResponse(iterator, controller.getRepairedDataInfo());
                 }
 
                 if (command.complete())
