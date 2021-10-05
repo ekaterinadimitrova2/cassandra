@@ -47,12 +47,15 @@ import org.apache.cassandra.config.EncryptionOptions;
 import org.apache.cassandra.cql3.QueryOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
 import org.apache.cassandra.net.*;
+import org.apache.cassandra.security.ISslContextFactory;
 import org.apache.cassandra.security.SSLFactory;
 import org.apache.cassandra.transport.messages.*;
 
 import static org.apache.cassandra.transport.CQLMessageHandler.envelopeSize;
 import static org.apache.cassandra.transport.Flusher.MAX_FRAMED_PAYLOAD_SIZE;
 import static org.apache.cassandra.utils.concurrent.NonBlockingRateLimiter.NO_OP_LIMITER;
+
+import static org.apache.cassandra.utils.Clock.Global.currentTimeMillis;
 
 public class SimpleClient implements Closeable
 {
@@ -316,10 +319,10 @@ public class SimpleClient implements Closeable
                 }
                 lastWriteFuture = channel.writeAndFlush(requests);
 
-                long deadline = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(TIMEOUT_SECONDS);
+                long deadline = currentTimeMillis() + TimeUnit.SECONDS.toMillis(TIMEOUT_SECONDS);
                 for (int i = 0; i < requests.size(); i++)
                 {
-                    Message.Response msg = responseHandler.responses.poll(deadline - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+                    Message.Response msg = responseHandler.responses.poll(deadline - currentTimeMillis(), TimeUnit.MILLISECONDS);
                     if (msg == null)
                         throw new RuntimeException("timeout");
                     if (msg instanceof ErrorMessage)
@@ -618,7 +621,7 @@ public class SimpleClient implements Closeable
         {
             super.initChannel(channel);
             SslContext sslContext = SSLFactory.getOrCreateSslContext(encryptionOptions, encryptionOptions.require_client_auth,
-                                                                     SSLFactory.SocketType.CLIENT);
+                                                                     ISslContextFactory.SocketType.CLIENT);
             channel.pipeline().addFirst("ssl", sslContext.newHandler(channel.alloc()));
         }
     }

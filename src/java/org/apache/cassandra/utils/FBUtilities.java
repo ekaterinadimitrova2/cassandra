@@ -42,8 +42,8 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.cassandra.auth.AllowAllNetworkAuthorizer;
 import org.apache.cassandra.audit.IAuditLogger;
+import org.apache.cassandra.auth.AllowAllNetworkAuthorizer;
 import org.apache.cassandra.auth.IAuthenticator;
 import org.apache.cassandra.auth.IAuthorizer;
 import org.apache.cassandra.auth.INetworkAuthorizer;
@@ -66,9 +66,12 @@ import org.apache.cassandra.io.util.DataOutputBuffer;
 import org.apache.cassandra.io.util.DataOutputBufferFixed;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.locator.InetAddressAndPort;
+import org.apache.cassandra.security.ISslContextFactory;
 
 import static org.apache.cassandra.config.CassandraRelevantProperties.LINE_SEPARATOR;
 import static org.apache.cassandra.config.CassandraRelevantProperties.USER_HOME;
+import static org.apache.cassandra.utils.Clock.Global.currentTimeMillis;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 
 public class FBUtilities
@@ -426,12 +429,12 @@ public class FBUtilities
     {
         // we use microsecond resolution for compatibility with other client libraries, even though
         // we can't actually get microsecond precision.
-        return System.currentTimeMillis() * 1000;
+        return currentTimeMillis() * 1000;
     }
 
     public static int nowInSeconds()
     {
-        return (int) (System.currentTimeMillis() / 1000);
+        return (int) (currentTimeMillis() / 1000);
     }
 
     public static <T> List<T> waitOnFutures(Iterable<? extends Future<? extends T>> futures)
@@ -451,7 +454,7 @@ public class FBUtilities
     {
         long endNanos = 0;
         if (timeout > 0)
-            endNanos = System.nanoTime() + units.toNanos(timeout);
+            endNanos = nanoTime() + units.toNanos(timeout);
         List<T> results = new ArrayList<>();
         Throwable fail = null;
         for (Future<? extends T> f : futures)
@@ -464,7 +467,7 @@ public class FBUtilities
                 }
                 else
                 {
-                    long waitFor = Math.max(1, endNanos - System.nanoTime());
+                    long waitFor = Math.max(1, endNanos - nanoTime());
                     results.add(f.get(waitFor, TimeUnit.NANOSECONDS));
                 }
             }
@@ -556,10 +559,10 @@ public class FBUtilities
             public List get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException
             {
                 List result = new ArrayList<>(futures.size());
-                long deadline = System.nanoTime() + TimeUnit.NANOSECONDS.convert(timeout, unit);
+                long deadline = nanoTime() + TimeUnit.NANOSECONDS.convert(timeout, unit);
                 for (Future current : futures)
                 {
-                    long remaining = deadline - System.nanoTime();
+                    long remaining = deadline - nanoTime();
                     if (remaining <= 0)
                         throw new TimeoutException();
 
@@ -670,7 +673,7 @@ public class FBUtilities
         }
         return FBUtilities.construct(className, "network authorizer");
     }
-    
+
     public static IAuditLogger newAuditLogger(String className, Map<String, String> parameters) throws ConfigurationException
     {
         if (!className.contains("."))
@@ -684,6 +687,22 @@ public class FBUtilities
         catch (Exception ex)
         {
             throw new ConfigurationException("Unable to create instance of IAuditLogger.", ex);
+        }
+    }
+
+    public static ISslContextFactory newSslContextFactory(String className, Map<String,Object> parameters) throws ConfigurationException
+    {
+        if (!className.contains("."))
+            className = "org.apache.cassandra.security." + className;
+
+        try
+        {
+            Class<?> sslContextFactoryClass = Class.forName(className);
+            return (ISslContextFactory) sslContextFactoryClass.getConstructor(Map.class).newInstance(parameters);
+        }
+        catch (Exception ex)
+        {
+            throw new ConfigurationException("Unable to create instance of ISslContextFactory for " + className, ex);
         }
     }
 

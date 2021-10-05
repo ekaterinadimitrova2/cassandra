@@ -32,7 +32,6 @@ import com.google.common.collect.Iterators;
 import org.apache.cassandra.cql3.CQLStatement;
 import org.apache.cassandra.cql3.QueryOptions;
 import org.apache.cassandra.cql3.QueryProcessor;
-import org.apache.cassandra.cql3.UntypedResultSet;
 import org.apache.cassandra.cql3.statements.SelectStatement;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.ICoordinator;
@@ -43,13 +42,17 @@ import org.apache.cassandra.distributed.api.SimpleQueryResult;
 import org.apache.cassandra.service.ClientState;
 import org.apache.cassandra.service.ClientWarn;
 import org.apache.cassandra.service.QueryState;
-import org.apache.cassandra.service.pager.QueryPager;
-import org.apache.cassandra.transport.ClientStat;
+import org.apache.cassandra.service.reads.trackwarnings.CoordinatorWarnings;
 import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.tracing.Tracing;
 import org.apache.cassandra.transport.messages.ResultMessage;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.cassandra.utils.FBUtilities;
+
+import static java.lang.Integer.MAX_VALUE;
+import static org.apache.cassandra.cql3.QueryOptions.create;
+import static org.apache.cassandra.service.QueryState.forInternalCalls;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 public class Coordinator implements ICoordinator
 {
@@ -99,23 +102,36 @@ public class Coordinator implements ICoordinator
         // Start capturing warnings on this thread. Note that this will implicitly clear out any previous 
         // warnings as it sets a new State instance on the ThreadLocal.
         ClientWarn.instance.captureWarnings();
-        
-        ResultMessage res = prepared.execute(QueryState.forInternalCalls(),
-                                             QueryOptions.create(toCassandraCL(consistencyLevel),
-                                                                 boundBBValues,
-                                                                 false,
-                                                                 Integer.MAX_VALUE,
-                                                                 null,
-                                                                 null,
-                                                                 ProtocolVersion.CURRENT,
-                                                                 null),
-                                             System.nanoTime());
+        CoordinatorWarnings.init();
+        try
+        {
+            ResultMessage res = prepared.execute(QueryState.forInternalCalls(),
+                                   QueryOptions.create(toCassandraCL(consistencyLevel),
+                                                       boundBBValues,
+                                                       false,
+                                                       Integer.MAX_VALUE,
+                                                       null,
+                                                       null,
+                                                       ProtocolVersion.CURRENT,
+                                                       null),
+                                   System.nanoTime());
+            // Collect warnings reported during the query.
+            CoordinatorWarnings.done();
+            if (res != null)
+                res.setWarnings(ClientWarn.instance.getWarnings());
 
-        // Collect warnings reported during the query.
-        if (res != null)
-            res.setWarnings(ClientWarn.instance.getWarnings());
-
-        return RowUtil.toQueryResult(res);
+            return RowUtil.toQueryResult(res);
+        }
+        catch (Exception | Error e)
+        {
+            CoordinatorWarnings.done();
+            throw e;
+        }
+        finally
+        {
+            CoordinatorWarnings.reset();
+            ClientWarn.instance.resetWarnings();
+        }
     }
 
     public Object[][] executeWithTracing(UUID sessionId, String query, ConsistencyLevel consistencyLevelOrigin, Object... boundValues)
@@ -145,7 +161,7 @@ public class Coordinator implements ICoordinator
             prepared.validate(clientState);
             assert prepared instanceof SelectStatement : "Only SELECT statements can be executed with paging";
 
-            long nanoTime = System.nanoTime();
+            long nanoTime = nanoTime();
             SelectStatement selectStatement = (SelectStatement) prepared;
 
             QueryState queryState = new QueryState(clientState);

@@ -34,6 +34,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.ListenableFutureTask;
 import com.google.common.util.concurrent.Uninterruptibles;
@@ -51,6 +52,7 @@ import org.apache.cassandra.utils.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.netty.util.concurrent.FastThreadLocal;
 import org.apache.cassandra.concurrent.DebuggableScheduledThreadPoolExecutor;
 import org.apache.cassandra.concurrent.JMXEnabledThreadPoolExecutor;
 import org.apache.cassandra.concurrent.Stage;
@@ -61,13 +63,21 @@ import org.apache.cassandra.net.RequestCallback;
 import org.apache.cassandra.net.Message;
 import org.apache.cassandra.net.MessagingService;
 import org.apache.cassandra.service.StorageService;
+import org.apache.cassandra.utils.CassandraVersion;
+import org.apache.cassandra.utils.ExecutorUtils;
 import org.apache.cassandra.utils.FBUtilities;
 import org.apache.cassandra.utils.JVMStabilityInspector;
+import org.apache.cassandra.utils.MBeanWrapper;
+import org.apache.cassandra.utils.NoSpamLogger;
+import org.apache.cassandra.utils.Pair;
+import org.apache.cassandra.utils.RecomputingSupplier;
 
 import static org.apache.cassandra.config.CassandraRelevantProperties.GOSSIPER_QUARANTINE_DELAY;
 import static org.apache.cassandra.net.NoPayload.noPayload;
 import static org.apache.cassandra.net.Verb.ECHO_REQ;
 import static org.apache.cassandra.net.Verb.GOSSIP_DIGEST_SYN;
+import static org.apache.cassandra.utils.Clock.Global.currentTimeMillis;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 /**
  * This module is responsible for Gossiping information for the local endpoint. This abstraction
@@ -158,7 +168,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     // endpoint states as gathered during shadow round
     private final Map<InetAddressAndPort, EndpointState> endpointShadowStateMap = new ConcurrentHashMap<>();
 
-    private volatile long lastProcessedMessageAt = System.currentTimeMillis();
+    private volatile long lastProcessedMessageAt = currentTimeMillis();
 
     /**
      * This property is initially set to {@code true} which means that we have no information about the other nodes.
@@ -333,7 +343,10 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         }
     }
 
-    Gossiper(boolean registerJmx)
+    private final RecomputingSupplier<CassandraVersion> minVersionSupplier = new RecomputingSupplier<>(this::computeMinVersion, executor);
+
+    @VisibleForTesting
+    public Gossiper(boolean registerJmx)
     {
         // half of QUARATINE_DELAY, to ensure justRemovedEndpoints has enough leeway to prevent re-gossip
         fatClientTimeout = (QUARANTINE_DELAY / 2);
@@ -345,6 +358,31 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         {
             MBeanWrapper.instance.registerMBean(this, MBEAN_NAME);
         }
+
+        subscribers.add(new IEndpointStateChangeSubscriber()
+        {
+            public void onJoin(InetAddressAndPort endpoint, EndpointState state)
+	    {
+                maybeRecompute(state);
+            }
+
+            public void onAlive(InetAddressAndPort endpoint, EndpointState state)
+	    {
+                maybeRecompute(state);
+            }
+
+            private void maybeRecompute(EndpointState state)
+	    {
+                if (state.getApplicationState(ApplicationState.RELEASE_VERSION) != null)
+                    minVersionSupplier.recompute();
+            }
+
+            public void onChange(InetAddressAndPort endpoint, ApplicationState state, VersionedValue value)
+            {
+                if (state == ApplicationState.RELEASE_VERSION)
+                    minVersionSupplier.recompute();
+            }
+        });
     }
 
     public void setLastProcessedMessageAt(long timeInMillis)
@@ -448,7 +486,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     {
         Long downtime = unreachableEndpoints.get(ep);
         if (downtime != null)
-            return TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - downtime);
+            return TimeUnit.NANOSECONDS.toMillis(nanoTime() - downtime);
         else
             return 0L;
     }
@@ -620,7 +658,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
      */
     private void quarantineEndpoint(InetAddressAndPort endpoint)
     {
-        quarantineEndpoint(endpoint, System.currentTimeMillis());
+        quarantineEndpoint(endpoint, currentTimeMillis());
     }
 
     /**
@@ -643,7 +681,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     {
         // remember, quarantineEndpoint will effectively already add QUARANTINE_DELAY, so this is 2x
         logger.debug("");
-        quarantineEndpoint(endpoint, System.currentTimeMillis() + QUARANTINE_DELAY);
+        quarantineEndpoint(endpoint, currentTimeMillis() + QUARANTINE_DELAY);
         GossiperDiagnostics.replacementQuarantine(this, endpoint);
     }
 
@@ -777,7 +815,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
 
             if (epState == null)
             {
-                epState = new EndpointState(new HeartBeatState((int) ((System.currentTimeMillis() + 60000) / 1000), 9999));
+                epState = new EndpointState(new HeartBeatState((int) ((currentTimeMillis() + 60000) / 1000), 9999));
             }
             else
             {
@@ -851,7 +889,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         if (logger.isTraceEnabled())
             logger.trace("Sending a GossipDigestSyn to {} ...", to);
         if (firstSynSendAt == 0)
-            firstSynSendAt = System.nanoTime();
+            firstSynSendAt = nanoTime();
         MessagingService.instance().send(message, to);
 
         boolean isSeed = seeds.contains(to);
@@ -985,8 +1023,8 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         if (logger.isTraceEnabled())
             logger.trace("Performing status check ...");
 
-        long now = System.currentTimeMillis();
-        long nowNano = System.nanoTime();
+        long now = currentTimeMillis();
+        long nowNano = nanoTime();
 
         long pending = ((JMXEnabledThreadPoolExecutor) Stage.GOSSIP.executor()).metrics.pendingTasks.getValue();
         if (pending > 0 && lastProcessedMessageAt < now - 1000)
@@ -1307,7 +1345,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     {
         localState.markDead();
         liveEndpoints.remove(addr);
-        unreachableEndpoints.put(addr, System.nanoTime());
+        unreachableEndpoints.put(addr, nanoTime());
     }
 
     /**
@@ -1448,7 +1486,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
             {
                 int localGeneration = localEpStatePtr.getHeartBeatState().getGeneration();
                 int remoteGeneration = remoteState.getHeartBeatState().getGeneration();
-                long localTime = System.currentTimeMillis()/1000;
+                long localTime = currentTimeMillis() / 1000;
                 if (logger.isTraceEnabled())
                     logger.trace("{} local generation {}, remote generation {}", ep, localGeneration, remoteGeneration);
 
@@ -1714,6 +1752,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
         maybeInitializeLocalState(generationNbr);
         EndpointState localState = endpointStateMap.get(FBUtilities.getBroadcastAddressAndPort());
         localState.addApplicationStates(preloadLocalStates);
+        minVersionSupplier.recompute();
 
         //notify snitches that Gossiper is about to start
         DatabaseDescriptor.getEndpointSnitch().gossiperStarting();
@@ -2125,7 +2164,7 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
 
     public static long computeExpireTime()
     {
-        return System.currentTimeMillis() + Gossiper.aVeryLongTime;
+        return currentTimeMillis() + aVeryLongTime;
     }
 
     @Nullable
@@ -2284,5 +2323,71 @@ public class Gossiper implements IFailureDetectionEventListener, GossiperMBean
     {
         stop();
         ExecutorUtils.shutdownAndWait(timeout, unit, executor);
+    }
+
+    @Nullable
+    public CassandraVersion getMinVersion(int delay, TimeUnit timeUnit)
+    {
+        try
+        {
+            return minVersionSupplier.get(delay, timeUnit);
+        }
+        catch (TimeoutException e)
+        {
+            // Timeouts here are harmless: they won't cause reprepares and may only
+            // cause the old version of the hash to be kept for longer
+            return null;
+        }
+        catch (Throwable e)
+        {
+            logger.error("Caught an exception while waiting for min version", e);
+            return null;
+        }
+    }
+
+    @Nullable
+    private String getReleaseVersionString(InetAddressAndPort ep)
+    {
+        EndpointState state = getEndpointStateForEndpoint(ep);
+        if (state == null)
+            return null;
+
+        VersionedValue value = state.getApplicationState(ApplicationState.RELEASE_VERSION);
+        return value == null ? null : value.value;
+    }
+
+    private CassandraVersion computeMinVersion()
+    {
+        CassandraVersion minVersion = null;
+
+        for (InetAddressAndPort addr : Iterables.concat(Gossiper.instance.getLiveMembers(),
+                                                 Gossiper.instance.getUnreachableMembers()))
+        {
+            String versionString = getReleaseVersionString(addr);
+            // Raced with changes to gossip state, wait until next iteration
+            if (versionString == null)
+                return null;
+
+            CassandraVersion version;
+
+            try
+            {
+                version = new CassandraVersion(versionString);
+            }
+            catch (Throwable t)
+            {
+                JVMStabilityInspector.inspectThrowable(t);
+                String message = String.format("Can't parse version string %s", versionString);
+                logger.warn(message);
+                if (logger.isDebugEnabled())
+                    logger.debug(message, t);
+                return null;
+            }
+
+            if (minVersion == null || version.compareTo(minVersion) < 0)
+                minVersion = version;
+        }
+
+        return minVersion;
     }
 }

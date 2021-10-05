@@ -62,11 +62,12 @@ import org.apache.cassandra.utils.UUIDGen;
 
 import static org.apache.cassandra.cql3.statements.RequestValidations.checkFalse;
 import static org.apache.cassandra.cql3.statements.RequestValidations.checkNull;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 /*
  * Abstract parent class of individual modifications, i.e. INSERT, UPDATE and DELETE.
  */
-public abstract class ModificationStatement implements CQLStatement
+public abstract class ModificationStatement implements CQLStatement.SingleKeyspaceCqlStatement
 {
     protected static final Logger logger = LoggerFactory.getLogger(ModificationStatement.class);
 
@@ -196,6 +197,7 @@ public abstract class ModificationStatement implements CQLStatement
 
     public abstract void addUpdateForKey(PartitionUpdate.Builder updateBuilder, Slice slice, UpdateParameters params);
 
+    @Override
     public String keyspace()
     {
         return metadata.keyspace;
@@ -622,7 +624,7 @@ public abstract class ModificationStatement implements CQLStatement
     {
         return hasConditions()
                ? executeInternalWithCondition(queryState, options)
-               : executeInternalWithoutCondition(queryState, options, System.nanoTime());
+               : executeInternalWithoutCondition(queryState, options, nanoTime());
     }
 
     public ResultMessage executeInternalWithoutCondition(QueryState queryState, QueryOptions options, long queryStartNanoTime)

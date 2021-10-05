@@ -134,6 +134,8 @@ import static org.apache.cassandra.index.SecondaryIndexManager.isIndexColumnFami
 import static org.apache.cassandra.net.NoPayload.noPayload;
 import static org.apache.cassandra.net.Verb.REPLICATION_DONE_REQ;
 import static org.apache.cassandra.schema.MigrationManager.evolveSystemKeyspace;
+import static org.apache.cassandra.utils.Clock.Global.currentTimeMillis;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 /**
  * This abstraction contains the token/identifier of this node
@@ -392,7 +394,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
                 setGossipTokens(tokens);
 
             Gossiper.instance.forceNewerGeneration();
-            Gossiper.instance.start((int) (System.currentTimeMillis() / 1000));
+            Gossiper.instance.start((int) (currentTimeMillis() / 1000));
             gossipActive = true;
         }
     }
@@ -725,7 +727,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         initialized = true;
         gossipActive = true;
         Gossiper.instance.register(this);
-        Gossiper.instance.start((int) (System.currentTimeMillis() / 1000)); // needed for node-ring gathering.
+        Gossiper.instance.start((int) (currentTimeMillis() / 1000)); // needed for node-ring gathering.
         Gossiper.instance.addLocalApplicationState(ApplicationState.NET_VERSION, valueFactory.networkVersion());
         MessagingService.instance().listen();
     }
@@ -1486,8 +1488,10 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
     public void setStreamThroughputMbPerSec(int value)
     {
+        int oldValue = DatabaseDescriptor.getStreamThroughputOutboundMegabitsPerSec();
         DatabaseDescriptor.setStreamThroughputOutboundMegabitsPerSec(value);
-        logger.info("setstreamthroughput: throttle set to {}", value);
+        StreamManager.StreamRateLimiter.updateThroughput();
+        logger.info("setstreamthroughput: throttle set to {} Mb/s (was {} Mb/s)", value, oldValue);
     }
 
     public int getStreamThroughputMbPerSec()
@@ -1497,8 +1501,10 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
     public void setInterDCStreamThroughputMbPerSec(int value)
     {
+        int oldValue = DatabaseDescriptor.getInterDCStreamThroughputOutboundMegabitsPerSec();
         DatabaseDescriptor.setInterDCStreamThroughputOutboundMegabitsPerSec(value);
-        logger.info("setinterdcstreamthroughput: throttle set to {}", value);
+        StreamManager.StreamRateLimiter.updateInterDCThroughput();
+        logger.info("setinterdcstreamthroughput: throttle set to {} Mb/s (was {} Mb/s)", value, oldValue);
     }
 
     public int getInterDCStreamThroughputMbPerSec()
@@ -1703,7 +1709,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
                     if (existing != null)
                     {
                         long nanoDelay = schemaDelay * 1000000L;
-                        if (Gossiper.instance.getEndpointStateForEndpoint(existing).getUpdateTimestamp() > (System.nanoTime() - nanoDelay))
+                        if (Gossiper.instance.getEndpointStateForEndpoint(existing).getUpdateTimestamp() > (nanoTime() - nanoDelay))
                             throw new UnsupportedOperationException("Cannot replace a live node... ");
                         collisions.add(existing);
                     }
@@ -6128,41 +6134,105 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
     }
 
     @Override
-    public long getClientLargeReadWarnThresholdKB()
+    public boolean getTrackWarningsEnabled()
     {
-        return DatabaseDescriptor.getClientLargeReadWarnThresholdKB();
+        return DatabaseDescriptor.getTrackWarningsEnabled();
     }
 
     @Override
-    public void setClientLargeReadWarnThresholdKB(long threshold)
+    public void setTrackWarningsEnabled(boolean value)
     {
-        DatabaseDescriptor.setClientLargeReadWarnThresholdKB(threshold);
-        logger.info("updated client_large_read_warn_threshold_kb to {}", threshold);
+        DatabaseDescriptor.setTrackWarningsEnabled(value);
+        logger.info("updated track_warnings.enabled to {}", value);
     }
 
     @Override
-    public long getClientLargeReadAbortThresholdKB()
+    public long getCoordinatorLargeReadWarnThresholdKB()
     {
-        return DatabaseDescriptor.getClientLargeReadAbortThresholdKB();
+        return DatabaseDescriptor.getCoordinatorReadSizeWarnThresholdKB();
     }
 
     @Override
-    public void setClientLargeReadAbortThresholdKB(long threshold)
+    public void setCoordinatorLargeReadWarnThresholdKB(long threshold)
     {
-        DatabaseDescriptor.setClientLargeReadAbortThresholdKB(threshold);
-        logger.info("updated client_large_read_abort_threshold_kb to {}", threshold);
+        if (threshold < 0)
+            throw new IllegalArgumentException("threshold " + threshold + " is less than 0; must be positive or zero");
+        DatabaseDescriptor.setCoordinatorReadSizeWarnThresholdKB(threshold);
+        logger.info("updated track_warnings.coordinator_large_read.warn_threshold_kb to {}", threshold);
     }
 
     @Override
-    public boolean getClientTrackWarningsEnabled()
+    public long getCoordinatorLargeReadAbortThresholdKB()
     {
-        return DatabaseDescriptor.getClientTrackWarningsEnabled();
+        return DatabaseDescriptor.getCoordinatorReadSizeAbortThresholdKB();
     }
 
     @Override
-    public void setClientTrackWarningsEnabled(boolean value)
+    public void setCoordinatorLargeReadAbortThresholdKB(long threshold)
     {
-        DatabaseDescriptor.setClientTrackWarningsEnabled(value);
-        logger.info("updated client_track_warnings_enabled to {}", value);
+        if (threshold < 0)
+            throw new IllegalArgumentException("threshold " + threshold + " is less than 0; must be positive or zero");
+        DatabaseDescriptor.setCoordinatorReadSizeAbortThresholdKB(threshold);
+        logger.info("updated track_warnings.coordinator_large_read.abort_threshold_kb to {}", threshold);
+    }
+
+    @Override
+    public long getLocalReadTooLargeWarnThresholdKb()
+    {
+        return DatabaseDescriptor.getLocalReadSizeWarnThresholdKb();
+    }
+
+    @Override
+    public void setLocalReadTooLargeWarnThresholdKb(long value)
+    {
+        if (value < 0)
+            throw new IllegalArgumentException("value " + value + " is less than 0; must be positive or zero");
+        DatabaseDescriptor.setLocalReadSizeWarnThresholdKb(value);
+        logger.info("updated track_warnings.local_read_size.warn_threshold_kb to {}", value);
+    }
+
+    @Override
+    public long getLocalReadTooLargeAbortThresholdKb()
+    {
+        return DatabaseDescriptor.getLocalReadSizeAbortThresholdKb();
+    }
+
+    @Override
+    public void setLocalReadTooLargeAbortThresholdKb(long value)
+    {
+        if (value < 0)
+            throw new IllegalArgumentException("value " + value + " is less than 0; must be positive or zero");
+        DatabaseDescriptor.setLocalReadSizeAbortThresholdKb(value);
+        logger.info("updated track_warnings.local_read_size.abort_threshold_kb to {}", value);
+    }
+
+    @Override
+    public int getRowIndexSizeWarnThresholdKb()
+    {
+        return DatabaseDescriptor.getRowIndexSizeWarnThresholdKb();
+    }
+
+    @Override
+    public void setRowIndexSizeWarnThresholdKb(int value)
+    {
+        if (value < 0)
+            throw new IllegalArgumentException("value " + value + " is less than 0; must be positive or zero");
+        DatabaseDescriptor.setRowIndexSizeWarnThresholdKb(value);
+        logger.info("updated track_warnings.row_index_size.warn_threshold_kb to {}", value);
+    }
+
+    @Override
+    public int getRowIndexSizeAbortThresholdKb()
+    {
+        return DatabaseDescriptor.getRowIndexSizeAbortThresholdKb();
+    }
+
+    @Override
+    public void setRowIndexSizeAbortThresholdKb(int value)
+    {
+        if (value < 0)
+            throw new IllegalArgumentException("value " + value + " is less than 0; must be positive or zero");
+        DatabaseDescriptor.setRowIndexSizeAbortThresholdKb(value);
+        logger.info("updated track_warnings.row_index_size.abort_threshold_kb to {}", value);
     }
 }
