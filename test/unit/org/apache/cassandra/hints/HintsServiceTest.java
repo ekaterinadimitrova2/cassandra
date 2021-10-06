@@ -247,7 +247,7 @@ public class HintsServiceTest
 
     private static class MockFailureDetector implements IFailureDetector
     {
-        private boolean isAlive = true;
+        private volatile boolean isAlive = true;
 
         public boolean isAlive(InetAddressAndPort ep)
         {
