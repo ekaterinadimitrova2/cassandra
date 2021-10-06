@@ -275,21 +275,38 @@ final class HintsDispatchExecutor
                 if (offset != null)
                     dispatcher.seek(offset);
 
-                if (dispatcher.dispatch())
+                try
                 {
-                    store.delete(descriptor);
-                    store.cleanUp(descriptor);
-                    logger.info("Finished hinted handoff of file {} to endpoint {}: {}", descriptor.fileName(), address, hostId);
-                    return true;
+                    boolean dispatchResult = dispatcher.dispatch();
+                    if (dispatchResult)
+                    {
+                        store.delete(descriptor);
+                        store.cleanUp(descriptor);
+                        logger.info("Finished hinted handoff of file {} to endpoint {}: {}", descriptor.fileName(), address, hostId);
+                        return true;
+                    }
+                    else
+                    {
+                        handleDispatchFailure(dispatcher, descriptor, address);
+                        return false;
+                    }
                 }
-                else
+                // we wrap InterruptedException in AssertionError
+                // without that catch, undispatched HintsDescriptor won't be added back to the store and cleaned up by
+                // HintsStore.delete
+                catch (AssertionError e)
                 {
-                    store.markDispatchOffset(descriptor, dispatcher.dispatchPosition());
-                    store.offerFirst(descriptor);
-                    logger.info("Finished hinted handoff of file {} to endpoint {}: {}, partially", descriptor.fileName(), address, hostId);
-                    return false;
+                    handleDispatchFailure(dispatcher, descriptor, address);
+                    throw e;
                 }
             }
+        }
+
+        private void handleDispatchFailure(HintsDispatcher dispatcher, HintsDescriptor descriptor, InetAddressAndPort address)
+        {
+            store.markDispatchOffset(descriptor, dispatcher.dispatchPosition());
+            store.offerFirst(descriptor);
+            logger.info("Finished hinted handoff of file {} to endpoint {}: {}, partially", descriptor.fileName(), address, hostId);
         }
 
         // for each hint in the hints file for a node that isn't part of the ring anymore, write RF hints for each replica
