@@ -660,6 +660,8 @@
           </dependency>
           <dependency groupId="org.hamcrest" artifactId="hamcrest" version="2.2" scope="test"/>
           <dependency groupId="com.github.seancfoley" artifactId="ipaddress" version="5.3.3" />
+          <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on -->
+          <dependency groupId="org.bouncycastle" artifactId="bcpkix-jdk15on" version="1.69" scope="test"/>
         </dependencyManagement>
         <developer id="adelapena" name="Andres de la Peña"/>
         <developer id="alakshman" name="Avinash Lakshman"/>
@@ -733,6 +735,7 @@
         <dependency groupId="org.junit" artifactId="junit-bom" type="pom"/>
         <dependency groupId="org.awaitility" artifactId="awaitility"/>
         <dependency groupId="org.hamcrest" artifactId="hamcrest"/>
+        <dependency groupId="org.bouncycastle" artifactId="bcpkix-jdk15on" scope="test"/>
         <!-- coverage debs -->
         <dependency groupId="org.jacoco" artifactId="org.jacoco.agent"/>
         <dependency groupId="org.jacoco" artifactId="org.jacoco.ant"/>
