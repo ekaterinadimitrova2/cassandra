@@ -23,6 +23,7 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.BindException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.security.Permission;
@@ -108,11 +109,13 @@ import org.apache.cassandra.schema.SchemaConstants;
 import org.apache.cassandra.service.ActiveRepairService;
 import org.apache.cassandra.service.CassandraDaemon;
 import org.apache.cassandra.service.ClientState;
+import org.apache.cassandra.service.ClientWarn;
 import org.apache.cassandra.service.DefaultFSErrorHandler;
 import org.apache.cassandra.service.PendingRangeCalculatorService;
 import org.apache.cassandra.service.QueryState;
 import org.apache.cassandra.service.StorageService;
 import org.apache.cassandra.service.StorageServiceMBean;
+import org.apache.cassandra.service.reads.trackwarnings.CoordinatorWarnings;
 import org.apache.cassandra.service.snapshot.SnapshotManager;
 import org.apache.cassandra.streaming.StreamReceiveTask;
 import org.apache.cassandra.streaming.StreamTransferTask;
@@ -141,12 +144,13 @@ import static org.apache.cassandra.distributed.api.Feature.NETWORK;
 import static org.apache.cassandra.distributed.impl.DistributedTestSnitch.fromCassandraInetAddressAndPort;
 import static org.apache.cassandra.distributed.impl.DistributedTestSnitch.toCassandraInetAddressAndPort;
 import static org.apache.cassandra.net.Verb.BATCH_STORE_REQ;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 public class Instance extends IsolatedExecutor implements IInvokableInstance
 {
     public final IInstanceConfig config;
     private volatile boolean initialized = false;
-    private final long startedAt = System.nanoTime();
+    private final long startedAt;
 
     // should never be invoked directly, so that it is instantiated on other class loader;
     // only visible for inheritance
@@ -157,6 +161,11 @@ public class Instance extends IsolatedExecutor implements IInvokableInstance
         Object clusterId = Objects.requireNonNull(config.get(Constants.KEY_DTEST_API_CLUSTER_ID), "cluster_id is not defined");
         ClusterIDDefiner.setId("cluster-" + clusterId);
         InstanceIDDefiner.setInstanceId(config.num());
+        // Defer initialisation of Clock.Global until cluster/instance identifiers are set.
+        // Otherwise, the instance classloader's logging classes are setup ahead of time and
+        // the patterns/file paths are not set correctly. This will be addressed in a subsequent
+        // commit to extend the functionality of the @Shared annotation to app classes.
+        startedAt = nanoTime();
         FBUtilities.setBroadcastInetAddressAndPort(InetAddressAndPort.getByAddressOverrideDefaults(config.broadcastAddress().getAddress(),
                                                                                                    config.broadcastAddress().getPort()));
 
@@ -219,10 +228,29 @@ public class Instance extends IsolatedExecutor implements IInvokableInstance
     public SimpleQueryResult executeInternalWithResult(String query, Object... args)
     {
         return sync(() -> {
-            QueryHandler.Prepared prepared = QueryProcessor.prepareInternal(query);
-            ResultMessage result = prepared.statement.executeLocally(QueryProcessor.internalQueryState(),
-                                                                     QueryProcessor.makeInternalOptions(prepared.statement, args));
-            return RowUtil.toQueryResult(result);
+            ClientWarn.instance.captureWarnings();
+            CoordinatorWarnings.init();
+            try
+            {
+                QueryHandler.Prepared prepared = QueryProcessor.prepareInternal(query);
+                ResultMessage result = prepared.statement.executeLocally(QueryProcessor.internalQueryState(),
+                                                           QueryProcessor.makeInternalOptions(prepared.statement, args));
+                CoordinatorWarnings.done();
+
+                if (result != null)
+                    result.setWarnings(ClientWarn.instance.getWarnings());
+                return RowUtil.toQueryResult(result);
+            }
+            catch (Exception | Error e)
+            {
+                CoordinatorWarnings.done();
+                throw e;
+            }
+            finally
+            {
+                CoordinatorWarnings.reset();
+                ClientWarn.instance.resetWarnings();
+            }
         }).call();
     }
 
@@ -544,8 +572,19 @@ public class Instance extends IsolatedExecutor implements IInvokableInstance
                 StorageService.instance.registerDaemon(CassandraDaemon.getInstanceForTesting());
                 if (config.has(GOSSIP))
                 {
-                    MigrationManager.setUptimeFn(() -> TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedAt));
-                    StorageService.instance.initServer();
+                    MigrationManager.setUptimeFn(() -> TimeUnit.NANOSECONDS.toMillis(nanoTime() - startedAt));
+                    try
+                    {
+                        StorageService.instance.initServer();
+                    }
+                    catch (Exception e)
+                    {
+                        // I am tired of looking up my notes for how to fix this... so why not tell the user?
+                        Throwable cause = com.google.common.base.Throwables.getRootCause(e);
+                        if (cause instanceof BindException && "Can't assign requested address".equals(cause.getMessage()))
+                            throw new RuntimeException("Unable to bind, run the following in a termanl and try again:\nfor subnet in $(seq 0 5); do for id in $(seq 0 5); do sudo ifconfig lo0 alias \"127.0.$subnet.$id\"; done; done;", e);
+                        throw e;
+                    }
                     StorageService.instance.removeShutdownHook();
                     Gossiper.waitToSettle();
                 }

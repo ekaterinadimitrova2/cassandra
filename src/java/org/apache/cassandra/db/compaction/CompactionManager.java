@@ -86,6 +86,7 @@ import org.apache.cassandra.utils.concurrent.Refs;
 import static java.util.Collections.singleton;
 import static org.apache.cassandra.service.ActiveRepairService.NO_PENDING_REPAIR;
 import static org.apache.cassandra.service.ActiveRepairService.UNREPAIRED_SSTABLE;
+import static org.apache.cassandra.utils.Clock.Global.nanoTime;
 
 /**
  * <p>
@@ -573,11 +574,11 @@ public class CompactionManager implements CompactionManagerMBean
                 {
                     SSTableReader sstable = sstableIter.next();
                     boolean needsCleanupFull = needsCleanup(sstable, fullRanges);
-                    boolean needsCleanupTransient = needsCleanup(sstable, transientRanges);
+                    boolean needsCleanupTransient = !transientRanges.isEmpty() && sstable.isRepaired() && needsCleanup(sstable, transientRanges);
                     //If there are no ranges for which the table needs cleanup either due to lack of intersection or lack
                     //of the table being repaired.
                     totalSSTables++;
-                    if (!needsCleanupFull && (!needsCleanupTransient || !sstable.isRepaired()))
+                    if (!needsCleanupFull && !needsCleanupTransient)
                     {
                         logger.debug("Skipping {} ([{}, {}]) for cleanup; all rows should be kept. Needs cleanup full ranges: {} Needs cleanup transient ranges: {} Repaired: {}",
                                     sstable,
@@ -601,7 +602,7 @@ public class CompactionManager implements CompactionManagerMBean
             public void execute(LifecycleTransaction txn) throws IOException
             {
                 CleanupStrategy cleanupStrategy = CleanupStrategy.get(cfStore, allRanges, transientRanges, txn.onlyOne().isRepaired(), FBUtilities.nowInSeconds());
-                doCleanupOne(cfStore, txn, cleanupStrategy, replicas.ranges(), fullRanges, transientRanges, hasIndexes);
+                doCleanupOne(cfStore, txn, cleanupStrategy, replicas.ranges(), hasIndexes);
             }
         }, jobs, OperationType.CLEANUP);
     }
@@ -1052,7 +1053,6 @@ public class CompactionManager implements CompactionManagerMBean
             final RangesAtEndpoint replicas = StorageService.instance.getLocalReplicas(keyspace.getName());
             final Set<Range<Token>> allRanges = replicas.ranges();
             final Set<Range<Token>> transientRanges = replicas.onlyTransient().ranges();
-            final Set<Range<Token>> fullRanges = replicas.onlyFull().ranges();
             boolean hasIndexes = cfs.indexManager.hasIndexes();
             SSTableReader sstable = lookupSSTable(cfs, entry.getValue());
 
@@ -1065,7 +1065,7 @@ public class CompactionManager implements CompactionManagerMBean
                 CleanupStrategy cleanupStrategy = CleanupStrategy.get(cfs, allRanges, transientRanges, sstable.isRepaired(), FBUtilities.nowInSeconds());
                 try (LifecycleTransaction txn = cfs.getTracker().tryModify(sstable, OperationType.CLEANUP))
                 {
-                    doCleanupOne(cfs, txn, cleanupStrategy, allRanges, fullRanges, transientRanges, hasIndexes);
+                    doCleanupOne(cfs, txn, cleanupStrategy, allRanges, hasIndexes);
                 }
                 catch (IOException e)
                 {
@@ -1250,8 +1250,6 @@ public class CompactionManager implements CompactionManagerMBean
                               LifecycleTransaction txn,
                               CleanupStrategy cleanupStrategy,
                               Collection<Range<Token>> allRanges,
-                              Collection<Range<Token>> fullRanges,
-                              Collection<Range<Token>> transientRanges,
                               boolean hasIndexes) throws IOException
     {
         assert !cfs.isIndex();
@@ -1267,7 +1265,7 @@ public class CompactionManager implements CompactionManagerMBean
             return;
         }
 
-        long start = System.nanoTime();
+        long start = nanoTime();
 
         long totalkeysWritten = 0;
 
@@ -1325,7 +1323,7 @@ public class CompactionManager implements CompactionManagerMBean
         if (!finished.isEmpty())
         {
             String format = "Cleaned up to %s.  %s to %s (~%d%% of original) for %,d keys.  Time: %,dms.";
-            long dTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
+            long dTime = TimeUnit.NANOSECONDS.toMillis(nanoTime() - start);
             long startsize = sstable.onDiskLength();
             long endsize = 0;
             for (SSTableReader newSstable : finished)
@@ -2247,10 +2245,10 @@ public class CompactionManager implements CompactionManagerMBean
 
     public void waitForCessation(Iterable<ColumnFamilyStore> cfss, Predicate<SSTableReader> sstablePredicate)
     {
-        long start = System.nanoTime();
+        long start = nanoTime();
         long delay = TimeUnit.MINUTES.toNanos(1);
 
-        while (System.nanoTime() - start < delay)
+        while (nanoTime() - start < delay)
         {
             if (CompactionManager.instance.isCompacting(cfss, sstablePredicate))
                 Uninterruptibles.sleepUninterruptibly(1, TimeUnit.MILLISECONDS);

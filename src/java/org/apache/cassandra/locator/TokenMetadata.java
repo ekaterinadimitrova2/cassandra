@@ -48,6 +48,7 @@ import org.apache.cassandra.utils.Pair;
 import org.apache.cassandra.utils.SortedBiMultiValMap;
 
 import static org.apache.cassandra.config.CassandraRelevantProperties.LINE_SEPARATOR;
+import static org.apache.cassandra.utils.Clock.Global.currentTimeMillis;
 
 public class TokenMetadata
 {
@@ -496,7 +497,7 @@ public class TokenMetadata
         try
         {
             bootstrapTokens.removeValue(endpoint);
-            tokenToEndpointMap.removeValue(endpoint);
+
             topology = topology.unbuild().removeEndpoint(endpoint).build();
             leavingEndpoints.remove(endpoint);
             if (replacementToOriginal.remove(endpoint) != null)
@@ -504,8 +505,12 @@ public class TokenMetadata
                 logger.debug("Node {} failed during replace.", endpoint);
             }
             endpointToHostIdMap.remove(endpoint);
-            sortedTokens = sortTokens();
-            invalidateCachedRingsUnsafe();
+            Collection<Token> removedTokens = tokenToEndpointMap.removeValue(endpoint);
+            if (removedTokens != null && !removedTokens.isEmpty())
+            {
+                sortedTokens = sortTokens();
+                invalidateCachedRingsUnsafe();
+            }
         }
         finally
         {
@@ -851,7 +856,7 @@ public class TokenMetadata
     public void calculatePendingRanges(AbstractReplicationStrategy strategy, String keyspaceName)
     {
         // avoid race between both branches - do not use a lock here as this will block any other unrelated operations!
-        long startedAt = System.currentTimeMillis();
+        long startedAt = currentTimeMillis();
         synchronized (pendingRanges)
         {
             TokenMetadataDiagnostics.pendingRangeCalculationStarted(this, keyspaceName);
@@ -895,7 +900,7 @@ public class TokenMetadata
             if (logger.isDebugEnabled())
                 logger.debug("Starting pending range calculation for {}", keyspaceName);
 
-            long took = System.currentTimeMillis() - startedAt;
+            long took = currentTimeMillis() - startedAt;
 
             if (logger.isDebugEnabled())
                 logger.debug("Pending range calculation for {} completed (took: {}ms)", keyspaceName, took);

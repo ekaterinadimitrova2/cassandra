@@ -15,40 +15,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.cassandra.utils;
 
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
-import com.google.common.util.concurrent.Uninterruptibles;
+import org.apache.cassandra.db.TypeSizes;
+import org.apache.cassandra.io.IVersionedSerializer;
+import org.apache.cassandra.io.util.DataInputPlus;
+import org.apache.cassandra.io.util.DataOutputPlus;
 
-/**
- * Time source backed by JVM clock.
- */
-public class SystemTimeSource implements TimeSource
+public class Int64Serializer implements IVersionedSerializer<Long>
 {
+    public static final Int64Serializer serializer = new Int64Serializer();
+
     @Override
-    public long currentTimeMillis()
+    public void serialize(Long t, DataOutputPlus out, int version) throws IOException
     {
-        return System.currentTimeMillis();
+        out.writeLong(t);
     }
 
     @Override
-    public long nanoTime()
+    public Long deserialize(DataInputPlus in, int version) throws IOException
     {
-        return System.nanoTime();
+        return in.readLong();
     }
 
     @Override
-    public TimeSource sleepUninterruptibly(long sleepFor, TimeUnit unit)
+    public long serializedSize(Long t, int version)
     {
-        Uninterruptibles.sleepUninterruptibly(sleepFor, unit);
-        return this;
-    }
-
-    @Override
-    public TimeSource sleep(long sleepFor, TimeUnit unit) throws InterruptedException
-    {
-        TimeUnit.NANOSECONDS.sleep(TimeUnit.NANOSECONDS.convert(sleepFor, unit));
-        return this;
+        return TypeSizes.sizeof(t);
     }
 }
