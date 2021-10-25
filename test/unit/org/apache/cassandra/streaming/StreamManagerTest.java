@@ -38,8 +38,8 @@ public class StreamManagerTest
     public static void setupClass()
     {
         Config c = DatabaseDescriptor.loadConfig();
-        defaultStreamThroughputMbPerSec = c.stream_throughput_outbound_megabits_per_sec;
-        defaultInterDCStreamThroughputMbPerSec = c.inter_dc_stream_throughput_outbound_megabits_per_sec;
+        defaultStreamThroughputMbPerSec = c.stream_throughput_outbound.toMegabitsPerSecondAsInt();
+        defaultInterDCStreamThroughputMbPerSec = c.inter_dc_stream_throughput_outbound.toMegabitsPerSecondAsInt();
         DatabaseDescriptor.daemonInitialization(() -> c);
     }
 

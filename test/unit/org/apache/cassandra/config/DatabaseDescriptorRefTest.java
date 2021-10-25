@@ -321,7 +321,7 @@ public class DatabaseDescriptorRefTest
         {
             Method method = databaseDescriptorClass.getDeclaredMethod(methodName);
             method.invoke(null);
-            
+
             if (threadCount != threads.getThreadCount())
             {
                 for (ThreadInfo threadInfo : threads.getThreadInfo(threads.getAllThreadIds()))

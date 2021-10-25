@@ -20,15 +20,10 @@ package org.apache.cassandra.config;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.apache.cassandra.OrderedJUnit4ClassRunner;
-
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-@RunWith(OrderedJUnit4ClassRunner.class)
 public class LoadOldYAMLBackwardCompatibilityTest
 {
     @BeforeClass
