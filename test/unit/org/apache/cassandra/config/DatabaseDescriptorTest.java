@@ -51,7 +51,7 @@ public class DatabaseDescriptorTest
 
     // this came as a result of CASSANDRA-995
     @Test
-    public void testConfigurationLoader() throws Exception
+    public void testConfigurationLoader()
     {
         // By default, we should load from the yaml
         Config config = DatabaseDescriptor.loadConfig();
@@ -111,7 +111,7 @@ public class DatabaseDescriptorTest
     }
 
     @Test
-    public void testRpcInterface() throws Exception
+    public void testRpcInterface()
     {
         Config testConfig = DatabaseDescriptor.loadConfig();
         testConfig.rpc_interface = suitableInterface.getName();
@@ -149,7 +149,7 @@ public class DatabaseDescriptorTest
     }
 
     @Test
-    public void testListenInterface() throws Exception
+    public void testListenInterface()
     {
         Config testConfig = DatabaseDescriptor.loadConfig();
         testConfig.listen_interface = suitableInterface.getName();
@@ -187,7 +187,7 @@ public class DatabaseDescriptorTest
     }
 
     @Test
-    public void testListenAddress() throws Exception
+    public void testListenAddress()
     {
         Config testConfig = DatabaseDescriptor.loadConfig();
         testConfig.listen_address = suitableInterface.getInterfaceAddresses().get(0).getAddress().getHostAddress();
@@ -196,7 +196,7 @@ public class DatabaseDescriptorTest
     }
 
     @Test
-    public void testRpcAddress() throws Exception
+    public void testRpcAddress()
     {
         Config testConfig = DatabaseDescriptor.loadConfig();
         testConfig.rpc_address = suitableInterface.getInterfaceAddresses().get(0).getAddress().getHostAddress();
@@ -206,7 +206,7 @@ public class DatabaseDescriptorTest
     }
 
     @Test
-    public void testInvalidPartition() throws Exception
+    public void testInvalidPartition()
     {
         Config testConfig = DatabaseDescriptor.loadConfig();
         testConfig.partitioner = "ThisDoesNotExist";
@@ -228,7 +228,7 @@ public class DatabaseDescriptorTest
     }
 
     @Test
-    public void testInvalidPartitionPropertyOverride() throws Exception
+    public void testInvalidPartitionPropertyOverride()
     {
         String key = Config.PROPERTY_PREFIX + "partitioner";
         String previous = System.getProperty(key);
@@ -272,11 +272,12 @@ public class DatabaseDescriptorTest
         assertTrue(DatabaseDescriptor.tokensFromString(null).isEmpty());
         Collection<String> tokens = DatabaseDescriptor.tokensFromString(" a,b ,c , d, f,g,h");
         assertEquals(7, tokens.size());
-        assertTrue(tokens.containsAll(Arrays.asList(new String[]{"a", "b", "c", "d", "f", "g", "h"})));
+        assertTrue(tokens.containsAll(Arrays.asList("a", "b", "c", "d", "f", "g", "h")));
     }
 
     @Test
-    public void testExceptionsForInvalidConfigValues() {
+    public void testExceptionsForInvalidConfigValues()
+    {
         try
         {
             DatabaseDescriptor.setColumnIndexCacheSize(-1);
