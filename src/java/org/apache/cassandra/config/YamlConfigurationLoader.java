@@ -167,17 +167,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
     private static void isConfigFileValid()
     {
-        if (isBlank("commitlog_sync_period") || isBlank("commitlog_sync_period"))
-        {
+        if (isBlank("commitlog_sync_period"))
             throw new IllegalArgumentException("You should provide a value for commitlog_sync_period or comment it in " +
                                                "order to get a default one");
-        }
 
-        if (isBlank("commitlog_sync_group_window") || isBlank("commitlog_sync_group_window"))
-        {
+        if (isBlank("commitlog_sync_group_window"))
             throw new IllegalArgumentException("You should provide a value for commitlog_sync_group_window or comment it in " +
                                                "order to get a default one");
-        }
     }
 
     private static boolean isBlank(String property)
@@ -216,7 +212,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     }
 
     @VisibleForTesting
-    public static class CustomConstructor extends CustomClassLoaderConstructor
+    static class CustomConstructor extends CustomClassLoaderConstructor
     {
         CustomConstructor(Class<?> theRoot, ClassLoader classLoader)
         {
@@ -259,7 +255,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * are not set to null.
      */
     @VisibleForTesting
-    public static class PropertiesChecker extends PropertyUtils
+    private static class PropertiesChecker extends PropertyUtils
     {
         private final Set<String> missingProperties = new HashSet<>();
 
@@ -267,14 +263,14 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
         private final Map<Class<?>, Map<String, Replacement>> replacements;
 
-        public PropertiesChecker(Map<Class<?>, Map<String, Replacement>> replacements)
+        PropertiesChecker(Map<Class<?>, Map<String, Replacement>> replacements)
         {
             this.replacements = Objects.requireNonNull(replacements, "replacements");
             setSkipMissingProperties(true);
         }
 
         @Override
-        public Property getProperty(Class<? extends Object> type, String name)
+        public Property getProperty(Class<?> type, String name)
         {
             final Property result;
             Map<String, Replacement> typeReplacements = replacements.getOrDefault(type, Collections.emptyMap());
@@ -313,14 +309,6 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                         return null;
                     }
                 };
-                if (replacement.scheduledRemoveBy != null)
-                {
-                    logger.warn("{} parameter has a new name and value format; it is scheduled to be removed by {}. For more information, please refer to NEWS.txt", name, replacement.scheduledRemoveBy);
-                }
-                else
-                {
-                    logger.warn("{} parameter has a new name and value format. For more information, please refer to NEWS.txt", name);
-                }
 
                 if(replacement.deprecated)
                 {
@@ -389,7 +377,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     }
 
     @VisibleForTesting
-    public static Map<Class<? extends Object>, Map<String, Replacement>> getReplacements(Class<? extends Object> klass)
+    static Map<Class<?>, Map<String, Replacement>> getReplacements(Class<?> klass)
     {
         List<Replacement> replacements = getReplacementsRecursive(klass);
         Map<Class<? extends Object>, Map<String, Replacement>> objectOldNames = new HashMap<>();
@@ -401,7 +389,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         return objectOldNames;
     }
 
-    public static List<Replacement> getReplacementsRecursive(Class<? extends Object> klass)
+    public static List<Replacement> getReplacementsRecursive(Class<?> klass)
     {
         Set<Class<?>> seen = new HashSet<>(); // to make sure not to process the same type twice
         Map<Class<? extends Converter>, Converter> converterCache = new HashMap<>();
@@ -426,7 +414,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         }
     }
 
-    private static List<Replacement> getReplacements(Map<Class<? extends Converter>, Converter> converterCache, Class<? extends Object> klass)
+    private static List<Replacement> getReplacements(Map<Class<? extends Converter>, Converter> converterCache, Class<?> klass)
     {
         List<Replacement> replacements = new ArrayList<>();
         for (Field field : klass.getDeclaredFields())
@@ -474,42 +462,33 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             }
         });
 
-        String scheduledRemoveBy = r.scheduledRemoveBy();
-        if ("".equals(scheduledRemoveBy))
-            scheduledRemoveBy = null;
-
         boolean deprecated;
-        if (r.deprecated())
-            deprecated = true;
-        else
-            deprecated = false;
+        deprecated = r.deprecated();
 
         Class<?> oldType = converter.getInputType();
         if (oldType == null)
             oldType = newType;
-        replacements.add(new Replacement(klass, oldName, oldType, newName, converter, scheduledRemoveBy, deprecated));
+        replacements.add(new Replacement(klass, oldName, oldType, newName, converter, deprecated));
     }
 
-    public static final class Replacement
+    static final class Replacement
     {
-        public final Class<? extends Object> parent;
-        public final String oldName;
-        public final Class<?> oldType;
-        public final String newName;
-        public final Converter converter;
-        public final String scheduledRemoveBy;
-        public final boolean deprecated;
+        final Class<? extends Object> parent;
+        final String oldName;
+        final Class<?> oldType;
+        final String newName;
+        final Converter converter;
+        final boolean deprecated;
 
         Replacement(Class<? extends Object> parent,
                     String oldName, Class<?> oldType,
-                    String newName, Converter converter, String scheduledRemoveBy, boolean deprecated)
+                    String newName, Converter converter, boolean deprecated)
         {
             this.parent = Objects.requireNonNull(parent);
             this.oldName = Objects.requireNonNull(oldName);
             this.oldType = Objects.requireNonNull(oldType);
             this.newName = Objects.requireNonNull(newName);
             this.converter = Objects.requireNonNull(converter);
-            this.scheduledRemoveBy = scheduledRemoveBy;
             this.deprecated = deprecated;
         }
     }
