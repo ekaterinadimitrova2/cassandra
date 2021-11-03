@@ -265,7 +265,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
         PropertiesChecker(Map<Class<?>, Map<String, Replacement>> replacements)
         {
-            this.replacements = Objects.requireNonNull(replacements, "replacements");
+            this.replacements = Objects.requireNonNull(replacements, "Replacements should not be null");
             setSkipMissingProperties(true);
         }
 
