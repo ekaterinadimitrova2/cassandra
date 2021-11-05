@@ -25,6 +25,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Contatining annotation type for the repeatable annotation Replaces
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD})
 public @interface ReplacesList

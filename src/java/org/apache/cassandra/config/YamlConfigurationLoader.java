@@ -282,6 +282,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 Replacement replacement = typeReplacements.get(name);
                 Converter converter = replacement.converter;
+                //Converter2 converter2 = replacement.converter;
                 Property newProperty = super.getProperty(type, replacement.newName);
                 result = new Property(replacement.oldName, replacement.oldType)
                 {
@@ -316,7 +317,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
                 if(replacement.deprecated)
                 {
-                    logger.warn("{} parameter has been deprecated. It has a new name and value format; For more information, please refer to NEWS.txt", name);
+                    logger.warn("{} parameter has been deprecated. It has a new name and/or value format; For more information, please refer to NEWS.txt", name);
                 }
             }
             else
@@ -354,11 +355,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                     return result.get(object);
                 }
 
+                @Override
                 public List<Annotation> getAnnotations()
                 {
                     return Collections.EMPTY_LIST;
                 }
 
+                @Override
                 public <A extends Annotation> A getAnnotation(Class<A> aClass)
                 {
                     return null;
@@ -380,11 +383,17 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         }
     }
 
+    /**
+     *
+     * @param klass to get replacements for
+     * @return
+     */
+
     @VisibleForTesting
     static Map<Class<?>, Map<String, Replacement>> getReplacements(Class<?> klass)
     {
         List<Replacement> replacements = getReplacementsRecursive(klass);
-        Map<Class<? extends Object>, Map<String, Replacement>> objectOldNames = new HashMap<>();
+        Map<Class<?>, Map<String, Replacement>> objectOldNames = new HashMap<>();
         for (Replacement r : replacements)
         {
             Map<String, Replacement> oldNames = objectOldNames.computeIfAbsent(r.parent, ignore -> new HashMap<>());
@@ -466,8 +475,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             }
         });
 
-        boolean deprecated;
-        deprecated = r.deprecated();
+        boolean deprecated = r.deprecated();
 
         Class<?> oldType = converter.getInputType();
         if (oldType == null)
@@ -477,14 +485,14 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
     static final class Replacement
     {
-        final Class<? extends Object> parent;
+        final Class<?> parent;
         final String oldName;
         final Class<?> oldType;
         final String newName;
         final Converter converter;
         final boolean deprecated;
 
-        Replacement(Class<? extends Object> parent,
+        Replacement(Class<?> parent,
                     String oldName, Class<?> oldType,
                     String newName, Converter converter, boolean deprecated)
         {

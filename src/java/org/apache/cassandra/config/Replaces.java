@@ -26,12 +26,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Repeatable annotation for providing old name, old defaunlt unit, and whether the config parameters we annotate are deprecated
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD})
 @Repeatable(ReplacesList.class)
 public @interface Replaces
 {
     String oldName();
+
+    Converter2 converter2() default Converter2.MILIS;
 
     Class<? extends Converter> converter() default Converter.IdentityConverter.class;
 
