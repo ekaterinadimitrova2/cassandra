@@ -282,7 +282,12 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 Replacement replacement = typeReplacements.get(name);
                 Converter converter = replacement.converter;
+<<<<<<< HEAD
                 final Property newProperty = super.getProperty(type, replacement.newName);
+=======
+                //Converter2 converter2 = replacement.converter;
+                Property newProperty = super.getProperty(type, replacement.newName);
+>>>>>>> cleeaning
                 result = new Property(replacement.oldName, replacement.oldType)
                 {
                     @Override
@@ -327,7 +332,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
                 if(replacement.deprecated)
                 {
-                    logger.warn("{} parameter has been deprecated. It has a new name and value format; For more information, please refer to NEWS.txt", name);
+                    logger.warn("{} parameter has been deprecated. It has a new name and/or value format; For more information, please refer to NEWS.txt", name);
                 }
             }
             else
@@ -394,12 +399,21 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * @param klass to get replacements for
      * @return map of old names and replacements needed.
      */
     private static Map<Class<? extends Object>, Map<String, Replacement>> getReplacements(Class<? extends Object> klass)
 =======
+=======
+    /**
+     *
+     * @param klass to get replacements for
+     * @return
+     */
+
+>>>>>>> cleeaning
     @VisibleForTesting
     static Map<Class<?>, Map<String, Replacement>> getReplacements(Class<?> klass)
 >>>>>>> Cleanup
@@ -492,11 +506,11 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         });
 
         boolean deprecated = r.deprecated();
-        deprecated = r.deprecated();
 
         Class<?> oldType = converter.getInputType();
         if (oldType == null)
             oldType = newType;
+
         replacements.add(new Replacement(klass, oldName, oldType, newName, converter, deprecated));
     }
 
