@@ -282,12 +282,8 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 Replacement replacement = typeReplacements.get(name);
                 Converter converter = replacement.converter;
-<<<<<<< HEAD
+
                 final Property newProperty = super.getProperty(type, replacement.newName);
-=======
-                //Converter2 converter2 = replacement.converter;
-                Property newProperty = super.getProperty(type, replacement.newName);
->>>>>>> cleeaning
                 result = new Property(replacement.oldName, replacement.oldType)
                 {
                     @Override
@@ -321,14 +317,6 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                         return null;
                     }
                 };
-<<<<<<< HEAD
-
-                if(replacement.deprecated)
-                {
-                    logger.warn("{} parameter has been deprecated. It has a new name; For more information, please refer to NEWS.txt", name);
-                }
-=======
->>>>>>> Cleanup
 
                 if(replacement.deprecated)
                 {
@@ -398,25 +386,12 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         }
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     /**
      * @param klass to get replacements for
      * @return map of old names and replacements needed.
      */
     private static Map<Class<? extends Object>, Map<String, Replacement>> getReplacements(Class<? extends Object> klass)
-=======
-=======
-    /**
-     *
-     * @param klass to get replacements for
-     * @return
-     */
-
->>>>>>> cleeaning
-    @VisibleForTesting
-    static Map<Class<?>, Map<String, Replacement>> getReplacements(Class<?> klass)
->>>>>>> Cleanup
     {
         List<Replacement> replacements = getReplacementsRecursive(klass);
         Map<Class<?>, Map<String, Replacement>> objectOldNames = new HashMap<>();
