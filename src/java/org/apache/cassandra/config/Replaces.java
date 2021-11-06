@@ -36,8 +36,6 @@ public @interface Replaces
 {
     String oldName();
 
-    Converter2 converter2() default Converter2.MILIS;
-
     Class<? extends Converter> converter() default Converter.IdentityConverter.class;
 
     boolean deprecated() default false;

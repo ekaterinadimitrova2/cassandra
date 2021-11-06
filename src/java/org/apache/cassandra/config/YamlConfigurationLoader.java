@@ -282,7 +282,6 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 Replacement replacement = typeReplacements.get(name);
                 Converter converter = replacement.converter;
-                //Converter2 converter2 = replacement.converter;
                 Property newProperty = super.getProperty(type, replacement.newName);
                 result = new Property(replacement.oldName, replacement.oldType)
                 {
