@@ -20,7 +20,7 @@ package org.apache.cassandra.config;
 
 public enum Converter2
 {
-    RENAME,
+    RENAME (day ),
     MILIS,
     SECONDS,
     MINUTES;
