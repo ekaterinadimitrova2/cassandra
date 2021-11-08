@@ -87,7 +87,7 @@ public class DatabaseDescriptor
     /**
      * Request timeouts can not be less than below defined value (see CASSANDRA-9375)
      */
-    static final Duration LOWEST_ACCEPTED_TIMEOUT = Duration.inMilliseconds(10L);
+    static final CassandraDuration LOWEST_ACCEPTED_TIMEOUT = CassandraDuration.inMilliseconds(10L);
 
     private static Supplier<IFailureDetector> newFailureDetector;
     private static IEndpointSnitch snitch;
@@ -1027,7 +1027,7 @@ public class DatabaseDescriptor
      * @param lowestTimeout the lowest valid timeout 
      * @return the greatest timeout
      */
-    static Duration max(String property, Duration timeout, Duration lowestTimeout)
+    static CassandraDuration max(String property, CassandraDuration timeout, CassandraDuration lowestTimeout)
     {
         if(timeout.toMilliseconds() < lowestTimeout.toMilliseconds())
         {
@@ -1037,7 +1037,7 @@ public class DatabaseDescriptor
         return timeout;
     }
 
-    private static void logInfo(String property, Duration actualValue, Duration lowestAcceptedValue)
+    private static void logInfo(String property, CassandraDuration actualValue, CassandraDuration lowestAcceptedValue)
     {
         logger.info("found {}::{} less than lowest acceptable value {}, continuing with {}", property, actualValue, lowestAcceptedValue, lowestAcceptedValue);
     }
@@ -1220,7 +1220,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = Duration.inMilliseconds(timeout);
+        conf.permissions_validity = CassandraDuration.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -1232,7 +1232,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsUpdateInterval(int updateInterval)
     {
-        conf.permissions_update_interval = Duration.inMilliseconds(updateInterval);
+        conf.permissions_update_interval = CassandraDuration.inMilliseconds(updateInterval);
     }
 
     public static int getPermissionsCacheMaxEntries()
@@ -1262,7 +1262,7 @@ public class DatabaseDescriptor
 
     public static void setRolesValidity(int validity)
     {
-        conf.roles_validity = Duration.inMilliseconds(validity);
+        conf.roles_validity = CassandraDuration.inMilliseconds(validity);
     }
 
     public static int getRolesUpdateInterval()
@@ -1284,7 +1284,7 @@ public class DatabaseDescriptor
 
     public static void setRolesUpdateInterval(int interval)
     {
-        conf.roles_update_interval = Duration.inMilliseconds(interval);
+        conf.roles_update_interval = CassandraDuration.inMilliseconds(interval);
     }
 
     public static int getRolesCacheMaxEntries()
@@ -1304,7 +1304,7 @@ public class DatabaseDescriptor
 
     public static void setCredentialsValidity(int timeout)
     {
-        conf.credentials_validity = Duration.inMilliseconds(timeout);
+        conf.credentials_validity = CassandraDuration.inMilliseconds(timeout);
     }
 
     public static int getCredentialsUpdateInterval()
@@ -1316,7 +1316,7 @@ public class DatabaseDescriptor
 
     public static void setCredentialsUpdateInterval(int updateInterval)
     {
-        conf.credentials_update_interval = Duration.inMilliseconds(updateInterval);
+        conf.credentials_update_interval = CassandraDuration.inMilliseconds(updateInterval);
     }
 
     public static int getCredentialsCacheMaxEntries()
@@ -1586,7 +1586,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportIdleTimeout(long nativeTransportTimeout)
     {
-        conf.native_transport_idle_timeout = Duration.inMilliseconds(nativeTransportTimeout);
+        conf.native_transport_idle_timeout = CassandraDuration.inMilliseconds(nativeTransportTimeout);
     }
 
     public static long getRpcTimeout(TimeUnit unit)
@@ -1596,7 +1596,7 @@ public class DatabaseDescriptor
 
     public static void setRpcTimeout(long timeOutInMillis)
     {
-        conf.request_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static long getReadRpcTimeout(TimeUnit unit)
@@ -1606,7 +1606,7 @@ public class DatabaseDescriptor
 
     public static void setReadRpcTimeout(long timeOutInMillis)
     {
-        conf.read_request_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.read_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static long getRangeRpcTimeout(TimeUnit unit)
@@ -1616,7 +1616,7 @@ public class DatabaseDescriptor
 
     public static void setRangeRpcTimeout(long timeOutInMillis)
     {
-        conf.range_request_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.range_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static long getWriteRpcTimeout(TimeUnit unit)
@@ -1626,7 +1626,7 @@ public class DatabaseDescriptor
 
     public static void setWriteRpcTimeout(long timeOutInMillis)
     {
-        conf.write_request_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.write_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static long getCounterWriteRpcTimeout(TimeUnit unit)
@@ -1636,7 +1636,7 @@ public class DatabaseDescriptor
 
     public static void setCounterWriteRpcTimeout(long timeOutInMillis)
     {
-        conf.counter_write_request_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.counter_write_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static long getCasContentionTimeout(TimeUnit unit)
@@ -1646,7 +1646,7 @@ public class DatabaseDescriptor
 
     public static void setCasContentionTimeout(long timeOutInMillis)
     {
-        conf.cas_contention_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.cas_contention_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static long getTruncateRpcTimeout(TimeUnit unit)
@@ -1656,7 +1656,7 @@ public class DatabaseDescriptor
 
     public static void setTruncateRpcTimeout(long timeOutInMillis)
     {
-        conf.truncate_request_timeout = Duration.inMilliseconds(timeOutInMillis);
+        conf.truncate_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
     }
 
     public static boolean hasCrossNodeTimeout()
@@ -2161,7 +2161,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpConnectTimeoutInMS(int value)
     {
-        conf.internode_tcp_connect_timeout = Duration.inMilliseconds(value);
+        conf.internode_tcp_connect_timeout = CassandraDuration.inMilliseconds(value);
     }
 
     public static int getInternodeTcpUserTimeoutInMS()
@@ -2171,7 +2171,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpUserTimeoutInMS(int value)
     {
-        conf.internode_tcp_user_timeout = Duration.inMilliseconds(value);
+        conf.internode_tcp_user_timeout = CassandraDuration.inMilliseconds(value);
     }
 
     public static int getInternodeStreamingTcpUserTimeoutInMS()
@@ -2181,7 +2181,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeStreamingTcpUserTimeoutInMS(int value)
     {
-        conf.internode_streaming_tcp_user_timeout = Duration.inMilliseconds(value);
+        conf.internode_streaming_tcp_user_timeout = CassandraDuration.inMilliseconds(value);
     }
 
     public static int getInternodeMaxMessageSizeInBytes()
@@ -2288,7 +2288,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncGroupWindow(long windowMillis)
     {
-        conf.commitlog_sync_group_window = Duration.inMilliseconds(windowMillis);
+        conf.commitlog_sync_group_window = CassandraDuration.inMilliseconds(windowMillis);
     }
 
     public static int getNativeTransportReceiveQueueCapacityInBytes()
@@ -2350,7 +2350,7 @@ public class DatabaseDescriptor
 
     public static long getPeriodicCommitLogSyncBlock()
     {
-        Duration block = conf.periodic_commitlog_sync_lag_block;
+        CassandraDuration block = conf.periodic_commitlog_sync_lag_block;
         return block == null
                ? (long)(getCommitLogSyncPeriod() * 1.5)
                : block.toMilliseconds();
@@ -2358,7 +2358,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncPeriod(int periodMillis)
     {
-        conf.commitlog_sync_period = Duration.inMilliseconds(periodMillis) ;
+        conf.commitlog_sync_period = CassandraDuration.inMilliseconds(periodMillis) ;
     }
 
     public static Config.CommitLogSync getCommitLogSync()
@@ -2496,7 +2496,7 @@ public class DatabaseDescriptor
 
     public static void setMaxHintWindow(int ms)
     {
-        conf.max_hint_window = Duration.inMilliseconds(ms);
+        conf.max_hint_window = CassandraDuration.inMilliseconds(ms);
     }
 
     public static int getMaxHintWindow()
@@ -2527,7 +2527,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicUpdateInterval(int dynamicUpdateInterval)
     {
-        conf.dynamic_snitch_update_interval = Duration.inMilliseconds(dynamicUpdateInterval);
+        conf.dynamic_snitch_update_interval = CassandraDuration.inMilliseconds(dynamicUpdateInterval);
     }
 
     public static int getDynamicResetInterval()
@@ -2536,7 +2536,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicResetInterval(int dynamicResetInterval)
     {
-        conf.dynamic_snitch_reset_interval = Duration.inMilliseconds(dynamicResetInterval);
+        conf.dynamic_snitch_reset_interval = CassandraDuration.inMilliseconds(dynamicResetInterval);
     }
 
     public static double getDynamicBadnessThreshold()
@@ -3482,7 +3482,7 @@ public class DatabaseDescriptor
     {
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_refresh must be a positive integer.");
-        conf.denylist_refresh = Duration.inSeconds(seconds);
+        conf.denylist_refresh = CassandraDuration.inSeconds(seconds);
     }
 
     public static int getDenylistInitialLoadRetrySeconds()
@@ -3494,7 +3494,7 @@ public class DatabaseDescriptor
     {
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_initial_load_retry must be a positive integer.");
-        conf.denylist_initial_load_retry = Duration.inSeconds(seconds);
+        conf.denylist_initial_load_retry = CassandraDuration.inSeconds(seconds);
     }
 
     public static ConsistencyLevel getDenylistConsistencyLevel()
