@@ -383,9 +383,8 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     }
 
     /**
-     *
      * @param klass to get replacements for
-     * @return
+     * @return map of old names and replacements needed.
      */
 
     @VisibleForTesting
@@ -401,6 +400,10 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         return objectOldNames;
     }
 
+    /**
+     * @param klass to get replacements for
+     * @return map of old names and replacements needed.
+     */
     public static List<Replacement> getReplacementsRecursive(Class<?> klass)
     {
         Set<Class<?>> seen = new HashSet<>(); // to make sure not to process the same type twice
@@ -438,19 +441,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 Replaces r = field.getAnnotation(Replaces.class);
                 if (r != null)
-                {
                     addReplacement(converterCache, klass, replacements, newName, newType, r);
-                }
             }
             else
             {
                 for (ReplacesList replacesList : byType)
-                {
                     for (Replaces r : replacesList.value())
-                    {
                         addReplacement(converterCache, klass, replacements, newName, newType, r);
-                    }
-                }
             }
         }
         return replacements.isEmpty() ? Collections.emptyList() : replacements;
@@ -482,12 +479,32 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         replacements.add(new Replacement(klass, oldName, oldType, newName, converter, deprecated));
     }
 
+    /**
+     * Holder for replacements to support backward compatibility between old and new format of configuration parameters
+     * (CASSANDRA-15234)
+     */
     static final class Replacement
     {
+        /**
+         * Config class
+         */
         final Class<?> parent;
+        /**
+         * Old name of the configuration parameter
+         */
         final String oldName;
+        /**
+         * Old type of the configuration parameter
+         */
         final Class<?> oldType;
+        /**
+         * New name used for the configuration parameter
+         */
         final String newName;
+        /**
+         * Converter to be used according to the old default unit which was provided as a suffix of the configuration
+         * parameter
+         */
         final Converter converter;
         final boolean deprecated;
 
@@ -500,6 +517,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             this.oldType = Objects.requireNonNull(oldType);
             this.newName = Objects.requireNonNull(newName);
             this.converter = Objects.requireNonNull(converter);
+            // by default deprecated is false
             this.deprecated = deprecated;
         }
     }

@@ -27,16 +27,26 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Repeatable annotation for providing old name, old defaunlt unit, and whether the config parameters we annotate are deprecated
+ * Repeatable annotation for providing old name, converter to be used according to the old default unit, and whether the
+ * config parameters we annotate are deprecated and we need to warn the users. (CASSANDRA-15234)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD})
 @Repeatable(ReplacesList.class)
 public @interface Replaces
 {
+    /**
+     * @return old configuration parameter name
+     */
     String oldName();
 
+    /**
+     * @return which converter we need depending on the old default unit that was used
+     */
     Class<? extends Converter> converter() default Converter.IdentityConverter.class;
 
+    /**
+     * @return whether the parameter should be marked as deprecated or not and warning sent to the user
+     */
     boolean deprecated() default false;
 }
