@@ -413,7 +413,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * @param klass to get replacements for
      * @return map of old names and replacements needed.
      */
-    private static List<Replacement> getReplacementsRecursive(Class<?> klass)
+    public static List<Replacement> getReplacementsRecursive(Class<?> klass)
     {
         Set<Class<?>> seen = new HashSet<>(); // to make sure not to process the same type twice
         Map<Class<? extends Converter>, Converter> converterCache = new HashMap<>();
