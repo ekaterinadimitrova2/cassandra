@@ -1569,3 +1569,4 @@ drop_compact_storage_enabled: false
 #     row_index_size:
 #         warn_threshold_kb: 0
 #         abort_threshold_kb: 0
+commitlog_sync_batch_window_in_ms: 2

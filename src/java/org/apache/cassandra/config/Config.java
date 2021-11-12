@@ -635,6 +635,7 @@ public class Config
      * The growth factor to enlarge a RangeTombstoneList.
      */
     public volatile double range_tombstone_list_growth_factor = 1.5;
+    public double commitlog_sync_batch_window_in_ms = Double.NaN;
 
     /**
      * @deprecated migrate to {@link DatabaseDescriptor#isClientInitialized()}
