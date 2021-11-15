@@ -38,6 +38,10 @@ using the provided 'sstableupgrade' tool.
 
 New features
 ------------
+    - Before you upgrade, if you are using `cassandra.auth_bcrypt_gensalt_log2_rounds` property,
+      confirm it is set to value lower than 31 otherwise Cassandra will fail to start. See CASSANDRA-9384
+      for further details. You also need to regenerate passwords for users for who the password
+      was created while the above property was set to be more than 30 otherwise they will not be able to log in.
     - New native functions to convert unix time values into C* native types: toDate(bigint), toTimestamp(bigint),
       mintimeuuid(bigint) and maxtimeuuid(bigint)
     - Support for multiple permission in a single GRANT/REVOKE/LIST statement has been added. It allows to
@@ -177,6 +181,11 @@ New features
 
 Upgrading
 ---------
+    - As part of the Internode Messaging improvement work in CASSANDRA-15066, internode_send_buff_size_in_bytes and
+      internode_recv_buff_size_in_bytes were renamed to internode_socket_send_buffer_size_in_bytes and
+      internode_socket_receive_buffer_size_in_bytes. To support upgrades pre-4.0, we add backward compatibility and
+      currently both old and new names should work. Cassandra 4.0.0 and Cassandra 4.0.1 work ONLY with the new names
+      (They weren't updated in CASSANDRA-yaml though).
     - DESCRIBE|DESC was moved to server side in Cassandra 4.0. As a consequence DESRIBE|DESC will not work in cqlsh 6.0.0
       being connected to earlier major Cassandra versions where DESCRIBE does not exist server side.
     - cqlsh shell startup script now prefers 'python3' before 'python' when identifying a runtime.
