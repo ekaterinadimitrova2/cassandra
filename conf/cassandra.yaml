@@ -1451,3 +1451,8 @@ enable_transient_replication: false
 # Enables the used of 'ALTER ... DROP COMPACT STORAGE' statements on this node.
 # 'ALTER ... DROP COMPACT STORAGE' is considered experimental and is not recommended for production use.
 enable_drop_compact_storage: false
+
+internode_send_buff_size_in_bytes: 0
+
+internode_recv_buff_size_in_bytes: 0
+

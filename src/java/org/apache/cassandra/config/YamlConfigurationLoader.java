@@ -24,12 +24,15 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -208,9 +211,16 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      */
     private static class PropertiesChecker extends PropertyUtils
     {
+
         private final Set<String> missingProperties = new HashSet<>();
 
         private final Set<String> nullProperties = new HashSet<>();
+
+        // backward compatibility for parameters which names have changed in 4.0 as part of CASSANDRA-15066
+        private static final ImmutableMap<String, String> nameReplacements =
+        ImmutableMap.of("internode_send_buff_size_in_bytes", "internode_socket_send_buffer_size_in_bytes",
+                        "internode_recv_buff_size_in_bytes", "internode_socket_receive_buffer_size_in_bytes");
+
 
         public PropertiesChecker()
         {
@@ -220,7 +230,55 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         @Override
         public Property getProperty(Class<? extends Object> type, String name)
         {
-            final Property result = super.getProperty(type, name);
+            final Property result;
+            if(nameReplacements.containsKey(name))
+            {
+                String newName = nameReplacements.get(name);
+
+                logger.warn("{} parameter has a new name {}", name, newName);
+
+                final Property newProperty = super.getProperty(type, newName);
+                result = new Property(newProperty.getName(), newProperty.getType())
+                {
+                    @Override
+                    public Class<?>[] getActualTypeArguments()
+                    {
+                        return newProperty.getActualTypeArguments();
+                    }
+
+                    @Override
+                    public void set(Object object, Object value) throws Exception
+                    {
+                        if (value == null && get(object) != null)
+                        {
+                            nullProperties.add(getName());
+                        }
+                        newProperty.set(object, value);
+                    }
+
+                    @Override
+                    public Object get(Object o)
+                    {
+                        return newProperty.get(o);
+                    }
+
+                    @Override
+                    public List<Annotation> getAnnotations()
+                    {
+                        return null;
+                    }
+
+                    @Override
+                    public <A extends Annotation> A getAnnotation(Class<A> aClass)
+                    {
+                        return null;
+                    }
+                };
+            }
+            else
+            {
+                result = super.getProperty(type, name);
+            }
 
             if (result instanceof MissingProperty)
             {
@@ -236,6 +294,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                     {
                         nullProperties.add(getName());
                     }
+
                     result.set(object, value);
                 }
 
@@ -251,11 +310,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                     return result.get(object);
                 }
 
+                @Override
                 public List<Annotation> getAnnotations()
                 {
                     return Collections.EMPTY_LIST;
                 }
 
+                @Override
                 public <A extends Annotation> A getAnnotation(Class<A> aClass)
                 {
                     return null;
