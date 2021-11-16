@@ -37,7 +37,7 @@ public class LoadOldYAMLBackwardCompatibilityTest
     public void testConfigurationLoaderBackwardCompatibility()
     {
         Config config = DatabaseDescriptor.loadConfig();
-        //Confirm parameters were successfully read with the old names in cassandra-old.yaml
+        //Confirm parameters were successfully read with the old names from cassandra-old.yaml
         assertEquals(5, config.internode_socket_send_buffer_size_in_bytes);
         assertEquals(5, config.internode_socket_receive_buffer_size_in_bytes);
     }

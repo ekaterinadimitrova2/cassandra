@@ -47,7 +47,7 @@ Upgrading
       internode_recv_buff_size_in_bytes were renamed to internode_socket_send_buffer_size_in_bytes and
       internode_socket_receive_buffer_size_in_bytes. To support upgrades pre-4.0, we add backward compatibility and
       currently both old and new names should work. Cassandra 4.0.0 and Cassandra 4.0.1 work ONLY with the new names
-      (They weren't updated in CASSANDRA-yaml though).
+      (They weren't updated in cassandra.yaml though).
 4.0
 ===
 

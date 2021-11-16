@@ -142,6 +142,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         }
     }
 
+    @VisibleForTesting
     public static <T> T fromMap(Map<String,Object> map, Class<T> klass)
     {
         return fromMap(map, true, klass);
@@ -347,7 +348,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         for (Replacement r : replacements)
         {
             Map<String, Replacement> oldNames = objectOldNames.computeIfAbsent(r.parent, ignore -> new HashMap<>());
-            oldNames.put(r.oldName, r);
+            if (!oldNames.containsKey(r.oldName))
+                oldNames.put(r.oldName, r);
+            else
+            {
+                throw new ConfigurationException("Invalid annotations, you have more than one @Replaces annotation in " +
+                                                 "Config class with same old name(" + r.oldName + ") defined.");
+            }
         }
         return objectOldNames;
     }
