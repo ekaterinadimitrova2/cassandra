@@ -164,7 +164,7 @@ public class RepairBoundaryTest extends TestBaseImpl
     {
         cluster = Cluster.build(3)
                          .withConfig(config -> config.set("hinted_handoff_enabled", false)
-                                                     .set("commitlog_sync_batch_window", "5ms")
+                                                     .set("commitlog_sync_batch_window", "5.0ms")
                                                      .set("num_tokens", 1)
                                                      .set("initial_token", Long.toString(config.num() * 1000))
                                                      .with(NETWORK)
