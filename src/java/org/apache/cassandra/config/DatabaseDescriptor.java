@@ -386,10 +386,6 @@ public class DatabaseDescriptor
             {
                 throw new ConfigurationException("Missing value for commitlog_sync_period.", false);
             }
-            else if (!conf.commitlog_sync_batch_window.equals("0.0ms"))
-            {
-                throw new ConfigurationException("commitlog_sync_period specified, but commitlog_sync_batch_window found.  Only specify commitlog_sync_period when using periodic sync.", false);
-            }
             logger.debug("Syncing log with a period of {}", conf.commitlog_sync_period);
         }
 
