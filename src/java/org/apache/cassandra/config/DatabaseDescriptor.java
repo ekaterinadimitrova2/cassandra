@@ -364,7 +364,7 @@ public class DatabaseDescriptor
         {
             if (conf.commitlog_sync_period.toMilliseconds() != 0)
             {
-                throw new ConfigurationException("Batch sync specified, but commitlog_sync_period found.Only specify commitlog_sync_batch_window when using batch sync", false);
+                throw new ConfigurationException("Batch sync specified, but commitlog_sync_period found.Only specify commitlog_sync_batch_window_in_ms when using batch sync", false);
             }
             logger.debug("Syncing log with batch mode");
         }
@@ -385,6 +385,10 @@ public class DatabaseDescriptor
             if (conf.commitlog_sync_period.toMilliseconds() <= 0)
             {
                 throw new ConfigurationException("Missing value for commitlog_sync_period.", false);
+            }
+            else if (!Double.isNaN(conf.commitlog_sync_batch_window_in_ms))
+            {
+                throw new ConfigurationException("commitlog_sync_period_in_ms specified, but commitlog_sync_batch_window_in_ms found.  Only specify commitlog_sync_period_in_ms when using periodic sync.", false);
             }
             logger.debug("Syncing log with a period of {}", conf.commitlog_sync_period);
         }
