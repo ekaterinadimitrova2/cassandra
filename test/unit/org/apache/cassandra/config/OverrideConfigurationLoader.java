@@ -18,6 +18,7 @@
 
 package org.apache.cassandra.config;
 
+import java.io.IOException;
 import java.util.function.Consumer;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
@@ -33,7 +34,15 @@ public class OverrideConfigurationLoader implements ConfigurationLoader
     public Config loadConfig() throws ConfigurationException
     {
         YamlConfigurationLoader loader = new YamlConfigurationLoader();
-        Config config = loader.loadConfig();
+        Config config;
+        try
+        {
+            config = loader.loadConfig();
+        }
+        catch (IOException e)
+        {
+            throw new ConfigurationException("", e);
+        }
         configModifier.accept(config);
         return config;
     }

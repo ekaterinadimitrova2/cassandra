@@ -17,6 +17,8 @@
  */
 package org.apache.cassandra.config;
 
+import java.io.IOException;
+
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 public interface ConfigurationLoader
@@ -27,5 +29,5 @@ public interface ConfigurationLoader
      * @return the {@link Config} to use.
      * @throws ConfigurationException if the configuration cannot be properly loaded.
      */
-    Config loadConfig() throws ConfigurationException;
+    Config loadConfig() throws ConfigurationException, IOException;
 }

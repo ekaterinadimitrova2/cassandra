@@ -17,9 +17,11 @@
  */
 package org.apache.cassandra.config;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -69,7 +71,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * Inspect the classpath to find storage configuration file
      */
     @VisibleForTesting
-    private static URL getStorageConfigURL() throws ConfigurationException
+    private static URL getStorageConfigURL() throws ConfigurationException, IOException
     {
         String configUrl = System.getProperty("cassandra.config");
         if (configUrl == null)
@@ -100,6 +102,14 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
         logger.info("Configuration location: {}", url);
 
+        String readLine;
+        try(InputStream is = url.openStream(); BufferedReader br = new BufferedReader(new InputStreamReader(is)))
+        {
+            logger.info("Print the yaml file for debug purposes:");
+            while (((readLine = br.readLine()) != null))
+                logger.info(readLine);
+        }
+
         return url;
     }
 
@@ -107,7 +117,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     private static String content;
 
     @Override
-    public Config loadConfig() throws ConfigurationException
+    public Config loadConfig() throws ConfigurationException, IOException
     {
         if (storageConfigURL == null)
             storageConfigURL = getStorageConfigURL();
