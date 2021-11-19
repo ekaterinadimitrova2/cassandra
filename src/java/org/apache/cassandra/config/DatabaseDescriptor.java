@@ -283,8 +283,15 @@ public class DatabaseDescriptor
         ConfigurationLoader loader = loaderClass == null
                                      ? new YamlConfigurationLoader()
                                      : FBUtilities.construct(loaderClass, "configuration loading");
-        Config config = loader.loadConfig();
-
+        Config config;
+        try
+        {
+            config = loader.loadConfig();
+        }
+        catch (IOException e)
+        {
+            throw new ConfigurationException("", e);
+        }
         if (!hasLoggedConfig)
         {
             hasLoggedConfig = true;
