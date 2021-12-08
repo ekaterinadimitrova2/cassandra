@@ -29,8 +29,6 @@ import org.slf4j.LoggerFactory;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.ICluster;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 // TODO: this test should be removed after running in-jvm dtests is set up via the shared API repository
 public class LargeColumnTest extends TestBaseImpl
 {
@@ -67,9 +65,9 @@ public class LargeColumnTest extends TestBaseImpl
         try (ICluster cluster = init(builder()
                                      .withNodes(nodes)
                                      .withConfig(config ->
-                                                 config.set("commitlog_segment_size", "48mb") //(columnSize * 3) >> 20
-                                                       .set("internode_application_send_queue_reserve_endpoint_capacity", "3200000000000gb") //columnSize * 2
-                                                       .set("internode_application_send_queue_reserve_global_capacity", "4800000000000gb") //columnSize * 3
+                                                 config.set("commitlog_segment_size", String.format("%dmb", (columnSize * 3) >> 20))
+                                                       .set("internode_application_send_queue_reserve_endpoint_capacity", String.format("%dgb", (columnSize * 2)))
+                                                       .set("internode_application_send_queue_reserve_global_capacity", String.format("%dgb", (columnSize * 3)))
                                                        .set("write_request_timeout", "30s")
                                                        .set("read_request_timeout", "30s")
                                                        .set("memtable_heap_space", "1024mb")
