@@ -26,9 +26,9 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.cassandra.config.CassandraDuration;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import org.apache.cassandra.config.CassandraDuration;
 import org.apache.cassandra.io.util.File;
 
 // Only serialize fields
