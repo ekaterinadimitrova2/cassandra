@@ -101,8 +101,6 @@ public final class DataStorage
     }
 
     /**
-     * Returns the data storage unit.
-     *
      * @return the data storage unit.
      */
     public DataStorageUnit getUnit()
@@ -111,8 +109,6 @@ public final class DataStorage
     }
 
     /**
-     * Returns the amount of data storage in bytes
-     *
      * @return the amount of data storage in bytes
      */
     public long toBytes()
@@ -131,8 +127,6 @@ public final class DataStorage
     }
 
     /**
-     * Returns the amount of data storage in kilobytes
-     *
      * @return the amount of data storage in kilobytes
      */
     public long toKilobytes()
@@ -151,8 +145,6 @@ public final class DataStorage
     }
 
     /**
-     * Returns the amount of data storage in megabytes
-     *
      * @return the amount of data storage in megabytes
      */
     public long toMegabytes()
@@ -327,8 +319,6 @@ public final class DataStorage
         }
 
         /**
-         * Returns the memory unit corresponding to the given symbol. 
-         *
          * @param symbol the unit symbol
          * @return the memory unit corresponding to the given symbol
          */

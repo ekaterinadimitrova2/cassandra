@@ -94,8 +94,6 @@ public final class BitRate
     }
 
     /**
-     * Returns the bit rate unit.
-     *
      * @return the bit rate unit.
      */
     public BitRateUnit getUnit()
@@ -104,8 +102,6 @@ public final class BitRate
     }
 
     /**
-     * Returns the bit rate in bits per seconds
-     *
      * @return the bit rate in bits per seconds
      */
     public long toBitsPerSecond()
@@ -124,8 +120,6 @@ public final class BitRate
     }
 
     /**
-     * Returns the bit rate in kilobits per seconds
-     *
      * @return the bit rate in kilobits per seconds
      */
     public long toKilobitsPerSecond()
@@ -144,8 +138,6 @@ public final class BitRate
     }
 
     /**
-     * Returns the bit rate in megabits per seconds
-     *
      * @return the bit rate in megabits per seconds
      */
     public long toMegabitsPerSecond()
@@ -280,8 +272,6 @@ public final class BitRate
         }
 
         /**
-         * Returns the rate unit corresponding to the given symbol. 
-         *
          * @param symbol the unit symbol
          * @return the rate unit corresponding to the given symbol
          */

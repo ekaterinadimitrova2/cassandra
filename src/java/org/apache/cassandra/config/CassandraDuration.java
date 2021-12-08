@@ -124,8 +124,6 @@ public final class CassandraDuration
     }
 
     /**
-     * Returns the time unit associated to the specified symbol
-     *
      * @param symbol the time unit symbol
      * @return the time unit associated to the specified symbol
      */
@@ -149,8 +147,6 @@ public final class CassandraDuration
     }
 
     /**
-     * Returns this duration in the specified time unit
-     *
      * @param targetUnit the time unit
      * @return this duration in the specified time unit
      */
@@ -160,8 +156,6 @@ public final class CassandraDuration
     }
 
     /**
-     * Returns this duration in number of minutes
-     *
      * @return this duration in number of minutes
      */
     public long toMinutes()
@@ -180,8 +174,6 @@ public final class CassandraDuration
     }
 
     /**
-     * Returns this duration in number of seconds
-     *
      * @return this duration in number of seconds
      */
     public long toSeconds()
@@ -200,8 +192,6 @@ public final class CassandraDuration
     }
 
     /**
-     * Returns this duration in number of milliseconds
-     *
      * @return this duration in number of milliseconds
      */
     public long toMilliseconds()
