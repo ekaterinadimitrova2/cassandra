@@ -63,34 +63,34 @@ public final class BitRate
     /**
      * Creates a {@code BitRate} of the specified amount of bits per second.
      *
-     * @param bitsPerSeconds the amount of bits per second
+     * @param bitsPerSecond the amount of bits per second
      * @return a {@code BitRate}
      */
-    public static BitRate inBitsPerSeconds(long bitsPerSeconds)
+    public static BitRate inBitsPerSecond(long bitsPerSecond)
     {
-        return new BitRate(bitsPerSeconds, BitRateUnit.BITS_PER_SECOND);
+        return new BitRate(bitsPerSecond, BitRateUnit.BITS_PER_SECOND);
     }
 
     /**
      * Creates a {@code BitRate} of the specified amount of kilobits per second.
      *
-     * @param kilobitsPerSeconds the amount of kilobits per second
+     * @param kilobitsPerSecond the amount of kilobits per second
      * @return a {@code BitRate}
      */
-    public static BitRate inKilobitsPerSecond(long kilobitsPerSeconds)
+    public static BitRate inKilobitsPerSecond(long kilobitsPerSecond)
     {
-        return new BitRate(kilobitsPerSeconds, BitRateUnit.KILOBITS_PER_SECOND);
+        return new BitRate(kilobitsPerSecond, BitRateUnit.KILOBITS_PER_SECOND);
     }
 
     /**
      * Creates a {@code BitRate} of the specified amount of megabits per second.
      *
-     * @param megabitsPerSeconds the amount of megabits per second
+     * @param megabitsPerSecond the amount of megabits per second
      * @return a {@code BitRate}
      */
-    public static BitRate inMegabitsPerSecond(long megabitsPerSeconds)
+    public static BitRate inMegabitsPerSecond(long megabitsPerSecond)
     {
-        return new BitRate(megabitsPerSeconds, BitRateUnit.MEGABITS_PER_SECOND);
+        return new BitRate(megabitsPerSecond, BitRateUnit.MEGABITS_PER_SECOND);
     }
 
     /**
@@ -150,7 +150,7 @@ public final class BitRate
      */
     public long toMegabitsPerSecond()
     {
-        return unit.toMegabitsPerSeconds(quantity);
+        return unit.toMegabitsPerSecond(quantity);
     }
 
     /**
@@ -212,7 +212,7 @@ public final class BitRate
                 return d / 1000;
             }
 
-            public long toMegabitsPerSeconds(long d)
+            public long toMegabitsPerSecond(long d)
             {
                 return d / (1000 * 1000);
             }
@@ -234,7 +234,7 @@ public final class BitRate
                 return d;
             }
 
-            public long toMegabitsPerSeconds(long d)
+            public long toMegabitsPerSecond(long d)
             {
                 return d / 1000;
             }
@@ -256,14 +256,14 @@ public final class BitRate
                 return x(d, 1000, MAX / (1000));
             }
 
-            public long toMegabitsPerSeconds(long d)
+            public long toMegabitsPerSecond(long d)
             {
                 return d;
             }
 
             public long convert(long source, BitRateUnit sourceUnit)
             {
-                return sourceUnit.toMegabitsPerSeconds(source);
+                return sourceUnit.toMegabitsPerSecond(source);
             }
         };
 
@@ -318,7 +318,7 @@ public final class BitRate
             throw new AbstractMethodError();
         }
 
-        public long toMegabitsPerSeconds(long d)
+        public long toMegabitsPerSecond(long d)
         {
             throw new AbstractMethodError();
         }

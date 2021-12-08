@@ -59,7 +59,7 @@ public class BitRateTest
         assertEquals(new BitRate("10KiB/s"), new BitRate("10000B/s"));
         assertEquals(new BitRate("10000B/s"), new BitRate("10KiB/s"));
         assertEquals(BitRate.inMegabitsPerSecond(Long.MAX_VALUE), BitRate.inMegabitsPerSecond(Long.MAX_VALUE));
-        assertNotEquals(BitRate.inMegabitsPerSecond(Long.MAX_VALUE), BitRate.inBitsPerSeconds(Long.MAX_VALUE));
+        assertNotEquals(BitRate.inMegabitsPerSecond(Long.MAX_VALUE), BitRate.inBitsPerSecond(Long.MAX_VALUE));
         assertNotEquals(new BitRate("0KiB/s"), new BitRate("10MiB/s"));
     }
 
