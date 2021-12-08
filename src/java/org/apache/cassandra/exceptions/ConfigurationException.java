@@ -35,7 +35,7 @@ public class ConfigurationException extends RequestValidationException
     public ConfigurationException(String msg, boolean logStackTrace)
     {
         super(ExceptionCode.CONFIG_ERROR, msg);
-        this.logStackTrace = true;
+        this.logStackTrace = logStackTrace;
     }
 
     public ConfigurationException(String msg, Throwable e)
