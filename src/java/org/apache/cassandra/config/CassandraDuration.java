@@ -71,7 +71,7 @@ public final class CassandraDuration
         }
     }
 
-    private CassandraDuration(long quantity, TimeUnit unit)
+    CassandraDuration(long quantity, TimeUnit unit)
     {
         if (quantity < 0)
             throw new IllegalArgumentException("CassandraDuration must be positive");

@@ -17,10 +17,16 @@
  */
 package org.apache.cassandra.config;
 
+import java.util.Locale;
+
 import org.junit.Test;
+
+import org.quicktheories.core.Gen;
+import org.quicktheories.generators.SourceDSL;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
+import static org.quicktheories.QuickTheory.qt;
 
 public class BitRateTest
 {
@@ -55,5 +61,38 @@ public class BitRateTest
         assertEquals(BitRate.inMegabitsPerSecond(Long.MAX_VALUE), BitRate.inMegabitsPerSecond(Long.MAX_VALUE));
         assertNotEquals(BitRate.inMegabitsPerSecond(Long.MAX_VALUE), BitRate.inBitsPerSeconds(Long.MAX_VALUE));
         assertNotEquals(new BitRate("0KiB/s"), new BitRate("10MiB/s"));
+    }
+
+    @Test
+    public void thereAndBack()
+    {
+        Gen<BitRate.BitRateUnit> unitGen = SourceDSL.arbitrary().enumValues(BitRate.BitRateUnit.class);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
+        qt().forAll(valueGen, unitGen).check((value, unit) -> {
+            BitRate there = new BitRate(value, unit);
+            BitRate back = new BitRate(there.toString());
+            BitRate BACK = new BitRate(there.toString().toUpperCase(Locale.ROOT).replace("I", "i"));
+            return there.equals(back) && there.equals(BACK);
+        });
+    }
+
+    @Test
+    public void eq()
+    {
+        qt().forAll(gen(), gen()).check((a, b) -> a.equals(b) == b.equals(a));
+    }
+
+    @Test
+    public void eqAndHash()
+    {
+        qt().forAll(gen(), gen()).check((a, b) -> !a.equals(b) || a.hashCode() == b.hashCode());
+    }
+
+    private static Gen<BitRate> gen()
+    {
+        Gen<BitRate.BitRateUnit> unitGen = SourceDSL.arbitrary().enumValues(BitRate.BitRateUnit.class);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);;
+        Gen<BitRate> gen = rs -> new BitRate(valueGen.generate(rs), unitGen.generate(rs));
+        return gen.describedAs(BitRate::toString);
     }
 }

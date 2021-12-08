@@ -17,10 +17,17 @@
  */
 package org.apache.cassandra.config;
 
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Test;
+
+import org.quicktheories.core.Gen;
+import org.quicktheories.generators.SourceDSL;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
+import static org.quicktheories.QuickTheory.qt;
 
 public class CassandraDurationTest
 {
@@ -57,4 +64,16 @@ public class CassandraDurationTest
         assertNotEquals(new CassandraDuration("0m"), new CassandraDuration("10ms"));
     }
 
+    @Test
+    public void thereAndBack()
+    {
+        Gen<TimeUnit> unitGen = SourceDSL.arbitrary().enumValues(TimeUnit.class);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
+        qt().forAll(valueGen, unitGen).check((value, unit) -> {
+            CassandraDuration there = new CassandraDuration(value, unit);
+            CassandraDuration back = new CassandraDuration(there.toString());
+            CassandraDuration BACK = new CassandraDuration(there.toString().toUpperCase(Locale.ROOT));
+            return there.equals(back) && there.equals(BACK);
+        });
+    }
 }

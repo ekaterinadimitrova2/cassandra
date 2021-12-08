@@ -54,7 +54,7 @@ public final class BitRate
         unit = BitRateUnit.fromSymbol(matcher.group(2));
     }
 
-    private BitRate(long quantity, BitRateUnit unit)
+    BitRate(long quantity, BitRateUnit unit)
     {
         this.quantity = quantity;
         this.unit = unit;
