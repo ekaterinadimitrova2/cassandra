@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +35,7 @@ public final class BitRate
     /**
      * The Regexp used to parse the rate provided as String in cassandra.yaml.
      */
-    private static final Pattern BIT_RATE_UNITS_PATTERN = Pattern.compile("^(\\d+)(MiB/s|mib/s|MiB/S|KiB/s|kib/s|KiB/S|B/s|b/s|B/S)$");
+    private static final Pattern BIT_RATE_UNITS_PATTERN = Pattern.compile("^(\\d+)(mib/s|kib/s|b/s)$");
 
     private final long quantity;
 
@@ -42,6 +43,7 @@ public final class BitRate
 
     public BitRate(String value)
     {
+        value = value.toLowerCase(Locale.ROOT);
         //parse the string field value
         Matcher matcher = BIT_RATE_UNITS_PATTERN.matcher(value);
 

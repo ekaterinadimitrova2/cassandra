@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -36,9 +37,9 @@ public final class CassandraDuration
     /**
      * The Regexp used to parse the duration provided as String.
      */
-    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|D|h|H|s|S|ms|MS|mS|Ms|us|US|uS|Us|µs|µS|ns|NS|nS|Nsm|M|m)"));
-    private static final Pattern DOUBLE_TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+\\.\\d+)(d|D|h|H|s|S|ms|MS|mS|Ms|us|US|uS|Us|µs|µS|ns|NS|nS|Nsm|M|m)$"));
-    
+    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)"));
+    private static final Pattern DOUBLE_TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+\\.\\d+)(d|h|s|ms|us|µs|ns|m)$"));
+
     private final long quantity;
 
     private final TimeUnit unit;
@@ -52,6 +53,7 @@ public final class CassandraDuration
             return;
         }
 
+        value = value.toLowerCase(Locale.ROOT);
         //parse the string field value
         Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
         Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);

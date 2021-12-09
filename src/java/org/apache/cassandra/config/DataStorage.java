@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +36,7 @@ public final class DataStorage
     /**
      * The Regexp used to parse the storage provided as String.
      */
-    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(kb|KB|mb|MB|gb|GB|b|B)$");
+    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(kb|mb|gb|b)$");
 
     private final long quantity;
 
@@ -49,6 +50,8 @@ public final class DataStorage
             unit = DataStorageUnit.MEGABYTES; // the unit doesn't really matter as 0 is 0 in all units
             return;
         }
+
+        value = value.toLowerCase(Locale.ROOT);
         //parse the string field value
         Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
 
@@ -340,7 +343,7 @@ public final class DataStorage
         /**
          * The unit symbol
          */
-        private String symbol;
+        private final String symbol;
 
         DataStorageUnit(String symbol)
         {

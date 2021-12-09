@@ -91,7 +91,7 @@ public class BitRateTest
     private static Gen<BitRate> gen()
     {
         Gen<BitRate.BitRateUnit> unitGen = SourceDSL.arbitrary().enumValues(BitRate.BitRateUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);;
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
         Gen<BitRate> gen = rs -> new BitRate(valueGen.generate(rs), unitGen.generate(rs));
         return gen.describedAs(BitRate::toString);
     }
