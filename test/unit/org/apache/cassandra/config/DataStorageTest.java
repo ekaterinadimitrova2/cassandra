@@ -41,6 +41,8 @@ public class DataStorageTest
                                                     .hasMessageContaining("Invalid data storage: 10");
         assertThatThrownBy(() -> new DataStorage("-10bps")).isInstanceOf(IllegalArgumentException.class)
                                                       .hasMessageContaining("Invalid data storage: -10bps");
+        assertThatThrownBy(() -> new DataStorage("-10b")).isInstanceOf(IllegalArgumentException.class)
+                                                           .hasMessageContaining("Invalid data storage: -10b");
         assertThatThrownBy(() -> new DataStorage("10HG")).isInstanceOf(IllegalArgumentException.class)
                                                       .hasMessageContaining("Invalid data storage: 10hg");
     }

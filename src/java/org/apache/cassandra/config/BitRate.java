@@ -48,9 +48,7 @@ public final class BitRate
         Matcher matcher = BIT_RATE_UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
-        {
             throw new IllegalArgumentException("Invalid bit rate: " + value + " Accepted units: MiB/s, KiB/s, B/s.");
-        }
 
         quantity = Long.parseLong(matcher.group(1));
         unit = BitRateUnit.fromSymbol(matcher.group(2));
@@ -58,6 +56,9 @@ public final class BitRate
 
     BitRate(long quantity, BitRateUnit unit)
     {
+        if (quantity < 0)
+            throw new IllegalArgumentException("BitRate must be positive");
+
         this.quantity = quantity;
         this.unit = unit;
     }

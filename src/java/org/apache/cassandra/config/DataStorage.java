@@ -66,6 +66,9 @@ public final class DataStorage
 
     private DataStorage(long quantity, DataStorageUnit unit)
     {
+        if (quantity < 0)
+            throw new IllegalArgumentException("DataStorage must be positive");
+
         this.quantity = quantity;
         this.unit = unit;
     }
