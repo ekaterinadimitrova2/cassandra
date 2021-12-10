@@ -18,7 +18,6 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,76 +29,76 @@ import com.google.common.primitives.Ints;
  * Represents a bit rate type used for cassandra configuration. It supports the opportunity for the users to be able to
  * add units to the confiuration parameter value. (CASSANDRA-15234)
  */
-public final class BitRate
+public final class DataRateSpec
 {
     /**
      * The Regexp used to parse the rate provided as String in cassandra.yaml.
      */
-    private static final Pattern BIT_RATE_UNITS_PATTERN = Pattern.compile("^(\\d+)(mib/s|kib/s|b/s)$");
+    private static final Pattern BIT_RATE_UNITS_PATTERN = Pattern.compile("^(\\d+)(MiB/s|KiB/s|B/s)$");
 
     private final long quantity;
 
-    private final BitRateUnit unit;
+    private final DataRateUnit unit;
 
-    public BitRate(String value)
+    public DataRateSpec(String value)
     {
-        value = value.toLowerCase(Locale.ROOT);
         //parse the string field value
         Matcher matcher = BIT_RATE_UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
-            throw new IllegalArgumentException("Invalid bit rate: " + value + " Accepted units: MiB/s, KiB/s, B/s.");
+            throw new IllegalArgumentException("Invalid bit rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
+                                               "case matters and " + "only non-negative values");
 
         quantity = Long.parseLong(matcher.group(1));
-        unit = BitRateUnit.fromSymbol(matcher.group(2));
+        unit = DataRateUnit.fromSymbol(matcher.group(2));
     }
 
-    BitRate(long quantity, BitRateUnit unit)
+    DataRateSpec(long quantity, DataRateUnit unit)
     {
         if (quantity < 0)
-            throw new IllegalArgumentException("BitRate must be positive");
+            throw new IllegalArgumentException("DataRate value must be non-negative");
 
         this.quantity = quantity;
         this.unit = unit;
     }
 
     /**
-     * Creates a {@code BitRate} of the specified amount of bits per second.
+     * Creates a {@code DataRateSpec} of the specified amount of bits per second.
      *
-     * @param bitsPerSecond the amount of bits per second
-     * @return a {@code BitRate}
+     * @param bytesPerSecond the amount of bits per second
+     * @return a {@code DataRateSpec}
      */
-    public static BitRate inBitsPerSecond(long bitsPerSecond)
+    public static DataRateSpec inBytesPerSecond(long bytesPerSecond)
     {
-        return new BitRate(bitsPerSecond, BitRateUnit.BITS_PER_SECOND);
+        return new DataRateSpec(bytesPerSecond, DataRateUnit.BYTES_PER_SECOND);
     }
 
     /**
-     * Creates a {@code BitRate} of the specified amount of kilobits per second.
+     * Creates a {@code DataRateSpec} of the specified amount of kilobits per second.
      *
-     * @param kilobitsPerSecond the amount of kilobits per second
-     * @return a {@code BitRate}
+     * @param kibibytesPerSecond the amount of kilobits per second
+     * @return a {@code DataRateSpec}
      */
-    public static BitRate inKilobitsPerSecond(long kilobitsPerSecond)
+    public static DataRateSpec inKibibytesPerSecond(long kibibytesPerSecond)
     {
-        return new BitRate(kilobitsPerSecond, BitRateUnit.KILOBITS_PER_SECOND);
+        return new DataRateSpec(kibibytesPerSecond, DataRateUnit.KIBIBYTES_PER_SECOND);
     }
 
     /**
-     * Creates a {@code BitRate} of the specified amount of megabits per second.
+     * Creates a {@code DataRateSpec} of the specified amount of megabits per second.
      *
-     * @param megabitsPerSecond the amount of megabits per second
-     * @return a {@code BitRate}
+     * @param mebibytesPerSecond the amount of megabits per second
+     * @return a {@code DataRateSpec}
      */
-    public static BitRate inMegabitsPerSecond(long megabitsPerSecond)
+    public static DataRateSpec inMebibytesPerSecond(long mebibytesPerSecond)
     {
-        return new BitRate(megabitsPerSecond, BitRateUnit.MEGABITS_PER_SECOND);
+        return new DataRateSpec(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
     }
 
     /**
      * @return the bit rate unit.
      */
-    public BitRateUnit getUnit()
+    public DataRateUnit getUnit()
     {
         return unit;
     }
@@ -107,9 +106,9 @@ public final class BitRate
     /**
      * @return the bit rate in bits per seconds
      */
-    public long toBitsPerSecond()
+    public long toBytesPerSecond()
     {
-        return unit.toBitsPerSecond(quantity);
+        return unit.toBytesPerSecond(quantity);
     }
 
     /**
@@ -117,17 +116,17 @@ public final class BitRate
      *
      * @return the bit rate in bits per secondss or {@code Integer.MAX_VALUE} if the rate is too large.
      */
-    public int toBitsPerSecondAsInt()
+    public int toBytesPerSecondAsInt()
     {
-        return Ints.saturatedCast(toBitsPerSecond());
+        return Ints.saturatedCast(toBytesPerSecond());
     }
 
     /**
      * @return the bit rate in kilobits per seconds
      */
-    public long toKilobitsPerSecond()
+    public long toKibibytesPerSecond()
     {
-        return unit.toKilobitsPerSecond(quantity);
+        return unit.toKibibytesPerSecond(quantity);
     }
 
     /**
@@ -135,17 +134,17 @@ public final class BitRate
      *
      * @return the bit rate in kilobits per seconds or {@code Integer.MAX_VALUE} if the number of kilobits is too large.
      */
-    public int toKilobitsPerSecondAsInt()
+    public int toKibibytesPerSecondAsInt()
     {
-        return Ints.saturatedCast(toKilobitsPerSecond());
+        return Ints.saturatedCast(toKibibytesPerSecond());
     }
 
     /**
      * @return the bit rate in megabits per seconds
      */
-    public long toMegabitsPerSecond()
+    public long toMebibytesPerSecond()
     {
-        return unit.toMegabitsPerSecond(quantity);
+        return unit.toMebibytesPerSecond(quantity);
     }
 
     /**
@@ -153,15 +152,15 @@ public final class BitRate
      *
      * @return the bit rate in megabits per seconds or {@code Integer.MAX_VALUE} if the number of megabits is too large.
      */
-    public int toMegabitsPerSecondAsInt()
+    public int toMebibytesPerSecondAsInt()
     {
-        return Ints.saturatedCast(toMegabitsPerSecond());
+        return Ints.saturatedCast(toMebibytesPerSecond());
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(unit.toKilobitsPerSecond(quantity));
+        return Objects.hash(unit.toKibibytesPerSecond(quantity));
     }
 
     @Override
@@ -170,10 +169,10 @@ public final class BitRate
         if (this == obj)
             return true;
 
-        if (!(obj instanceof BitRate))
+        if (!(obj instanceof DataRateSpec))
             return false;
 
-        BitRate other = (BitRate) obj;
+        DataRateSpec other = (DataRateSpec) obj;
         if (unit == other.unit)
             return quantity == other.quantity;
 
@@ -193,72 +192,72 @@ public final class BitRate
         return String.valueOf(quantity);
     }
 
-    public enum BitRateUnit
+    public enum DataRateUnit
     {
-        BITS_PER_SECOND("b/s")
+        BYTES_PER_SECOND("B/s")
         {
-            public long toBitsPerSecond(long d)
+            public long toBytesPerSecond(long d)
             {
                 return d;
             }
 
-            public long toKilobitsPerSecond(long d)
+            public long toKibibytesPerSecond(long d)
             {
-                return d / 1000;
+                return d / 1024;
             }
 
-            public long toMegabitsPerSecond(long d)
+            public long toMebibytesPerSecond(long d)
             {
-                return d / (1000 * 1000);
+                return d / (1024 * 1024);
             }
 
-            public long convert(long source, BitRateUnit sourceUnit)
+            public long convert(long source, DataRateUnit sourceUnit)
             {
-                return sourceUnit.toBitsPerSecond(source);
+                return sourceUnit.toBytesPerSecond(source);
             }
         },
-        KILOBITS_PER_SECOND("kib/s")
+        KIBIBYTES_PER_SECOND("KiB/s")
         {
-            public long toBitsPerSecond(long d)
+            public long toBytesPerSecond(long d)
             {
-                return x(d, 1000, MAX / 1000);
+                return x(d, 1024, MAX / 1024);
             }
 
-            public long toKilobitsPerSecond(long d)
+            public long toKibibytesPerSecond(long d)
             {
                 return d;
             }
 
-            public long toMegabitsPerSecond(long d)
+            public long toMebibytesPerSecond(long d)
             {
-                return d / 1000;
+                return d / 1024;
             }
 
-            public long convert(long source, BitRateUnit sourceUnit)
+            public long convert(long source, DataRateUnit sourceUnit)
             {
-                return sourceUnit.toKilobitsPerSecond(source);
+                return sourceUnit.toKibibytesPerSecond(source);
             }
         },
-        MEGABITS_PER_SECOND("mib/s")
+        MEBIBYTES_PER_SECOND("MiB/s")
         {
-            public long toBitsPerSecond(long d)
+            public long toBytesPerSecond(long d)
             {
-                return x(d, 1000 * 1000, MAX / (1000 * 1000));
+                return x(d, 1024 * 1024, MAX / (1024 * 1024));
             }
 
-            public long toKilobitsPerSecond(long d)
+            public long toKibibytesPerSecond(long d)
             {
-                return x(d, 1000, MAX / (1000));
+                return x(d, 1024, MAX / (1024));
             }
 
-            public long toMegabitsPerSecond(long d)
+            public long toMebibytesPerSecond(long d)
             {
                 return d;
             }
 
-            public long convert(long source, BitRateUnit sourceUnit)
+            public long convert(long source, DataRateUnit sourceUnit)
             {
-                return sourceUnit.toMegabitsPerSecond(source);
+                return sourceUnit.toMebibytesPerSecond(source);
             }
         };
 
@@ -278,9 +277,9 @@ public final class BitRate
          * @param symbol the unit symbol
          * @return the rate unit corresponding to the given symbol
          */
-        public static BitRateUnit fromSymbol(String symbol)
+        public static DataRateUnit fromSymbol(String symbol)
         {
-            for (BitRateUnit value : values())
+            for (DataRateUnit value : values())
             {
                 if (value.symbol.equalsIgnoreCase(symbol))
                     return value;
@@ -296,27 +295,27 @@ public final class BitRate
          */
         private final String symbol;
 
-        BitRateUnit(String symbol)
+        DataRateUnit(String symbol)
         {
             this.symbol = symbol;
         }
 
-        public long toBitsPerSecond(long d)
+        public long toBytesPerSecond(long d)
         {
             throw new AbstractMethodError();
         }
 
-        public long toKilobitsPerSecond(long d)
+        public long toKibibytesPerSecond(long d)
         {
             throw new AbstractMethodError();
         }
 
-        public long toMegabitsPerSecond(long d)
+        public long toMebibytesPerSecond(long d)
         {
             throw new AbstractMethodError();
         }
 
-        public long convert(long source, BitRateUnit sourceUnit)
+        public long convert(long source, DataRateUnit sourceUnit)
         {
             throw new AbstractMethodError();
         }

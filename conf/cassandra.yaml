@@ -361,7 +361,7 @@ prepared_statements_cache_size:
 # Default value is empty to make it "auto" (min(5% of Heap (in MB), 100MB)). Set to 0 to disable key cache.
 key_cache_size:
 
-# CassandraDuration in seconds after which Cassandra should
+# DurationSpec in seconds after which Cassandra should
 # save the key cache. Caches are saved to saved_caches_directory as
 # specified in this configuration file.
 #
@@ -396,7 +396,7 @@ key_cache_save_period: 14400
 # Default value is 0, to disable row caching.
 row_cache_size: 0mb
 
-# CassandraDuration in seconds after which Cassandra should save the row cache.
+# DurationSpec in seconds after which Cassandra should save the row cache.
 # Caches are saved to saved_caches_directory as specified in this configuration file.
 #
 # Saved caches greatly improve cold-start speeds, and is relatively cheap in
@@ -425,7 +425,7 @@ row_cache_save_period: 0
 # NOTE: if you perform counter deletes and rely on low gcgs, you should disable the counter cache.
 counter_cache_size:
 
-# CassandraDuration in seconds after which Cassandra should
+# DurationSpec in seconds after which Cassandra should
 # save the counter cache (keys only). Caches are saved to saved_caches_directory as
 # specified in this configuration file.
 #
@@ -944,27 +944,27 @@ sstable_preemptive_open_interval: 50mb
 # Throttles entire SSTable outbound streaming file transfers on
 # this node to the given total throughput in Mbps.
 # Setting this value to 0 it disables throttling.
-# When unset, the default is 200 Mbps or 25 MB/s.
-# entire_sstable_stream_throughput_outbound_megabits_per_sec: 200
+# When unset, the default is 200 Mbps or 25 MiB/s.
+# entire_sstable_stream_throughput_outbound: 25MiB/s
 
 # Throttles entire SSTable file streaming between datacenters.
 # Setting this value to 0 disables throttling for entire SSTable inter-DC file streaming.
-# When unset, the default is 200 Mbps or 25 MB/s.
-# entire_sstable_inter_dc_stream_throughput_outbound_megabits_per_sec: 200
+# When unset, the default is 200 Mbps or 25 MiB/s.
+# entire_sstable_inter_dc_stream_throughput_outbound 25MiB/S
 
 # Throttles all outbound streaming file transfers on this node to the
 # given total throughput in Mbps. This is necessary because Cassandra does
 # mostly sequential IO when streaming data during bootstrap or repair, which
 # can lead to saturating the network connection and degrading rpc performance.
-# When unset, the default is 200 Mbps or 25 MB/s.
-# stream_throughput_outbound: 200MiB/s
+# When unset, the default is 200 Mbps or 25 MiB/S.
+# stream_throughput_outbound: 25MiB/S
 
 # Throttles all streaming file transfer between the datacenters,
 # this setting allows users to throttle inter dc stream throughput in addition
 # to throttling all network stream traffic as configured with
 # stream_throughput_outbound
-# When unset, the default is 200 Mbps or 25 MB/s
-# inter_dc_stream_throughput_outbound: 200MiB/s
+# When unset, the default is 200 Mbps or 25 MiB/S
+# inter_dc_stream_throughput_outbound: 25MiB/S
 
 # Server side timeouts for requests. The server will return a timeout exception
 # to the client if it can't complete an operation within the corresponding

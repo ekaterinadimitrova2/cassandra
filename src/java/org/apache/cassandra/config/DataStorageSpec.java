@@ -18,7 +18,6 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,18 +30,18 @@ import com.google.common.primitives.Ints;
  * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
  * options. (CASSANDRA-15234)
  */
-public final class DataStorage
+public final class DataStorageSpec
 {
     /**
      * The Regexp used to parse the storage provided as String.
      */
-    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(kb|mb|gb|b)$");
+    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(GB|MB|KB|B)$");
 
     private final long quantity;
 
     private final DataStorageUnit unit;
 
-    public DataStorage(String value)
+    public DataStorageSpec(String value)
     {
         if(value == null || value.equals("null"))
         {
@@ -51,20 +50,20 @@ public final class DataStorage
             return;
         }
 
-        value = value.toLowerCase(Locale.ROOT);
         //parse the string field value
         Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
         {
-            throw new IllegalArgumentException("Invalid data storage: " + value);
+            throw new IllegalArgumentException("Invalid data storage: " + value + " Accepted units: B, KB, MB, GB where " +
+                                               "case matters and " + "only non-negative values");
         }
 
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
     }
 
-    private DataStorage(long quantity, DataStorageUnit unit)
+    private DataStorageSpec(long quantity, DataStorageUnit unit)
     {
         if (quantity < 0)
             throw new IllegalArgumentException("DataStorage must be positive");
@@ -74,36 +73,36 @@ public final class DataStorage
     }
 
     /**
-     * Creates a {@code DataStorage} of the specified amount of bytes.
+     * Creates a {@code DataStorageSpec} of the specified amount of bytes.
      *
      * @param bytes the amount of bytes
-     * @return a {@code DataStorage}
+     * @return a {@code DataStorageSpec}
      */
-    public static DataStorage inBytes(long bytes)
+    public static DataStorageSpec inBytes(long bytes)
     {
-        return new DataStorage(bytes, DataStorageUnit.BYTES);
+        return new DataStorageSpec(bytes, DataStorageUnit.BYTES);
     }
 
     /**
-     * Creates a {@code DataStorage} of the specified amount of kilobytes.
+     * Creates a {@code DataStorageSpec} of the specified amount of kilobytes.
      *
      * @param kilobytes the amount of kilobytes
-     * @return a {@code DataStorage}
+     * @return a {@code DataStorageSpec}
      */
-    public static DataStorage inKilobytes(long kilobytes)
+    public static DataStorageSpec inKilobytes(long kilobytes)
     {
-        return new DataStorage(kilobytes, DataStorageUnit.KILOBYTES);
+        return new DataStorageSpec(kilobytes, DataStorageUnit.KILOBYTES);
     }
 
     /**
-     * Creates a {@code DataStorage} of the specified amount of megabytes.
+     * Creates a {@code DataStorageSpec} of the specified amount of megabytes.
      *
      * @param megabytes the amount of megabytes
-     * @return a {@code DataStorage}
+     * @return a {@code DataStorageSpec}
      */
-    public static DataStorage inMegabytes(long megabytes)
+    public static DataStorageSpec inMegabytes(long megabytes)
     {
-        return new DataStorage(megabytes, DataStorageUnit.MEGABYTES);
+        return new DataStorageSpec(megabytes, DataStorageUnit.MEGABYTES);
     }
 
     /**
@@ -180,10 +179,10 @@ public final class DataStorage
         if (this == obj)
             return true;
 
-        if (!(obj instanceof DataStorage))
+        if (!(obj instanceof DataStorageSpec))
             return false;
 
-        DataStorage other = (DataStorage) obj;
+        DataStorageSpec other = (DataStorageSpec) obj;
         if (unit == other.unit)
             return quantity == other.quantity;
 

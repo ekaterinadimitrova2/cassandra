@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import org.apache.cassandra.config.CassandraDuration;
+import org.apache.cassandra.config.DurationSpec;
 import org.apache.cassandra.io.util.File;
 
 // Only serialize fields
@@ -60,7 +60,7 @@ public class SnapshotManifest
         this.expiresAt = null;
     }
 
-    public SnapshotManifest(List<String> files, CassandraDuration ttl, Instant creationTime)
+    public SnapshotManifest(List<String> files, DurationSpec ttl, Instant creationTime)
     {
         this.files = files;
         this.createdAt = creationTime;

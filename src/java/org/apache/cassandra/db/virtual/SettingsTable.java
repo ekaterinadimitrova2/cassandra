@@ -118,21 +118,21 @@ final class SettingsTable extends AbstractVirtualTable
 
             if(ANNOTATED_FIELDS.containsKey(f.getName()))
             {
-                if (CassandraDuration.class.equals(value.getClass()))
+                if (DurationSpec.class.equals(value.getClass()))
                 {
-                    CassandraDuration quantity = (CassandraDuration) value;
+                    DurationSpec quantity = (DurationSpec) value;
                     result.row(f.getAnnotation(Replaces.class).oldName()).column(VALUE,quantity.quantityToString());
                 }
 
-                if (DataStorage.class.equals(value.getClass()))
+                if (DataStorageSpec.class.equals(value.getClass()))
                 {
-                    DataStorage quantity = (DataStorage) value;
+                    DataStorageSpec quantity = (DataStorageSpec) value;
                     result.row(f.getAnnotation(Replaces.class).oldName()).column(VALUE,quantity.quantityToString());
                 }
 
-                if (BitRate.class.equals(value.getClass()))
+                if (DataRateSpec.class.equals(value.getClass()))
                 {
-                    BitRate quantity = (BitRate) value;
+                    DataRateSpec quantity = (DataRateSpec) value;
                     result.row(f.getAnnotation(Replaces.class).oldName()).column(VALUE,quantity.quantityToString());
                 }
 

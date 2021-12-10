@@ -39,9 +39,9 @@ public interface Converter<Original, Current>
 
     /**
      * Apply the converter specified as part of the {@link Replaces} annotation in {@link Config}
-     * @param value we will use from cassandra.yaml to create a new {@link Config} parameter of type {@link CassandraDuration},
-     * {@link BitRate} or {@link DataStorage}
-     * @return new object of type {@link CassandraDuration}, {@link BitRate} or {@link DataStorage}
+     * @param value we will use from cassandra.yaml to create a new {@link Config} parameter of type {@link DurationSpec},
+     * {@link DataRateSpec} or {@link DataStorageSpec}
+     * @return new object of type {@link DurationSpec}, {@link DataRateSpec} or {@link DataStorageSpec}
      */
     Current apply(Original value);
 
@@ -62,22 +62,22 @@ public interface Converter<Original, Current>
         }
     }
 
-    public static final class MillisDurationConverter implements Converter<Long, CassandraDuration>
+    public static final class MillisDurationConverter implements Converter<Long, DurationSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public CassandraDuration apply(Long value)
+        public DurationSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return CassandraDuration.inMilliseconds(value);
+            return DurationSpec.inMilliseconds(value);
         }
     }
 
-    public static final class MillisDurationInDoubleConverter implements Converter<Double, CassandraDuration>
+    public static final class MillisDurationInDoubleConverter implements Converter<Double, DurationSpec>
     {
 
         public Class<Double> getInputType()
@@ -85,22 +85,22 @@ public interface Converter<Original, Current>
             return Double.class;
         }
 
-        public CassandraDuration apply(Double value)
+        public DurationSpec apply(Double value)
         {
             if (value == null)
                 return null;
-            return CassandraDuration.inMilliseconds((long)value.doubleValue());
+            return DurationSpec.inMilliseconds((long)value.doubleValue());
         }
     }
 
-    public static final class MillisDurationConverterCustom implements Converter<Long, CassandraDuration>
+    public static final class MillisDurationConverterCustom implements Converter<Long, DurationSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public CassandraDuration apply(Long value)
+        public DurationSpec apply(Long value)
         {
             if (value == null)
                 return null;
@@ -108,97 +108,97 @@ public interface Converter<Original, Current>
             if (value.equals((long) -1))
                 value = 0L;
 
-            return CassandraDuration.inMilliseconds(value);
+            return DurationSpec.inMilliseconds(value);
         }
     }
 
-    public static final class SecondsDurationConverter implements Converter<Long, CassandraDuration>
+    public static final class SecondsDurationConverter implements Converter<Long, DurationSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public CassandraDuration apply(Long value)
+        public DurationSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return CassandraDuration.inSeconds(value);
+            return DurationSpec.inSeconds(value);
         }
     }
 
-    public static final class MinutesDurationConverter implements Converter<Long, CassandraDuration>
+    public static final class MinutesDurationConverter implements Converter<Long, DurationSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public CassandraDuration apply(Long value)
+        public DurationSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return CassandraDuration.inMinutes(value);
+            return DurationSpec.inMinutes(value);
         }
     }
 
-    public static final class MegabytesDataStorageConverter implements Converter<Long, DataStorage>
+    public static final class MegabytesDataStorageConverter implements Converter<Long, DataStorageSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public DataStorage apply(Long value)
+        public DataStorageSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return DataStorage.inMegabytes(value);
+            return DataStorageSpec.inMegabytes(value);
         }
     }
 
-    public static final class KilobytesDataStorageConverter implements Converter<Long, DataStorage>
+    public static final class KilobytesDataStorageConverter implements Converter<Long, DataStorageSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public DataStorage apply(Long value)
+        public DataStorageSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return DataStorage.inKilobytes(value);
+            return DataStorageSpec.inKilobytes(value);
         }
     }
 
-    public static final class BytesDataStorageConverter implements Converter<Long, DataStorage>
+    public static final class BytesDataStorageConverter implements Converter<Long, DataStorageSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public DataStorage apply(Long value)
+        public DataStorageSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return DataStorage.inBytes(value);
+            return DataStorageSpec.inBytes(value);
         }
     }
 
-    public static final class MegabitsPerSecondBitRateConverter implements Converter<Long, BitRate>
+    public static final class MegabitsPerSecondDataRateConverter implements Converter<Long, DataRateSpec>
     {
         public Class<Long> getInputType()
         {
             return Long.class;
         }
 
-        public BitRate apply(Long value)
+        public DataRateSpec apply(Long value)
         {
             if (value == null)
                 return null;
-            return BitRate.inMegabitsPerSecond(value);
+            return DataRateSpec.inMebibytesPerSecond(value);
         }
     }
 }

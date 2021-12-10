@@ -334,7 +334,7 @@ public class DatabaseDescriptorTest
     {
         Config testConfig = new Config();
 
-        CassandraDuration greaterThanLowestTimeout = CassandraDuration.inMilliseconds(DatabaseDescriptor.LOWEST_ACCEPTED_TIMEOUT.toMilliseconds() + 1);
+        DurationSpec greaterThanLowestTimeout = DurationSpec.inMilliseconds(DatabaseDescriptor.LOWEST_ACCEPTED_TIMEOUT.toMilliseconds() + 1);
 
         testConfig.read_request_timeout = greaterThanLowestTimeout;
         testConfig.range_request_timeout = greaterThanLowestTimeout;
@@ -353,7 +353,7 @@ public class DatabaseDescriptorTest
         assertEquals(testConfig.request_timeout, greaterThanLowestTimeout);
 
         //set less than Lowest acceptable value
-        CassandraDuration lowerThanLowestTimeout = CassandraDuration.inMilliseconds(DatabaseDescriptor.LOWEST_ACCEPTED_TIMEOUT.toMilliseconds() - 1);
+        DurationSpec lowerThanLowestTimeout = DurationSpec.inMilliseconds(DatabaseDescriptor.LOWEST_ACCEPTED_TIMEOUT.toMilliseconds() - 1);
 
         testConfig.read_request_timeout = lowerThanLowestTimeout;
         testConfig.range_request_timeout = lowerThanLowestTimeout;
@@ -625,8 +625,8 @@ public class DatabaseDescriptorTest
     public void testClientLargeReadWarnAndAbortDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorage("0kb");
-        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorage("0kb");
+        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorageSpec("0kb");
+        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
         Assertions.assertThat(conf.track_warnings.coordinator_read_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
         Assertions.assertThat(conf.track_warnings.coordinator_read_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
@@ -636,8 +636,8 @@ public class DatabaseDescriptorTest
     public void testClientLargeReadWarnGreaterThanAbort()
     {
         Config conf = new Config();
-        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorage("1kb");
+        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorageSpec("1kb");
         Assertions.assertThatThrownBy(() -> DatabaseDescriptor.applyTrackWarningsValidations(conf))
                   .isInstanceOf(ConfigurationException.class)
                   .hasMessage("abort_threshold (1KB) must be greater than or equal to warn_threshold (2KB); see track_warnings.coordinator_read_size");
@@ -647,8 +647,8 @@ public class DatabaseDescriptorTest
     public void testClientLargeReadWarnEqAbort()
     {
         Config conf = new Config();
-        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorage("2kb");
+        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorageSpec("2kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -656,8 +656,8 @@ public class DatabaseDescriptorTest
     public void testClientLargeReadWarnEnabledAbortDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorage("0kb");
+        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -665,8 +665,8 @@ public class DatabaseDescriptorTest
     public void testClientLargeReadAbortEnabledWarnDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorage("0kb");
-        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorage("2kb");
+        conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorageSpec("0kb");
+        conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorageSpec("2kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -675,8 +675,8 @@ public class DatabaseDescriptorTest
     public void testLocalLargeReadWarnAndAbortDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.local_read_size.warn_threshold = new DataStorage("0kb");
-        conf.track_warnings.local_read_size.abort_threshold = new DataStorage("0kb");
+        conf.track_warnings.local_read_size.warn_threshold = new DataStorageSpec("0kb");
+        conf.track_warnings.local_read_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
         Assertions.assertThat(conf.track_warnings.local_read_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
         Assertions.assertThat(conf.track_warnings.local_read_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
@@ -686,8 +686,8 @@ public class DatabaseDescriptorTest
     public void testLocalLargeReadWarnGreaterThanAbort()
     {
         Config conf = new Config();
-        conf.track_warnings.local_read_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.local_read_size.abort_threshold = new DataStorage("1kb");
+        conf.track_warnings.local_read_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.local_read_size.abort_threshold = new DataStorageSpec("1kb");
         Assertions.assertThatThrownBy(() -> DatabaseDescriptor.applyTrackWarningsValidations(conf))
                   .isInstanceOf(ConfigurationException.class)
                   .hasMessage("abort_threshold (1KB) must be greater than or equal to warn_threshold (2KB); see track_warnings.local_read_size");
@@ -697,8 +697,8 @@ public class DatabaseDescriptorTest
     public void testLocalLargeReadWarnEqAbort()
     {
         Config conf = new Config();
-        conf.track_warnings.local_read_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.local_read_size.abort_threshold = new DataStorage("2kb");
+        conf.track_warnings.local_read_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.local_read_size.abort_threshold = new DataStorageSpec("2kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -706,8 +706,8 @@ public class DatabaseDescriptorTest
     public void testLocalLargeReadWarnEnabledAbortDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.local_read_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.local_read_size.abort_threshold = new DataStorage("0kb");
+        conf.track_warnings.local_read_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.local_read_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -715,8 +715,8 @@ public class DatabaseDescriptorTest
     public void testLocalLargeReadAbortEnabledWarnDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.local_read_size.warn_threshold = new DataStorage("0kb");
-        conf.track_warnings.local_read_size.abort_threshold = new DataStorage("2kb");
+        conf.track_warnings.local_read_size.warn_threshold = new DataStorageSpec("0kb");
+        conf.track_warnings.local_read_size.abort_threshold = new DataStorageSpec("2kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -725,8 +725,8 @@ public class DatabaseDescriptorTest
     public void testRowIndexSizeWarnAndAbortDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.row_index_size.warn_threshold = new DataStorage("0kb");
-        conf.track_warnings.row_index_size.abort_threshold = new DataStorage("0kb");
+        conf.track_warnings.row_index_size.warn_threshold = new DataStorageSpec("0kb");
+        conf.track_warnings.row_index_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
         Assertions.assertThat(conf.track_warnings.row_index_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
         Assertions.assertThat(conf.track_warnings.row_index_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
@@ -736,8 +736,8 @@ public class DatabaseDescriptorTest
     public void testRowIndexSizeWarnGreaterThanAbort()
     {
         Config conf = new Config();
-        conf.track_warnings.row_index_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.row_index_size.abort_threshold = new DataStorage("1kb");
+        conf.track_warnings.row_index_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.row_index_size.abort_threshold = new DataStorageSpec("1kb");
         Assertions.assertThatThrownBy(() -> DatabaseDescriptor.applyTrackWarningsValidations(conf))
                   .isInstanceOf(ConfigurationException.class)
                   .hasMessage("abort_threshold (1KB) must be greater than or equal to warn_threshold (2KB); see track_warnings.row_index_size");
@@ -747,8 +747,8 @@ public class DatabaseDescriptorTest
     public void testRowIndexSizeWarnEqAbort()
     {
         Config conf = new Config();
-        conf.track_warnings.row_index_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.row_index_size.abort_threshold = new DataStorage("2kb");
+        conf.track_warnings.row_index_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.row_index_size.abort_threshold = new DataStorageSpec("2kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -756,8 +756,8 @@ public class DatabaseDescriptorTest
     public void testRowIndexSizeWarnEnabledAbortDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.row_index_size.warn_threshold = new DataStorage("2kb");
-        conf.track_warnings.row_index_size.abort_threshold = new DataStorage("0kb");
+        conf.track_warnings.row_index_size.warn_threshold = new DataStorageSpec("2kb");
+        conf.track_warnings.row_index_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 
@@ -765,8 +765,8 @@ public class DatabaseDescriptorTest
     public void testRowIndexSizeAbortEnabledWarnDisabled()
     {
         Config conf = new Config();
-        conf.track_warnings.row_index_size.warn_threshold = new DataStorage("0kb");
-        conf.track_warnings.row_index_size.abort_threshold = new DataStorage("2kb");
+        conf.track_warnings.row_index_size.warn_threshold = new DataStorageSpec("0kb");
+        conf.track_warnings.row_index_size.abort_threshold = new DataStorageSpec("2kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
     }
 

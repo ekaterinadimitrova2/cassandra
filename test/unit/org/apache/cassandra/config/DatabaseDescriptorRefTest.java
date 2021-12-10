@@ -185,18 +185,18 @@ public class DatabaseDescriptorRefTest
     "org.apache.cassandra.locator.InetAddressAndPort",
     "org.apache.cassandra.cql3.statements.schema.AlterKeyspaceStatement",
     "org.apache.cassandra.cql3.statements.schema.CreateKeyspaceStatement",
-    "org.apache.cassandra.config.CassandraDuration",
-    "org.apache.cassandra.config.DataStorage",
-    "org.apache.cassandra.config.DataStorage$DataStorageUnit",
-    "org.apache.cassandra.config.DataStorage$DataStorageUnit$1",
-    "org.apache.cassandra.config.DataStorage$DataStorageUnit$2",
-    "org.apache.cassandra.config.DataStorage$DataStorageUnit$3",
-    "org.apache.cassandra.config.DataStorage$DataStorageUnit$4",
-    "org.apache.cassandra.config.BitRate",
-    "org.apache.cassandra.config.BitRate$BitRateUnit",
-    "org.apache.cassandra.config.BitRate$BitRateUnit$1",
-    "org.apache.cassandra.config.BitRate$BitRateUnit$2",
-    "org.apache.cassandra.config.BitRate$BitRateUnit$3"
+    "org.apache.cassandra.config.DurationSpec",
+    "org.apache.cassandra.config.DataStorageSpec",
+    "org.apache.cassandra.config.DataStorageSpec$DataStorageUnit",
+    "org.apache.cassandra.config.DataStorageSpec$DataStorageUnit$1",
+    "org.apache.cassandra.config.DataStorageSpec$DataStorageUnit$2",
+    "org.apache.cassandra.config.DataStorageSpec$DataStorageUnit$3",
+    "org.apache.cassandra.config.DataStorageSpec$DataStorageUnit$4",
+    "org.apache.cassandra.config.DataRateSpec",
+    "org.apache.cassandra.config.DataRateSpec$DataRateUnit",
+    "org.apache.cassandra.config.DataRateSpec$DataRateUnit$1",
+    "org.apache.cassandra.config.DataRateSpec$DataRateUnit$2",
+    "org.apache.cassandra.config.DataRateSpec$DataRateUnit$3"
     };
 
     static final Set<String> checkedClasses = new HashSet<>(Arrays.asList(validClasses));

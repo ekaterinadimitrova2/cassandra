@@ -36,8 +36,8 @@ public class TrackWarnings
 
     public static class LongByteThreshold
     {
-        public volatile DataStorage warn_threshold = new DataStorage("0kb");
-        public volatile DataStorage abort_threshold = new DataStorage("0kb");
+        public volatile DataStorageSpec warn_threshold = new DataStorageSpec("0kb");
+        public volatile DataStorageSpec abort_threshold = new DataStorageSpec("0kb");
 
         public long getWarnThresholdKb()
         {
@@ -46,7 +46,7 @@ public class TrackWarnings
 
         public void setWarnThresholdKb(long value)
         {
-            warn_threshold = DataStorage.inKilobytes(Math.max(value, 0));
+            warn_threshold = DataStorageSpec.inKilobytes(Math.max(value, 0));
         }
 
         public long getAbortThresholdKb()
@@ -56,13 +56,13 @@ public class TrackWarnings
 
         public void setAbortThresholdKb(long value)
         {
-            abort_threshold = DataStorage.inKilobytes(Math.max(value, 0));
+            abort_threshold = DataStorageSpec.inKilobytes(Math.max(value, 0));
         }
 
         public void validate(String prefix)
         {
-            warn_threshold = DataStorage.inKilobytes(Math.max(warn_threshold.toKilobytes(), 0));
-            abort_threshold = DataStorage.inKilobytes(Math.max(abort_threshold.toKilobytes(), 0));
+            warn_threshold = DataStorageSpec.inKilobytes(Math.max(warn_threshold.toKilobytes(), 0));
+            abort_threshold = DataStorageSpec.inKilobytes(Math.max(abort_threshold.toKilobytes(), 0));
 
             if (abort_threshold.toKilobytes() != 0 && abort_threshold.toKilobytes() < warn_threshold.toKilobytes())
                 throw new ConfigurationException(String.format("abort_threshold (%s) must be greater than or equal to warn_threshold (%s); see %s",
@@ -72,8 +72,8 @@ public class TrackWarnings
 
     public static class IntByteThreshold
     {
-        public volatile DataStorage warn_threshold = new DataStorage("0kb");
-        public volatile DataStorage abort_threshold = new DataStorage("0kb");
+        public volatile DataStorageSpec warn_threshold = new DataStorageSpec("0kb");
+        public volatile DataStorageSpec abort_threshold = new DataStorageSpec("0kb");
 
         public int getWarnThresholdKb()
         {
@@ -82,7 +82,7 @@ public class TrackWarnings
 
         public void setWarnThresholdKb(int value)
         {
-            warn_threshold = DataStorage.inKilobytes(Math.max(value, 0));
+            warn_threshold = DataStorageSpec.inKilobytes(Math.max(value, 0));
         }
 
         public int getAbortThresholdKb()
@@ -92,13 +92,13 @@ public class TrackWarnings
 
         public void setAbortThresholdKb(int value)
         {
-            abort_threshold = DataStorage.inKilobytes(Math.max(value, 0));
+            abort_threshold = DataStorageSpec.inKilobytes(Math.max(value, 0));
         }
 
         public void validate(String prefix)
         {
-            warn_threshold = DataStorage.inKilobytes(Math.max(warn_threshold.toKilobytes(), 0));
-            abort_threshold = DataStorage.inKilobytes(Math.max(abort_threshold.toKilobytes(), 0));
+            warn_threshold = DataStorageSpec.inKilobytes(Math.max(warn_threshold.toKilobytes(), 0));
+            abort_threshold = DataStorageSpec.inKilobytes(Math.max(abort_threshold.toKilobytes(), 0));
 
             if (abort_threshold.toKilobytesAsInt() != 0 && abort_threshold.toKilobytesAsInt() < warn_threshold.toKilobytesAsInt())
                 throw new ConfigurationException(String.format("abort_threshold (%s) must be greater than or equal to warn_threshold (%s); see %s",

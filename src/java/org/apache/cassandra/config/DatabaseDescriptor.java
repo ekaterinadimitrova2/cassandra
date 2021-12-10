@@ -35,7 +35,7 @@ import com.google.common.util.concurrent.RateLimiter;
 import org.apache.cassandra.audit.AuditLogOptions;
 import org.apache.cassandra.auth.*;
 import org.apache.cassandra.config.Config.CommitLogSync;
-import org.apache.cassandra.config.DataStorage.DataStorageUnit;
+import org.apache.cassandra.config.DataStorageSpec.DataStorageUnit;
 import org.apache.cassandra.db.ConsistencyLevel;
 import org.apache.cassandra.db.commitlog.AbstractCommitLogSegmentManager;
 import org.apache.cassandra.db.commitlog.CommitLog;
@@ -87,7 +87,7 @@ public class DatabaseDescriptor
     /**
      * Request timeouts can not be less than below defined value (see CASSANDRA-9375)
      */
-    static final CassandraDuration LOWEST_ACCEPTED_TIMEOUT = CassandraDuration.inMilliseconds(10L);
+    static final DurationSpec LOWEST_ACCEPTED_TIMEOUT = DurationSpec.inMilliseconds(10L);
 
     private static Supplier<IFailureDetector> newFailureDetector;
     private static IEndpointSnitch snitch;
@@ -432,22 +432,22 @@ public class DatabaseDescriptor
             logger.warn("concurrent_replicates has been deprecated and should be removed from cassandra.yaml");
 
         if (conf.networking_cache_size == null)
-            conf.networking_cache_size = DataStorage.inMegabytes(Math.min(128, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.networking_cache_size = DataStorageSpec.inMegabytes(Math.min(128, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
         if (conf.file_cache_size == null)
-            conf.file_cache_size = DataStorage.inMegabytes(Math.min(512, (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
+            conf.file_cache_size = DataStorageSpec.inMegabytes(Math.min(512, (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
 
         // round down for SSDs and round up for spinning disks
         if (conf.file_cache_round_up == null)
             conf.file_cache_round_up = conf.disk_optimization_strategy == Config.DiskOptimizationStrategy.spinning;
 
         if (conf.memtable_offheap_space == null)
-            conf.memtable_offheap_space = DataStorage.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
+            conf.memtable_offheap_space = DataStorageSpec.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
         if (conf.memtable_offheap_space.toMegabytes() < 0)
             throw new ConfigurationException("memtable_offheap_space must be positive, but was " + conf.memtable_offheap_space, false);
         // for the moment, we default to twice as much on-heap space as off-heap, as heap overhead is very large
         if (conf.memtable_heap_space == null)
-            conf.memtable_heap_space = DataStorage.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
+            conf.memtable_heap_space = DataStorageSpec.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
         if (conf.memtable_heap_space.toMegabytes() <= 0)
             throw new ConfigurationException("memtable_heap_space must be positive, but was " + conf.memtable_heap_space, false);
         logger.info("Global memtable on-heap threshold is enabled at {}", conf.memtable_heap_space);
@@ -470,7 +470,7 @@ public class DatabaseDescriptor
         }
 
         if (conf.repair_session_space == null)
-            conf.repair_session_space = DataStorage.inMegabytes(Math.max(1, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.repair_session_space = DataStorageSpec.inMegabytes(Math.max(1, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
         if (conf.repair_session_space.toMegabytes() < 1)
             throw new ConfigurationException("repair_session_space must be > 0, but was " + conf.repair_session_space);
@@ -525,7 +525,7 @@ public class DatabaseDescriptor
                                                                          "commitlog_total_space",
                                                                          preferredSizeInMB,
                                                                          totalSpaceInBytes, 1, 4);
-            conf.commitlog_total_space = DataStorage.inMegabytes(defaultSpaceInMB);
+            conf.commitlog_total_space = DataStorageSpec.inMegabytes(defaultSpaceInMB);
         }
 
         if (conf.cdc_enabled)
@@ -549,7 +549,7 @@ public class DatabaseDescriptor
                                                                        "cdc_total_space",
                                                                        preferredSizeInMB,
                                                                        totalSpaceInBytes, 1, 8);
-                conf.cdc_total_space = DataStorage.inMegabytes(defaultSpaceInMB);
+                conf.cdc_total_space = DataStorageSpec.inMegabytes(defaultSpaceInMB);
             }
 
             logger.info("cdc_enabled is true. Starting casssandra node with Change-Data-Capture enabled.");
@@ -721,7 +721,7 @@ public class DatabaseDescriptor
                                              + conf.commitlog_segment_size.toString(), false);
 
         if (conf.max_mutation_size == null)
-            conf.max_mutation_size = DataStorage.inKilobytes(conf.commitlog_segment_size.toKilobytes() / 2);
+            conf.max_mutation_size = DataStorageSpec.inKilobytes(conf.commitlog_segment_size.toKilobytes() / 2);
         else if (conf.commitlog_segment_size.toKilobytes() < 2 * conf.max_mutation_size.toKilobytes())
             throw new ConfigurationException("commitlog_segment_size must be at least twice the size of max_mutation_size / 1024", false);
 
@@ -790,7 +790,7 @@ public class DatabaseDescriptor
                 Math.min(conf.internode_application_receive_queue_reserve_endpoint_capacity.toBytes(),
                          conf.internode_application_send_queue_reserve_endpoint_capacity.toBytes());
 
-            conf.internode_max_message_size = DataStorage.inBytes(maxMessageSizeInBytes);
+            conf.internode_max_message_size = DataStorageSpec.inBytes(maxMessageSizeInBytes);
         }
 
         validateMaxConcurrentAutoUpgradeTasksConf(conf.max_concurrent_automatic_sstable_upgrades);
@@ -1021,7 +1021,7 @@ public class DatabaseDescriptor
      * @param lowestTimeout the lowest valid timeout 
      * @return the greatest timeout
      */
-    static CassandraDuration max(String property, CassandraDuration timeout, CassandraDuration lowestTimeout)
+    static DurationSpec max(String property, DurationSpec timeout, DurationSpec lowestTimeout)
     {
         if(timeout.toMilliseconds() < lowestTimeout.toMilliseconds())
         {
@@ -1031,7 +1031,7 @@ public class DatabaseDescriptor
         return timeout;
     }
 
-    private static void logInfo(String property, CassandraDuration actualValue, CassandraDuration lowestAcceptedValue)
+    private static void logInfo(String property, DurationSpec actualValue, DurationSpec lowestAcceptedValue)
     {
         logger.info("found {}::{} less than lowest acceptable value {}, continuing with {}", property, actualValue, lowestAcceptedValue, lowestAcceptedValue);
     }
@@ -1214,7 +1214,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = CassandraDuration.inMilliseconds(timeout);
+        conf.permissions_validity = DurationSpec.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -1226,7 +1226,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsUpdateInterval(int updateInterval)
     {
-        conf.permissions_update_interval = CassandraDuration.inMilliseconds(updateInterval);
+        conf.permissions_update_interval = DurationSpec.inMilliseconds(updateInterval);
     }
 
     public static int getPermissionsCacheMaxEntries()
@@ -1256,7 +1256,7 @@ public class DatabaseDescriptor
 
     public static void setRolesValidity(int validity)
     {
-        conf.roles_validity = CassandraDuration.inMilliseconds(validity);
+        conf.roles_validity = DurationSpec.inMilliseconds(validity);
     }
 
     public static int getRolesUpdateInterval()
@@ -1278,7 +1278,7 @@ public class DatabaseDescriptor
 
     public static void setRolesUpdateInterval(int interval)
     {
-        conf.roles_update_interval = CassandraDuration.inMilliseconds(interval);
+        conf.roles_update_interval = DurationSpec.inMilliseconds(interval);
     }
 
     public static int getRolesCacheMaxEntries()
@@ -1298,7 +1298,7 @@ public class DatabaseDescriptor
 
     public static void setCredentialsValidity(int timeout)
     {
-        conf.credentials_validity = CassandraDuration.inMilliseconds(timeout);
+        conf.credentials_validity = DurationSpec.inMilliseconds(timeout);
     }
 
     public static int getCredentialsUpdateInterval()
@@ -1310,7 +1310,7 @@ public class DatabaseDescriptor
 
     public static void setCredentialsUpdateInterval(int updateInterval)
     {
-        conf.credentials_update_interval = CassandraDuration.inMilliseconds(updateInterval);
+        conf.credentials_update_interval = DurationSpec.inMilliseconds(updateInterval);
     }
 
     public static int getCredentialsCacheMaxEntries()
@@ -1340,7 +1340,7 @@ public class DatabaseDescriptor
 
     public static void setMaxValueSize(int maxValueSizeInBytes)
     {
-        conf.max_value_size = DataStorage.inBytes(maxValueSizeInBytes);
+        conf.max_value_size = DataStorageSpec.inBytes(maxValueSizeInBytes);
     }
 
     /**
@@ -1438,7 +1438,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setColumnIndexSize(int val)
     {
-        DataStorage memory = DataStorage.inKilobytes(val);
+        DataStorageSpec memory = DataStorageSpec.inKilobytes(val);
         checkValidForByteConversion(memory, "column_index_size");
         conf.column_index_size = memory;
     }
@@ -1455,7 +1455,7 @@ public class DatabaseDescriptor
 
     public static void setColumnIndexCacheSize(int val)
     {
-        DataStorage memory = DataStorage.inKilobytes(val);
+        DataStorageSpec memory = DataStorageSpec.inKilobytes(val);
         checkValidForByteConversion(memory, "column_index_cache_size");
         conf.column_index_cache_size = memory;
     }
@@ -1487,14 +1487,14 @@ public class DatabaseDescriptor
 
     public static void setBatchSizeWarnThresholdInKB(int threshold)
     {
-        DataStorage storage = DataStorage.inKilobytes(threshold);
+        DataStorageSpec storage = DataStorageSpec.inKilobytes(threshold);
         checkValidForByteConversion(storage, "batch_size_warn_threshold");
         conf.batch_size_warn_threshold = storage;
     }
 
     public static void setBatchSizeFailThresholdInKB(int threshold)
     {
-        conf.batch_size_fail_threshold = DataStorage.inKilobytes(threshold);
+        conf.batch_size_fail_threshold = DataStorageSpec.inKilobytes(threshold);
     }
 
     public static Collection<String> getInitialTokens()
@@ -1580,7 +1580,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportIdleTimeout(long nativeTransportTimeout)
     {
-        conf.native_transport_idle_timeout = CassandraDuration.inMilliseconds(nativeTransportTimeout);
+        conf.native_transport_idle_timeout = DurationSpec.inMilliseconds(nativeTransportTimeout);
     }
 
     public static long getRpcTimeout(TimeUnit unit)
@@ -1590,7 +1590,7 @@ public class DatabaseDescriptor
 
     public static void setRpcTimeout(long timeOutInMillis)
     {
-        conf.request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.request_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static long getReadRpcTimeout(TimeUnit unit)
@@ -1600,7 +1600,7 @@ public class DatabaseDescriptor
 
     public static void setReadRpcTimeout(long timeOutInMillis)
     {
-        conf.read_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.read_request_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static long getRangeRpcTimeout(TimeUnit unit)
@@ -1610,7 +1610,7 @@ public class DatabaseDescriptor
 
     public static void setRangeRpcTimeout(long timeOutInMillis)
     {
-        conf.range_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.range_request_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static long getWriteRpcTimeout(TimeUnit unit)
@@ -1620,7 +1620,7 @@ public class DatabaseDescriptor
 
     public static void setWriteRpcTimeout(long timeOutInMillis)
     {
-        conf.write_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.write_request_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static long getCounterWriteRpcTimeout(TimeUnit unit)
@@ -1630,7 +1630,7 @@ public class DatabaseDescriptor
 
     public static void setCounterWriteRpcTimeout(long timeOutInMillis)
     {
-        conf.counter_write_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.counter_write_request_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static long getCasContentionTimeout(TimeUnit unit)
@@ -1640,7 +1640,7 @@ public class DatabaseDescriptor
 
     public static void setCasContentionTimeout(long timeOutInMillis)
     {
-        conf.cas_contention_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.cas_contention_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static long getTruncateRpcTimeout(TimeUnit unit)
@@ -1650,7 +1650,7 @@ public class DatabaseDescriptor
 
     public static void setTruncateRpcTimeout(long timeOutInMillis)
     {
-        conf.truncate_request_timeout = CassandraDuration.inMilliseconds(timeOutInMillis);
+        conf.truncate_request_timeout = DurationSpec.inMilliseconds(timeOutInMillis);
     }
 
     public static boolean hasCrossNodeTimeout()
@@ -1774,12 +1774,12 @@ public class DatabaseDescriptor
 
     public static int getCompactionThroughputMbPerSec()
     {
-        return conf.compaction_throughput.toMegabitsPerSecondAsInt();
+        return conf.compaction_throughput.toMebibytesPerSecondAsInt();
     }
 
     public static void setCompactionThroughputMbPerSec(int value)
     {
-        conf.compaction_throughput = BitRate.inMegabitsPerSecond(value);
+        conf.compaction_throughput = DataRateSpec.inMebibytesPerSecond(value);
     }
 
     public static long getCompactionLargePartitionWarningThreshold()
@@ -1835,12 +1835,12 @@ public class DatabaseDescriptor
 
     public static int getStreamThroughputOutboundMegabitsPerSec()
     {
-        return conf.stream_throughput_outbound.toMegabitsPerSecondAsInt();
+        return conf.stream_throughput_outbound.toMebibytesPerSecondAsInt();
     }
 
     public static void setStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.stream_throughput_outbound = BitRate.inMegabitsPerSecond(value);
+        conf.stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(value);
     }
 
     public static int getEntireSSTableStreamThroughputOutboundMegabitsPerSec()
@@ -1855,12 +1855,12 @@ public class DatabaseDescriptor
 
     public static int getInterDCStreamThroughputOutboundMegabitsPerSec()
     {
-        return conf.inter_dc_stream_throughput_outbound.toMegabitsPerSecondAsInt();
+        return conf.inter_dc_stream_throughput_outbound.toMebibytesPerSecondAsInt();
     }
 
     public static void setInterDCStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.inter_dc_stream_throughput_outbound = BitRate.inMegabitsPerSecond(value);
+        conf.inter_dc_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(value);
     }
 
     public static int getEntireSSTableInterDCStreamThroughputOutboundMegabitsPerSec()
@@ -2025,7 +2025,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSegmentSize(int sizeMegabytes)
     {
-        conf.commitlog_segment_size = DataStorage.inMegabytes(sizeMegabytes);
+        conf.commitlog_segment_size = DataStorageSpec.inMegabytes(sizeMegabytes);
     }
 
     public static String getSavedCachesLocation()
@@ -2175,7 +2175,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpConnectTimeoutInMS(int value)
     {
-        conf.internode_tcp_connect_timeout = CassandraDuration.inMilliseconds(value);
+        conf.internode_tcp_connect_timeout = DurationSpec.inMilliseconds(value);
     }
 
     public static int getInternodeTcpUserTimeoutInMS()
@@ -2185,7 +2185,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpUserTimeoutInMS(int value)
     {
-        conf.internode_tcp_user_timeout = CassandraDuration.inMilliseconds(value);
+        conf.internode_tcp_user_timeout = DurationSpec.inMilliseconds(value);
     }
 
     public static int getInternodeStreamingTcpUserTimeoutInMS()
@@ -2195,7 +2195,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeStreamingTcpUserTimeoutInMS(int value)
     {
-        conf.internode_streaming_tcp_user_timeout = CassandraDuration.inMilliseconds(value);
+        conf.internode_streaming_tcp_user_timeout = DurationSpec.inMilliseconds(value);
     }
 
     public static int getInternodeMaxMessageSizeInBytes()
@@ -2206,7 +2206,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setInternodeMaxMessageSizeInBytes(int value)
     {
-        conf.internode_max_message_size = DataStorage.inBytes(value);
+        conf.internode_max_message_size = DataStorageSpec.inBytes(value);
     }
 
     public static boolean startNativeTransport()
@@ -2257,7 +2257,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportMaxFrameSize(int bytes)
     {
-        conf.native_transport_max_frame_size = DataStorage.inMegabytes(bytes);
+        conf.native_transport_max_frame_size = DataStorageSpec.inMegabytes(bytes);
     }
 
     public static long getMaxNativeTransportConcurrentConnections()
@@ -2302,7 +2302,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncGroupWindow(long windowMillis)
     {
-        conf.commitlog_sync_group_window = CassandraDuration.inMilliseconds(windowMillis);
+        conf.commitlog_sync_group_window = DurationSpec.inMilliseconds(windowMillis);
     }
 
     public static int getNativeTransportReceiveQueueCapacityInBytes()
@@ -2364,7 +2364,7 @@ public class DatabaseDescriptor
 
     public static long getPeriodicCommitLogSyncBlock()
     {
-        CassandraDuration block = conf.periodic_commitlog_sync_lag_block;
+        DurationSpec block = conf.periodic_commitlog_sync_lag_block;
         return block == null
                ? (long)(getCommitLogSyncPeriod() * 1.5)
                : block.toMilliseconds();
@@ -2372,7 +2372,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncPeriod(int periodMillis)
     {
-        conf.commitlog_sync_period = CassandraDuration.inMilliseconds(periodMillis) ;
+        conf.commitlog_sync_period = DurationSpec.inMilliseconds(periodMillis) ;
     }
 
     public static Config.CommitLogSync getCommitLogSync()
@@ -2510,7 +2510,7 @@ public class DatabaseDescriptor
 
     public static void setMaxHintWindow(int ms)
     {
-        conf.max_hint_window = CassandraDuration.inMilliseconds(ms);
+        conf.max_hint_window = DurationSpec.inMilliseconds(ms);
     }
 
     public static int getMaxHintWindow()
@@ -2541,7 +2541,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicUpdateInterval(int dynamicUpdateInterval)
     {
-        conf.dynamic_snitch_update_interval = CassandraDuration.inMilliseconds(dynamicUpdateInterval);
+        conf.dynamic_snitch_update_interval = DurationSpec.inMilliseconds(dynamicUpdateInterval);
     }
 
     public static int getDynamicResetInterval()
@@ -2550,7 +2550,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicResetInterval(int dynamicResetInterval)
     {
-        conf.dynamic_snitch_reset_interval = CassandraDuration.inMilliseconds(dynamicResetInterval);
+        conf.dynamic_snitch_reset_interval = DurationSpec.inMilliseconds(dynamicResetInterval);
     }
 
     public static double getDynamicBadnessThreshold()
@@ -2591,7 +2591,7 @@ public class DatabaseDescriptor
 
     public static void setHintedHandoffThrottleInKB(int throttleInKB)
     {
-        conf.hinted_handoff_throttle = DataStorage.inKilobytes(throttleInKB);
+        conf.hinted_handoff_throttle = DataStorageSpec.inKilobytes(throttleInKB);
     }
 
     public static int getBatchlogReplayThrottleInKB()
@@ -2601,7 +2601,7 @@ public class DatabaseDescriptor
 
     public static void setBatchlogReplayThrottleInKB(int throttleInKB)
     {
-        conf.batchlog_replay_throttle = DataStorage.inKilobytes(throttleInKB);
+        conf.batchlog_replay_throttle = DataStorageSpec.inKilobytes(throttleInKB);
     }
 
     public static int getMaxHintsDeliveryThreads()
@@ -2720,7 +2720,7 @@ public class DatabaseDescriptor
     }
     public static void setSSTablePreemptiveOpenIntervalInMB(int mb)
     {
-        conf.sstable_preemptive_open_interval = DataStorage.inMegabytes(mb);
+        conf.sstable_preemptive_open_interval = DataStorageSpec.inMegabytes(mb);
     }
 
     public static boolean getTrickleFsync()
@@ -2776,7 +2776,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setRowCacheSizeInMB(long val)
     {
-        conf.row_cache_size = DataStorage.inMegabytes(val);
+        conf.row_cache_size = DataStorageSpec.inMegabytes(val);
     }
 
     public static int getRowCacheSavePeriod()
@@ -2909,7 +2909,7 @@ public class DatabaseDescriptor
             logger.warn("A repair_session_space of " + conf.repair_session_space +
                         " megabytes is likely to cause heap pressure.");
 
-        conf.repair_session_space = DataStorage.inMegabytes(sizeInMegabytes);
+        conf.repair_session_space = DataStorageSpec.inMegabytes(sizeInMegabytes);
     }
 
     public static Float getMemtableCleanupThreshold()
@@ -3088,7 +3088,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setCDCSpaceInMB(int input)
     {
-        conf.cdc_total_space =DataStorage.inMegabytes(input);
+        conf.cdc_total_space = DataStorageSpec.inMegabytes(input);
     }
 
     public static int getCDCDiskCheckInterval()
@@ -3289,7 +3289,7 @@ public class DatabaseDescriptor
     /**
      * Ensures passed in configuration value is positive and will not overflow when converted to Bytes
      */
-    private static void checkValidForByteConversion(DataStorage value, String name)
+    private static void checkValidForByteConversion(DataStorageSpec value, String name)
     {
         long valueInBytes = value.toBytes();
         if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
@@ -3496,7 +3496,7 @@ public class DatabaseDescriptor
     {
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_refresh must be a positive integer.");
-        conf.denylist_refresh = CassandraDuration.inSeconds(seconds);
+        conf.denylist_refresh = DurationSpec.inSeconds(seconds);
     }
 
     public static int getDenylistInitialLoadRetrySeconds()
@@ -3508,7 +3508,7 @@ public class DatabaseDescriptor
     {
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_initial_load_retry must be a positive integer.");
-        conf.denylist_initial_load_retry = CassandraDuration.inSeconds(seconds);
+        conf.denylist_initial_load_retry = DurationSpec.inSeconds(seconds);
     }
 
     public static ConsistencyLevel getDenylistConsistencyLevel()

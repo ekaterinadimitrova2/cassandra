@@ -18,7 +18,6 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -32,7 +31,7 @@ import com.google.common.primitives.Ints;
  * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
  * options. (CASSANDRA-15234)
  */
-public final class CassandraDuration
+public final class DurationSpec
 {
     /**
      * The Regexp used to parse the duration provided as String.
@@ -44,7 +43,7 @@ public final class CassandraDuration
 
     private final TimeUnit unit;
 
-    public CassandraDuration(String value)
+    public DurationSpec(String value)
     {
         if (value == null || value.equals("null"))
         {
@@ -53,7 +52,6 @@ public final class CassandraDuration
             return;
         }
 
-        value = value.toLowerCase(Locale.ROOT);
         //parse the string field value
         Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
         Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
@@ -69,60 +67,61 @@ public final class CassandraDuration
             unit = fromSymbol(matcherDouble.group(2));
         }
         else {
-            throw new IllegalArgumentException("Invalid duration: " + value);
+            throw new IllegalArgumentException("Invalid duration: " + value + " Accepted units: d, h, m, s, ms, us, µs," +
+                                               " ns where case matters and " + "only non-negative values");
         }
     }
 
-    CassandraDuration(long quantity, TimeUnit unit)
+    DurationSpec(long quantity, TimeUnit unit)
     {
         if (quantity < 0)
-            throw new IllegalArgumentException("CassandraDuration must be positive");
+            throw new IllegalArgumentException("DurationSpec must be positive");
 
         this.quantity = quantity;
         this.unit = unit;
     }
 
-    private CassandraDuration(double quantity, TimeUnit unit)
+    private DurationSpec(double quantity, TimeUnit unit)
     {
         this((long)quantity, unit);
     }
 
     /**
-     * Creates a {@code CassandraDuration} of the specified amount of milliseconds.
+     * Creates a {@code DurationSpec} of the specified amount of milliseconds.
      *
      * @param milliseconds the amount of milliseconds
      * @return a duration
      */
-    public static CassandraDuration inMilliseconds(long milliseconds)
+    public static DurationSpec inMilliseconds(long milliseconds)
     {
-        return new CassandraDuration(milliseconds, TimeUnit.MILLISECONDS);
+        return new DurationSpec(milliseconds, TimeUnit.MILLISECONDS);
     }
 
-    public static CassandraDuration inDoubleMilliseconds(double milliseconds)
+    public static DurationSpec inDoubleMilliseconds(double milliseconds)
     {
-        return new CassandraDuration(milliseconds, TimeUnit.MILLISECONDS);
+        return new DurationSpec(milliseconds, TimeUnit.MILLISECONDS);
     }
 
     /**
-     * Creates a {@code CassandraDuration} of the specified amount of seconds.
+     * Creates a {@code DurationSpec} of the specified amount of seconds.
      *
      * @param seconds the amount of seconds
      * @return a duration
      */
-    public static CassandraDuration inSeconds(long seconds)
+    public static DurationSpec inSeconds(long seconds)
     {
-        return new CassandraDuration(seconds, TimeUnit.SECONDS);
+        return new DurationSpec(seconds, TimeUnit.SECONDS);
     }
 
     /**
-     * Creates a {@code CassandraDuration} of the specified amount of minutes.
+     * Creates a {@code DurationSpec} of the specified amount of minutes.
      *
      * @param minutes the amount of minutes
      * @return a duration
      */
-    public static CassandraDuration inMinutes(long minutes)
+    public static DurationSpec inMinutes(long minutes)
     {
-        return new CassandraDuration(minutes, TimeUnit.MINUTES);
+        return new DurationSpec(minutes, TimeUnit.MINUTES);
     }
 
     /**
@@ -144,7 +143,7 @@ public final class CassandraDuration
         }
         throw new IllegalArgumentException(String.format("Unsupported time unit: %s. Supported units are: %s",
                                                          symbol, Arrays.stream(TimeUnit.values())
-                                                                       .map(CassandraDuration::getSymbol)
+                                                                       .map(DurationSpec::getSymbol)
                                                                        .collect(Collectors.joining(", "))));
     }
 
@@ -224,10 +223,10 @@ public final class CassandraDuration
         if (this == obj)
             return true;
 
-        if (!(obj instanceof CassandraDuration))
+        if (!(obj instanceof DurationSpec))
             return false;
 
-        CassandraDuration other = (CassandraDuration) obj;
+        DurationSpec other = (DurationSpec) obj;
         if (unit == other.unit)
             return quantity == other.quantity;
 
