@@ -67,10 +67,6 @@ public class StreamManagerTest
         // Zero value check
         StorageService.instance.setStreamThroughputMbPerSec(0);
         assertEquals(Double.MAX_VALUE, StreamRateLimiter.getRateLimiterRateInBytes(), 0);
-
-        // Negative value check
-        StorageService.instance.setStreamThroughputMbPerSec(-200);
-        assertEquals(Double.MAX_VALUE, StreamRateLimiter.getRateLimiterRateInBytes(), 0);
     }
 
     @Test
@@ -89,10 +85,6 @@ public class StreamManagerTest
 
         // Zero value check
         StorageService.instance.setEntireSSTableStreamThroughputMbPerSec(0);
-        assertEquals(Double.MAX_VALUE, StreamRateLimiter.getEntireSSTableRateLimiterRateInBytes(), 0);
-
-        // Negative value check
-        StorageService.instance.setEntireSSTableStreamThroughputMbPerSec(-200);
         assertEquals(Double.MAX_VALUE, StreamRateLimiter.getEntireSSTableRateLimiterRateInBytes(), 0);
     }
 
@@ -113,10 +105,6 @@ public class StreamManagerTest
         // Zero value check
         StorageService.instance.setInterDCStreamThroughputMbPerSec(0);
         assertEquals(Double.MAX_VALUE, StreamRateLimiter.getInterDCRateLimiterRateInBytes(), 0);
-
-        // Negative value check
-        StorageService.instance.setInterDCStreamThroughputMbPerSec(-200);
-        assertEquals(Double.MAX_VALUE, StreamRateLimiter.getInterDCRateLimiterRateInBytes(), 0);
     }
 
     @Test
@@ -135,10 +123,6 @@ public class StreamManagerTest
 
         // Zero value check
         StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(0);
-        assertEquals(Double.MAX_VALUE, StreamRateLimiter.getEntireSSTableInterDCRateLimiterRateInBytes(), 0);
-
-        // Negative value check
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(-200);
         assertEquals(Double.MAX_VALUE, StreamRateLimiter.getEntireSSTableInterDCRateLimiterRateInBytes(), 0);
     }
 }
