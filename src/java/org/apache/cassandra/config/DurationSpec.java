@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -45,7 +46,7 @@ public final class DurationSpec
 
     public DurationSpec(String value)
     {
-        if (value == null || value.equals("null"))
+        if (value == null || value.equals("null") || value.toLowerCase(Locale.ROOT).equals("nan"))
         {
             quantity = 0;
             unit = TimeUnit.MILLISECONDS;
