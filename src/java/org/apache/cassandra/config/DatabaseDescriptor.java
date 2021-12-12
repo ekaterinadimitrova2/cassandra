@@ -33,7 +33,13 @@ import com.google.common.primitives.Longs;
 import com.google.common.util.concurrent.RateLimiter;
 
 import org.apache.cassandra.audit.AuditLogOptions;
-import org.apache.cassandra.auth.*;
+import org.apache.cassandra.auth.AllowAllInternodeAuthenticator;
+import org.apache.cassandra.auth.AuthConfig;
+import org.apache.cassandra.auth.IAuthenticator;
+import org.apache.cassandra.auth.IAuthorizer;
+import org.apache.cassandra.auth.IInternodeAuthenticator;
+import org.apache.cassandra.auth.INetworkAuthorizer;
+import org.apache.cassandra.auth.IRoleManager;
 import org.apache.cassandra.config.Config.CommitLogSync;
 import org.apache.cassandra.config.DataStorageSpec.DataStorageUnit;
 import org.apache.cassandra.db.ConsistencyLevel;
@@ -46,8 +52,18 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.fql.FullQueryLoggerOptions;
 import org.apache.cassandra.gms.IFailureDetector;
 import org.apache.cassandra.io.FSWriteError;
-import org.apache.cassandra.io.util.*;
-import org.apache.cassandra.locator.*;
+import org.apache.cassandra.io.util.DiskOptimizationStrategy;
+import org.apache.cassandra.io.util.File;
+import org.apache.cassandra.io.util.FileUtils;
+import org.apache.cassandra.io.util.PathUtils;
+import org.apache.cassandra.io.util.SpinningDiskOptimizationStrategy;
+import org.apache.cassandra.io.util.SsdDiskOptimizationStrategy;
+import org.apache.cassandra.locator.DynamicEndpointSnitch;
+import org.apache.cassandra.locator.EndpointSnitchInfo;
+import org.apache.cassandra.locator.IEndpointSnitch;
+import org.apache.cassandra.locator.InetAddressAndPort;
+import org.apache.cassandra.locator.Replica;
+import org.apache.cassandra.locator.SeedProvider;
 import org.apache.cassandra.security.EncryptionContext;
 import org.apache.cassandra.security.SSLFactory;
 import org.apache.cassandra.service.CacheService.CacheType;
@@ -382,7 +398,7 @@ public class DatabaseDescriptor
         }
         else
         {
-            if (conf.commitlog_sync_period.toMilliseconds() <= 0)
+            if (conf.commitlog_sync_period.toMilliseconds() == 0)
             {
                 throw new ConfigurationException("Missing value for commitlog_sync_period.", false);
             }
@@ -443,12 +459,10 @@ public class DatabaseDescriptor
 
         if (conf.memtable_offheap_space == null)
             conf.memtable_offheap_space = DataStorageSpec.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
-        if (conf.memtable_offheap_space.toMegabytes() < 0)
-            throw new ConfigurationException("memtable_offheap_space must be positive, but was " + conf.memtable_offheap_space, false);
         // for the moment, we default to twice as much on-heap space as off-heap, as heap overhead is very large
         if (conf.memtable_heap_space == null)
             conf.memtable_heap_space = DataStorageSpec.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
-        if (conf.memtable_heap_space.toMegabytes() <= 0)
+        if (conf.memtable_heap_space.toMegabytes() == 0)
             throw new ConfigurationException("memtable_heap_space must be positive, but was " + conf.memtable_heap_space, false);
         logger.info("Global memtable on-heap threshold is enabled at {}", conf.memtable_heap_space);
         if (conf.memtable_offheap_space.toMegabytes() == 0)
