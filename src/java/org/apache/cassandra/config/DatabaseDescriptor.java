@@ -1047,7 +1047,11 @@ public class DatabaseDescriptor
 
     private static void logInfo(String property, DurationSpec actualValue, DurationSpec lowestAcceptedValue)
     {
-        logger.info("found {}::{} less than lowest acceptable value {}, continuing with {}", property, actualValue, lowestAcceptedValue, lowestAcceptedValue);
+        logger.info("found {}::{} less than lowest acceptable value {}, continuing with {}",
+                    property,
+                    actualValue.toString(),
+                    lowestAcceptedValue.toString(),
+                    lowestAcceptedValue);
     }
 
     public static void applyTokensConfig()
