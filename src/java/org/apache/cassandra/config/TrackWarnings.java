@@ -41,7 +41,7 @@ public class TrackWarnings
 
         public long getWarnThresholdKiB()
         {
-            return warn_threshold.toKilobytes();
+            return warn_threshold.toKibibytes();
         }
 
         public void setWarnThresholdKiB(long value)
@@ -51,7 +51,7 @@ public class TrackWarnings
 
         public long getAbortThresholdKiB()
         {
-            return abort_threshold.toKilobytes();
+            return abort_threshold.toKibibytes();
         }
 
         public void setAbortThresholdKiB(long value)
@@ -61,10 +61,10 @@ public class TrackWarnings
 
         public void validate(String prefix)
         {
-            warn_threshold = DataStorageSpec.inKibibytes(Math.max(warn_threshold.toKilobytes(), 0));
-            abort_threshold = DataStorageSpec.inKibibytes(Math.max(abort_threshold.toKilobytes(), 0));
+            warn_threshold = DataStorageSpec.inKibibytes(Math.max(warn_threshold.toKibibytes(), 0));
+            abort_threshold = DataStorageSpec.inKibibytes(Math.max(abort_threshold.toKibibytes(), 0));
 
-            if (abort_threshold.toKilobytes() != 0 && abort_threshold.toKilobytes() < warn_threshold.toKilobytes())
+            if (abort_threshold.toKibibytes() != 0 && abort_threshold.toKibibytes() < warn_threshold.toKibibytes())
                 throw new ConfigurationException(String.format("abort_threshold (%s) must be greater than or equal to warn_threshold (%s); see %s",
                                                                abort_threshold, warn_threshold, prefix));
         }
@@ -97,8 +97,8 @@ public class TrackWarnings
 
         public void validate(String prefix)
         {
-            warn_threshold = DataStorageSpec.inKibibytes(Math.max(warn_threshold.toKilobytes(), 0));
-            abort_threshold = DataStorageSpec.inKibibytes(Math.max(abort_threshold.toKilobytes(), 0));
+            warn_threshold = DataStorageSpec.inKibibytes(Math.max(warn_threshold.toKibibytes(), 0));
+            abort_threshold = DataStorageSpec.inKibibytes(Math.max(abort_threshold.toKibibytes(), 0));
 
             if (abort_threshold.toKibibytesAsInt() != 0 && abort_threshold.toKibibytesAsInt() < warn_threshold.toKibibytesAsInt())
                 throw new ConfigurationException(String.format("abort_threshold (%s) must be greater than or equal to warn_threshold (%s); see %s",

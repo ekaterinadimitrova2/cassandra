@@ -35,7 +35,7 @@ public final class DataStorageSpec
     /**
      * The Regexp used to parse the storage provided as String.
      */
-    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(GB|MB|KB|B)$");
+    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(GiB|MiB|KiB|B)$");
 
     private final long quantity;
 
@@ -46,7 +46,7 @@ public final class DataStorageSpec
         if(value == null || value.equals("null"))
         {
             quantity = 0;
-            unit = DataStorageUnit.MEGABYTES; // the unit doesn't really matter as 0 is 0 in all units
+            unit = DataStorageUnit.MEBIBYTES; // the unit doesn't really matter as 0 is 0 in all units
             return;
         }
 
@@ -55,18 +55,18 @@ public final class DataStorageSpec
 
         if (!matcher.find())
         {
-            throw new IllegalArgumentException("Invalid data storage: " + value + " Accepted units: B, KB, MB, GB where " +
-                                               "case matters and " + "only non-negative values");
+            throw new IllegalArgumentException("Invalid data storage: " + value + " Accepted units: B, KiB, MiB, GiB" +
+                                               " where case matters and only non-negative values are accepted");
         }
 
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
     }
 
-    private DataStorageSpec(long quantity, DataStorageUnit unit)
+    DataStorageSpec(long quantity, DataStorageUnit unit)
     {
         if (quantity < 0)
-            throw new IllegalArgumentException("DataStorage must be positive");
+            throw new IllegalArgumentException("DataStorage value must be positive");
 
         this.quantity = quantity;
         this.unit = unit;
@@ -84,25 +84,25 @@ public final class DataStorageSpec
     }
 
     /**
-     * Creates a {@code DataStorageSpec} of the specified amount of kilobytes.
+     * Creates a {@code DataStorageSpec} of the specified amount of kibibytes.
      *
-     * @param kilobytes the amount of kilobytes
+     * @param kibibytes the amount of kibibytes
      * @return a {@code DataStorageSpec}
      */
-    public static DataStorageSpec inKibibytes(long kilobytes)
+    public static DataStorageSpec inKibibytes(long kibibytes)
     {
-        return new DataStorageSpec(kilobytes, DataStorageUnit.KILOBYTES);
+        return new DataStorageSpec(kibibytes, DataStorageUnit.KIBIBYTES);
     }
 
     /**
-     * Creates a {@code DataStorageSpec} of the specified amount of megabytes.
+     * Creates a {@code DataStorageSpec} of the specified amount of mebibytes.
      *
-     * @param megabytes the amount of megabytes
+     * @param mebibytes the amount of mebibytes
      * @return a {@code DataStorageSpec}
      */
-    public static DataStorageSpec inMebibytes(long megabytes)
+    public static DataStorageSpec inMebibytes(long mebibytes)
     {
-        return new DataStorageSpec(megabytes, DataStorageUnit.MEGABYTES);
+        return new DataStorageSpec(mebibytes, DataStorageUnit.MEBIBYTES);
     }
 
     /**
@@ -132,21 +132,21 @@ public final class DataStorageSpec
     }
 
     /**
-     * @return the amount of data storage in kilobytes
+     * @return the amount of data storage in kibibytes
      */
-    public long toKilobytes()
+    public long toKibibytes()
     {
-        return unit.toKilobytes(quantity);
+        return unit.toKibibytes(quantity);
     }
 
     /**
-     * Returns the amount of data storage in kilobytes as an {@code int}
+     * Returns the amount of data storage in kibibytes as an {@code int}
      *
-     * @return the amount of data storage in kilobytes or {@code Integer.MAX_VALUE} if the number of kilobytes is too large.
+     * @return the amount of data storage in kibibytes or {@code Integer.MAX_VALUE} if the number of kibibytes is too large.
      */
     public int toKibibytesAsInt()
     {
-        return Ints.saturatedCast(toKilobytes());
+        return Ints.saturatedCast(toKibibytes());
     }
 
     /**
@@ -154,13 +154,13 @@ public final class DataStorageSpec
      */
     public long toMebibytes()
     {
-        return unit.toMegabytes(quantity);
+        return unit.toMebibytes(quantity);
     }
 
     /**
-     * Returns the amount of data storage in megabytes as an {@code int}
+     * Returns the amount of data storage in mebibytes as an {@code int}
      *
-     * @return the amount of data storage in megabytes or {@code Integer.MAX_VALUE} if the number of megabytes is too large.
+     * @return the amount of data storage in mebibytes or {@code Integer.MAX_VALUE} if the number of mebibytes is too large.
      */
     public int toMebibytesAsInt()
     {
@@ -170,7 +170,7 @@ public final class DataStorageSpec
     @Override
     public int hashCode()
     {
-        return Objects.hash(unit.toKilobytes(quantity));
+        return Objects.hash(unit.toKibibytes(quantity));
     }
 
     @Override
@@ -211,17 +211,17 @@ public final class DataStorageSpec
                 return d;
             }
 
-            public long toKilobytes(long d)
+            public long toKibibytes(long d)
             {
                 return d / 1024;
             }
 
-            public long toMegabytes(long d)
+            public long toMebibytes(long d)
             {
                 return d / (1024 * 1024);
             }
 
-            public long toGigabytes(long d)
+            public long toGibibytes(long d)
             {
                 return d / (1024 * 1024 * 1024);
             }
@@ -231,85 +231,85 @@ public final class DataStorageSpec
                 return sourceUnit.toBytes(source);
             }
         },
-        KILOBYTES("KB")
+        KIBIBYTES("KiB")
         {
             public long toBytes(long d)
             {
                 return x(d, 1024, MAX / 1024);
             }
 
-            public long toKilobytes(long d)
+            public long toKibibytes(long d)
             {
                 return d;
             }
 
-            public long toMegabytes(long d)
+            public long toMebibytes(long d)
             {
                 return d / 1024;
             }
 
-            public long toGigabytes(long d)
+            public long toGibibytes(long d)
             {
                 return d / (1024 * 1024);
             }
 
             public long convert(long source, DataStorageUnit sourceUnit)
             {
-                return sourceUnit.toKilobytes(source);
+                return sourceUnit.toKibibytes(source);
             }
         },
-        MEGABYTES("MB")
+        MEBIBYTES("MiB")
         {
             public long toBytes(long d)
             {
                 return x(d, 1024 * 1024, MAX / (1024 * 1024));
             }
 
-            public long toKilobytes(long d)
+            public long toKibibytes(long d)
             {
                 return x(d, 1024, MAX / 1024);
             }
 
-            public long toMegabytes(long d)
+            public long toMebibytes(long d)
             {
                 return d;
             }
 
-            public long toGigabytes(long d)
+            public long toGibibytes(long d)
             {
                 return d / 1024;
             }
 
             public long convert(long source, DataStorageUnit sourceUnit)
             {
-                return sourceUnit.toMegabytes(source);
+                return sourceUnit.toMebibytes(source);
             }
         },
-        GIGABYTES("GB")
+        GIBIBYTES("GiB")
         {
             public long toBytes(long d)
             {
                 return x(d, 1024 * 1024 * 1024, MAX / (1024 * 1024 * 1024));
             }
 
-            public long toKilobytes(long d)
+            public long toKibibytes(long d)
             {
                 return x(d, 1024 * 1024, MAX / 1024 * 1024);
             }
 
-            public long toMegabytes(long d)
+            public long toMebibytes(long d)
             {
                 return x(d, 1024, MAX / 1024);
             }
 
-            public long toGigabytes(long d)
+            public long toGibibytes(long d)
             {
                 return d;
             }
 
             public long convert(long source, DataStorageUnit sourceUnit)
             {
-                return sourceUnit.toGigabytes(source);
+                return sourceUnit.toGibibytes(source);
             }
         };
 
@@ -357,17 +357,17 @@ public final class DataStorageSpec
             throw new AbstractMethodError();
         }
 
-        public long toKilobytes(long d)
+        public long toKibibytes(long d)
         {
             throw new AbstractMethodError();
         }
 
-        public long toMegabytes(long d)
+        public long toMebibytes(long d)
         {
             throw new AbstractMethodError();
         }
 
-        public long toGigabytes(long d)
+        public long toGibibytes(long d)
         {
             throw new AbstractMethodError();
         }

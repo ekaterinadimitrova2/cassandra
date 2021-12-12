@@ -17,10 +17,16 @@
  */
 package org.apache.cassandra.config;
 
+import java.util.Locale;
+
 import org.junit.Test;
+
+import org.quicktheories.core.Gen;
+import org.quicktheories.generators.SourceDSL;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
+import static org.quicktheories.QuickTheory.qt;
 
 public class DataStorageSpecTest
 {
@@ -28,10 +34,10 @@ public class DataStorageSpecTest
     public void testConversions()
     {
         assertEquals(10, new DataStorageSpec("10B").toBytes());
-        assertEquals(10240, new DataStorageSpec("10KB").toBytes());
-        assertEquals(0, new DataStorageSpec("10KB").toMebibytes());
-        assertEquals(10240, new DataStorageSpec("10MB").toKilobytes());
-        assertEquals(10485760, new DataStorageSpec("10MB").toBytes());
+        assertEquals(10240, new DataStorageSpec("10KiB").toBytes());
+        assertEquals(0, new DataStorageSpec("10KiB").toMebibytes());
+        assertEquals(10240, new DataStorageSpec("10MiB").toKibibytes());
+        assertEquals(10485760, new DataStorageSpec("10MiB").toBytes());
     }
 
     @Test
@@ -51,11 +57,40 @@ public class DataStorageSpecTest
     public void testEquals()
     {
         assertEquals(new DataStorageSpec("10B"), new DataStorageSpec("10B"));
-        assertEquals(new DataStorageSpec("10KB"), new DataStorageSpec("10240B"));
-        assertEquals(new DataStorageSpec("10240B"), new DataStorageSpec("10KB"));
+        assertEquals(new DataStorageSpec("10KiB"), new DataStorageSpec("10240B"));
+        assertEquals(new DataStorageSpec("10240B"), new DataStorageSpec("10KiB"));
         assertEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inMebibytes(Long.MAX_VALUE));
         assertNotEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
-        assertNotEquals(new DataStorageSpec("0MB"), new DataStorageSpec("10KB"));
+        assertNotEquals(new DataStorageSpec("0MiB"), new DataStorageSpec("10KiB"));
     }
 
+    @Test
+    public void thereAndBack()
+    {
+        qt().forAll(gen()).check(there -> {
+            DataStorageSpec back = new DataStorageSpec(there.toString());
+            DataStorageSpec BACK = new DataStorageSpec(there.toString().toUpperCase(Locale.ROOT).replace("I", "i"));
+            return there.equals(back) && there.equals(BACK);
+        });
+    }
+
+    @Test
+    public void eq()
+    {
+        qt().forAll(gen(), gen()).check((a, b) -> a.equals(b) == b.equals(a));
+    }
+
+    @Test
+    public void eqAndHash()
+    {
+        qt().forAll(gen(), gen()).check((a, b) -> a.equals(b) ? a.hashCode() == b.hashCode() : true);
+    }
+
+    private static Gen<DataStorageSpec> gen()
+    {
+        Gen<DataStorageSpec.DataStorageUnit> unitGen = SourceDSL.arbitrary().enumValues(DataStorageSpec.DataStorageUnit.class);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);;
+        Gen<DataStorageSpec> gen = rs -> new DataStorageSpec(valueGen.generate(rs), unitGen.generate(rs));
+        return gen.describedAs(DataStorageSpec::toString);
+    }
 }

@@ -735,8 +735,8 @@ public class DatabaseDescriptor
                                              + conf.commitlog_segment_size.toString(), false);
 
         if (conf.max_mutation_size == null)
-            conf.max_mutation_size = DataStorageSpec.inKibibytes(conf.commitlog_segment_size.toKilobytes() / 2);
-        else if (conf.commitlog_segment_size.toKilobytes() < 2 * conf.max_mutation_size.toKilobytes())
+            conf.max_mutation_size = DataStorageSpec.inKibibytes(conf.commitlog_segment_size.toKibibytes() / 2);
+        else if (conf.commitlog_segment_size.toKibibytes() < 2 * conf.max_mutation_size.toKibibytes())
             throw new ConfigurationException("commitlog_segment_size must be at least twice the size of max_mutation_size / 1024", false);
 
         // native transport encryption options
