@@ -104,14 +104,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     }
 
     private static URL storageConfigURL;
-    private static String content;
 
     @Override
     public Config loadConfig() throws ConfigurationException
     {
         if (storageConfigURL == null)
             storageConfigURL = getStorageConfigURL();
-        content = YamlConfigurationLoader.readStorageConfig(storageConfigURL);
+
         isConfigFileValid();
         return loadConfig(storageConfigURL);
     }
@@ -149,7 +148,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
     private static String readStorageConfig(URL url)
     {
-        String content = "";
+        String content;
 
         try
         {
@@ -158,7 +157,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            throw new ConfigurationException("Invalid yaml: " + url, e);
         }
 
         return content;
@@ -166,11 +165,13 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
     private static void isConfigFileValid()
     {
-        if (isBlank("commitlog_sync_period"))
+        String content = YamlConfigurationLoader.readStorageConfig(storageConfigURL);
+
+        if (isBlank("commitlog_sync_period", content))
             throw new IllegalArgumentException("You should provide a value for commitlog_sync_period or comment it in " +
                                                "order to get a default one");
 
-        if (isBlank("commitlog_sync_group_window"))
+        if (isBlank("commitlog_sync_group_window", content))
             throw new IllegalArgumentException("You should provide a value for commitlog_sync_group_window or comment it in " +
                                                "order to get a default one");
     }
@@ -179,7 +180,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * This method helps to preserve the behavior of parameters which were originally of primitive type and
      * without default value in Config.java (CASSANDRA-15234)
      */
-    private static boolean isBlank(String property)
+    private static boolean isBlank(String property, String content)
     {
         Pattern p = Pattern.compile(String.format("%s%s *: *$", '^', property), Pattern.MULTILINE);
         Matcher m = p.matcher(content);
