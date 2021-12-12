@@ -109,7 +109,3 @@ public class ParseAndConvertUnitsTest
         assertEquals(DataRateSpec.inMebibytesPerSecond(200), config.inter_dc_stream_throughput_outbound);
     }
 }
-
-
-
-
