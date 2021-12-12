@@ -196,18 +196,18 @@ public class Config
 
     // TODO: derive defaults from system memory settings?
     @Replaces(oldName = "internode_application_send_queue_capacity_in_bytes", converter = Converter.BytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_capacity = new DataStorageSpec("4MB");
+    public DataStorageSpec internode_application_send_queue_capacity = new DataStorageSpec("4MiB");
     @Replaces(oldName = "internode_application_send_queue_reserve_endpoint_capacity_in_bytes", converter = Converter.BytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_reserve_endpoint_capacity = new DataStorageSpec("128MB");
+    public DataStorageSpec internode_application_send_queue_reserve_endpoint_capacity = new DataStorageSpec("128MiB");
     @Replaces(oldName = "internode_application_send_queue_reserve_global_capacity_in_bytes", converter = Converter.BytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_reserve_global_capacity = new DataStorageSpec("512MB");
+    public DataStorageSpec internode_application_send_queue_reserve_global_capacity = new DataStorageSpec("512MiB");
 
     @Replaces(oldName = "internode_application_receive_queue_capacity_in_bytes", converter = Converter.BytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_capacity = new DataStorageSpec("4MB");
+    public DataStorageSpec internode_application_receive_queue_capacity = new DataStorageSpec("4MiB");
     @Replaces(oldName = "internode_application_receive_queue_reserve_endpoint_capacity_in_bytes", converter = Converter.BytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_reserve_endpoint_capacity = new DataStorageSpec("128MB");
+    public DataStorageSpec internode_application_receive_queue_reserve_endpoint_capacity = new DataStorageSpec("128MiB");
     @Replaces(oldName = "internode_application_receive_queue_reserve_global_capacity_in_bytes", converter = Converter.BytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_reserve_global_capacity = new DataStorageSpec("512MB");
+    public DataStorageSpec internode_application_receive_queue_reserve_global_capacity = new DataStorageSpec("512MiB");
 
     // Defensive settings for protecting Cassandra from true network partitions. See (CASSANDRA-14358) for details.
     // The amount of time to wait for internode tcp connections to establish.
@@ -229,7 +229,7 @@ public class Config
     public Integer native_transport_port_ssl = null;
     public int native_transport_max_threads = 128;
     @Replaces(oldName = "native_transport_max_frame_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec native_transport_max_frame_size = new DataStorageSpec("16MB");
+    public DataStorageSpec native_transport_max_frame_size = new DataStorageSpec("16MiB");
     public volatile long native_transport_max_concurrent_connections = -1L;
     public volatile long native_transport_max_concurrent_connections_per_ip = -1L;
     public boolean native_transport_flush_in_batches_legacy = false;
@@ -249,7 +249,7 @@ public class Config
      * See AbstractType for how it is used.
      */
     @Replaces(oldName = "max_value_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec max_value_size = new DataStorageSpec("256MB");
+    public DataStorageSpec max_value_size = new DataStorageSpec("256MiB");
 
     public boolean snapshot_before_compaction = false;
     public boolean auto_snapshot = true;
@@ -257,22 +257,22 @@ public class Config
 
     /* if the size of columns or super-columns are more than this, indexing will kick in */
     @Replaces(oldName = "column_index_size_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec column_index_size = new DataStorageSpec("64KB");
+    public volatile DataStorageSpec column_index_size = new DataStorageSpec("64KiB");
     @Replaces(oldName = "column_index_cache_size_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec column_index_cache_size = new DataStorageSpec("2KB");
+    public DataStorageSpec column_index_cache_size = new DataStorageSpec("2KiB");
     @Replaces(oldName = "batch_size_warn_threshold_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec batch_size_warn_threshold = new DataStorageSpec("5KB");
+    public DataStorageSpec batch_size_warn_threshold = new DataStorageSpec("5KiB");
     @Replaces(oldName = "batch_size_fail_threshold_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec batch_size_fail_threshold = new DataStorageSpec("50KB");
+    public volatile DataStorageSpec batch_size_fail_threshold = new DataStorageSpec("50KiB");
     public Integer unlogged_batch_across_partitions_warn_threshold = 10;
     public volatile Integer concurrent_compactors;
     //follow up on the below one Kate!
     @Replaces(oldName = "compaction_throughput_mb_per_sec", converter = Converter.MegabitsPerSecondDataRateConverter.class, deprecated = true)
     public volatile DataRateSpec compaction_throughput = new DataRateSpec("16MiB/s");
     @Replaces(oldName = "compaction_large_partition_warning_threshold_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec compaction_large_partition_warning_threshold = new DataStorageSpec("100MB");
+    public volatile DataStorageSpec compaction_large_partition_warning_threshold = new DataStorageSpec("100MiB");
     @Replaces(oldName = "min_free_space_per_drive_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec min_free_space_per_drive = new DataStorageSpec("50MB");
+    public DataStorageSpec min_free_space_per_drive = new DataStorageSpec("50MiB");
     public volatile Integer compaction_tombstone_warning_threshold = 100000;
 
     public volatile int concurrent_materialized_view_builders = 1;
@@ -327,7 +327,7 @@ public class Config
     public boolean cdc_enabled = false;
     public String cdc_raw_directory;
     @Replaces(oldName = "cdc_total_space_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec cdc_total_space = new DataStorageSpec("0MB");
+    public DataStorageSpec cdc_total_space = new DataStorageSpec("0MiB");
     @Replaces(oldName = "cdc_free_space_check_interval_ms", converter = Converter.MillisDurationConverter.class, deprecated = true)
     public DurationSpec cdc_free_space_check_interval = new DurationSpec("250ms");
 
@@ -350,9 +350,9 @@ public class Config
     public InternodeCompression internode_compression = InternodeCompression.none;
 
     @Replaces(oldName = "hinted_handoff_throttle_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec hinted_handoff_throttle = new DataStorageSpec("1024KB");
+    public volatile DataStorageSpec hinted_handoff_throttle = new DataStorageSpec("1024KiB");
     @Replaces(oldName = "batchlog_replay_throttle_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec batchlog_replay_throttle = new DataStorageSpec("1024KB");
+    public volatile DataStorageSpec batchlog_replay_throttle = new DataStorageSpec("1024KiB");
     public int max_hints_delivery_threads = 2;
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converter.MillisDurationConverter.class, deprecated = true)
     public DurationSpec hints_flush_period = new DurationSpec("10s");
@@ -364,10 +364,10 @@ public class Config
     public volatile boolean incremental_backups = false;
     public boolean trickle_fsync = false;
     @Replaces(oldName = "trickle_fsync_interval_in_kb", converter = Converter.KilobytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec trickle_fsync_interval = new DataStorageSpec("10240KB");
+    public DataStorageSpec trickle_fsync_interval = new DataStorageSpec("10240KiB");
 
     @Replaces(oldName = "sstable_preemptive_open_interval_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec sstable_preemptive_open_interval = new DataStorageSpec("50MB");
+    public volatile DataStorageSpec sstable_preemptive_open_interval = new DataStorageSpec("50MiB");
 
     public volatile boolean key_cache_migrate_during_compaction = true;
     @Replaces(oldName = "key_cache_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
@@ -377,7 +377,7 @@ public class Config
 
     public String row_cache_class_name = "org.apache.cassandra.cache.OHCProvider";
     @Replaces(oldName = "row_cache_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public volatile DataStorageSpec row_cache_size = new DataStorageSpec("0MB");
+    public volatile DataStorageSpec row_cache_size = new DataStorageSpec("0MiB");
     public volatile int row_cache_save_period = 0;
     public volatile int row_cache_keys_to_save = Integer.MAX_VALUE;
     
@@ -453,8 +453,8 @@ public class Config
     public int windows_timer_interval = 0;
 
     /**
-     * Size of the CQL prepared statements cache in MB.
-     * Defaults to 1/256th of the heap size or 10MB, whichever is greater.
+     * Size of the CQL prepared statements cache in MiB.
+     * Defaults to 1/256th of the heap size or 10MiB, whichever is greater.
      *
      */
     @Replaces(oldName = "prepared_statements_cache_size_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)

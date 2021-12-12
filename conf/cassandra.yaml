@@ -628,7 +628,7 @@ memtable_allocation_type: heap_buffers
 # The default value is the smaller of 8192, and 1/4 of the total space
 # of the commitlog volume.
 #
-# commitlog_total_space: 8192mb
+# commitlog_total_space: 8192MiB
 
 # This sets the number of memtable flush writer threads per disk
 # as well as the total number of memtables that can be flushed concurrently.
@@ -665,9 +665,9 @@ memtable_allocation_type: heap_buffers
 # on Mutations including tables with CDC enabled. A CDCCompactor is responsible
 # for parsing the raw CDC logs and deleting them when parsing is completed.
 #
-# The default value is the min of 4096 mb and 1/8th of the total space
+# The default value is the min of 4096 MiB and 1/8th of the total space
 # of the drive where cdc_raw_directory resides.
-# cdc_total_space: 4096mb
+# cdc_total_space: 4096MiB
 
 # When we hit our cdc_raw limit and the CDCCompactor is either running behind
 # or experiencing backpressure, we check at the following interval to see if any
@@ -694,7 +694,7 @@ index_summary_resize_interval: 60m
 # impacting read latencies. Almost always a good idea on SSDs; not
 # necessarily on platters.
 trickle_fsync: false
-trickle_fsync_interval: 10240kb
+trickle_fsync_interval: 10240KiB
 
 # TCP port, for commands and data
 # For security reasons, you should not expose this port to the internet.  Firewall it if needed.
@@ -768,7 +768,7 @@ native_transport_port: 9042
 # The maximum size of allowed frame. Frame (requests) larger than this will
 # be rejected as invalid. The default is 16MB. If you're changing this parameter,
 # you may want to adjust max_value_size accordingly. This should be positive and less than 2048.
-# native_transport_max_frame_size: 16mb
+# native_transport_max_frame_size: 16MiB
 
 # The maximum number of concurrent client connections.
 # The default is -1, which means unlimited.
@@ -875,7 +875,7 @@ snapshot_links_per_second: 0
 # - but, Cassandra will keep the collation index in memory for hot
 #   rows (as part of the key cache), so a larger granularity means
 #   you can cache more hot rows
-column_index_size: 64kb
+column_index_size: 64KiB
 
 # Per sstable indexed key cache entries (the collation index in memory
 # mentioned above) exceeding this size will not be held on heap.
@@ -884,7 +884,7 @@ column_index_size: 64kb
 #
 # Note that this size refers to the size of the
 # serialized index information and not the size of the partition.
-column_index_cache_size: 2kb
+column_index_cache_size: 2KiB
 
 # Number of simultaneous compactions to allow, NOT including
 # validation "compactions" for anti-entropy repair.  Simultaneous
@@ -927,7 +927,7 @@ compaction_throughput: 64MiB/s
 # are completely written, and used in place of the prior sstables for
 # any range that has been written. This helps to smoothly transfer reads
 # between the sstables, reducing page cache churn and keeping hot rows hot
-sstable_preemptive_open_interval: 50mb
+sstable_preemptive_open_interval: 50MiB
 
 # When enabled, permits Cassandra to zero-copy stream entire eligible
 # SSTables between nodes, including every component.
@@ -1392,18 +1392,18 @@ replica_filtering_protection:
     cached_rows_warn_threshold: 2000
     cached_rows_fail_threshold: 32000
 
-# Log WARN on any multiple-partition batch size exceeding this value. 5kb per batch by default.
+# Log WARN on any multiple-partition batch size exceeding this value. 5KiB per batch by default.
 # Caution should be taken on increasing the size of this threshold as it can lead to node instability.
-batch_size_warn_threshold: 5kb
+batch_size_warn_threshold: 5KiB
 
-# Fail any multiple-partition batch exceeding this value. 50kb (10x warn threshold) by default.
-batch_size_fail_threshold: 50kb
+# Fail any multiple-partition batch exceeding this value. 50KiB (10x warn threshold) by default.
+batch_size_fail_threshold: 50KiB
 
 # Log WARN on any batches not of type LOGGED than span across more partitions than this limit
 unlogged_batch_across_partitions_warn_threshold: 10
 
 # Log a warning when compacting partitions larger than this value
-compaction_large_partition_warning_threshold: 100mb
+compaction_large_partition_warning_threshold: 100MiB
 
 # Log a warning when writing more tombstones than this value to a partition
 compaction_tombstone_warning_threshold: 100000
@@ -1420,7 +1420,7 @@ compaction_tombstone_warning_threshold: 100000
 # Maximum size of any value in SSTables. Safety measure to detect SSTable corruption
 # early. Any value size larger than this threshold will result into marking an SSTable
 # as corrupted. This should be positive and less than 2048.
-# max_value_size: 256mb
+# max_value_size: 256MiB
 
 # ** Impact on keyspace creation **
 # If replication factor is not mentioned as part of keyspace creation, default_keyspace_rf would apply.
@@ -1560,20 +1560,20 @@ drop_compact_storage_enabled: false
 # Scheduled to enable in 4.2
 #     enabled: true
 # When track_warnings.enabled: true, this tracks the materialized size of a query on the
-# coordinator. If coordinator_large_read.warn_threshold_kb is greater than 0, this will emit a warning
+# coordinator. If coordinator_large_read.warn_threshold is greater than 0, this will emit a warning
 # to clients with details on what query triggered this as well as the size of the result set; if
-# coordinator_large_read.abort_threshold_kb is greater than 0, this will abort the query after it
+# coordinator_large_read.abort_threshold is greater than 0, this will abort the query after it
 # has exceeded this threshold, returning a read error to the user.
 #     coordinator_read_size:
-#         warn_threshold_kb: 0
-#         abort_threshold_kb: 0
+#         warn_threshold: 0KiB
+#         abort_threshold: 0KiB
 # When track_warnings.enabled: true, this tracks the size of the local read (as defined by
 # heap size), and will warn/abort based off these thresholds; 0 disables these checks.
 #     local_read_size:
-#         warn_threshold_kb: 0
-#         abort_threshold_kb: 0
+#         warn_threshold: 0KiB
+#         abort_threshold: 0KiB
 # When track_warnings.enabled: true, this tracks the expected memory size of the RowIndexEntry
 # and will warn/abort based off these thresholds; 0 disables these checks.
 #     row_index_size:
-#         warn_threshold_kb: 0
-#         abort_threshold_kb: 0
+#         warn_threshold: 0KiB
+#         abort_threshold: 0KiB

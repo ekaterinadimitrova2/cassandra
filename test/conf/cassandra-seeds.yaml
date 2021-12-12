@@ -7,7 +7,7 @@ cluster_name: Test Cluster
 memtable_allocation_type: offheap_objects
 commitlog_sync: batch
 commitlog_sync_batch_window_in_ms: 1
-commitlog_segment_size: 5mb
+commitlog_segment_size: 5MiB
 commitlog_directory: build/test/cassandra/commitlog
 cdc_raw_directory: build/test/cassandra/cdc_raw
 cdc_enabled: false
@@ -36,8 +36,8 @@ server_encryption_options:
     truststore_password: cassandra
 incremental_backups: true
 concurrent_compactors: 4
-compaction_throughput: 0mib/s
+compaction_throughput: 0MiB/s
 row_cache_class_name: org.apache.cassandra.cache.OHCProvider
-row_cache_size: 16mb
+row_cache_size: 16MiB
 user_defined_functions_enabled: true
 scripted_user_defined_functions_enabled: true
