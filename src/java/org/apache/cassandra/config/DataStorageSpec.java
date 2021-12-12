@@ -89,7 +89,7 @@ public final class DataStorageSpec
      * @param kilobytes the amount of kilobytes
      * @return a {@code DataStorageSpec}
      */
-    public static DataStorageSpec inKilobytes(long kilobytes)
+    public static DataStorageSpec inKibibytes(long kilobytes)
     {
         return new DataStorageSpec(kilobytes, DataStorageUnit.KILOBYTES);
     }
@@ -100,7 +100,7 @@ public final class DataStorageSpec
      * @param megabytes the amount of megabytes
      * @return a {@code DataStorageSpec}
      */
-    public static DataStorageSpec inMegabytes(long megabytes)
+    public static DataStorageSpec inMebibytes(long megabytes)
     {
         return new DataStorageSpec(megabytes, DataStorageUnit.MEGABYTES);
     }
@@ -144,7 +144,7 @@ public final class DataStorageSpec
      *
      * @return the amount of data storage in kilobytes or {@code Integer.MAX_VALUE} if the number of kilobytes is too large.
      */
-    public int toKilobytesAsInt()
+    public int toKibibytesAsInt()
     {
         return Ints.saturatedCast(toKilobytes());
     }
@@ -152,7 +152,7 @@ public final class DataStorageSpec
     /**
      * @return the amount of data storage in megabytes
      */
-    public long toMegabytes()
+    public long toMebibytes()
     {
         return unit.toMegabytes(quantity);
     }
@@ -162,9 +162,9 @@ public final class DataStorageSpec
      *
      * @return the amount of data storage in megabytes or {@code Integer.MAX_VALUE} if the number of megabytes is too large.
      */
-    public int toMegabytesAsInt()
+    public int toMebibytesAsInt()
     {
-        return Ints.saturatedCast(toMegabytes());
+        return Ints.saturatedCast(toMebibytes());
     }
 
     @Override

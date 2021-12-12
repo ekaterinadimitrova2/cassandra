@@ -29,7 +29,7 @@ public class DataStorageSpecTest
     {
         assertEquals(10, new DataStorageSpec("10B").toBytes());
         assertEquals(10240, new DataStorageSpec("10KB").toBytes());
-        assertEquals(0, new DataStorageSpec("10KB").toMegabytes());
+        assertEquals(0, new DataStorageSpec("10KB").toMebibytes());
         assertEquals(10240, new DataStorageSpec("10MB").toKilobytes());
         assertEquals(10485760, new DataStorageSpec("10MB").toBytes());
     }
@@ -53,8 +53,8 @@ public class DataStorageSpecTest
         assertEquals(new DataStorageSpec("10B"), new DataStorageSpec("10B"));
         assertEquals(new DataStorageSpec("10KB"), new DataStorageSpec("10240B"));
         assertEquals(new DataStorageSpec("10240B"), new DataStorageSpec("10KB"));
-        assertEquals(DataStorageSpec.inMegabytes(Long.MAX_VALUE), DataStorageSpec.inMegabytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inMegabytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
+        assertEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inMebibytes(Long.MAX_VALUE));
+        assertNotEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
         assertNotEquals(new DataStorageSpec("0MB"), new DataStorageSpec("10KB"));
     }
 

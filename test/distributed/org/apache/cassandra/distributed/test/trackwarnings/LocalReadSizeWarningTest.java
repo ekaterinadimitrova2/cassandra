@@ -38,11 +38,11 @@ public class LocalReadSizeWarningTest extends AbstractClientSizeWarning
         // the test uses a rather small limit, which causes driver to fail while loading metadata
         CLUSTER.stream().forEach(i -> i.runOnInstance(() -> {
             // disable coordinator version
-            DatabaseDescriptor.setCoordinatorReadSizeWarnThresholdKB(0);
-            DatabaseDescriptor.setCoordinatorReadSizeAbortThresholdKB(0);
+            DatabaseDescriptor.setCoordinatorReadSizeWarnThresholdKiB(0);
+            DatabaseDescriptor.setCoordinatorReadSizeAbortThresholdKiB(0);
 
-            DatabaseDescriptor.setLocalReadSizeWarnThresholdKb(1);
-            DatabaseDescriptor.setLocalReadSizeAbortThresholdKb(2);
+            DatabaseDescriptor.setLocalReadSizeWarnThresholdKiB(1);
+            DatabaseDescriptor.setLocalReadSizeAbortThresholdKiB(2);
         }));
     }
 

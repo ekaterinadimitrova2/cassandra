@@ -661,8 +661,8 @@ public abstract class ReadCommand extends AbstractReadQuery
 
     private UnfilteredPartitionIterator withQuerySizeTracking(UnfilteredPartitionIterator iterator)
     {
-        final long warnThresholdBytes = DatabaseDescriptor.getLocalReadSizeWarnThresholdKb() * 1024;
-        final long abortThresholdBytes = DatabaseDescriptor.getLocalReadSizeAbortThresholdKb() * 1024;
+        final long warnThresholdBytes = DatabaseDescriptor.getLocalReadSizeWarnThresholdKiB() * 1024;
+        final long abortThresholdBytes = DatabaseDescriptor.getLocalReadSizeAbortThresholdKiB() * 1024;
         if (!shouldTrackSize(warnThresholdBytes, abortThresholdBytes))
             return iterator;
         class QuerySizeTracking extends Transformation<UnfilteredRowIterator>

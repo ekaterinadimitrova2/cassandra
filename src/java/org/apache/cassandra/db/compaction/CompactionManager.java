@@ -152,7 +152,7 @@ public class CompactionManager implements CompactionManagerMBean
      */
     public RateLimiter getRateLimiter()
     {
-        setRate(DatabaseDescriptor.getCompactionThroughputMbPerSec());
+        setRate(DatabaseDescriptor.getCompactionThroughputMiBPerSec());
         return compactionRateLimiter;
     }
 

@@ -42,14 +42,14 @@ public class YamlConfigurationLoaderTest
         TrackWarnings tw = load("test/conf/cassandra.yaml").track_warnings;
         assertThat(tw.enabled).isTrue();
 
-        assertThat(tw.coordinator_read_size.warn_threshold.toKilobytesAsInt()).isGreaterThan(0);
-        assertThat(tw.coordinator_read_size.abort_threshold.toKilobytesAsInt()).isGreaterThan(0);
+        assertThat(tw.coordinator_read_size.warn_threshold.toKibibytesAsInt()).isGreaterThan(0);
+        assertThat(tw.coordinator_read_size.abort_threshold.toKibibytesAsInt()).isGreaterThan(0);
 
-        assertThat(tw.local_read_size.warn_threshold.toKilobytesAsInt()).isGreaterThan(0);
-        assertThat(tw.local_read_size.abort_threshold.toKilobytesAsInt()).isGreaterThan(0);
+        assertThat(tw.local_read_size.warn_threshold.toKibibytesAsInt()).isGreaterThan(0);
+        assertThat(tw.local_read_size.abort_threshold.toKibibytesAsInt()).isGreaterThan(0);
 
-        assertThat(tw.row_index_size.warn_threshold.toKilobytesAsInt()).isGreaterThan(0);
-        assertThat(tw.row_index_size.abort_threshold.toKilobytesAsInt()).isGreaterThan(0);
+        assertThat(tw.row_index_size.warn_threshold.toKibibytesAsInt()).isGreaterThan(0);
+        assertThat(tw.row_index_size.abort_threshold.toKibibytesAsInt()).isGreaterThan(0);
     }
 
     @Test
@@ -66,14 +66,14 @@ public class YamlConfigurationLoaderTest
         TrackWarnings tw = config.track_warnings;
         assertThat(tw.enabled).isTrue();
 
-        assertThat(tw.coordinator_read_size.warn_threshold.toKilobytesAsInt()).isEqualTo(1024);
-        assertThat(tw.coordinator_read_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
+        assertThat(tw.coordinator_read_size.warn_threshold.toKibibytesAsInt()).isEqualTo(1024);
+        assertThat(tw.coordinator_read_size.abort_threshold.toKibibytesAsInt()).isEqualTo(0);
 
-        assertThat(tw.local_read_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
-        assertThat(tw.local_read_size.abort_threshold.toKilobytesAsInt()).isEqualTo(1024);
+        assertThat(tw.local_read_size.warn_threshold.toKibibytesAsInt()).isEqualTo(0);
+        assertThat(tw.local_read_size.abort_threshold.toKibibytesAsInt()).isEqualTo(1024);
 
-        assertThat(tw.row_index_size.warn_threshold.toKilobytesAsInt()).isEqualTo(1024);
-        assertThat(tw.row_index_size.abort_threshold.toKilobytesAsInt()).isEqualTo(1024);
+        assertThat(tw.row_index_size.warn_threshold.toKibibytesAsInt()).isEqualTo(1024);
+        assertThat(tw.row_index_size.abort_threshold.toKibibytesAsInt()).isEqualTo(1024);
     }
 
     @Test

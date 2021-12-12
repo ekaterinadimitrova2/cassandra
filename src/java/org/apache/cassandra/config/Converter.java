@@ -153,7 +153,7 @@ public interface Converter<Original, Current>
         {
             if (value == null)
                 return null;
-            return DataStorageSpec.inMegabytes(value);
+            return DataStorageSpec.inMebibytes(value);
         }
     }
 
@@ -168,7 +168,7 @@ public interface Converter<Original, Current>
         {
             if (value == null)
                 return null;
-            return DataStorageSpec.inKilobytes(value);
+            return DataStorageSpec.inKibibytes(value);
         }
     }
 

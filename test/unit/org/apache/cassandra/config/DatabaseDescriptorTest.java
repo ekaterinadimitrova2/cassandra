@@ -377,32 +377,32 @@ public class DatabaseDescriptorTest
     @Test
     public void testRepairSessionMemorySizeToggles()
     {
-        int previousSize = DatabaseDescriptor.getRepairSessionSpaceInMegabytes();
+        int previousSize = DatabaseDescriptor.getRepairSessionSpaceInMiB();
         try
         {
             Assert.assertEquals((Runtime.getRuntime().maxMemory() / (1024 * 1024) / 16),
-                                DatabaseDescriptor.getRepairSessionSpaceInMegabytes());
+                                DatabaseDescriptor.getRepairSessionSpaceInMiB());
 
             int targetSize = (int) (Runtime.getRuntime().maxMemory() / (1024 * 1024) / 4) + 1;
 
-            DatabaseDescriptor.setRepairSessionSpaceInMegabytes(targetSize);
-            Assert.assertEquals(targetSize, DatabaseDescriptor.getRepairSessionSpaceInMegabytes());
+            DatabaseDescriptor.setRepairSessionSpaceInMiB(targetSize);
+            Assert.assertEquals(targetSize, DatabaseDescriptor.getRepairSessionSpaceInMiB());
 
-            DatabaseDescriptor.setRepairSessionSpaceInMegabytes(10);
-            Assert.assertEquals(10, DatabaseDescriptor.getRepairSessionSpaceInMegabytes());
+            DatabaseDescriptor.setRepairSessionSpaceInMiB(10);
+            Assert.assertEquals(10, DatabaseDescriptor.getRepairSessionSpaceInMiB());
 
             try
             {
-                DatabaseDescriptor.setRepairSessionSpaceInMegabytes(0);
+                DatabaseDescriptor.setRepairSessionSpaceInMiB(0);
                 fail("Should have received a ConfigurationException for depth of 9");
             }
             catch (ConfigurationException ignored) { }
 
-            Assert.assertEquals(10, DatabaseDescriptor.getRepairSessionSpaceInMegabytes());
+            Assert.assertEquals(10, DatabaseDescriptor.getRepairSessionSpaceInMiB());
         }
         finally
         {
-            DatabaseDescriptor.setRepairSessionSpaceInMegabytes(previousSize);
+            DatabaseDescriptor.setRepairSessionSpaceInMiB(previousSize);
         }
     }
 
@@ -628,8 +628,8 @@ public class DatabaseDescriptorTest
         conf.track_warnings.coordinator_read_size.warn_threshold = new DataStorageSpec("0kb");
         conf.track_warnings.coordinator_read_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
-        Assertions.assertThat(conf.track_warnings.coordinator_read_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
-        Assertions.assertThat(conf.track_warnings.coordinator_read_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
+        Assertions.assertThat(conf.track_warnings.coordinator_read_size.warn_threshold.toKibibytesAsInt()).isEqualTo(0);
+        Assertions.assertThat(conf.track_warnings.coordinator_read_size.abort_threshold.toKibibytesAsInt()).isEqualTo(0);
     }
 
     @Test
@@ -678,8 +678,8 @@ public class DatabaseDescriptorTest
         conf.track_warnings.local_read_size.warn_threshold = new DataStorageSpec("0kb");
         conf.track_warnings.local_read_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
-        Assertions.assertThat(conf.track_warnings.local_read_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
-        Assertions.assertThat(conf.track_warnings.local_read_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
+        Assertions.assertThat(conf.track_warnings.local_read_size.warn_threshold.toKibibytesAsInt()).isEqualTo(0);
+        Assertions.assertThat(conf.track_warnings.local_read_size.abort_threshold.toKibibytesAsInt()).isEqualTo(0);
     }
 
     @Test
@@ -728,8 +728,8 @@ public class DatabaseDescriptorTest
         conf.track_warnings.row_index_size.warn_threshold = new DataStorageSpec("0kb");
         conf.track_warnings.row_index_size.abort_threshold = new DataStorageSpec("0kb");
         DatabaseDescriptor.applyTrackWarningsValidations(conf);
-        Assertions.assertThat(conf.track_warnings.row_index_size.warn_threshold.toKilobytesAsInt()).isEqualTo(0);
-        Assertions.assertThat(conf.track_warnings.row_index_size.abort_threshold.toKilobytesAsInt()).isEqualTo(0);
+        Assertions.assertThat(conf.track_warnings.row_index_size.warn_threshold.toKibibytesAsInt()).isEqualTo(0);
+        Assertions.assertThat(conf.track_warnings.row_index_size.abort_threshold.toKibibytesAsInt()).isEqualTo(0);
     }
 
     @Test

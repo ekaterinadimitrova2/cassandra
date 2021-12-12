@@ -127,11 +127,11 @@ public class DatabaseDescriptor
     // depend on the configured IAuthenticator, so defer creating it until that's been set.
     private static IRoleManager roleManager;
 
-    private static long preparedStatementsCacheSizeInMB;
+    private static long preparedStatementsCacheSizeInMiB;
 
-    private static long keyCacheSizeInMB;
-    private static long counterCacheSizeInMB;
-    private static long indexSummaryCapacityInMB;
+    private static long keyCacheSizeInMiB;
+    private static long counterCacheSizeInMiB;
+    private static long indexSummaryCapacityInMiB;
 
     private static String localDC;
     private static Comparator<Replica> localComparator;
@@ -448,24 +448,24 @@ public class DatabaseDescriptor
             logger.warn("concurrent_replicates has been deprecated and should be removed from cassandra.yaml");
 
         if (conf.networking_cache_size == null)
-            conf.networking_cache_size = DataStorageSpec.inMegabytes(Math.min(128, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.networking_cache_size = DataStorageSpec.inMebibytes(Math.min(128, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
         if (conf.file_cache_size == null)
-            conf.file_cache_size = DataStorageSpec.inMegabytes(Math.min(512, (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
+            conf.file_cache_size = DataStorageSpec.inMebibytes(Math.min(512, (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
 
         // round down for SSDs and round up for spinning disks
         if (conf.file_cache_round_up == null)
             conf.file_cache_round_up = conf.disk_optimization_strategy == Config.DiskOptimizationStrategy.spinning;
 
         if (conf.memtable_offheap_space == null)
-            conf.memtable_offheap_space = DataStorageSpec.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
+            conf.memtable_offheap_space = DataStorageSpec.inMebibytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
         // for the moment, we default to twice as much on-heap space as off-heap, as heap overhead is very large
         if (conf.memtable_heap_space == null)
-            conf.memtable_heap_space = DataStorageSpec.inMegabytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
-        if (conf.memtable_heap_space.toMegabytes() == 0)
+            conf.memtable_heap_space = DataStorageSpec.inMebibytes(Runtime.getRuntime().maxMemory() / (4 * 1048576));
+        if (conf.memtable_heap_space.toMebibytes() == 0)
             throw new ConfigurationException("memtable_heap_space must be positive, but was " + conf.memtable_heap_space, false);
         logger.info("Global memtable on-heap threshold is enabled at {}", conf.memtable_heap_space);
-        if (conf.memtable_offheap_space.toMegabytes() == 0)
+        if (conf.memtable_offheap_space.toMebibytes() == 0)
             logger.info("Global memtable off-heap threshold is disabled, HeapAllocator will be used instead");
         else
             logger.info("Global memtable off-heap threshold is enabled at {}", conf.memtable_offheap_space);
@@ -484,11 +484,11 @@ public class DatabaseDescriptor
         }
 
         if (conf.repair_session_space == null)
-            conf.repair_session_space = DataStorageSpec.inMegabytes(Math.max(1, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.repair_session_space = DataStorageSpec.inMebibytes(Math.max(1, (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
-        if (conf.repair_session_space.toMegabytes() < 1)
+        if (conf.repair_session_space.toMebibytes() < 1)
             throw new ConfigurationException("repair_session_space must be > 0, but was " + conf.repair_session_space);
-        else if (conf.repair_session_space.toMegabytes() > (Runtime.getRuntime().maxMemory() / (4 * 1048576)))
+        else if (conf.repair_session_space.toMebibytes() > (Runtime.getRuntime().maxMemory() / (4 * 1048576)))
             logger.warn("A repair_session_space of " + conf.repair_session_space + " megabytes is likely to cause heap pressure");
 
         checkForLowestAcceptedTimeouts(conf);
@@ -539,7 +539,7 @@ public class DatabaseDescriptor
                                                                          "commitlog_total_space",
                                                                          preferredSizeInMB,
                                                                          totalSpaceInBytes, 1, 4);
-            conf.commitlog_total_space = DataStorageSpec.inMegabytes(defaultSpaceInMB);
+            conf.commitlog_total_space = DataStorageSpec.inMebibytes(defaultSpaceInMB);
         }
 
         if (conf.cdc_enabled)
@@ -553,7 +553,7 @@ public class DatabaseDescriptor
                 conf.cdc_raw_directory = storagedirFor("cdc_raw");
             }
 
-            if (conf.cdc_total_space.toMegabytes() == 0)
+            if (conf.cdc_total_space.toMebibytes() == 0)
             {
                 final int preferredSizeInMB = 4096;
                 // use 1/8th of available space.  See discussion on #10013 and #10199 on the CL, taking half that for CDC
@@ -563,7 +563,7 @@ public class DatabaseDescriptor
                                                                        "cdc_total_space",
                                                                        preferredSizeInMB,
                                                                        totalSpaceInBytes, 1, 8);
-                conf.cdc_total_space = DataStorageSpec.inMegabytes(defaultSpaceInMB);
+                conf.cdc_total_space = DataStorageSpec.inMebibytes(defaultSpaceInMB);
             }
 
             logger.info("cdc_enabled is true. Starting casssandra node with Change-Data-Capture enabled.");
@@ -664,44 +664,44 @@ public class DatabaseDescriptor
 
         try
         {
-            // if prepared_statements_cache_size_mb option was set to "auto" then size of the cache should be "max(1/256 of Heap (in MB), 10MB)"
-            preparedStatementsCacheSizeInMB = (conf.prepared_statements_cache_size == null)
+            // if prepared_statements_cache_size_mb option was set to "auto" then size of the cache should be "max(1/256 of Heap (in MiB), 10MiB)"
+            preparedStatementsCacheSizeInMiB = (conf.prepared_statements_cache_size == null)
                                               ? Math.max(10, (Runtime.getRuntime().maxMemory() / 1024 / 1024 / 256))
-                                              : conf.prepared_statements_cache_size.toMegabytes();
+                                              : conf.prepared_statements_cache_size.toMebibytes();
 
-            if (preparedStatementsCacheSizeInMB <= 0)
+            if (preparedStatementsCacheSizeInMiB == 0)
                 throw new NumberFormatException(); // to escape duplicating error message
         }
         catch (NumberFormatException e)
         {
             throw new ConfigurationException("prepared_statements_cache_size option was set incorrectly to '"
-                                             + conf.prepared_statements_cache_size + "', supported values are <integer> >= 0.", false);
+                                             + (conf.prepared_statements_cache_size != null ? conf.prepared_statements_cache_size.toString() : null) + "', supported values are <integer> >= 0.", false);
         }
 
         try
         {
-            // if key_cache_size option was set to "auto" then size of the cache should be "min(5% of Heap (in MB), 100MB)
-            keyCacheSizeInMB = (conf.key_cache_size == null)
+            // if key_cache_size option was set to "auto" then size of the cache should be "min(5% of Heap (in MiB), 100MiB)
+            keyCacheSizeInMiB = (conf.key_cache_size == null)
                                ? Math.min(Math.max(1, (long) (Runtime.getRuntime().totalMemory() * 0.05 / 1024 / 1024)), 100)
-                               : conf.key_cache_size.toMegabytes();
+                               : conf.key_cache_size.toMebibytes();
 
-            if (keyCacheSizeInMB < 0)
+            if (keyCacheSizeInMiB < 0)
                 throw new NumberFormatException(); // to escape duplicating error message
         }
         catch (NumberFormatException e)
         {
             throw new ConfigurationException("key_cache_size option was set incorrectly to '"
-                                             + conf.key_cache_size + "', supported values are <integer> >= 0.", false);
+                                             + (conf.key_cache_size != null ? conf.key_cache_size.toString() : null) + "', supported values are <integer> >= 0.", false);
         }
 
         try
         {
             // if counter_cache_size option was set to "auto" then size of the cache should be "min(2.5% of Heap (in MB), 50MB)
-            counterCacheSizeInMB = (conf.counter_cache_size == null)
+            counterCacheSizeInMiB = (conf.counter_cache_size == null)
                                    ? Math.min(Math.max(1, (long) (Runtime.getRuntime().totalMemory() * 0.025 / 1024 / 1024)), 50)
-                                   : conf.counter_cache_size.toMegabytes();
+                                   : conf.counter_cache_size.toMebibytes();
 
-            if (counterCacheSizeInMB < 0)
+            if (counterCacheSizeInMiB < 0)
                 throw new NumberFormatException(); // to escape duplicating error message
         }
         catch (NumberFormatException e)
@@ -711,13 +711,13 @@ public class DatabaseDescriptor
         }
 
         // if set to empty/"auto" then use 5% of Heap size
-        indexSummaryCapacityInMB = (conf.index_summary_capacity == null)
+        indexSummaryCapacityInMiB = (conf.index_summary_capacity == null)
                                    ? Math.max(1, (long) (Runtime.getRuntime().totalMemory() * 0.05 / 1024 / 1024))
-                                   : conf.index_summary_capacity.toMegabytes();
+                                   : conf.index_summary_capacity.toMebibytes();
 
-        if (indexSummaryCapacityInMB < 0)
+        if (indexSummaryCapacityInMiB < 0)
             throw new ConfigurationException("index_summary_capacity option was set incorrectly to '"
-                                             + conf.index_summary_capacity + "', it should be a non-negative integer.", false);
+                                             + conf.index_summary_capacity.toString() + "', it should be a non-negative integer.", false);
 
         if (conf.user_defined_function_fail_timeout_in_ms < 0)
             throw new ConfigurationException("user_defined_function_fail_timeout_in_ms must not be negative", false);
@@ -725,17 +725,17 @@ public class DatabaseDescriptor
             throw new ConfigurationException("user_defined_function_warn_timeout_in_ms must not be negative", false);
 
         if (conf.user_defined_function_fail_timeout_in_ms < conf.user_defined_function_warn_timeout_in_ms)
-            throw new ConfigurationException("user_defined_function_warn_timeout must less than user_defined_function_fail_timeout", false);
+            throw new ConfigurationException("user_defined_function_warn_timeout_in_ms must be less than user_defined_function_fail_timeout_in_ms", false);
 
-        if (conf.commitlog_segment_size.toMegabytes() <= 0)
+        if (conf.commitlog_segment_size.toMebibytes() == 0)
             throw new ConfigurationException("commitlog_segment_size must be positive, but was "
                                              + conf.commitlog_segment_size.toString(), false);
-        else if (conf.commitlog_segment_size.toMegabytes() >= 2048)
+        else if (conf.commitlog_segment_size.toMebibytes() >= 2048)
             throw new ConfigurationException("commitlog_segment_size must be smaller than 2048, but was "
                                              + conf.commitlog_segment_size.toString(), false);
 
         if (conf.max_mutation_size == null)
-            conf.max_mutation_size = DataStorageSpec.inKilobytes(conf.commitlog_segment_size.toKilobytes() / 2);
+            conf.max_mutation_size = DataStorageSpec.inKibibytes(conf.commitlog_segment_size.toKilobytes() / 2);
         else if (conf.commitlog_segment_size.toKilobytes() < 2 * conf.max_mutation_size.toKilobytes())
             throw new ConfigurationException("commitlog_segment_size must be at least twice the size of max_mutation_size / 1024", false);
 
@@ -755,11 +755,11 @@ public class DatabaseDescriptor
         if (conf.snapshot_links_per_second < 0)
             throw new ConfigurationException("snapshot_links_per_second must be >= 0");
 
-        if (conf.max_value_size.toMegabytes() <= 0)
+        if (conf.max_value_size.toMebibytes() == 0)
             throw new ConfigurationException("max_value_size must be positive", false);
-        else if (conf.max_value_size.toMegabytes() >= 2048)
+        else if (conf.max_value_size.toMebibytes() >= 2048)
             throw new ConfigurationException("max_value_size must be smaller than 2048, but was "
-                    + conf.max_value_size, false);
+                    + conf.max_value_size.toString(), false);
 
         switch (conf.disk_optimization_strategy)
         {
@@ -1446,13 +1446,13 @@ public class DatabaseDescriptor
 
     public static int getColumnIndexSizeInKB()
     {
-        return conf.column_index_size.toKilobytesAsInt();
+        return conf.column_index_size.toKibibytesAsInt();
     }
 
     @VisibleForTesting
     public static void setColumnIndexSize(int val)
     {
-        DataStorageSpec memory = DataStorageSpec.inKilobytes(val);
+        DataStorageSpec memory = DataStorageSpec.inKibibytes(val);
         checkValidForByteConversion(memory, "column_index_size");
         conf.column_index_size = memory;
     }
@@ -1462,14 +1462,14 @@ public class DatabaseDescriptor
         return conf.column_index_cache_size.toBytesAsInt();
     }
 
-    public static int getColumnIndexCacheSizeInKB()
+    public static int getColumnIndexCacheSizeInKiB()
     {
-        return conf.column_index_cache_size.toKilobytesAsInt();
+        return conf.column_index_cache_size.toKibibytesAsInt();
     }
 
     public static void setColumnIndexCacheSize(int val)
     {
-        DataStorageSpec memory = DataStorageSpec.inKilobytes(val);
+        DataStorageSpec memory = DataStorageSpec.inKibibytes(val);
         checkValidForByteConversion(memory, "column_index_cache_size");
         conf.column_index_cache_size = memory;
     }
@@ -1479,9 +1479,9 @@ public class DatabaseDescriptor
         return conf.batch_size_warn_threshold.toBytesAsInt();
     }
 
-    public static int getBatchSizeWarnThresholdInKB()
+    public static int getBatchSizeWarnThresholdInKiB()
     {
-        return conf.batch_size_warn_threshold.toKilobytesAsInt();
+        return conf.batch_size_warn_threshold.toKibibytesAsInt();
     }
 
     public static long getBatchSizeFailThreshold()
@@ -1489,9 +1489,9 @@ public class DatabaseDescriptor
         return conf.batch_size_fail_threshold.toBytesAsInt();
     }
 
-    public static int getBatchSizeFailThresholdInKB()
+    public static int getBatchSizeFailThresholdInKiB()
     {
-        return conf.batch_size_fail_threshold.toKilobytesAsInt();
+        return conf.batch_size_fail_threshold.toKibibytesAsInt();
     }
 
     public static int getUnloggedBatchAcrossPartitionsWarnThreshold()
@@ -1501,14 +1501,14 @@ public class DatabaseDescriptor
 
     public static void setBatchSizeWarnThresholdInKB(int threshold)
     {
-        DataStorageSpec storage = DataStorageSpec.inKilobytes(threshold);
+        DataStorageSpec storage = DataStorageSpec.inKibibytes(threshold);
         checkValidForByteConversion(storage, "batch_size_warn_threshold");
         conf.batch_size_warn_threshold = storage;
     }
 
-    public static void setBatchSizeFailThresholdInKB(int threshold)
+    public static void setBatchSizeFailThresholdInKiB(int threshold)
     {
-        conf.batch_size_fail_threshold = DataStorageSpec.inKilobytes(threshold);
+        conf.batch_size_fail_threshold = DataStorageSpec.inKibibytes(threshold);
     }
 
     public static Collection<String> getInitialTokens()
@@ -1786,12 +1786,12 @@ public class DatabaseDescriptor
         conf.concurrent_compactors = value;
     }
 
-    public static int getCompactionThroughputMbPerSec()
+    public static int getCompactionThroughputMiBPerSec()
     {
         return conf.compaction_throughput.toMebibytesPerSecondAsInt();
     }
 
-    public static void setCompactionThroughputMbPerSec(int value)
+    public static void setCompactionThroughputMiBPerSec(int value)
     {
         conf.compaction_throughput = DataRateSpec.inMebibytesPerSecond(value);
     }
@@ -2039,7 +2039,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSegmentSize(int sizeMegabytes)
     {
-        conf.commitlog_segment_size = DataStorageSpec.inMegabytes(sizeMegabytes);
+        conf.commitlog_segment_size = DataStorageSpec.inMebibytes(sizeMegabytes);
     }
 
     public static String getSavedCachesLocation()
@@ -2271,7 +2271,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportMaxFrameSize(int bytes)
     {
-        conf.native_transport_max_frame_size = DataStorageSpec.inMegabytes(bytes);
+        conf.native_transport_max_frame_size = DataStorageSpec.inMebibytes(bytes);
     }
 
     public static long getMaxNativeTransportConcurrentConnections()
@@ -2598,24 +2598,24 @@ public class DatabaseDescriptor
         conf.client_encryption_options = update.apply(conf.client_encryption_options);
     }
 
-    public static int getHintedHandoffThrottleInKB()
+    public static int getHintedHandoffThrottleInKiB()
     {
-        return conf.hinted_handoff_throttle.toKilobytesAsInt();
+        return conf.hinted_handoff_throttle.toKibibytesAsInt();
     }
 
-    public static void setHintedHandoffThrottleInKB(int throttleInKB)
+    public static void setHintedHandoffThrottleInKiB(int throttleInKB)
     {
-        conf.hinted_handoff_throttle = DataStorageSpec.inKilobytes(throttleInKB);
+        conf.hinted_handoff_throttle = DataStorageSpec.inKibibytes(throttleInKB);
     }
 
-    public static int getBatchlogReplayThrottleInKB()
+    public static int getBatchlogReplayThrottleInKiB()
     {
-        return conf.batchlog_replay_throttle.toKilobytesAsInt();
+        return conf.batchlog_replay_throttle.toKibibytesAsInt();
     }
 
-    public static void setBatchlogReplayThrottleInKB(int throttleInKB)
+    public static void setBatchlogReplayThrottleInKiB(int throttleInKiB)
     {
-        conf.batchlog_replay_throttle = DataStorageSpec.inKilobytes(throttleInKB);
+        conf.batchlog_replay_throttle = DataStorageSpec.inKibibytes(throttleInKiB);
     }
 
     public static int getMaxHintsDeliveryThreads()
@@ -2668,7 +2668,7 @@ public class DatabaseDescriptor
         return conf.file_cache_enabled;
     }
 
-    public static int getFileCacheSizeInMB()
+    public static int getFileCacheSizeInMiB()
     {
         if (conf.file_cache_size == null)
         {
@@ -2677,10 +2677,10 @@ public class DatabaseDescriptor
             return 0;
         }
 
-        return conf.file_cache_size.toMegabytesAsInt();
+        return conf.file_cache_size.toMebibytesAsInt();
     }
 
-    public static int getNetworkingCacheSizeInMB()
+    public static int getNetworkingCacheSizeInMiB()
     {
         if (conf.networking_cache_size == null)
         {
@@ -2688,7 +2688,7 @@ public class DatabaseDescriptor
             assert DatabaseDescriptor.isClientInitialized();
             return 0;
         }
-        return conf.networking_cache_size.toMegabytesAsInt();
+        return conf.networking_cache_size.toMebibytesAsInt();
     }
 
     public static boolean getFileCacheRoundUp()
@@ -2713,9 +2713,9 @@ public class DatabaseDescriptor
         return conf.disk_optimization_estimate_percentile;
     }
 
-    public static long getTotalCommitlogSpaceInMB()
+    public static long getTotalCommitlogSpaceInMiB()
     {
-        return conf.commitlog_total_space.toMegabytes();
+        return conf.commitlog_total_space.toMebibytes();
     }
 
     public static boolean shouldMigrateKeycacheOnCompaction()
@@ -2728,13 +2728,13 @@ public class DatabaseDescriptor
         conf.key_cache_migrate_during_compaction = migrateCacheEntry;
     }
 
-    public static int getSSTablePreemptiveOpenIntervalInMB()
+    public static int getSSTablePreemptiveOpenIntervalInMiB()
     {
-        return  FBUtilities.isWindows ? -1 : conf.sstable_preemptive_open_interval.toMegabytesAsInt();
+        return  FBUtilities.isWindows ? -1 : conf.sstable_preemptive_open_interval.toMebibytesAsInt();
     }
-    public static void setSSTablePreemptiveOpenIntervalInMB(int mb)
+    public static void setSSTablePreemptiveOpenIntervalInMiB(int mb)
     {
-        conf.sstable_preemptive_open_interval = DataStorageSpec.inMegabytes(mb);
+        conf.sstable_preemptive_open_interval = DataStorageSpec.inMebibytes(mb);
     }
 
     public static boolean getTrickleFsync()
@@ -2742,19 +2742,19 @@ public class DatabaseDescriptor
         return conf.trickle_fsync;
     }
 
-    public static int getTrickleFsyncIntervalInKb()
+    public static int getTrickleFsyncIntervalInKiB()
     {
-        return conf.trickle_fsync_interval.toKilobytesAsInt();
+        return conf.trickle_fsync_interval.toKibibytesAsInt();
     }
 
-    public static long getKeyCacheSizeInMB()
+    public static long getKeyCacheSizeInMiB()
     {
-        return keyCacheSizeInMB;
+        return keyCacheSizeInMiB;
     }
 
-    public static long getIndexSummaryCapacityInMB()
+    public static long getIndexSummaryCapacityInMiB()
     {
-        return indexSummaryCapacityInMB;
+        return indexSummaryCapacityInMiB;
     }
 
     public static int getKeyCacheSavePeriod()
@@ -2782,15 +2782,15 @@ public class DatabaseDescriptor
         return conf.row_cache_class_name;
     }
 
-    public static long getRowCacheSizeInMB()
+    public static long getRowCacheSizeInMiB()
     {
-        return conf.row_cache_size.toMegabytes();
+        return conf.row_cache_size.toMebibytes();
     }
 
     @VisibleForTesting
-    public static void setRowCacheSizeInMB(long val)
+    public static void setRowCacheSizeInMiB(long val)
     {
-        conf.row_cache_size = DataStorageSpec.inMegabytes(val);
+        conf.row_cache_size = DataStorageSpec.inMebibytes(val);
     }
 
     public static int getRowCacheSavePeriod()
@@ -2808,9 +2808,9 @@ public class DatabaseDescriptor
         return conf.row_cache_keys_to_save;
     }
 
-    public static long getCounterCacheSizeInMB()
+    public static long getCounterCacheSizeInMiB()
     {
-        return counterCacheSizeInMB;
+        return counterCacheSizeInMiB;
     }
 
     public static void setRowCacheKeysToSave(int rowCacheKeysToSave)
@@ -2878,14 +2878,14 @@ public class DatabaseDescriptor
         return conf.inter_dc_tcp_nodelay;
     }
 
-    public static long getMemtableHeapSpaceInMb()
+    public static long getMemtableHeapSpaceInMiB()
     {
-        return conf.memtable_heap_space.toMegabytes();
+        return conf.memtable_heap_space.toMebibytes();
     }
 
-    public static long getMemtableOffheapSpaceInMb()
+    public static long getMemtableOffheapSpaceInMiB()
     {
-        return conf.memtable_offheap_space.toMegabytes();
+        return conf.memtable_offheap_space.toMebibytes();
     }
 
     public static Config.MemtableAllocationType getMemtableAllocationType()
@@ -2909,21 +2909,21 @@ public class DatabaseDescriptor
         conf.repair_session_max_tree_depth = depth;
     }
 
-    public static int getRepairSessionSpaceInMegabytes()
+    public static int getRepairSessionSpaceInMiB()
     {
-        return conf.repair_session_space.toMegabytesAsInt();
+        return conf.repair_session_space.toMebibytesAsInt();
     }
 
-    public static void setRepairSessionSpaceInMegabytes(int sizeInMegabytes)
+    public static void setRepairSessionSpaceInMiB(int sizeInMiB)
     {
-        if (sizeInMegabytes < 1)
-            throw new ConfigurationException("Cannot set repair_session_space to " + sizeInMegabytes +
+        if (sizeInMiB < 1)
+            throw new ConfigurationException("Cannot set repair_session_space to " + sizeInMiB +
                                              " < 1 megabyte");
-        else if (sizeInMegabytes > (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)))
+        else if (sizeInMiB > (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)))
             logger.warn("A repair_session_space of " + conf.repair_session_space +
-                        " megabytes is likely to cause heap pressure.");
+                        " mebibytes is likely to cause heap pressure.");
 
-        conf.repair_session_space = DataStorageSpec.inMegabytes(sizeInMegabytes);
+        conf.repair_session_space = DataStorageSpec.inMebibytes(sizeInMiB);
     }
 
     public static Float getMemtableCleanupThreshold()
@@ -2969,7 +2969,7 @@ public class DatabaseDescriptor
 
     public static long getPreparedStatementsCacheSizeMB()
     {
-        return preparedStatementsCacheSizeInMB;
+        return preparedStatementsCacheSizeInMiB;
     }
 
     public static boolean enableUserDefinedFunctions()
@@ -3096,13 +3096,13 @@ public class DatabaseDescriptor
 
     public static int getCDCSpaceInMB()
     {
-        return conf.cdc_total_space.toMegabytesAsInt();
+        return conf.cdc_total_space.toMebibytesAsInt();
     }
 
     @VisibleForTesting
     public static void setCDCSpaceInMB(int input)
     {
-        conf.cdc_total_space = DataStorageSpec.inMegabytes(input);
+        conf.cdc_total_space = DataStorageSpec.inMebibytes(input);
     }
 
     public static int getCDCDiskCheckInterval()
@@ -3579,64 +3579,64 @@ public class DatabaseDescriptor
         conf.track_warnings.enabled = value;
     }
 
-    public static long getCoordinatorReadSizeWarnThresholdKB()
+    public static long getCoordinatorReadSizeWarnThresholdKiB()
     {
-        return conf.track_warnings.coordinator_read_size.getWarnThresholdKb();
+        return conf.track_warnings.coordinator_read_size.getWarnThresholdKiB();
     }
 
-    public static void setCoordinatorReadSizeWarnThresholdKB(long threshold)
+    public static void setCoordinatorReadSizeWarnThresholdKiB(long threshold)
     {
-        conf.track_warnings.coordinator_read_size.setWarnThresholdKb(threshold);
+        conf.track_warnings.coordinator_read_size.setWarnThresholdKiB(threshold);
     }
 
-    public static long getCoordinatorReadSizeAbortThresholdKB()
+    public static long getCoordinatorReadSizeAbortThresholdKiB()
     {
-        return conf.track_warnings.coordinator_read_size.getAbortThresholdKb();
+        return conf.track_warnings.coordinator_read_size.getAbortThresholdKiB();
     }
 
-    public static void setCoordinatorReadSizeAbortThresholdKB(long threshold)
+    public static void setCoordinatorReadSizeAbortThresholdKiB(long threshold)
     {
-        conf.track_warnings.coordinator_read_size.setAbortThresholdKb(threshold);
+        conf.track_warnings.coordinator_read_size.setAbortThresholdKiB(threshold);
     }
 
-    public static long getLocalReadSizeWarnThresholdKb()
+    public static long getLocalReadSizeWarnThresholdKiB()
     {
-        return conf.track_warnings.local_read_size.getWarnThresholdKb();
+        return conf.track_warnings.local_read_size.getWarnThresholdKiB();
     }
 
-    public static void setLocalReadSizeWarnThresholdKb(long value)
+    public static void setLocalReadSizeWarnThresholdKiB(long value)
     {
-        conf.track_warnings.local_read_size.setWarnThresholdKb(value);
+        conf.track_warnings.local_read_size.setWarnThresholdKiB(value);
     }
 
-    public static long getLocalReadSizeAbortThresholdKb()
+    public static long getLocalReadSizeAbortThresholdKiB()
     {
-        return conf.track_warnings.local_read_size.getAbortThresholdKb();
+        return conf.track_warnings.local_read_size.getAbortThresholdKiB();
     }
 
-    public static void setLocalReadSizeAbortThresholdKb(long value)
+    public static void setLocalReadSizeAbortThresholdKiB(long value)
     {
-        conf.track_warnings.local_read_size.setAbortThresholdKb(value);
+        conf.track_warnings.local_read_size.setAbortThresholdKiB(value);
     }
 
-    public static int getRowIndexSizeWarnThresholdKb()
+    public static int getRowIndexSizeWarnThresholdKiB()
     {
         return conf.track_warnings.row_index_size.getWarnThresholdKb();
     }
 
-    public static void setRowIndexSizeWarnThresholdKb(int value)
+    public static void setRowIndexSizeWarnThresholdKiB(int value)
     {
         conf.track_warnings.row_index_size.setWarnThresholdKb(value);
     }
 
-    public static int getRowIndexSizeAbortThresholdKb()
+    public static int getRowIndexSizeAbortThresholdKiB()
     {
-        return conf.track_warnings.row_index_size.getAbortThresholdKb();
+        return conf.track_warnings.row_index_size.getAbortThresholdKiB();
     }
 
-    public static void setRowIndexSizeAbortThresholdKb(int value)
+    public static void setRowIndexSizeAbortThresholdKiB(int value)
     {
-        conf.track_warnings.row_index_size.setAbortThresholdKb(value);
+        conf.track_warnings.row_index_size.setAbortThresholdKiB(value);
     }
 
     public static int getDefaultKeyspaceRF() { return conf.default_keyspace_rf; }
