@@ -66,7 +66,7 @@ public class PartitionDenylistTest extends TestBaseImpl
                                       .with(NETWORK)
                                       .with(GOSSIP)
                                       .set("partition_denylist_enabled", true)
-                                      .set("denylist_initial_load_retry", "1S"))
+                                      .set("denylist_initial_load_retry", "1s"))
                                       .createWithoutStarting())
         {
             cluster.forEach(i -> {
@@ -143,7 +143,7 @@ public class PartitionDenylistTest extends TestBaseImpl
                                       .with(NETWORK)
                                       .with(GOSSIP)
                                       .set("partition_denylist_enabled", true)
-                                      .set("denylist_initial_load_retry", "1S"))
+                                      .set("denylist_initial_load_retry", "1s"))
                                       .createWithoutStarting())
         {
             // Starting without networking enabled in the hope it doesn't trigger

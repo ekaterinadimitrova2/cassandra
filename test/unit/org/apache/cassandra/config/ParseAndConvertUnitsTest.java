@@ -80,32 +80,32 @@ public class ParseAndConvertUnitsTest
         assertEquals(new DataStorageSpec("4194304B"), config.internode_application_receive_queue_capacity);
         assertEquals(new DataStorageSpec("134217728B"), config.internode_application_receive_queue_reserve_endpoint_capacity);
         assertEquals(new DataStorageSpec("536870912B"), config.internode_application_receive_queue_reserve_global_capacity);
-        assertEquals(new DataStorageSpec("16MB"), config.native_transport_max_frame_size);
-        //assertEquals(new DataStorageSpec("32KB"), config.native_transport_frame_block_size);
-        assertEquals(new DataStorageSpec("256MB"), config.max_value_size);
-        assertEquals(new DataStorageSpec("4KB"), config.column_index_size);
-        assertEquals(new DataStorageSpec("2KB"), config.column_index_cache_size);
-        assertEquals(new DataStorageSpec("5KB"), config.batch_size_warn_threshold);
-        assertEquals(new DataStorageSpec("50KB"), config.batch_size_fail_threshold);
-        assertEquals(new DataStorageSpec("100MB"), config.compaction_large_partition_warning_threshold);
+        assertEquals(new DataStorageSpec("16MiB"), config.native_transport_max_frame_size);
+        //assertEquals(new DataStorageSpec("32KiB"), config.native_transport_frame_block_size);
+        assertEquals(new DataStorageSpec("256MiB"), config.max_value_size);
+        assertEquals(new DataStorageSpec("4KiB"), config.column_index_size);
+        assertEquals(new DataStorageSpec("2KiB"), config.column_index_cache_size);
+        assertEquals(new DataStorageSpec("5KiB"), config.batch_size_warn_threshold);
+        assertEquals(new DataStorageSpec("50KiB"), config.batch_size_fail_threshold);
+        assertEquals(new DataStorageSpec("100MiB"), config.compaction_large_partition_warning_threshold);
         assertNull(config.commitlog_total_space);
-        assertEquals(new DataStorageSpec("5MB"), config.commitlog_segment_size);
+        assertEquals(new DataStorageSpec("5MiB"), config.commitlog_segment_size);
         assertNull(config.max_mutation_size); //not set explicitly in the default yaml, check the config; not set there too
-        assertEquals(new DataStorageSpec("0MB"), config.cdc_total_space);
-        assertEquals(new DataStorageSpec("1024KB"), config.hinted_handoff_throttle);
-        assertEquals(new DataStorageSpec("1024KB"), config.batchlog_replay_throttle);
-        assertEquals(new DataStorageSpec("10240KB"), config.trickle_fsync_interval);
-        assertEquals(new DataStorageSpec("50MB"), config.sstable_preemptive_open_interval);
+        assertEquals(new DataStorageSpec("0MiB"), config.cdc_total_space);
+        assertEquals(new DataStorageSpec("1024KiB"), config.hinted_handoff_throttle);
+        assertEquals(new DataStorageSpec("1024KiB"), config.batchlog_replay_throttle);
+        assertEquals(new DataStorageSpec("10240KiB"), config.trickle_fsync_interval);
+        assertEquals(new DataStorageSpec("50MiB"), config.sstable_preemptive_open_interval);
         assertNull(config.counter_cache_size);
         assertNull(config.file_cache_size);
         assertNull(config.index_summary_capacity);
-        assertEquals(new DataStorageSpec("1MB"), config.prepared_statements_cache_size);
+        assertEquals(new DataStorageSpec("1MiB"), config.prepared_statements_cache_size);
         assertNull(config.key_cache_size);
-        assertEquals(new DataStorageSpec("16MB"), config.row_cache_size);
+        assertEquals(new DataStorageSpec("16MiB"), config.row_cache_size);
 
         //Confirm rate parameters were successfully parsed with the default values in cassandra.yaml
         assertEquals(DataRateSpec.inMebibytesPerSecond(0), config.compaction_throughput);
         assertEquals(DataRateSpec.inMebibytesPerSecond(200000000), config.stream_throughput_outbound);
-        assertEquals(DataRateSpec.inMebibytesPerSecond(200), config.inter_dc_stream_throughput_outbound);
+        assertEquals(DataRateSpec.inMebibytesPerSecond(25), config.inter_dc_stream_throughput_outbound);
     }
 }

@@ -36,8 +36,8 @@ public class TrackWarnings
 
     public static class LongByteThreshold
     {
-        public volatile DataStorageSpec warn_threshold = new DataStorageSpec("0kb");
-        public volatile DataStorageSpec abort_threshold = new DataStorageSpec("0kb");
+        public volatile DataStorageSpec warn_threshold = new DataStorageSpec("0KiB");
+        public volatile DataStorageSpec abort_threshold = new DataStorageSpec("0KiB");
 
         public long getWarnThresholdKiB()
         {
@@ -72,8 +72,8 @@ public class TrackWarnings
 
     public static class IntByteThreshold
     {
-        public volatile DataStorageSpec warn_threshold = new DataStorageSpec("0kb");
-        public volatile DataStorageSpec abort_threshold = new DataStorageSpec("0kb");
+        public volatile DataStorageSpec warn_threshold = new DataStorageSpec("0KiB");
+        public volatile DataStorageSpec abort_threshold = new DataStorageSpec("0KiB");
 
         public int getWarnThresholdKb()
         {

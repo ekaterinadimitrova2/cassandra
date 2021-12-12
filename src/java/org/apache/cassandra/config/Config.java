@@ -311,7 +311,7 @@ public class Config
     @Replaces(oldName = "commitlog_sync_period_in_ms", converter = Converter.MillisDurationConverter.class, deprecated = true)
     public DurationSpec commitlog_sync_period = new DurationSpec("0ms");
     @Replaces(oldName = "commitlog_segment_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec commitlog_segment_size = new DataStorageSpec("32mb");
+    public DataStorageSpec commitlog_segment_size = new DataStorageSpec("32MiB");
 
     public ParameterizedClass commitlog_compression;
     public FlushCompression flush_compression = FlushCompression.fast;
@@ -356,8 +356,8 @@ public class Config
     public int max_hints_delivery_threads = 2;
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converter.MillisDurationConverter.class, deprecated = true)
     public DurationSpec hints_flush_period = new DurationSpec("10s");
-    @Replaces(oldName = "max_hints_file_size_in_mb", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
-    public DataStorageSpec max_hints_file_size = new DataStorageSpec("128mb");
+    @Replaces(oldName = "max_hints_file_size_in_MiB", converter = Converter.MegabytesDataStorageConverter.class, deprecated = true)
+    public DataStorageSpec max_hints_file_size = new DataStorageSpec("128MiB");
     public ParameterizedClass hints_compression;
     public volatile boolean auto_hints_cleanup_enabled = false;
 
@@ -398,11 +398,11 @@ public class Config
     public boolean file_cache_enabled = Boolean.getBoolean("cassandra.file_cache_enabled");
 
     /**
-     * Because of the current {@link org.apache.cassandra.utils.memory.BufferPool} slab sizes of 64 kb, we
-     * store in the file cache buffers that divide 64 kb, so we need to round the buffer sizes to powers of two.
+     * Because of the current {@link org.apache.cassandra.utils.memory.BufferPool} slab sizes of 64 KiB, we
+     * store in the file cache buffers that divide 64 KiB, so we need to round the buffer sizes to powers of two.
      * This boolean controls weather they are rounded up or down. Set it to true to round up to the
      * next power of two, set it to false to round down to the previous power of two. Note that buffer sizes are
-     * already rounded to 4 kb and capped between 4 kb minimum and 64 kb maximum by the {@link DiskOptimizationStrategy}.
+     * already rounded to 4 KiB and capped between 4 KiB minimum and 64 KiB maximum by the {@link DiskOptimizationStrategy}.
      * By default, this boolean is set to round down when {@link #disk_optimization_strategy} is {@code ssd},
      * and to round up when it is {@code spinning}.
      */
@@ -611,9 +611,9 @@ public class Config
 
     public volatile boolean denylist_range_reads_enabled = true;
 
-    public DurationSpec denylist_refresh = new DurationSpec("600S");
+    public DurationSpec denylist_refresh = new DurationSpec("600s");
 
-    public DurationSpec denylist_initial_load_retry = new DurationSpec("5S");
+    public DurationSpec denylist_initial_load_retry = new DurationSpec("5s");
 
     /** We cap the number of denylisted keys allowed per table to keep things from growing unbounded. Operators will
      * receive warnings and only denylist_max_keys_per_table in natural query ordering will be processed on overflow.
