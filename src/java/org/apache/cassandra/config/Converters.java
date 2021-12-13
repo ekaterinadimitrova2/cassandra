@@ -1,0 +1,91 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.cassandra.config;
+
+import java.util.function.Function;
+
+/**
+ * Converters for backward compatibility with the old cassandra.yaml where duration, data rate and
+ * data storage configuration parameters were provided only by value and the expected unit was part of the configuration
+ * parameter name. (CASSANDRA-15234)
+ * It is important to be noted that this converter is not intended to be used when we don't change name of a configuration
+ * parameter but we want to add unit. This would always default to the old value provided without a unit at the moment.
+ * in case this functionality is needed at some point, please, raise a ticket.
+ */
+public enum Converters
+{
+    /**
+     * This converter is used when we change the name of a cassandra.yaml configuration parameter but we want to be
+     * able to still use the old name too. No units involved.
+     */
+    RENAME(null, o -> o),
+    MILLIS_DURATION(Long.class, o -> DurationSpec.inMilliseconds((Long) o)),
+    MILLIS_DOUBLE_DURATION(Double.class, o -> o == null ? null : DurationSpec.inDoubleMilliseconds((Double) o)),
+    /**
+     * This converter is a custom one for credentials_update_interval where in the past -1 was used, backward compatibility
+     * between credentials_update_interval_in_ms = -1 and credentials_update_interval = null (quantity of 0ms) .
+     */
+    MILLIS_CUTOM_DURATION(Long.class, o -> o == null ? null :
+                                           ((long)o == (long)-1 ? (long)0 : DurationSpec.inMilliseconds((Long) o))),
+    SECONDS_DURATION(Long.class, o -> o == null ? null : DurationSpec.inSeconds((Long) o)),
+    MINUTES_DURATION(Long.class, o -> DurationSpec.inMinutes((Long) o)),
+    MEBIBYTES_DATASTORAGE(Long.class, o -> o == null ? null : DataStorageSpec.inMebibytes((Long) o)),
+    KIBIBYTES_DATASTORAGE(Long.class, o -> o == null ? null : DataStorageSpec.inKibibytes((Long) o)),
+    BYTES_DATASTORAGE(Long.class, o -> o == null ? null : DataStorageSpec.inBytes((Long) o)),
+    MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, o -> o == null ? null : DataRateSpec.inMebibytesPerSecond((Long) o)),
+    /**
+     * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
+     * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
+     */
+    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class,
+                                          o -> o == null ? null :
+                                               DataRateSpec.inMebibytesPerSecond(((Long)o * 119209 / 1000000)));
+    //KATE: Should we make precise conversion? It is not the 8 times difference mentioned in the cassandra.yaml TBD
+
+    private final Class<?> inputType;
+    private final Function<Object, Object> convert;
+
+    Converters(Class<?> inputType, Function<Object, Object> convert)
+    {
+        this.inputType = inputType;
+        this.convert = convert;
+    }
+
+    /**
+     * A method to identify what type is needed to be returned from the conversion used for a configuration parameter
+     * in {@link Replaces} annotation in {@link Config}
+     * @return class type
+     */
+    public Class<?> getInputType()
+    {
+        return inputType;
+    }
+
+    /**
+     * Apply the converter specified as part of the {@link Replaces} annotation in {@link Config}
+     * @param value we will use from cassandra.yaml to create a new {@link Config} parameter of type {@link DurationSpec},
+     * {@link DataRateSpec} or {@link DataStorageSpec}
+     * @return new object of type {@link DurationSpec}, {@link DataRateSpec} or {@link DataStorageSpec}
+     */
+    public Object apply(Object value)
+    {
+        if (value == null) return null;
+        return convert.apply(value);
+    }
+}

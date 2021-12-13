@@ -132,7 +132,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             }
 
             Constructor constructor = new CustomConstructor(Config.class, Yaml.class.getClassLoader());
-            Map<Class<?>, Map<String, Replacement>> replacements = getReplacements(Config.class);
+            Map<Class<?>, Map<String, Replacement>> replacements = getNameReplacements(Config.class);
             PropertiesChecker propertiesChecker = new PropertiesChecker(replacements);
             constructor.setPropertyUtils(propertiesChecker);
             Yaml yaml = new Yaml(constructor);
@@ -197,7 +197,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     public static <T> T fromMap(Map<String,Object> map, boolean shouldCheck, Class<T> klass)
     {
         Constructor constructor = new YamlConfigurationLoader.CustomConstructor(klass, klass.getClassLoader());
-        Map<Class<?>, Map<String, Replacement>> replacements = getReplacements(Config.class);
+        Map<Class<?>, Map<String, Replacement>> replacements = getNameReplacements(Config.class);
         YamlConfigurationLoader.PropertiesChecker propertiesChecker = new YamlConfigurationLoader.PropertiesChecker(replacements);
         constructor.setPropertyUtils(propertiesChecker);
         Yaml yaml = new Yaml(constructor);
@@ -284,7 +284,6 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             if(typeReplacements.containsKey(name))
             {
                 Replacement replacement = typeReplacements.get(name);
-                Converter converter = replacement.converter;
 
                 final Property newProperty = super.getProperty(type, replacement.newName);
                 result = new Property(replacement.oldName, replacement.oldType)
@@ -298,7 +297,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                     @Override
                     public void set(Object o, Object o1) throws Exception
                     {
-                        Object migratedValue = converter.apply(o1);
+                        Object migratedValue = replacement.converter.apply(o1);
                         newProperty.set(o, migratedValue);
                     }
 
@@ -397,7 +396,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * @param klass to get replacements for
      * @return map of old names and replacements needed.
      */
-    private static Map<Class<? extends Object>, Map<String, Replacement>> getReplacements(Class<? extends Object> klass)
+    private static Map<Class<? extends Object>, Map<String, Replacement>> getNameReplacements(Class<? extends Object> klass)
     {
         List<Replacement> replacements = getReplacementsRecursive(klass);
         Map<Class<?>, Map<String, Replacement>> objectOldNames = new HashMap<>();
@@ -422,29 +421,27 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     private static List<Replacement> getReplacementsRecursive(Class<?> klass)
     {
         Set<Class<?>> seen = new HashSet<>(); // to make sure not to process the same type twice
-        Map<Class<? extends Converter>, Converter> converterCache = new HashMap<>();
         List<Replacement> accum = new ArrayList<>();
-        getReplacementsRecursive(seen, converterCache, accum, klass);
+        getReplacementsRecursive(seen, accum, klass);
         return accum.isEmpty() ? Collections.emptyList() : accum;
     }
 
     private static void getReplacementsRecursive(Set<Class<?>> seen,
-                                                 Map<Class<? extends Converter>, Converter> converterCache,
                                                  List<Replacement> accum,
                                                  Class<?> klass)
     {
-        accum.addAll(getReplacements(converterCache, klass));
+        accum.addAll(getReplacements(klass));
         for (Field field : klass.getDeclaredFields())
         {
             if (seen.add(field.getType()))
             {
                 // first time looking at this type, walk it
-                getReplacementsRecursive(seen, converterCache, accum, field.getType());
+                getReplacementsRecursive(seen, accum, field.getType());
             }
         }
     }
 
-    private static List<Replacement> getReplacements(Map<Class<? extends Converter>, Converter> converterCache, Class<?> klass)
+    private static List<Replacement> getReplacements(Class<?> klass)
     {
         List<Replacement> replacements = new ArrayList<>();
         for (Field field : klass.getDeclaredFields())
@@ -456,43 +453,32 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             {
                 Replaces r = field.getAnnotation(Replaces.class);
                 if (r != null)
-                    addReplacement(converterCache, klass, replacements, newName, newType, r);
+                    addReplacement(klass, replacements, newName, newType, r);
             }
             else
             {
                 for (ReplacesList replacesList : byType)
                     for (Replaces r : replacesList.value())
-                        addReplacement(converterCache, klass, replacements, newName, newType, r);
+                        addReplacement(klass, replacements, newName, newType, r);
             }
         }
         return replacements.isEmpty() ? Collections.emptyList() : replacements;
     }
 
-    private static void addReplacement(Map<Class<? extends Converter>, Converter> converterCache,
-                                       Class<?> klass,
+    private static void addReplacement(Class<?> klass,
                                        List<Replacement> replacements,
                                        String newName, Class<?> newType,
                                        Replaces r)
     {
         String oldName = r.oldName();
-        Converter converter = converterCache.computeIfAbsent(r.converter(), converterKlass -> {
-            try
-            {
-                return converterKlass.newInstance();
-            }
-            catch (IllegalAccessException | InstantiationException e)
-            {
-                throw new RuntimeException("Unable to create converter of type " + converterKlass, e);
-            }
-        });
 
         boolean deprecated = r.deprecated();
 
-        Class<?> oldType = converter.getInputType();
+        Class<?> oldType = r.converter().getInputType();
         if (oldType == null)
             oldType = newType;
 
-        replacements.add(new Replacement(klass, oldName, oldType, newName, converter, deprecated));
+        replacements.add(new Replacement(klass, oldName, oldType, newName, r.converter(), deprecated));
     }
 
     /**
@@ -521,12 +507,12 @@ public class YamlConfigurationLoader implements ConfigurationLoader
          * Converter to be used according to the old default unit which was provided as a suffix of the configuration
          * parameter
          */
-        final Converter converter;
+        final Converters converter;
         final boolean deprecated;
 
         Replacement(Class<?> parent,
                     String oldName, Class<?> oldType,
-                    String newName, Converter converter, boolean deprecated)
+                    String newName, Converters converter, boolean deprecated)
         {
             this.parent = Objects.requireNonNull(parent);
             this.oldName = Objects.requireNonNull(oldName);

@@ -68,7 +68,7 @@ max_hint_window: 10800000ms # 3 hours
 # are two nodes in the cluster, each delivery thread will use the maximum
 # rate; if there are three, each will throttle to half of the maximum,
 # since we expect two nodes to be delivering hints simultaneously.)
-hinted_handoff_throttle: 1024kb
+hinted_handoff_throttle: 1024KiB
 
 # Number of threads with which to deliver hints;
 # Consider increasing this number when you have multi-dc deployments, since
@@ -84,7 +84,7 @@ max_hints_delivery_threads: 2
 hints_flush_period: 10000ms
 
 # Maximum size for a single hints file, in megabytes.
-max_hints_file_size: 128mb
+max_hints_file_size: 128MiB
 
 # Enable / disable automatic cleanup for the expired and orphaned hints file.
 # Disable the option in order to preserve those hints on the disk.
@@ -114,7 +114,7 @@ auto_hints_cleanup_enabled: false
 
 # Maximum throttle in KBs per second, total. This will be
 # reduced proportionally to the number of nodes in the cluster.
-batchlog_replay_throttle: 1024kb
+batchlog_replay_throttle: 1024KiB
 
 # Authentication backend, implementing IAuthenticator; used to identify users
 # Out of the box, Cassandra provides org.apache.cassandra.auth.{AllowAllAuthenticator,
@@ -394,7 +394,7 @@ key_cache_save_period: 14400
 # headroom for OS block level cache. Do never allow your system to swap.
 #
 # Default value is 0, to disable row caching.
-row_cache_size: 0mb
+row_cache_size: 0MiB
 
 # DurationSpec in seconds after which Cassandra should save the row cache.
 # Caches are saved to saved_caches_directory as specified in this configuration file.
@@ -483,7 +483,7 @@ commitlog_sync_period: 10000ms
 # NOTE: If max_mutation_size is set explicitly then commitlog_segment_size must
 # be set to at least twice the size of max_mutation_size / 1024
 #
-commitlog_segment_size: 32mb
+commitlog_segment_size: 32MiB
 
 # Compression to apply to the commit log. If omitted, the commit log
 # will be written uncompressed.  LZ4, Snappy, and Deflate compressors
@@ -547,7 +547,7 @@ concurrent_materialized_view_writes: 32
 # overhead which is roughly 128 bytes per chunk (i.e. 0.2% of the reserved size
 # if the default 64k chunk size is used).
 # Memory is only allocated when needed.
-# networking_cache_size: 128mb
+# networking_cache_size: 128MiB
 
 # Enable the sstable chunk cache.  The chunk cache will store recently accessed
 # sections of the sstable in-memory as uncompressed buffers.
@@ -561,7 +561,7 @@ concurrent_materialized_view_writes: 32
 # overhead which is roughly 128 bytes per chunk (i.e. 0.2% of the reserved size
 # if the default 64k chunk size is used).
 # Memory is only allocated when needed.
-# file_cache_size: 512mb
+# file_cache_size: 512MiB
 
 # Flag indicating whether to allocate on or off heap when the sstable buffer
 # pool is exhausted, that is when it has exceeded the maximum memory
@@ -579,8 +579,8 @@ concurrent_materialized_view_writes: 32
 # accepting writes when the limit is exceeded until a flush completes,
 # and will trigger a flush based on memtable_cleanup_threshold
 # If omitted, Cassandra will set both to 1/4 the size of the heap.
-# memtable_heap_space: 2048mb
-# memtable_offheap_space: 2048mb
+# memtable_heap_space: 2048MiB
+# memtable_offheap_space: 2048MiB
 
 # memtable_cleanup_threshold is deprecated. The default calculation
 # is the only reasonable choice. See the comments on  memtable_flush_writers
