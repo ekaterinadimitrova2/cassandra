@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import com.google.common.primitives.Ints;
 
 /**
- * Represents a bit rate type used for cassandra configuration. It supports the opportunity for the users to be able to
+ * Represents a data rate type used for cassandra configuration. It supports the opportunity for the users to be able to
  * add units to the confiuration parameter value. (CASSANDRA-15234)
  */
 public final class DataRateSpec
@@ -47,7 +47,7 @@ public final class DataRateSpec
 
         if (!matcher.find())
             throw new IllegalArgumentException("Invalid bit rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
-                                               "case matters and " + "only non-negative values");
+                                               "case matters and " + "only non-negative values are valid");
 
         quantity = Long.parseLong(matcher.group(1));
         unit = DataRateUnit.fromSymbol(matcher.group(2));
@@ -65,7 +65,7 @@ public final class DataRateSpec
     /**
      * Creates a {@code DataRateSpec} of the specified amount of bits per second.
      *
-     * @param bytesPerSecond the amount of bits per second
+     * @param bytesPerSecond the amount of bytes per second
      * @return a {@code DataRateSpec}
      */
     public static DataRateSpec inBytesPerSecond(long bytesPerSecond)
@@ -74,9 +74,9 @@ public final class DataRateSpec
     }
 
     /**
-     * Creates a {@code DataRateSpec} of the specified amount of kilobits per second.
+     * Creates a {@code DataRateSpec} of the specified amount of kibibytes per second.
      *
-     * @param kibibytesPerSecond the amount of kilobits per second
+     * @param kibibytesPerSecond the amount of kibibytes per second
      * @return a {@code DataRateSpec}
      */
     public static DataRateSpec inKibibytesPerSecond(long kibibytesPerSecond)
@@ -85,9 +85,9 @@ public final class DataRateSpec
     }
 
     /**
-     * Creates a {@code DataRateSpec} of the specified amount of megabits per second.
+     * Creates a {@code DataRateSpec} of the specified amount of mebibytes per second.
      *
-     * @param mebibytesPerSecond the amount of megabits per second
+     * @param mebibytesPerSecond the amount of mebibytes per second
      * @return a {@code DataRateSpec}
      */
     public static DataRateSpec inMebibytesPerSecond(long mebibytesPerSecond)
@@ -96,7 +96,7 @@ public final class DataRateSpec
     }
 
     /**
-     * @return the bit rate unit.
+     * @return the data rate unit assigned.
      */
     public DataRateUnit getUnit()
     {
@@ -104,7 +104,7 @@ public final class DataRateSpec
     }
 
     /**
-     * @return the bit rate in bits per seconds
+     * @return the data rate in bytes per seconds
      */
     public long toBytesPerSecond()
     {
@@ -112,9 +112,9 @@ public final class DataRateSpec
     }
 
     /**
-     * Returns the bit rate in bits per seconds as an {@code int}
+     * Returns the data rate in bytes per seconds as an {@code int}
      *
-     * @return the bit rate in bits per secondss or {@code Integer.MAX_VALUE} if the rate is too large.
+     * @return the data rate in bytes per secondss or {@code Integer.MAX_VALUE} if the rate is too large.
      */
     public int toBytesPerSecondAsInt()
     {
@@ -122,7 +122,7 @@ public final class DataRateSpec
     }
 
     /**
-     * @return the bit rate in kilobits per seconds
+     * @return the data rate in kibibyts per seconds
      */
     public long toKibibytesPerSecond()
     {
@@ -130,9 +130,9 @@ public final class DataRateSpec
     }
 
     /**
-     * Returns the bit rate in kilobits per seconds as an {@code int}
+     * Returns the data rate in kibibytes per seconds as an {@code int}
      *
-     * @return the bit rate in kilobits per seconds or {@code Integer.MAX_VALUE} if the number of kilobits is too large.
+     * @return the data rate in kibibytes per seconds or {@code Integer.MAX_VALUE} if the number of kibibytes is too large.
      */
     public int toKibibytesPerSecondAsInt()
     {
@@ -140,7 +140,7 @@ public final class DataRateSpec
     }
 
     /**
-     * @return the bit rate in megabits per seconds
+     * @return the data rate in mebibytes per seconds
      */
     public long toMebibytesPerSecond()
     {
@@ -148,9 +148,9 @@ public final class DataRateSpec
     }
 
     /**
-     * Returns the bit rate in megabits per seconds as an {@code int}
+     * Returns the data rate in mebibytes per seconds as an {@code int}
      *
-     * @return the bit rate in megabits per seconds or {@code Integer.MAX_VALUE} if the number of megabits is too large.
+     * @return the data rate in mebibyts per seconds or {@code Integer.MAX_VALUE} if the number of mebibytes is too large.
      */
     public int toMebibytesPerSecondAsInt()
     {
@@ -176,7 +176,7 @@ public final class DataRateSpec
         if (unit == other.unit)
             return quantity == other.quantity;
 
-        // Due to overflows we can only guarantee that the 2 bit rates are equal if we get the same results
+        // Due to overflows we can only guarantee that the 2 data rates are equal if we get the same results
         // doing the conversion in both directions.
         return unit.convert(other.quantity, other.unit) == quantity && other.unit.convert(quantity, unit) == other.quantity;
     }
@@ -284,7 +284,7 @@ public final class DataRateSpec
                 if (value.symbol.equalsIgnoreCase(symbol))
                     return value;
             }
-            throw new IllegalArgumentException(String.format("Unsupported bit rate unit: %s. Supported units are: %s",
+            throw new IllegalArgumentException(String.format("Unsupported data rate unit: %s. Supported units are: %s",
                                                              symbol, Arrays.stream(values())
                                                                            .map(u -> u.symbol)
                                                                            .collect(Collectors.joining(", "))));

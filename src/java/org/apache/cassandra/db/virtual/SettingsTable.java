@@ -117,26 +117,8 @@ final class SettingsTable extends AbstractVirtualTable
             result.row(f.getName()).column(VALUE, value.toString());
 
             if(ANNOTATED_FIELDS.containsKey(f.getName()))
-            {
-                if (DurationSpec.class.equals(value.getClass()))
-                {
-                    DurationSpec quantity = (DurationSpec) value;
-                    result.row(f.getAnnotation(Replaces.class).oldName()).column(VALUE,quantity.quantityToString());
-                }
-
-                if (DataStorageSpec.class.equals(value.getClass()))
-                {
-                    DataStorageSpec quantity = (DataStorageSpec) value;
-                    result.row(f.getAnnotation(Replaces.class).oldName()).column(VALUE,quantity.quantityToString());
-                }
-
-                if (DataRateSpec.class.equals(value.getClass()))
-                {
-                    DataRateSpec quantity = (DataRateSpec) value;
-                    result.row(f.getAnnotation(Replaces.class).oldName()).column(VALUE,quantity.quantityToString());
-                }
-
-            }
+                result.row(f.getAnnotation(Replaces.class).oldName())
+                      .column(VALUE, f.getAnnotation(Replaces.class).reverseConverter().apply(value).toString());
         }
     }
 

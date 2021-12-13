@@ -34,9 +34,10 @@ public enum Converters
      * This converter is used when we change the name of a cassandra.yaml configuration parameter but we want to be
      * able to still use the old name too. No units involved.
      */
-    RENAME(null, o -> o),
+    IDENTITY(null, o -> o),
     MILLIS_DURATION(Long.class, o -> DurationSpec.inMilliseconds((Long) o)),
     MILLIS_DOUBLE_DURATION(Double.class, o -> o == null ? null : DurationSpec.inDoubleMilliseconds((Double) o)),
+    TO_MILLIS(DurationSpec.class, o -> o == null ? 0 : ((DurationSpec)o).toMilliseconds()),
     /**
      * This converter is a custom one for credentials_update_interval where in the past -1 was used, backward compatibility
      * between credentials_update_interval_in_ms = -1 and credentials_update_interval = null (quantity of 0ms) .

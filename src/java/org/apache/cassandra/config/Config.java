@@ -56,7 +56,7 @@ public class Config
     public String role_manager;
     public String network_authorizer;
 
-    @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MINUTES_DURATION, deprecated = true)
+    @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION, reverseConverter = Converters.TO_MILLIS, deprecated = true)
     public volatile DurationSpec permissions_validity = new DurationSpec("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
@@ -130,7 +130,7 @@ public class Config
     @Replaces(oldName = "streaming_keep_alive_period_in_secs", converter = Converters.MILLIS_DURATION, deprecated = true)
     public DurationSpec streaming_keep_alive_period = new DurationSpec("300s");
 
-    @Replaces(oldName = "cross_node_timeout", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "cross_node_timeout", converter = Converters.IDENTITY, deprecated = true)
     public boolean internode_timeout = true;
 
     @Replaces(oldName = "slow_query_log_timeout_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
@@ -189,9 +189,9 @@ public class Config
     @Replaces(oldName = "internode_max_message_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated=true)
     public DataStorageSpec internode_max_message_size;
 
-    @Replaces(oldName = "internode_send_buff_size_in_bytes", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "internode_send_buff_size_in_bytes", converter = Converters.IDENTITY, deprecated = true)
     public int internode_socket_send_buffer_size_in_bytes = 0;
-    @Replaces(oldName = "internode_recv_buff_size_in_bytes", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "internode_recv_buff_size_in_bytes", converter = Converters.IDENTITY, deprecated = true)
     public int internode_socket_receive_buffer_size_in_bytes = 0;
 
     // TODO: derive defaults from system memory settings?
@@ -460,22 +460,22 @@ public class Config
     @Replaces(oldName = "prepared_statements_cache_size_mb", converter = Converters.MEBIBYTES_DATASTORAGE, deprecated = true)
     public DataStorageSpec prepared_statements_cache_size = null;
 
-    @Replaces(oldName = "enable_user_defined_functions", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_user_defined_functions", converter = Converters.IDENTITY, deprecated = true)
     public boolean user_defined_functions_enabled = false;
 
-    @Replaces(oldName = "enable_scripted_user_defined_functions", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_scripted_user_defined_functions", converter = Converters.IDENTITY, deprecated = true)
     public boolean scripted_user_defined_functions_enabled = false;
 
-    @Replaces(oldName = "enable_materialized_views", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_materialized_views", converter = Converters.IDENTITY, deprecated = true)
     public boolean materialized_views_enabled = false;
 
-    @Replaces(oldName = "enable_transient_replication", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_transient_replication", converter = Converters.IDENTITY, deprecated = true)
     public boolean transient_replication_enabled = false;
 
-    @Replaces(oldName = "enable_sasi_indexes", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_sasi_indexes", converter = Converters.IDENTITY, deprecated = true)
     public boolean sasi_indexes_enabled = false;
 
-    @Replaces(oldName = "enable_drop_compact_storage", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_drop_compact_storage", converter = Converters.IDENTITY, deprecated = true)
     public volatile boolean drop_compact_storage_enabled = false;
 
     /**
@@ -489,7 +489,7 @@ public class Config
      */
     // Below parameter is not presented in cassandra.yaml but to be on the safe side that no one was directly using it
     // I still added backward compatibility (CASSANDRA-15234)
-    @Replaces(oldName = "enable_user_defined_functions_threads", converter = Converters.RENAME, deprecated = true)
+    @Replaces(oldName = "enable_user_defined_functions_threads", converter = Converters.IDENTITY, deprecated = true)
     public boolean user_defined_functions_threads_enabled = true;
     /**
      * Time in milliseconds after a warning will be emitted to the log and to the client that a UDF runs too long.

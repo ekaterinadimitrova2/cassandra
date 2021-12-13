@@ -41,7 +41,13 @@ public @interface Replaces
     /**
      * @return which converter we need depending on the old default unit that was used
      */
-    Converters converter() default Converters.RENAME;
+    Converters converter() default Converters.IDENTITY;
+
+    /**
+     * @return which converter we need to use in order to get the old value in the old unit, used for Virtual Tables
+     * to generate the old output pre-CASSANDRA-15234
+     */
+    Converters reverseConverter() default Converters.IDENTITY;
 
     /**
      * @return whether the parameter should be marked as deprecated or not and warning sent to the user
