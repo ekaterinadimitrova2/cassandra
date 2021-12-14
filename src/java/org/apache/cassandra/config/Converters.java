@@ -54,8 +54,8 @@ public enum Converters
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class, o -> DataRateSpec.inMebibytesPerSecond(((Long)o * 119209 / 1000000)),
-                                          o -> ((DataRateSpec)o).toMebibytesPerSecond() / 0.119209);
+    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class, o -> DataRateSpec.megabitsPerSecondInMebibytesPerSecond((Long)o),
+                                          o -> ((DataRateSpec)o).toMegabitsPerSecond());
     //KATE: Should we make precise conversion? It is not the 8 times difference mentioned in the cassandra.yaml TBD
 
     private final Class<?> inputType;

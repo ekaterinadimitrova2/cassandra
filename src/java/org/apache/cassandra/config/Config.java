@@ -280,6 +280,7 @@ public class Config
     
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converters.MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE, deprecated = true)
     public volatile DataRateSpec stream_throughput_outbound = new DataRateSpec("25MiB/s");
+    // Kate: Should we make those two 25 or 24...
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE, deprecated = true)
     public volatile DataRateSpec inter_dc_stream_throughput_outbound = new DataRateSpec("25MiB/s");
 

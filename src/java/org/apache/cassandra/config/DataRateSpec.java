@@ -96,6 +96,19 @@ public final class DataRateSpec
     }
 
     /**
+     * Creates a {@code DataRateSpec} of the specified amount of mebibytes per second.
+     *
+     * @param megabitsPerSecond the amount of megabits per second
+     * @return a {@code DataRateSpec}
+     */
+    public static DataRateSpec megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
+    {
+        long mebibytesPerSecond = Math.round((double)megabitsPerSecond * 0.119209);
+
+        return new DataRateSpec(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
+    }
+
+    /**
      * @return the data rate unit assigned.
      */
     public DataRateUnit getUnit()
@@ -157,6 +170,28 @@ public final class DataRateSpec
         return Ints.saturatedCast(toMebibytesPerSecond());
     }
 
+    /**
+     * This method is required in order to support backward compatibility with the old unit used for a few Data Rate
+     * paramters before CASSANDRA-15234
+     *
+     * @return the data rate in megabits per second.
+     */
+    public long toMegabitsPerSecond()
+    {
+        return unit.toMegabitsPerSecond(quantity);
+    }
+
+    /**
+     * Returns the data rate in megabits per seconds as an {@code int}. This method is required in order to support
+     * backward compatibility with the old unit used for a few Data Rate paramters before CASSANDRA-15234
+     *
+     * @return the data rate in mebibyts per seconds or {@code Integer.MAX_VALUE} if the number of mebibytes is too large.
+     */
+    public int toMegabitsPerSecondAsInt()
+    {
+        return Ints.saturatedCast(toMegabitsPerSecond());
+    }
+
     @Override
     public int hashCode()
     {
@@ -206,6 +241,8 @@ public final class DataRateSpec
                 return d / (1024 * 1024);
             }
 
+            public long toMegabitsPerSecond(long d) { return d / 125000; }
+
             public long convert(long source, DataRateUnit sourceUnit)
             {
                 return sourceUnit.toBytesPerSecond(source);
@@ -228,6 +265,11 @@ public final class DataRateSpec
                 return d / 1024;
             }
 
+            public long toMegabitsPerSecond(long d)
+            {
+                return d / 122;
+            }
+
             public long convert(long source, DataRateUnit sourceUnit)
             {
                 return sourceUnit.toKibibytesPerSecond(source);
@@ -248,6 +290,13 @@ public final class DataRateSpec
             public long toMebibytesPerSecond(long d)
             {
                 return d;
+            }
+
+            public long toMegabitsPerSecond(long d)
+            {
+                if ((double)d > MAX / (8.38861))
+                    return Long.MAX_VALUE;
+                return Math.round(d * 8.38861);
             }
 
             public long convert(long source, DataRateUnit sourceUnit)
@@ -309,6 +358,8 @@ public final class DataRateSpec
         {
             throw new AbstractMethodError();
         }
+
+        public long toMegabitsPerSecond(long d) { throw new AbstractMethodError(); }
 
         public long convert(long source, DataRateUnit sourceUnit)
         {
