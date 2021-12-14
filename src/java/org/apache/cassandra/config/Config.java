@@ -71,7 +71,7 @@ public class Config
     @Replaces(oldName = "credentials_validity_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
     public volatile DurationSpec credentials_validity = new DurationSpec("2s");
     public volatile int credentials_cache_max_entries = 1000;
-    @Replaces(oldName = "credentials_update_interval_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
+    @Replaces(oldName = "credentials_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile DurationSpec credentials_update_interval= new DurationSpec("0ms");
     public volatile boolean credentials_cache_active_update = false;
 
@@ -431,6 +431,7 @@ public class Config
 
     @Replaces(oldName = "index_summary_capacity_in_mb", converter = Converters.MEBIBYTES_DATASTORAGE, deprecated = true)
     public DataStorageSpec index_summary_capacity;
+    //KATE: Verify this one as disable is -1 but it seems it just throws exception as with any negative value
     @Replaces(oldName = "index_summary_resize_interval_in_minutes", converter = Converters.MINUTES_DURATION, deprecated = true)
     public volatile DurationSpec index_summary_resize_interval = new DurationSpec("60m");
 

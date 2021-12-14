@@ -35,26 +35,47 @@ public enum Converters
      * able to still use the old name too. No units involved.
      */
     IDENTITY(null, o -> o, o-> o),
-    MILLIS_DURATION(Long.class, o -> DurationSpec.inMilliseconds((Long) o), o -> ((DurationSpec)o).toMilliseconds()),
-    MILLIS_DOUBLE_DURATION(Double.class, o ->  DurationSpec.inDoubleMilliseconds((Double) o), o -> ((DurationSpec)o).toMilliseconds()),
+    MILLIS_DURATION(Long.class,
+                    o -> DurationSpec.inMilliseconds((Long) o),
+                    o -> ((DurationSpec)o).toMilliseconds()),
+    MILLIS_DOUBLE_DURATION(Double.class,
+                           o ->  DurationSpec.inDoubleMilliseconds((Double) o),
+                           o -> ((DurationSpec)o).toMilliseconds()),
     /**
      * This converter is a custom one for credentials_update_interval where in the past -1 was used, backward compatibility
      * between credentials_update_interval_in_ms = -1 and credentials_update_interval = null (quantity of 0ms) .
      */
-    MILLIS_CUTOM_DURATION(Long.class, o -> (long)o == (long)-1 ? (long)0 : DurationSpec.inMilliseconds((Long) o),
-                          o -> (long)o == (long)0 ? (long)-1 : ((DurationSpec)o).toMilliseconds()),
-    SECONDS_DURATION(Long.class, o -> DurationSpec.inSeconds((Long) o), o -> ((DurationSpec)o).toSeconds()),
-    MINUTES_DURATION(Long.class, o -> DurationSpec.inMinutes((Long) o), o -> ((DurationSpec)o).toMinutes()),
-    MEBIBYTES_DATASTORAGE(Long.class, o -> DataStorageSpec.inMebibytes((Long) o), o -> ((DataStorageSpec)o).toMebibytes()),
-    KIBIBYTES_DATASTORAGE(Long.class, o -> DataStorageSpec.inKibibytes((Long) o), o -> ((DataStorageSpec)o).toKibibytes()),
-    BYTES_DATASTORAGE(Long.class, o -> DataStorageSpec.inBytes((Long) o), o -> ((DataStorageSpec)o).toBytes()),
-    MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, o -> DataRateSpec.inMebibytesPerSecond((Long) o),
+    MILLIS_CUSTOM_DURATION(Long.class,
+                           o -> (long)o == (long)-1 ? (long)0 : DurationSpec.inMilliseconds((Long) o),
+                           o -> (long)o == (long)0 ? (long)-1 : ((DurationSpec)o).toMilliseconds()),
+    SECONDS_DURATION(Long.class,
+                     o -> DurationSpec.inSeconds((Long) o),
+                     o -> ((DurationSpec)o).toSeconds()),
+    MINUTES_DURATION(Long.class,
+                     o -> DurationSpec.inMinutes((Long) o),
+                     o -> ((DurationSpec)o).toMinutes()),
+    MINUTES_CUSTOM_DURATION(Long.class,
+                            o -> (long)o == (long)-1 ? (long)0 :
+                                             DurationSpec.inMinutes((Long) o),
+                            o -> ((DurationSpec)o).toMinutes()),
+    MEBIBYTES_DATASTORAGE(Long.class,
+                          o -> DataStorageSpec.inMebibytes((Long) o),
+                          o -> ((DataStorageSpec)o).toMebibytes()),
+    KIBIBYTES_DATASTORAGE(Long.class,
+                          o -> DataStorageSpec.inKibibytes((Long) o),
+                          o -> ((DataStorageSpec)o).toKibibytes()),
+    BYTES_DATASTORAGE(Long.class,
+                      o -> DataStorageSpec.inBytes((Long) o),
+                      o -> ((DataStorageSpec)o).toBytes()),
+    MEBIBYTES_PER_SECOND_DATA_RATE(Long.class,
+                                   o -> DataRateSpec.inMebibytesPerSecond((Long) o),
                                    o -> ((DataRateSpec)o).toMebibytesPerSecond()),
     /**
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class, o -> DataRateSpec.megabitsPerSecondInMebibytesPerSecond((Long)o),
+    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class,
+                                          o -> DataRateSpec.megabitsPerSecondInMebibytesPerSecond((Long)o),
                                           o -> ((DataRateSpec)o).toMegabitsPerSecond());
     //KATE: Should we make precise conversion? It is not the 8 times difference mentioned in the cassandra.yaml TBD
 

@@ -101,6 +101,7 @@ public class SetGetEntireSSTableInterDCStreamThroughputTest extends CQLTester
         ToolResult tool = invokeNodetool("getinterdcstreamthroughput", "-e");
         tool.assertOnCleanExit();
 
+        String t = tool.getStdout();
         if (expected > 0)
             assertThat(tool.getStdout()).contains("Current entire SSTable inter-datacenter stream throughput: " + expected + " Mb/s");
         else
