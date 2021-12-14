@@ -59,7 +59,7 @@ public class Config
     @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
     public volatile DurationSpec permissions_validity = new DurationSpec("2s");
     public volatile int permissions_cache_max_entries = 1000;
-    @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
+    @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile DurationSpec permissions_update_interval = new DurationSpec("0ms");
     public volatile boolean permissions_cache_active_update = false;
     @Replaces(oldName = "roles_validity_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)

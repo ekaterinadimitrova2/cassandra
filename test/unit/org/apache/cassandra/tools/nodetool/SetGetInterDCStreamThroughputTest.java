@@ -65,12 +65,6 @@ public class SetGetInterDCStreamThroughputTest extends CQLTester
     }
 
     @Test
-    public void testNegative()
-    {
-        assertSetGetValidThroughput(-7, Double.MAX_VALUE);
-    }
-
-    @Test
     public void testUnparseable()
     {
         assertSetInvalidThroughput("1.2", "inter_dc_stream_throughput: can not convert \"1.2\" to a int");
