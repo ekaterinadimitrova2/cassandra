@@ -25,8 +25,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.primitives.Ints;
 
-import org.apache.cassandra.exceptions.ConfigurationException;
-
 /**
  * Represents an amount of data storage. Wrapper class for Cassandra configuration parameters, providing to the
  * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
