@@ -56,7 +56,7 @@ public class Config
     public String role_manager;
     public String network_authorizer;
 
-    @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION, reverseConverter = Converters.TO_MILLIS, deprecated = true)
+    @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
     public volatile DurationSpec permissions_validity = new DurationSpec("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
@@ -440,9 +440,9 @@ public class Config
 
     // TTL for different types of trace events.
     @Replaces(oldName = "tracetype_query_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
-    public DurationSpec trace_type_query_ttl = new DurationSpec("86400s");
+    public DurationSpec trace_type_query_ttl = new DurationSpec("1d");
     @Replaces(oldName = "tracetype_repair_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
-    public DurationSpec trace_type_repair_ttl = new DurationSpec("604800s");
+    public DurationSpec trace_type_repair_ttl = new DurationSpec("7d");
 
     /**
      * Maintain statistics on whether writes achieve the ideal consistency level

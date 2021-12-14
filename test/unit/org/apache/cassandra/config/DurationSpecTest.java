@@ -39,6 +39,37 @@ public class DurationSpecTest
         assertEquals(10, new DurationSpec("10m").toMinutes());
         assertEquals(600000, new DurationSpec("10m").toMilliseconds());
         assertEquals(600, new DurationSpec("10m").toSeconds());
+        assertEquals(DurationSpec.inDoubleMilliseconds(0.7), new DurationSpec("1ms"));
+        assertEquals(DurationSpec.inDoubleMilliseconds(0.33), new DurationSpec("0ms"));
+        assertEquals(DurationSpec.inDoubleMilliseconds(0.333), new DurationSpec("0ms"));
+        assertEquals(0, new DurationSpec("0.333555555ms").toMilliseconds());
+    }
+
+    @Test
+    public void testFromSymbol()
+    {
+        assertEquals(DurationSpec.fromSymbol("ms"), TimeUnit.MILLISECONDS);
+        assertEquals(DurationSpec.fromSymbol("d"), TimeUnit.DAYS);
+        assertEquals(DurationSpec.fromSymbol("h"), TimeUnit.HOURS);
+        assertEquals(DurationSpec.fromSymbol("m"), TimeUnit.MINUTES);
+        assertEquals(DurationSpec.fromSymbol("s"), TimeUnit.SECONDS);
+        assertEquals(DurationSpec.fromSymbol("us"), TimeUnit.MICROSECONDS);
+        assertEquals(DurationSpec.fromSymbol("µs"), TimeUnit.MICROSECONDS);
+        assertEquals(DurationSpec.fromSymbol("ns"), TimeUnit.NANOSECONDS);
+        assertThatThrownBy(() -> DurationSpec.fromSymbol("n")).isInstanceOf(IllegalArgumentException.class)
+                                                              .hasMessageContaining("Unsupported time unit: n");
+    }
+
+    @Test
+    public void testGetSymbol()
+    {
+        assertEquals(DurationSpec.getSymbol(TimeUnit.MILLISECONDS), "ms");
+        assertEquals(DurationSpec.getSymbol(TimeUnit.DAYS), "d");
+        assertEquals(DurationSpec.getSymbol(TimeUnit.HOURS), "h");
+        assertEquals(DurationSpec.getSymbol(TimeUnit.MINUTES), "m");
+        assertEquals(DurationSpec.getSymbol(TimeUnit.SECONDS), "s");
+        assertEquals(DurationSpec.getSymbol(TimeUnit.MICROSECONDS), "us");
+        assertEquals(DurationSpec.getSymbol(TimeUnit.NANOSECONDS), "ns");
     }
 
     @Test

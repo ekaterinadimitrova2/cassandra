@@ -39,6 +39,39 @@ public class DataRateSpecTest
     }
 
     @Test
+    public void testOverflowingDuringConversion()
+    {
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807B/s").toBytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807B/s").toBytesPerSecondAsInt());
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toBytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toBytesPerSecondAsInt());
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecondAsInt());
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecondAsInt());
+
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toKibibytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toKibibytesPerSecondAsInt());
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toKibibytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toKibibytesPerSecondAsInt());
+
+        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toMebibytesPerSecond());
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toMebibytesPerSecondAsInt());
+    }
+
+    @Test
+    public void testFromSymbol()
+    {
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("B"), DataStorageSpec.DataStorageUnit.BYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("KiB"), DataStorageSpec.DataStorageUnit.KIBIBYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("MiB"), DataStorageSpec.DataStorageUnit.MEBIBYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("GiB"), DataStorageSpec.DataStorageUnit.GIBIBYTES);
+        assertThatThrownBy(() -> DataStorageSpec.DataStorageUnit.fromSymbol("n"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Unsupported data storage unit: n");
+    }
+
+    @Test
     public void testInvalidInputs()
     {
         assertThatThrownBy(() -> new DataRateSpec("10")).isInstanceOf(IllegalArgumentException.class)
@@ -47,7 +80,9 @@ public class DataRateSpecTest
                                                             .hasMessageContaining("Invalid bit rate: -10b/s");
         assertThatThrownBy(() -> new DataRateSpec("10xb/s")).isInstanceOf(IllegalArgumentException.class)
                                                             .hasMessageContaining("Invalid bit rate: 10xb/s");
-
+        assertThatThrownBy(() -> new DataRateSpec("9223372036854775809B/s")
+                                 .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
+                                            .hasMessageContaining("For input string: \"9223372036854775809\"");
     }
 
     @Test

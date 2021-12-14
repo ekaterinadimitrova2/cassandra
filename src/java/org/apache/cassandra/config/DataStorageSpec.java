@@ -25,6 +25,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.primitives.Ints;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
 /**
  * Represents an amount of data storage. Wrapper class for Cassandra configuration parameters, providing to the
  * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
@@ -150,7 +152,7 @@ public final class DataStorageSpec
     }
 
     /**
-     * @return the amount of data storage in megabytes
+     * @return the amount of data storage in mebibytes
      */
     public long toMebibytes()
     {
@@ -165,6 +167,24 @@ public final class DataStorageSpec
     public int toMebibytesAsInt()
     {
         return Ints.saturatedCast(toMebibytes());
+    }
+
+    /**
+     * @return the amount of data storage in gibibytes
+     */
+    public long toGibibytes()
+    {
+        return unit.toGibibytes(quantity);
+    }
+
+    /**
+     * Returns the amount of data storage in gibibytes as an {@code int}
+     *
+     * @return the amount of data storage in gibibytes or {@code Integer.MAX_VALUE} if the number of gibibytes is too large.
+     */
+    public int toGibibytesAsInt()
+    {
+        return Ints.saturatedCast(toGibibytes());
     }
 
     @Override
@@ -195,11 +215,6 @@ public final class DataStorageSpec
     public String toString()
     {
         return quantity + unit.symbol;
-    }
-
-    public String quantityToString()
-    {
-        return String.valueOf(quantity);
     }
 
     public enum DataStorageUnit

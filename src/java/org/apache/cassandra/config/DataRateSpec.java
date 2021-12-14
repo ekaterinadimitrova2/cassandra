@@ -187,11 +187,6 @@ public final class DataRateSpec
         return quantity + unit.symbol;
     }
 
-    public String quantityToString()
-    {
-        return String.valueOf(quantity);
-    }
-
     public enum DataRateUnit
     {
         BYTES_PER_SECOND("B/s")

@@ -75,7 +75,7 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertEquals(DataRateSpec.inMebibytesPerSecond(23), config.stream_throughput_outbound);
         assertEquals(DataRateSpec.inMebibytesPerSecond(25), config.inter_dc_stream_throughput_outbound);
         assertNull(config.commitlog_total_space);
-        assertEquals(DurationSpec.inMilliseconds(0), config.commitlog_sync_group_window);
+        assertEquals(DurationSpec.inDoubleMilliseconds(0), config.commitlog_sync_group_window);
         assertEquals(DurationSpec.inMilliseconds(0), config.commitlog_sync_period);
         assertEquals(DataStorageSpec.inMebibytes(32), config.commitlog_segment_size);
         assertNull(config.periodic_commitlog_sync_lag_block);  //Integer

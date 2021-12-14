@@ -40,7 +40,7 @@ public final class DurationSpec
     private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)"));
     private static final Pattern DOUBLE_TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+\\.\\d+)(d|h|s|ms|us|µs|ns|m)$"));
 
-    private final long quantity;
+    public final long quantity;
 
     private final TimeUnit unit;
 
@@ -64,7 +64,7 @@ public final class DurationSpec
         }
         else if(matcherDouble.find())
         {
-            quantity =(long) Double.parseDouble(matcherDouble.group(1));
+            quantity = Math.round(Double.parseDouble(matcherDouble.group(1)));
             unit = fromSymbol(matcherDouble.group(2));
         }
         else {
@@ -84,7 +84,7 @@ public final class DurationSpec
 
     private DurationSpec(double quantity, TimeUnit unit)
     {
-        this((long)quantity, unit);
+        this(Math.round(quantity), unit);
     }
 
     /**
@@ -129,7 +129,7 @@ public final class DurationSpec
      * @param symbol the time unit symbol
      * @return the time unit associated to the specified symbol
      */
-    private TimeUnit fromSymbol(String symbol)
+    static TimeUnit fromSymbol(String symbol)
     {
         switch (symbol.toLowerCase())
         {
@@ -242,18 +242,13 @@ public final class DurationSpec
         return quantity + getSymbol(unit);
     }
 
-    public String quantityToString()
-    {
-        return String.valueOf(quantity);
-    }
-
     /**
      * Returns the symbol associated to the specified unit
      *
      * @param unit the time unit
      * @return the time unit symbol
      */
-    private static String getSymbol(TimeUnit unit)
+    static String getSymbol(TimeUnit unit)
     {
         switch (unit)
         {

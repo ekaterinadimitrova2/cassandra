@@ -41,6 +41,46 @@ public class DataStorageSpecTest
     }
 
     @Test
+    public void testOverflowingDuringConversion()
+    {
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807B").toBytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807B").toBytesAsInt());
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toBytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toBytesAsInt());
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toBytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toBytesAsInt());
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toBytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toBytesAsInt());
+
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toKibibytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toKibibytesAsInt());
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toKibibytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toKibibytesAsInt());
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toKibibytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toKibibytesAsInt());
+
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toMebibytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toMebibytesAsInt());
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toMebibytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toMebibytesAsInt());
+
+        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toGibibytes());
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toGibibytesAsInt());
+    }
+
+    @Test
+    public void testFromSymbol()
+    {
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("B"), DataStorageSpec.DataStorageUnit.BYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("KiB"), DataStorageSpec.DataStorageUnit.KIBIBYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("MiB"), DataStorageSpec.DataStorageUnit.MEBIBYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("GiB"), DataStorageSpec.DataStorageUnit.GIBIBYTES);
+        assertThatThrownBy(() -> DataStorageSpec.DataStorageUnit.fromSymbol("n"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Unsupported data storage unit: n");
+    }
+
+    @Test
     public void testInvalidInputs()
     {
         assertThatThrownBy(() -> new DataStorageSpec("10")).isInstanceOf(IllegalArgumentException.class)
@@ -51,6 +91,9 @@ public class DataStorageSpecTest
                                                              .hasMessageContaining("Invalid data storage: -10b");
         assertThatThrownBy(() -> new DataStorageSpec("10HG")).isInstanceOf(IllegalArgumentException.class)
                                                              .hasMessageContaining("Invalid data storage: 10HG");
+        assertThatThrownBy(() -> new DataStorageSpec("9223372036854775809B")
+                                 .toBytes()).isInstanceOf(NumberFormatException.class)
+                                            .hasMessageContaining("For input string: \"9223372036854775809\"");
     }
 
     @Test
@@ -89,7 +132,7 @@ public class DataStorageSpecTest
     private static Gen<DataStorageSpec> gen()
     {
         Gen<DataStorageSpec.DataStorageUnit> unitGen = SourceDSL.arbitrary().enumValues(DataStorageSpec.DataStorageUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);;
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
         Gen<DataStorageSpec> gen = rs -> new DataStorageSpec(valueGen.generate(rs), unitGen.generate(rs));
         return gen.describedAs(DataStorageSpec::toString);
     }

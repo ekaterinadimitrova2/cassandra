@@ -34,38 +34,39 @@ public enum Converters
      * This converter is used when we change the name of a cassandra.yaml configuration parameter but we want to be
      * able to still use the old name too. No units involved.
      */
-    IDENTITY(null, o -> o),
-    MILLIS_DURATION(Long.class, o -> DurationSpec.inMilliseconds((Long) o)),
-    MILLIS_DOUBLE_DURATION(Double.class, o -> o == null ? null : DurationSpec.inDoubleMilliseconds((Double) o)),
-    TO_MILLIS(DurationSpec.class, o -> o == null ? 0 : ((DurationSpec)o).toMilliseconds()),
+    IDENTITY(null, o -> o, o-> o),
+    MILLIS_DURATION(Long.class, o -> DurationSpec.inMilliseconds((Long) o), o -> ((DurationSpec)o).toMilliseconds()),
+    MILLIS_DOUBLE_DURATION(Double.class, o ->  DurationSpec.inDoubleMilliseconds((Double) o), o -> ((DurationSpec)o).toMilliseconds()),
     /**
      * This converter is a custom one for credentials_update_interval where in the past -1 was used, backward compatibility
      * between credentials_update_interval_in_ms = -1 and credentials_update_interval = null (quantity of 0ms) .
      */
-    MILLIS_CUTOM_DURATION(Long.class, o -> o == null ? null :
-                                           ((long)o == (long)-1 ? (long)0 : DurationSpec.inMilliseconds((Long) o))),
-    SECONDS_DURATION(Long.class, o -> o == null ? null : DurationSpec.inSeconds((Long) o)),
-    MINUTES_DURATION(Long.class, o -> DurationSpec.inMinutes((Long) o)),
-    MEBIBYTES_DATASTORAGE(Long.class, o -> o == null ? null : DataStorageSpec.inMebibytes((Long) o)),
-    KIBIBYTES_DATASTORAGE(Long.class, o -> o == null ? null : DataStorageSpec.inKibibytes((Long) o)),
-    BYTES_DATASTORAGE(Long.class, o -> o == null ? null : DataStorageSpec.inBytes((Long) o)),
-    MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, o -> o == null ? null : DataRateSpec.inMebibytesPerSecond((Long) o)),
+    MILLIS_CUTOM_DURATION(Long.class, o -> (long)o == (long)-1 ? (long)0 : DurationSpec.inMilliseconds((Long) o),
+                          o -> (long)o == (long)0 ? (long)-1 : ((DurationSpec)o).toMilliseconds()),
+    SECONDS_DURATION(Long.class, o -> DurationSpec.inSeconds((Long) o), o -> ((DurationSpec)o).toSeconds()),
+    MINUTES_DURATION(Long.class, o -> DurationSpec.inMinutes((Long) o), o -> ((DurationSpec)o).toMinutes()),
+    MEBIBYTES_DATASTORAGE(Long.class, o -> DataStorageSpec.inMebibytes((Long) o), o -> ((DataStorageSpec)o).toMebibytes()),
+    KIBIBYTES_DATASTORAGE(Long.class, o -> DataStorageSpec.inKibibytes((Long) o), o -> ((DataStorageSpec)o).toKibibytes()),
+    BYTES_DATASTORAGE(Long.class, o -> DataStorageSpec.inBytes((Long) o), o -> ((DataStorageSpec)o).toBytes()),
+    MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, o -> DataRateSpec.inMebibytesPerSecond((Long) o),
+                                   o -> ((DataRateSpec)o).toMebibytesPerSecond()),
     /**
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class,
-                                          o -> o == null ? null :
-                                               DataRateSpec.inMebibytesPerSecond(((Long)o * 119209 / 1000000)));
+    MEBIBYTES_PER_SECOND_CUSTOM_DATA_RATE(Long.class, o -> DataRateSpec.inMebibytesPerSecond(((Long)o * 119209 / 1000000)),
+                                          o -> ((DataRateSpec)o).toMebibytesPerSecond() / 0.119209);
     //KATE: Should we make precise conversion? It is not the 8 times difference mentioned in the cassandra.yaml TBD
 
     private final Class<?> inputType;
     private final Function<Object, Object> convert;
+    private final Function<Object, Object> reverseConvert;
 
-    Converters(Class<?> inputType, Function<Object, Object> convert)
+    Converters(Class<?> inputType, Function<Object, Object> convert, Function<Object, Object> reverseConvert)
     {
         this.inputType = inputType;
         this.convert = convert;
+        this.reverseConvert = reverseConvert;
     }
 
     /**
@@ -88,5 +89,18 @@ public enum Converters
     {
         if (value == null) return null;
         return convert.apply(value);
+    }
+
+    /**
+     * Apply the converter specified as part of the {@link Replaces} annotation in {@link Config} to get config parameters'
+     * values in the old format pre-CASSANDRA-15234 and in the right units, used in the Virtual Tables to ensure backward
+     * compatibility
+     * @param value we will use to calculate the output value
+     * @return the numeric value
+     */
+    public Object reverseApply(Object value)
+    {
+        if (value == null) return 0;
+        return reverseConvert.apply(value);
     }
 }
