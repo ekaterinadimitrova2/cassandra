@@ -46,18 +46,14 @@ public enum Converters
      * between credentials_update_interval_in_ms = -1 and credentials_update_interval = null (quantity of 0ms) .
      */
     MILLIS_CUSTOM_DURATION(Long.class,
-                           o -> (long)o == (long)-1 ? (long)0 : DurationSpec.inMilliseconds((Long) o),
-                           o -> (long)o == (long)0 ? (long)-1 : ((DurationSpec)o).toMilliseconds()),
+                           o -> (Long)o == -1 ? new DurationSpec("0ms") : DurationSpec.inMilliseconds((Long) o),
+                           o -> ((DurationSpec)o).toMilliseconds() == 0 ? -1 : ((DurationSpec)o).toMilliseconds()),
     SECONDS_DURATION(Long.class,
                      o -> DurationSpec.inSeconds((Long) o),
                      o -> ((DurationSpec)o).toSeconds()),
     MINUTES_DURATION(Long.class,
                      o -> DurationSpec.inMinutes((Long) o),
                      o -> ((DurationSpec)o).toMinutes()),
-    MINUTES_CUSTOM_DURATION(Long.class,
-                            o -> (long)o == (long)-1 ? (long)0 :
-                                             DurationSpec.inMinutes((Long) o),
-                            o -> ((DurationSpec)o).toMinutes()),
     MEBIBYTES_DATASTORAGE(Long.class,
                           o -> DataStorageSpec.inMebibytes((Long) o),
                           o -> ((DataStorageSpec)o).toMebibytes()),

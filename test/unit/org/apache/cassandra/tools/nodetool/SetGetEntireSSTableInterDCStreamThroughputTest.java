@@ -103,7 +103,7 @@ public class SetGetEntireSSTableInterDCStreamThroughputTest extends CQLTester
 
         String t = tool.getStdout();
         if (expected > 0)
-            assertThat(tool.getStdout()).contains("Current entire SSTable inter-datacenter stream throughput: " + expected + " Mb/s");
+            assertThat(tool.getStdout()).contains("Current entire SSTable inter-datacenter stream throughput: " + expected + " MiB/s");
         else
             assertThat(tool.getStdout()).contains("Current entire SSTable inter-datacenter stream throughput: unlimited");
     }

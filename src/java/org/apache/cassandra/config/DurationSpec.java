@@ -202,6 +202,14 @@ public final class DurationSpec
     }
 
     /**
+     * @return the duration value in milliseconds
+     */
+    public static long toMilliseconds(DurationSpec quantity)
+    {
+        return quantity.toMilliseconds();
+    }
+
+    /**
      * Returns this duration in number of milliseconds as an {@code int}
      *
      * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
