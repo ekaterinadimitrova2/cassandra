@@ -21,6 +21,7 @@ package org.apache.cassandra.tools.nodetool;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import org.apache.cassandra.config.DataRateSpec;
 import org.apache.cassandra.cql3.CQLTester;
 
 import static org.assertj.core.api.Assertions.withPrecision;
@@ -35,6 +36,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SetGetStreamThroughputTest extends CQLTester
 {
+    private static final int INTEGER_MAX_VALUE_MEGABITS_IN_MEBIBYTES = DataRateSpec
+                                                                       .megabitsPerSecondInMebibytesPerSecond(Integer.MAX_VALUE)
+                                                                       .toMebibytesPerSecondAsInt();
     @BeforeClass
     public static void setup() throws Exception
     {
@@ -50,25 +54,19 @@ public class SetGetStreamThroughputTest extends CQLTester
     @Test
     public void testPositive()
     {
-        assertSetGetValidThroughput(7, 7 * StreamRateLimiter.BYTES_PER_MEGABIT);
+        assertSetGetValidThroughput(7, 1 * StreamRateLimiter.BYTES_PER_MEBIBYTE);
     }
 
     @Test
     public void testMaxValue()
     {
-        assertSetGetValidThroughput(Integer.MAX_VALUE, Integer.MAX_VALUE * StreamRateLimiter.BYTES_PER_MEGABIT);
+        assertSetGetValidThroughput(Integer.MAX_VALUE, INTEGER_MAX_VALUE_MEGABITS_IN_MEBIBYTES * StreamRateLimiter.BYTES_PER_MEBIBYTE);
     }
 
     @Test
     public void testZero()
     {
         assertSetGetValidThroughput(0, Double.MAX_VALUE);
-    }
-
-    @Test
-    public void testNegative()
-    {
-        assertSetGetValidThroughput(-7, Double.MAX_VALUE);
     }
 
     @Test
@@ -86,7 +84,7 @@ public class SetGetStreamThroughputTest extends CQLTester
 
         assertGetThroughput(throughput);
 
-        assertThat(StreamRateLimiter.getRateLimiterRateInBytes()).isEqualTo(rateInBytes, withPrecision(0.01));
+        assertThat(StreamRateLimiter.getRateLimiterRateInBytes()).isEqualTo(rateInBytes, withPrecision(0.));
     }
 
     private static void assertSetInvalidThroughput(String throughput, String expectedErrorMessage)
@@ -103,7 +101,7 @@ public class SetGetStreamThroughputTest extends CQLTester
         tool.assertOnCleanExit();
 
         if (expected > 0)
-            assertThat(tool.getStdout()).contains("Current stream throughput: " + expected + " Mb/s");
+            assertThat(tool.getStdout()).contains("Current stream throughput: " + expected + " megabits per second");
         else
             assertThat(tool.getStdout()).contains("Current stream throughput: unlimited");
     }

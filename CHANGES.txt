@@ -1,4 +1,5 @@
 4.1
+ * Standardize storage configuration parameters' names. Support unit suffixes (CASSANDRA-15234)
  * Remove python 2.x support from cqlsh (CASSANDRA-17242)
  * Prewarm role and credential caches to avoid timeouts at startup (CASSANDRA-16958)
  * Make capacity/validity/updateinterval/activeupdate for Auth Caches configurable via nodetool (CASSANDRA-17063)
@@ -14,7 +15,7 @@
  * Add guardrails framework (CASSANDRA-17147)
  * Harden resource management on SSTable components to prevent future leaks (CASSANDRA-17174)
  * Make nodes more resilient to local unrelated files during startup (CASSANDRA-17082)
- * repair prepare message would produce a wrong error message if network timeout happened rather than reply wait timeout (CASSANDRA-16992)
+ * Repair prepare message would produce a wrong error message if network timeout happened rather than reply wait timeout (CASSANDRA-16992)
  * Log queries that fail on timeout or unavailable errors up to once per minute by default (CASSANDRA-17159)
  * Refactor normal/preview/IR repair to standardize repair cleanup and error handling of failed RepairJobs (CASSANDRA-17069)
  * Log missing peers in StartupClusterConnectivityChecker (CASSANDRA-17130)

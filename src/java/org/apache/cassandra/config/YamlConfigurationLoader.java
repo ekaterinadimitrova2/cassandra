@@ -321,7 +321,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
                         return null;
                     }
                 };
-                
+
                 if (replacement.deprecated)
                     deprecationWarnings.add(replacement.oldName);
             }
