@@ -35,7 +35,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
-import com.google.common.util.concurrent.MoreExecutors;
 
 import org.apache.cassandra.concurrent.ExecutorPlus;
 import org.apache.cassandra.config.Config;
@@ -232,13 +231,13 @@ public class ActiveRepairService implements IEndpointStateChangeSubscriber, IFai
     @Override
     public void setRepairSessionSpaceInMegabytes(int sizeInMegabytes)
     {
-        DatabaseDescriptor.setRepairSessionSpaceInMegabytes(sizeInMegabytes);
+        DatabaseDescriptor.setRepairSessionSpaceInMiB(sizeInMegabytes);
     }
 
     @Override
     public int getRepairSessionSpaceInMegabytes()
     {
-        return DatabaseDescriptor.getRepairSessionSpaceInMegabytes();
+        return DatabaseDescriptor.getRepairSessionSpaceInMiB();
     }
 
     public List<CompositeData> getRepairStats(List<String> schemaArgs, String rangeString)
