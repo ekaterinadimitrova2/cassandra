@@ -48,7 +48,7 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
     public static void setUpClass()
     {
         DatabaseDescriptor.setCDCEnabled(true);
-        DatabaseDescriptor.setCDCSpaceInMB(1024);
+        DatabaseDescriptor.setCDCSpaceInMiB(1024);
         CQLTester.setUpClass();
     }
 
@@ -70,10 +70,10 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
         TableMetadata cfm = currentTableMetadata();
 
         // Confirm that logic to check for whether or not we can allocate new CDC segments works
-        Integer originalCDCSize = DatabaseDescriptor.getCDCSpaceInMB();
+        Integer originalCDCSize = DatabaseDescriptor.getCDCSpaceInMiB();
         try
         {
-            DatabaseDescriptor.setCDCSpaceInMB(32);
+            DatabaseDescriptor.setCDCSpaceInMiB(32);
             // Spin until we hit CDC capacity and make sure we get a CDCWriteException
             try
             {
@@ -112,7 +112,7 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
         }
         finally
         {
-            DatabaseDescriptor.setCDCSpaceInMB(originalCDCSize);
+            DatabaseDescriptor.setCDCSpaceInMiB(originalCDCSize);
         }
     }
 
@@ -122,10 +122,10 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
         CommitLogSegmentManagerCDC cdcMgr = (CommitLogSegmentManagerCDC)CommitLog.instance.segmentManager;
         String ct = createTable("CREATE TABLE %s (idx int, data text, primary key(idx)) WITH cdc=true;");
 
-        int origSize = DatabaseDescriptor.getCDCSpaceInMB();
+        int origSize = DatabaseDescriptor.getCDCSpaceInMiB();
         try
         {
-            DatabaseDescriptor.setCDCSpaceInMB(16);
+            DatabaseDescriptor.setCDCSpaceInMiB(16);
             TableMetadata ccfm = Keyspace.open(keyspace()).getColumnFamilyStore(ct).metadata();
             // Spin until we hit CDC capacity and make sure we get a CDCWriteException
             try
@@ -158,7 +158,7 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
         }
         finally
         {
-            DatabaseDescriptor.setCDCSpaceInMB(origSize);
+            DatabaseDescriptor.setCDCSpaceInMiB(origSize);
         }
     }
 
@@ -191,9 +191,9 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
     {
         createTable("CREATE TABLE %s (idx int, data text, primary key(idx)) WITH cdc=true;");
         CommitLogSegment initialSegment = CommitLog.instance.segmentManager.allocatingFrom();
-        Integer originalCDCSize = DatabaseDescriptor.getCDCSpaceInMB();
+        Integer originalCDCSize = DatabaseDescriptor.getCDCSpaceInMiB();
 
-        DatabaseDescriptor.setCDCSpaceInMB(8);
+        DatabaseDescriptor.setCDCSpaceInMiB(8);
         try
         {
             for (int i = 0; i < 1000; i++)
@@ -209,7 +209,7 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
         }
         finally
         {
-            DatabaseDescriptor.setCDCSpaceInMB(originalCDCSize);
+            DatabaseDescriptor.setCDCSpaceInMiB(originalCDCSize);
         }
 
         CommitLog.instance.forceRecycleAllSegments();
@@ -284,9 +284,9 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
     {
         // Assert.assertEquals(0, new File(DatabaseDescriptor.getCDCLogLocation()).listFiles().length);
         String table_name = createTable("CREATE TABLE %s (idx int, data text, primary key(idx)) WITH cdc=true;");
-        Integer originalCDCSize = DatabaseDescriptor.getCDCSpaceInMB();
+        Integer originalCDCSize = DatabaseDescriptor.getCDCSpaceInMiB();
 
-        DatabaseDescriptor.setCDCSpaceInMB(8);
+        DatabaseDescriptor.setCDCSpaceInMiB(8);
         TableMetadata ccfm = Keyspace.open(keyspace()).getColumnFamilyStore(table_name).metadata();
         try
         {
@@ -304,7 +304,7 @@ public class CommitLogSegmentManagerCDCTest extends CQLTester
         }
         finally
         {
-            DatabaseDescriptor.setCDCSpaceInMB(originalCDCSize);
+            DatabaseDescriptor.setCDCSpaceInMiB(originalCDCSize);
         }
 
         CommitLog.instance.sync(true);
