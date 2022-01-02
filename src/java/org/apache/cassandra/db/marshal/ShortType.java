@@ -134,4 +134,24 @@ public class ShortType extends NumberType<Short>
     {
         return ByteBufferUtil.bytes((short) -toShort(input));
     }
+
+    public ByteBuffer abs(ByteBuffer input) {
+        return ByteBufferUtil.bytes((short) Math.abs(toShort(input)));
+    }
+
+    public ByteBuffer exp(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.exp(toShort(input)));
+    }
+
+    public ByteBuffer log(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.log(toShort(input)));
+    }
+
+    public ByteBuffer log10(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.log10(toShort(input)));
+    }
+
+    public ByteBuffer round(ByteBuffer input) {
+        return ByteBufferUtil.clone(input);
+    }
 }

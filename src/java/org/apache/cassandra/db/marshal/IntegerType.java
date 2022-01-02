@@ -252,4 +252,33 @@ public final class IntegerType extends NumberType<BigInteger>
     {
         return decompose(toBigInteger(input).negate());
     }
+
+    public ByteBuffer abs(ByteBuffer input) {
+        return decompose(toBigInteger(input).abs());
+    }
+
+    public ByteBuffer exp(ByteBuffer input) {
+        BigInteger bi = toBigInteger(input);
+        BigDecimal bd = new BigDecimal(bi);
+        BigDecimal out = DecimalType.instance.exp(bd);
+        return DecimalType.instance.decompose(out);
+    }
+
+    public ByteBuffer log(ByteBuffer input) {
+        BigInteger bi = toBigInteger(input);
+        BigDecimal bd = new BigDecimal(bi);
+        BigDecimal out = DecimalType.instance.log(bd);
+        return DecimalType.instance.decompose(out);
+    }
+
+    public ByteBuffer log10(ByteBuffer input) {
+        BigInteger bi = toBigInteger(input);
+        BigDecimal bd = new BigDecimal(bi);
+        BigDecimal out = DecimalType.instance.log10(bd);
+        return DecimalType.instance.decompose(out);
+    }
+
+    public ByteBuffer round(ByteBuffer input) {
+        return ByteBufferUtil.clone(input);
+    }
 }

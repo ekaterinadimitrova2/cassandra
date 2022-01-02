@@ -128,4 +128,24 @@ public class CounterColumnType extends NumberType<Long>
     {
         return ByteBufferUtil.bytes(-toLong(input));
     }
+
+    public ByteBuffer abs(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.abs(toLong(input)));
+    }
+
+    public ByteBuffer exp(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.exp(toLong(input)));
+    }
+
+    public ByteBuffer log(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.log(toLong(input)));
+    }
+
+    public ByteBuffer log10(ByteBuffer input) {
+        return ByteBufferUtil.bytes(Math.log10(toLong(input)));
+    }
+
+    public ByteBuffer round(ByteBuffer input) {
+        return ByteBufferUtil.clone(input);
+    }
 }

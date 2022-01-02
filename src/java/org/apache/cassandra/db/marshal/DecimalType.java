@@ -31,6 +31,7 @@ import org.apache.cassandra.serializers.TypeSerializer;
 import org.apache.cassandra.serializers.DecimalSerializer;
 import org.apache.cassandra.serializers.MarshalException;
 import org.apache.cassandra.transport.ProtocolVersion;
+import org.apache.cassandra.utils.BigDecimalUtil;
 import org.apache.cassandra.utils.ByteBufferUtil;
 
 public class DecimalType extends NumberType<BigDecimal>
@@ -185,5 +186,45 @@ public class DecimalType extends NumberType<BigDecimal>
     public ByteBuffer negate(ByteBuffer input)
     {
         return decompose(toBigDecimal(input).negate());
+    }
+
+    public ByteBuffer abs(ByteBuffer input) {
+        return decompose(toBigDecimal(input).abs());
+    }
+
+    public ByteBuffer exp(ByteBuffer input) {
+        return decompose(exp(toBigDecimal(input)));
+    }
+
+    protected BigDecimal exp(BigDecimal input) {
+        int scale = input.scale();
+        scale = Math.max(scale, MIN_SCALE);
+        scale = Math.min(scale, MAX_SCALE);
+        return BigDecimalUtil.exp(input, scale);
+    }
+
+    public ByteBuffer log(ByteBuffer input) {
+        return decompose(log(toBigDecimal(input)));
+    }
+
+    protected BigDecimal log(BigDecimal input) {
+        int scale = input.scale();
+        scale = Math.max(scale, MIN_SCALE);
+        scale = Math.min(scale, MAX_SCALE);
+        return BigDecimalUtil.ln(input, scale);
+    }
+
+    public ByteBuffer log10(ByteBuffer input) {
+        return decompose(log10(toBigDecimal(input)));
+    }
+
+    protected BigDecimal log10(BigDecimal input) {
+        return log(input).divide(log(new BigDecimal(10)), RoundingMode.HALF_EVEN);
+    }
+
+    public ByteBuffer round(ByteBuffer input) {
+        return IntegerType.instance.decompose(
+            toBigDecimal(input).setScale(0, RoundingMode.HALF_UP).toBigInteger()
+        );
     }
 }
