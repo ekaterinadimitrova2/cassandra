@@ -16,6 +16,7 @@
  * Runtime-configurable YAML option to prohibit USE statements (CASSANDRA-17318)
  * When streaming sees a ClosedChannelException this triggers the disk failure policy (CASSANDRA-17116)
  * Add a virtual table for exposing prepared statements metrics (CASSANDRA-17224)
+ * Expose all client options via system_views.clients and nodetool clientstats (CASSANDRA-16378)
  * Remove python 2.x support from cqlsh (CASSANDRA-17242)
  * Prewarm role and credential caches to avoid timeouts at startup (CASSANDRA-16958)
  * Make capacity/validity/updateinterval/activeupdate for Auth Caches configurable via nodetool (CASSANDRA-17063)
