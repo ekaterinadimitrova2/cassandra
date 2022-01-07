@@ -78,7 +78,7 @@ import org.slf4j.LoggerFactory;
 import static org.apache.cassandra.config.CassandraRelevantProperties.OS_ARCH;
 import static org.apache.cassandra.config.CassandraRelevantProperties.SUN_ARCH_DATA_MODEL;
 
-import static org.apache.cassandra.io.util.FileUtils.ONE_GB;
+import static org.apache.cassandra.io.util.FileUtils.ONE_GIB;
 import static org.apache.cassandra.io.util.FileUtils.ONE_MIB;
 
 public class DatabaseDescriptor
@@ -595,7 +595,7 @@ public class DatabaseDescriptor
 
             dataFreeBytes = saturatedSum(dataFreeBytes, tryGetSpace(datadir, FileStore::getUnallocatedSpace));
         }
-        if (dataFreeBytes < 64 * ONE_GB) // 64 GB
+        if (dataFreeBytes < 64 * ONE_GIB) // 64 GiB
             logger.warn("Only {} free across all data volumes. Consider adding more capacity to your cluster or removing obsolete snapshots",
                         FBUtilities.prettyPrintMemory(dataFreeBytes));
 
@@ -610,7 +610,7 @@ public class DatabaseDescriptor
 
             long freeBytes = tryGetSpace(conf.local_system_data_file_directory, FileStore::getUnallocatedSpace);
 
-            if (freeBytes < ONE_GB)
+            if (freeBytes < ONE_GIB)
                 logger.warn("Only {} free in the system data volume. Consider adding more capacity or removing obsolete snapshots",
                             FBUtilities.prettyPrintMemory(freeBytes));
         }
