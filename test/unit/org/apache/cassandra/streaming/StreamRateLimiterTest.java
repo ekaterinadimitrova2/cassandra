@@ -89,7 +89,7 @@ public class StreamRateLimiterTest
     public void testEntireSSTableStreamingIsRateLimited()
     {
         // Enable rate limiting for local traffic and inter-DC traffic
-        StorageService.instance.setEntireSSTableStreamThroughputMbPerSec(200);
+        StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(200);
         StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(200);
 
         // Rate-limiter enabled for a local peer
@@ -99,7 +99,7 @@ public class StreamRateLimiterTest
         assertTrue(StreamManager.getEntireSSTableRateLimiter(REMOTE_PEER_ADDRESS).isRateLimited());
 
         // Disable rate limiting for local traffic, but enable it for inter-DC traffic
-        StorageService.instance.setEntireSSTableStreamThroughputMbPerSec(0);
+        StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(0);
         StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(200);
 
         // Rate-limiter disabled for a local peer
@@ -109,7 +109,7 @@ public class StreamRateLimiterTest
         assertTrue(StreamManager.getEntireSSTableRateLimiter(REMOTE_PEER_ADDRESS).isRateLimited());
 
         // Enable rate limiting for local traffic, but disable it for inter-DC traffic
-        StorageService.instance.setEntireSSTableStreamThroughputMbPerSec(200);
+        StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(200);
         StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(0);
 
         // Rate-limiter enabled for a local peer
@@ -119,7 +119,7 @@ public class StreamRateLimiterTest
         assertTrue(StreamManager.getEntireSSTableRateLimiter(REMOTE_PEER_ADDRESS).isRateLimited());
 
         // Disable rate liming for local and inter-DC traffic
-        StorageService.instance.setEntireSSTableStreamThroughputMbPerSec(0);
+        StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(0);
         StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(-1);
 
         // Rate-limiter enabled for a local and remote peers

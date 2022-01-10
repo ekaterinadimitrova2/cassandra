@@ -197,7 +197,7 @@ public final class DataRateSpec
     @Override
     public int hashCode()
     {
-        return Objects.hash(unit.toKibibytesPerSecond(quantity));
+        return Objects.hash(unit.toKibibytesPerSecond(Math.round(quantity)));
     }
 
     @Override

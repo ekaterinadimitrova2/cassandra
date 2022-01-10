@@ -1516,17 +1516,17 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         return DatabaseDescriptor.getStreamThroughputOutboundMegabitsPerSec();
     }
 
-    public void setEntireSSTableStreamThroughputMbPerSec(int value)
+    public void setEntireSSTableStreamThroughputMebibytesPerSec(int value)
     {
-        int oldValue = DatabaseDescriptor.getEntireSSTableStreamThroughputOutboundMegabitsPerSec();
-        DatabaseDescriptor.setEntireSSTableStreamThroughputOutboundMegabitsPerSec(value);
+        int oldValue = DatabaseDescriptor.getEntireSSTableStreamThroughputOutboundMebibytesPerSec();
+        DatabaseDescriptor.setEntireSSTableStreamThroughputOutboundMebibytesPerSec(value);
         StreamManager.StreamRateLimiter.updateEntireSSTableThroughput();
         logger.info("setstreamthroughput (entire SSTable): throttle set to {}{} MiB/s (was {} MiB/s)", value, value <= 0 ? " (unlimited)" : "", oldValue);
     }
 
     public int getEntireSSTableStreamThroughputMbPerSec()
     {
-        return DatabaseDescriptor.getEntireSSTableStreamThroughputOutboundMegabitsPerSec();
+        return DatabaseDescriptor.getEntireSSTableStreamThroughputOutboundMebibytesPerSec();
     }
 
     public void setInterDCStreamThroughputMbPerSec(int value)
@@ -1544,7 +1544,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
     public void setEntireSSTableInterDCStreamThroughputMbPerSec(int value)
     {
-        int oldValue = DatabaseDescriptor.getEntireSSTableInterDCStreamThroughputOutboundMegabitsPerSec();
+        int oldValue = DatabaseDescriptor.getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec();
         DatabaseDescriptor.setEntireSSTableInterDCStreamThroughputOutboundMegabitsPerSec(value);
         StreamManager.StreamRateLimiter.updateEntireSSTableInterDCThroughput();
         logger.info("setinterdcstreamthroughput (entire SSTable): throttle set to {}{} MiB/s (was {} MiB/s)", value, value <= 0 ? " (unlimited)" : "", oldValue);
@@ -1552,7 +1552,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
     public int getEntireSSTableInterDCStreamThroughputMbPerSec()
     {
-        return DatabaseDescriptor.getEntireSSTableInterDCStreamThroughputOutboundMegabitsPerSec();
+        return DatabaseDescriptor.getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec();
     }
 
     public int getCompactionThroughputMbPerSec()

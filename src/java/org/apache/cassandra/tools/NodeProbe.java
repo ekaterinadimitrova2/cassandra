@@ -1421,7 +1421,7 @@ public class NodeProbe implements AutoCloseable
 
     public void setEntireSSTableStreamThroughput(int value)
     {
-        ssProxy.setEntireSSTableStreamThroughputMbPerSec(value);
+        ssProxy.setEntireSSTableStreamThroughputMebibytesPerSec(value);
     }
 
     public void setEntireSSTableInterDCStreamThroughput(int value)
