@@ -630,7 +630,7 @@ public interface StorageServiceMBean extends NotificationEmitter
     public void setEntireSSTableInterDCStreamThroughputMebibytesPerSec(int value);
     public int getEntireSSTableInterDCStreamThroughputMebibytesPerSec();
 
-    public int getCompactionThroughputMbPerSec();
+    public int getCompactionThroughputMebibytesPerSec();
     public void setCompactionThroughputMbPerSec(int value);
 
     public int getBatchlogReplayThrottleInKB();

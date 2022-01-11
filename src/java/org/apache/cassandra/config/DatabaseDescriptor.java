@@ -1831,14 +1831,14 @@ public class DatabaseDescriptor
         return conf.compaction_throughput.toMebibytesPerSecondAsInt();
     }
 
-    public static int getCompactionThroughputMegabitsPerSec()
+    public static int getCompactionThroughputMebibytesPerSec()
     {
         return conf.compaction_throughput.toMegabitsPerSecondAsInt();
     }
 
-    public static void setCompactionThroughputMegabitsPerSec(int value)
+    public static void setCompactionThroughputMebibytesPerSec(int value)
     {
-        conf.compaction_throughput = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.compaction_throughput = DataRateSpec.inMebibytesPerSecond(value);
     }
 
     public static long getCompactionLargePartitionWarningThreshold()
