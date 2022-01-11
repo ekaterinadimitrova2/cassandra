@@ -90,7 +90,7 @@ public class StreamRateLimiterTest
     {
         // Enable rate limiting for local traffic and inter-DC traffic
         StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(200);
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(200);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(200);
 
         // Rate-limiter enabled for a local peer
         assertTrue(StreamManager.getEntireSSTableRateLimiter(FBUtilities.getBroadcastAddressAndPort()).isRateLimited());
@@ -100,7 +100,7 @@ public class StreamRateLimiterTest
 
         // Disable rate limiting for local traffic, but enable it for inter-DC traffic
         StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(0);
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(200);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(200);
 
         // Rate-limiter disabled for a local peer
         assertFalse(StreamManager.getEntireSSTableRateLimiter(FBUtilities.getBroadcastAddressAndPort()).isRateLimited());
@@ -110,7 +110,7 @@ public class StreamRateLimiterTest
 
         // Enable rate limiting for local traffic, but disable it for inter-DC traffic
         StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(200);
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(0);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(0);
 
         // Rate-limiter enabled for a local peer
         assertTrue(StreamManager.getEntireSSTableRateLimiter(FBUtilities.getBroadcastAddressAndPort()).isRateLimited());
@@ -120,7 +120,7 @@ public class StreamRateLimiterTest
 
         // Disable rate liming for local and inter-DC traffic
         StorageService.instance.setEntireSSTableStreamThroughputMebibytesPerSec(0);
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(-1);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(0);
 
         // Rate-limiter enabled for a local and remote peers
         assertFalse(StreamManager.getEntireSSTableRateLimiter(FBUtilities.getBroadcastAddressAndPort()).isRateLimited());

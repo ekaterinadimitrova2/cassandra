@@ -1524,7 +1524,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         logger.info("setstreamthroughput (entire SSTable): throttle set to {}{} MiB/s (was {} MiB/s)", value, value <= 0 ? " (unlimited)" : "", oldValue);
     }
 
-    public int getEntireSSTableStreamThroughputMbPerSec()
+    public int getEntireSSTableStreamThroughputMebibytesPerSec()
     {
         return DatabaseDescriptor.getEntireSSTableStreamThroughputOutboundMebibytesPerSec();
     }
@@ -1542,27 +1542,27 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         return DatabaseDescriptor.getInterDCStreamThroughputOutboundMegabitsPerSec();
     }
 
-    public void setEntireSSTableInterDCStreamThroughputMbPerSec(int value)
+    public void setEntireSSTableInterDCStreamThroughputMebibytesPerSec(int value)
     {
         int oldValue = DatabaseDescriptor.getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec();
-        DatabaseDescriptor.setEntireSSTableInterDCStreamThroughputOutboundMegabitsPerSec(value);
+        DatabaseDescriptor.setEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec(value);
         StreamManager.StreamRateLimiter.updateEntireSSTableInterDCThroughput();
         logger.info("setinterdcstreamthroughput (entire SSTable): throttle set to {}{} MiB/s (was {} MiB/s)", value, value <= 0 ? " (unlimited)" : "", oldValue);
     }
 
-    public int getEntireSSTableInterDCStreamThroughputMbPerSec()
+    public int getEntireSSTableInterDCStreamThroughputMebibytesPerSec()
     {
         return DatabaseDescriptor.getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec();
     }
 
     public int getCompactionThroughputMbPerSec()
     {
-        return DatabaseDescriptor.getCompactionThroughputMiBPerSec();
+        return DatabaseDescriptor.getCompactionThroughputMegabitsPerSec();
     }
 
     public void setCompactionThroughputMbPerSec(int value)
     {
-        DatabaseDescriptor.setCompactionThroughputMiBPerSec(value);
+        DatabaseDescriptor.setCompactionThroughputMegabitsPerSec(value);
         CompactionManager.instance.setRate(value);
     }
 

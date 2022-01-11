@@ -119,15 +119,15 @@ public class StreamManagerTest
         assertEquals(defaultEntireSSTableInterDCStreamThroughputMebibytesPerSec * BYTES_PER_MEBIBYTE, StreamRateLimiter.getEntireSSTableInterDCRateLimiterRateInBytes(), 0);
 
         // Positive value check
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(1200);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(1200);
         assertEquals(1200.0d * BYTES_PER_MEBIBYTE, StreamRateLimiter.getEntireSSTableInterDCRateLimiterRateInBytes(), 0);
 
         // Max positive value check
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(Integer.MAX_VALUE);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(Integer.MAX_VALUE);
         assertEquals(Integer.MAX_VALUE * BYTES_PER_MEBIBYTE, StreamRateLimiter.getEntireSSTableInterDCRateLimiterRateInBytes(), 0);
 
         // Zero value check
-        StorageService.instance.setEntireSSTableInterDCStreamThroughputMbPerSec(0);
+        StorageService.instance.setEntireSSTableInterDCStreamThroughputMebibytesPerSec(0);
         assertEquals(Double.MAX_VALUE, StreamRateLimiter.getEntireSSTableInterDCRateLimiterRateInBytes(), 0);
     }
 }

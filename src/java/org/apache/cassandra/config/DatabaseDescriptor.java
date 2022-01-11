@@ -1831,9 +1831,14 @@ public class DatabaseDescriptor
         return conf.compaction_throughput.toMebibytesPerSecondAsInt();
     }
 
-    public static void setCompactionThroughputMiBPerSec(int value)
+    public static int getCompactionThroughputMegabitsPerSec()
     {
-        conf.compaction_throughput = DataRateSpec.inMebibytesPerSecond(value);
+        return conf.compaction_throughput.toMegabitsPerSecondAsInt();
+    }
+
+    public static void setCompactionThroughputMegabitsPerSec(int value)
+    {
+        conf.compaction_throughput = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static long getCompactionLargePartitionWarningThreshold()
@@ -1932,7 +1937,7 @@ public class DatabaseDescriptor
         return conf.entire_sstable_inter_dc_stream_throughput_outbound.toMebibytesPerSecondAsInt();
     }
 
-    public static void setEntireSSTableInterDCStreamThroughputOutboundMegabitsPerSec(int value)
+    public static void setEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec(int value)
     {
         conf.entire_sstable_inter_dc_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(value);
     }
