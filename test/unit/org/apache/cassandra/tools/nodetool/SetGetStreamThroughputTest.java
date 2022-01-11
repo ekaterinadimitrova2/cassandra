@@ -50,7 +50,7 @@ public class SetGetStreamThroughputTest extends CQLTester
     @Test
     public void testPositive()
     {
-        assertSetGetValidThroughput(7, 7 * StreamRateLimiter.BYTES_PER_MEBIBYTE);
+        assertSetGetValidThroughput(7, 0.834 * StreamRateLimiter.BYTES_PER_MEBIBYTE);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class SetGetStreamThroughputTest extends CQLTester
         tool.assertOnCleanExit();
 
         if (expected > 0)
-            assertThat(tool.getStdout()).contains("Current stream throughput: " + expected + " MiB/s");
+            assertThat(tool.getStdout()).contains("Current stream throughput: " + expected + " megabits per second");
         else
             assertThat(tool.getStdout()).contains("Current stream throughput: unlimited");
     }
