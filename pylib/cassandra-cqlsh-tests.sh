@@ -43,14 +43,14 @@ export NUM_TOKENS="32"
 export CASSANDRA_DIR=${WORKSPACE}
 export TESTSUITE_NAME="cqlshlib.${PYTHON_VERSION}"
 
-if [ -z "$CASSANDRA_USE_JDK11" ]; then
-    export CASSANDRA_USE_JDK11=false
+if [ -z "$CASSANDRA_USE_JDK17" ]; then
+    export CASSANDRA_USE_JDK17=false
 fi
 
-if [ "$CASSANDRA_USE_JDK11" = true ] ; then
-    TESTSUITE_NAME="${TESTSUITE_NAME}.jdk11"
+if [ "$CASSANDRA_USE_JDK17" = true ] ; then
+    TESTSUITE_NAME="${TESTSUITE_NAME}.jdk17"
 else
-    TESTSUITE_NAME="${TESTSUITE_NAME}.jdk8"
+    TESTSUITE_NAME="${TESTSUITE_NAME}.jdk11"
 fi
 
 ant -buildfile ${CASSANDRA_DIR}/build.xml realclean
