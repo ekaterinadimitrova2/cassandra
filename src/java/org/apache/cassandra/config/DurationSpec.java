@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -26,25 +27,28 @@ import java.util.stream.Collectors;
 
 import com.google.common.primitives.Ints;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
 /**
- * Represents a positive time duration.
+ * Represents a positive time duration. Wrapper class for Cassandra duration configuration parameters, providing to the
+ * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
+ * options. (CASSANDRA-15234)
  */
-public final class Duration
+public final class DurationSpec
 {
     /**
      * The Regexp used to parse the duration provided as String.
      */
-    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)([a-zA-Z]{1,2}|µs|µS)$"));
-    private static final Pattern DOUBLE_TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+\\.\\d+)([a-zA-Z]{1,2}|µs|µS)$"));
-    
-    private final long quantity;
+    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)"));
+    private static final Pattern VALUES_PATTERN = Pattern.compile(("^(\\d+)"));
+
+    public final long quantity;
 
     private final TimeUnit unit;
 
-
-    public Duration(String value)
+    public DurationSpec(String value)
     {
-        if (value == null || value.equals("null"))
+        if (value == null || value.equals("null") || value.toLowerCase(Locale.ROOT).equals("nan"))
         {
             quantity = 0;
             unit = TimeUnit.MILLISECONDS;
@@ -53,86 +57,112 @@ public final class Duration
 
         //parse the string field value
         Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
-        Matcher matcherDouble = DOUBLE_TIME_UNITS_PATTERN.matcher(value);
 
         if(matcher.find())
         {
             quantity = Long.parseLong(matcher.group(1));
             unit = fromSymbol(matcher.group(2));
         }
-        else if(matcherDouble.find())
+        else
         {
-            quantity =(long) Double.parseDouble(matcherDouble.group(1));
-            unit = fromSymbol(matcherDouble.group(2));
-        }
-        else {
-            throw new IllegalArgumentException("Invalid duration: " + value);
+            throw new ConfigurationException("Invalid duration: " + value + " Accepted units: d, h, m, s, ms, us, µs," +
+                                             " ns where case matters and " + "only non-negative values");
         }
     }
 
-    private Duration(long quantity, TimeUnit unit)
+    DurationSpec(long quantity, TimeUnit unit)
     {
         if (quantity < 0)
-            throw new IllegalArgumentException("Duration must be positive");
+            throw new ConfigurationException("Invalid duration: value must be positive");
 
         this.quantity = quantity;
         this.unit = unit;
     }
 
-    private Duration(double quantity, TimeUnit unit)
+    private DurationSpec(double quantity, TimeUnit unit)
     {
-        if (quantity < 0)
-            throw new IllegalArgumentException("Duration must be positive");
-
-        this.quantity = (long) quantity;
-        this.unit = unit;
+        this(Math.round(quantity), unit);
     }
 
     /**
-     * Creates a {@code Duration} of the specified amount of milliseconds.
+     * Creates a {@code DurationSpec} of the specified amount of milliseconds.
      *
      * @param milliseconds the amount of milliseconds
      * @return a duration
      */
-    public static Duration inMilliseconds(long milliseconds)
+    public static DurationSpec inMilliseconds(long milliseconds)
     {
-        return new Duration(milliseconds, TimeUnit.MILLISECONDS);
+        return new DurationSpec(milliseconds, TimeUnit.MILLISECONDS);
     }
 
-    public static Duration inDoubleMilliseconds(double milliseconds)
+    public static DurationSpec inDoubleMilliseconds(double milliseconds)
     {
-        return new Duration(milliseconds, TimeUnit.MILLISECONDS);
+        return new DurationSpec(milliseconds, TimeUnit.MILLISECONDS);
     }
 
     /**
-     * Creates a {@code Duration} of the specified amount of seconds.
+     * Creates a {@code DurationSpec} of the specified amount of seconds.
      *
      * @param seconds the amount of seconds
      * @return a duration
      */
-    public static Duration inSeconds(long seconds)
+    public static DurationSpec inSeconds(long seconds)
     {
-        return new Duration(seconds, TimeUnit.SECONDS);
+        return new DurationSpec(seconds, TimeUnit.SECONDS);
     }
 
     /**
-     * Creates a {@code Duration} of the specified amount of minutes.
+     * Creates a {@code DurationSpec} of the specified amount of minutes.
      *
      * @param minutes the amount of minutes
      * @return a duration
      */
-    public static Duration inMinutes(long minutes)
+    public static DurationSpec inMinutes(long minutes)
     {
-        return new Duration(minutes, TimeUnit.MINUTES);
+        return new DurationSpec(minutes, TimeUnit.MINUTES);
     }
 
     /**
-     * Returns the time unit associated to the specified symbol
+     * Creates a {@code DurationSpec} of the specified amount of hours.
      *
+     * @param hours the amount of hours
+     * @return a duration
+     */
+    public static DurationSpec inHours(long hours)
+    {
+        return new DurationSpec(hours, TimeUnit.HOURS);
+    }
+
+    /**
+     * Creates a {@code DurationSpec} of the specified amount of seconds. Custom method for special cases.
+     *
+     * @param value which can be in the old form only presenting the quantity or the post CASSANDRA-15234 form - a
+     * value consisting of quantity and unit. This method is necessary for three parameters which didn't change their
+     * names but only their value format. (key_cache_save_period, row_cache_save_period, counter_cache_save_period)
+     * @return a duration
+     */
+    public static DurationSpec inSecondsString(String value)
+    {
+        //parse the string field value
+        Matcher matcher = VALUES_PATTERN.matcher(value);
+
+        long seconds;
+        //if the provided string value is just a number, then we create a Duration Spec value in seconds
+        if (matcher.find())
+        {
+            seconds = Long.parseLong(matcher.group(1));
+            return new DurationSpec(seconds, TimeUnit.SECONDS);
+        }
+
+        //otherwise we just use the standard constructors
+        return new DurationSpec(value);
+    }
+
+    /**
      * @param symbol the time unit symbol
      * @return the time unit associated to the specified symbol
      */
-    private TimeUnit fromSymbol(String symbol)
+    static TimeUnit fromSymbol(String symbol)
     {
         switch (symbol.toLowerCase())
         {
@@ -145,15 +175,13 @@ public final class Duration
             case "µs": return TimeUnit.MICROSECONDS;
             case "ns": return TimeUnit.NANOSECONDS;
         }
-        throw new IllegalArgumentException(String.format("Unsupported time unit: %s. Supported units are: %s",
+        throw new ConfigurationException(String.format("Unsupported time unit: %s. Supported units are: %s",
                                                          symbol, Arrays.stream(TimeUnit.values())
-                                                                       .map(Duration::getSymbol)
+                                                                       .map(DurationSpec::getSymbol)
                                                                        .collect(Collectors.joining(", "))));
     }
 
     /**
-     * Returns this duration in the specified time unit
-     *
      * @param targetUnit the time unit
      * @return this duration in the specified time unit
      */
@@ -163,8 +191,24 @@ public final class Duration
     }
 
     /**
-     * Returns this duration in number of minutes
+     * @return this duration in number of hours
+     */
+    public long toHours()
+    {
+        return unit.toHours(quantity);
+    }
+
+    /**
+     * Returns this duration in number of minutes as an {@code int}
      *
+     * @return this duration in number of minutes or {@code Integer.MAX_VALUE} if the number of minutes is too large.
+     */
+    public int toHoursAsInt()
+    {
+        return Ints.saturatedCast(toHours());
+    }
+
+    /**
      * @return this duration in number of minutes
      */
     public long toMinutes()
@@ -183,8 +227,6 @@ public final class Duration
     }
 
     /**
-     * Returns this duration in number of seconds
-     *
      * @return this duration in number of seconds
      */
     public long toSeconds()
@@ -203,13 +245,19 @@ public final class Duration
     }
 
     /**
-     * Returns this duration in number of milliseconds
-     *
      * @return this duration in number of milliseconds
      */
     public long toMilliseconds()
     {
         return unit.toMillis(quantity);
+    }
+
+    /**
+     * @return the duration value in milliseconds
+     */
+    public static long toMilliseconds(DurationSpec quantity)
+    {
+        return quantity.toMilliseconds();
     }
 
     /**
@@ -235,15 +283,15 @@ public final class Duration
         if (this == obj)
             return true;
 
-        if (!(obj instanceof Duration))
+        if (!(obj instanceof DurationSpec))
             return false;
 
-        Duration other = (Duration) obj;
+        DurationSpec other = (DurationSpec) obj;
         if (unit == other.unit)
             return quantity == other.quantity;
 
         // Due to overflows we can only guarantee that the 2 durations are equal if we get the same results
-        // doing the convertion in both directions.
+        // doing the conversion in both directions.
         return unit.convert(other.quantity, other.unit) == quantity && other.unit.convert(quantity, unit) == other.quantity;
     }
 
@@ -259,7 +307,7 @@ public final class Duration
      * @param unit the time unit
      * @return the time unit symbol
      */
-    private static String getSymbol(TimeUnit unit)
+    static String getSymbol(TimeUnit unit)
     {
         switch (unit)
         {
@@ -274,3 +322,4 @@ public final class Duration
         throw new AssertionError();
     }
 }
+

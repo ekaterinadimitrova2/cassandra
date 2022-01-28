@@ -317,7 +317,7 @@ public class KeyCacheTest
             throw new IllegalStateException();
 
         Util.compactAll(cfs, Integer.MAX_VALUE).get();
-        boolean noEarlyOpen = DatabaseDescriptor.getSSTablePreemptiveOpenIntervalInMB() < 0;
+        boolean noEarlyOpen = DatabaseDescriptor.getSSTablePreemptiveOpenIntervalInMiB() < 0;
 
         // after compaction cache should have entries for new SSTables,
         // but since we have kept a reference to the old sstables,
@@ -341,7 +341,7 @@ public class KeyCacheTest
     @Test
     public void testKeyCacheLoadNegativeCacheLoadTime() throws Exception
     {
-        DatabaseDescriptor.setCacheLoadTimeout(-1);
+        DatabaseDescriptor.setCacheLoadTimeout(0);
         String cf = COLUMN_FAMILY7;
 
         createAndInvalidateCache(Collections.singletonList(Pair.create(KEYSPACE1, cf)), 100);
