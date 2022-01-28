@@ -111,9 +111,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -272,9 +272,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -378,9 +378,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -492,9 +492,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -584,9 +584,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -676,9 +676,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -769,9 +769,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -862,9 +862,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -955,9 +955,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1090,9 +1090,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1204,9 +1204,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1302,9 +1302,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1379,9 +1379,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1455,9 +1455,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1518,9 +1518,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1624,9 +1624,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1730,9 +1730,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1829,9 +1829,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -1884,9 +1884,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2046,9 +2046,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2123,9 +2123,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2215,9 +2215,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2322,9 +2322,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2420,9 +2420,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2512,9 +2512,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2604,9 +2604,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2667,9 +2667,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2773,9 +2773,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2827,9 +2827,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2890,9 +2890,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -2988,9 +2988,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -3095,9 +3095,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -3256,9 +3256,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
@@ -3351,9 +3351,9 @@ jobs:
       - REPEATED_UTEST_METHODS: null
       - REPEATED_UTEST_COUNT: 100
       - REPEATED_UTEST_STOP_ON_FAILURE: false
-      - REPEATED_DTEST_NAME: commitlog_test.py
+      - REPEATED_DTEST_NAME: bootstrap_test.py::TestBootstrap::test_bootstrap_with_reset_bootstrap_state
       - REPEATED_DTEST_VNODES: false
-      - REPEATED_DTEST_COUNT: 1
+      - REPEATED_DTEST_COUNT: 100
       - REPEATED_DTEST_STOP_ON_FAILURE: false
       - REPEATED_UPGRADE_DTEST_NAME: null
       - REPEATED_UPGRADE_DTEST_COUNT: 100
