@@ -81,7 +81,7 @@ public final class DurationSpec
 
     private DurationSpec(double quantity, TimeUnit unit)
     {
-        this(Math.round(quantity), unit);
+        this((int)quantity, unit);
     }
 
     /**

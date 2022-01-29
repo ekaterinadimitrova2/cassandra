@@ -44,7 +44,7 @@ public class DurationSpecTest
         assertEquals(600000, new DurationSpec("10m").toMilliseconds());
         assertEquals(600, new DurationSpec("10m").toSeconds());
         assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807s").toSecondsAsInt());
-        assertEquals(DurationSpec.inDoubleMilliseconds(0.7), new DurationSpec("1ms"));
+        assertEquals(DurationSpec.inDoubleMilliseconds(0.7), new DurationSpec("0ms"));
         assertEquals(DurationSpec.inDoubleMilliseconds(0.33), new DurationSpec("0ms"));
         assertEquals(DurationSpec.inDoubleMilliseconds(0.333), new DurationSpec("0ms"));
     }
