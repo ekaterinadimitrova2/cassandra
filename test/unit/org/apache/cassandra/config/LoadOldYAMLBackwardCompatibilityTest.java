@@ -119,8 +119,11 @@ public class LoadOldYAMLBackwardCompatibilityTest
         //parameters which names have not changed with CASSANDRA-15234
         assertEquals(DurationSpec.inSecondsString("14400"), config.key_cache_save_period);
         assertEquals(DurationSpec.inHours(4), config.key_cache_save_period);
+        assertEquals(DurationSpec.inSecondsString("4h"), config.key_cache_save_period);
         assertEquals(DurationSpec.inSecondsString("0"), config.row_cache_save_period);
+        assertEquals(DurationSpec.inSecondsString("0m"), config.row_cache_save_period);
         assertEquals(DurationSpec.inSeconds(0), config.row_cache_save_period);
         assertEquals(DurationSpec.inHours(2), config.counter_cache_save_period);
+        assertEquals(DurationSpec.inSecondsString("2h"), config.counter_cache_save_period);
     }
 }
