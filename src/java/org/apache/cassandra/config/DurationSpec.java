@@ -40,7 +40,7 @@ public final class DurationSpec
      * The Regexp used to parse the duration provided as String.
      */
     private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)"));
-    private static final Pattern VALUES_PATTERN = Pattern.compile(("^(\\d+)"));
+    private static final Pattern VALUES_PATTERN = Pattern.compile(("\\d+"));
 
     public final long quantity;
 
@@ -148,9 +148,9 @@ public final class DurationSpec
 
         long seconds;
         //if the provided string value is just a number, then we create a Duration Spec value in seconds
-        if (matcher.find())
+        if (matcher.matches())
         {
-            seconds = Long.parseLong(matcher.group(1));
+            seconds = Long.parseLong(value);
             return new DurationSpec(seconds, TimeUnit.SECONDS);
         }
 
