@@ -103,7 +103,7 @@ public class Config
     public Integer allocate_tokens_for_local_replication_factor = null;
 
     @Replaces(oldName = "native_transport_idle_timeout_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
-    public volatile DurationSpec native_transport_idle_timeout = new DurationSpec("0ms");
+    public DurationSpec native_transport_idle_timeout = new DurationSpec("0ms");
 
     @Replaces(oldName = "request_timeout_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
     public volatile DurationSpec request_timeout = new DurationSpec("10000ms");
@@ -354,9 +354,9 @@ public class Config
     public InternodeCompression internode_compression = InternodeCompression.none;
 
     @Replaces(oldName = "hinted_handoff_throttle_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile DataStorageSpec hinted_handoff_throttle = new DataStorageSpec("1024KiB");
+    public DataStorageSpec hinted_handoff_throttle = new DataStorageSpec("1024KiB");
     @Replaces(oldName = "batchlog_replay_throttle_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile DataStorageSpec batchlog_replay_throttle = new DataStorageSpec("1024KiB");
+    public DataStorageSpec batchlog_replay_throttle = new DataStorageSpec("1024KiB");
     public int max_hints_delivery_threads = 2;
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
     public DurationSpec hints_flush_period = new DurationSpec("10s");
@@ -382,7 +382,7 @@ public class Config
 
     public String row_cache_class_name = "org.apache.cassandra.cache.OHCProvider";
     @Replaces(oldName = "row_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE, deprecated = true)
-    public volatile DataStorageSpec row_cache_size = new DataStorageSpec("0MiB");
+    public DataStorageSpec row_cache_size = new DataStorageSpec("0MiB");
     @Replaces(oldName = "row_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
     public volatile DurationSpec row_cache_save_period = new DurationSpec("0s");
     public volatile int row_cache_keys_to_save = Integer.MAX_VALUE;
@@ -438,7 +438,7 @@ public class Config
     public final ReplicaFilteringProtectionOptions replica_filtering_protection = new ReplicaFilteringProtectionOptions();
 
     @Replaces(oldName = "index_summary_capacity_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE, deprecated = true)
-    public DataStorageSpec index_summary_capacity;
+    public volatile DataStorageSpec index_summary_capacity;
     @Replaces(oldName = "index_summary_resize_interval_in_minutes", converter = Converters.MINUTES_DURATION, deprecated = true)
     public volatile DurationSpec index_summary_resize_interval = new DurationSpec("60m");
 
