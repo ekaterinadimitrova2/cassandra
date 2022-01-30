@@ -402,10 +402,10 @@ public class LoaderOptions
                 {
                     config = new Config();
                     // unthrottle stream by default
-                    config.stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(0);
-                    config.inter_dc_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(0);
-                    config.entire_sstable_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(0);
-                    config.entire_sstable_inter_dc_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(0);
+                    config.stream_throughput_outbound_megabits_per_sec = 0;
+                    config.inter_dc_stream_throughput_outbound_megabits_per_sec = 0;
+                    config.entire_sstable_stream_throughput_outbound_megabits_per_sec = 0;
+                    config.entire_sstable_inter_dc_stream_throughput_outbound_megabits_per_sec = 0;
                 }
 
 
@@ -461,7 +461,7 @@ public class LoaderOptions
                 else
                     sslStoragePort = config.ssl_storage_port;
 
-                throttle = config.stream_throughput_outbound.toMebibytesPerSecondAsInt();
+                throttle = config.stream_throughput_outbound_megabits_per_sec;
                 // Copy the encryption options and apply the config so that argument parsing can accesss isEnabled.
                 clientEncOptions = config.client_encryption_options.applyConfig();
                 serverEncOptions = config.server_encryption_options;

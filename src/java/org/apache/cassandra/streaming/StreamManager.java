@@ -86,6 +86,7 @@ public class StreamManager implements StreamManagerMBean
     public static class StreamRateLimiter implements StreamingDataOutputPlus.RateLimiter
     {
         public static final double BYTES_PER_MEBIBYTE = 1024.0 * 1024.0; // from bits
+        public static final double BYTES_PER_MEGABIT = (1000 * 1000) / 8.0; // from bits
         private static final RateLimiter LIMITER = RateLimiter.create(calculateRateInBytes());
         private static final RateLimiter INTER_DC_LIMITER = RateLimiter.create(calculateInterDCRateInBytes());
         private static final RateLimiter ENTIRE_SSTABLE_LIMITER = RateLimiter.create(calculateEntireSSTableRateInBytes());
@@ -198,7 +199,7 @@ public class StreamManager implements StreamManagerMBean
         {
             // if throughput is set to 0 or negative value, throttling is disabled
             return throughput > 0
-                   ? throughput * BYTES_PER_MEBIBYTE
+                   ? throughput * BYTES_PER_MEGABIT
                    : Double.MAX_VALUE;
         }
     }

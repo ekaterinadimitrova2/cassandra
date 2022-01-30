@@ -281,13 +281,17 @@ public class Config
     
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
     public volatile DataRateSpec stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile int stream_throughput_outbound_megabits_per_sec = 24;
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
     public volatile DataRateSpec inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile int inter_dc_stream_throughput_outbound_megabits_per_sec = 24;
 
     @Replaces(oldName = "entire_sstable_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
     public volatile DataRateSpec entire_sstable_stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile int entire_sstable_stream_throughput_outbound_megabits_per_sec = 24;
     @Replaces(oldName = "entire_sstable_inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
     public volatile DataRateSpec entire_sstable_inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile int entire_sstable_inter_dc_stream_throughput_outbound_megabits_per_sec = 24;
 
     public String[] data_file_directories = new String[0];
 
