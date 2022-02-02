@@ -554,8 +554,7 @@ public class Config
 
     public volatile boolean denylist_range_reads_enabled = true;
 
-    // public DurationSpec denylist_refresh = new DurationSpec("600s");
-    public int denylist_refresh_seconds = 600;
+    public DurationSpec denylist_refresh = new DurationSpec("600s");
 
     // public DurationSpec denylist_initial_load_retry = new DurationSpec("5s");
     public int denylist_initial_load_retry_seconds = 5;
