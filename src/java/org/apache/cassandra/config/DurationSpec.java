@@ -79,6 +79,34 @@ public final class DurationSpec
         this.unit = unit;
     }
 
+    private boolean checkValidForMillisConversion(long value, TimeUnit unit)
+    {
+        switch(unit)
+        {
+            case NANOSECONDS: if(((double)value/1000000.0) != 0.0)
+                throw new ConfigurationException("Invalid duration: value in nanoseconds must be number convertable to milliseconds, Integer");
+            case MICROSECONDS: if(((double)value/1000.0) != 0.0)
+                throw new ConfigurationException("Invalid duration: value in microseconds must be number convertable to milliseconds, Integer");
+        }
+
+        return true;
+    }
+
+    private boolean checkValidForSecondsConversion(long value, TimeUnit unit)
+    {
+        switch(unit)
+        {
+            case NANOSECONDS: if(((double)value/1000000000.0) != 0.0)
+                throw new ConfigurationException("Invalid duration: value in nanoseconds must be number convertable to seconds, Integer");
+            case MICROSECONDS: if(((double)value/1000000.0) != 0.0)
+                throw new ConfigurationException("Invalid duration: value in microseconds must be number convertable to seconds, Integer");
+            case MILLISECONDS: if(((double)value/1000.0) != 0.0)
+                throw new ConfigurationException("Invalid duration: value in microseconds must be number convertable to seconds, Integer");
+        }
+
+        return true;
+    }
+
     private DurationSpec(double quantity, TimeUnit unit)
     {
         this(Math.round(quantity), unit);

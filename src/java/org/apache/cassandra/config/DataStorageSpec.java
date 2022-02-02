@@ -228,11 +228,21 @@ public final class DataStorageSpec
 
             public long toKibibytes(long d)
             {
+                /*double inKibi = (double) d / 1024.0;
+                if (Math.floor(inKibi) == 0)
+                    return 1;*/
+
                 return (d / 1024L);
             }
 
             public long toMebibytes(long d)
             {
+                /*double inMebi = (double) d / (1024.0 * 1024.0);
+                long inMebiLong = d / (1024L * 1024);
+                if (inMebi != inMebiLong)
+                    throw new ConfigurationException("Invalid data storage: " + d + " Accepted units: B, KiB, MiB, GiB" +
+                                                     " where case matters and only non-negative values are accepted");*/
+
                 return (d / (1024L * 1024));
             }
 
