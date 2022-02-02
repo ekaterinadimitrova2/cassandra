@@ -374,9 +374,6 @@ public class DatabaseDescriptor
         //InetAddressAndPort and get the right defaults
         InetAddressAndPort.initializeDefaultPort(getStoragePort());
 
-        if (conf.denylist_refresh.toSeconds() == 0 && conf.denylist_refresh.quantity != 0)
-            throw new ConfigurationException("denylist_refresh should be equivalent to at least 1 when converted to seconds from any of the accepted time duration units", false);
-
         if (conf.commitlog_sync == null)
         {
             throw new ConfigurationException("Missing required directive CommitLogSync", false);
@@ -3676,14 +3673,15 @@ public class DatabaseDescriptor
 
     public static int getDenylistInitialLoadRetrySeconds()
     {
-        return conf.denylist_initial_load_retry_seconds;
+        return conf.denylist_initial_load_retry.toSecondsAsInt();
     }
 
     public static void setDenylistInitialLoadRetrySeconds(int seconds)
     {
         if (seconds <= 0)
-            throw new IllegalArgumentException("denylist_initial_load_retry_seconds must be a positive integer.");
-        conf.denylist_initial_load_retry_seconds = seconds;
+            throw new IllegalArgumentException("denylist_initial_load_retry must be a positive integer.");
+
+        conf.denylist_initial_load_retry = DurationSpec.inSeconds(seconds);
     }
 
     public static ConsistencyLevel getDenylistConsistencyLevel()

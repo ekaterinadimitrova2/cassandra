@@ -556,8 +556,7 @@ public class Config
 
     public DurationSpec denylist_refresh = new DurationSpec("600s");
 
-    // public DurationSpec denylist_initial_load_retry = new DurationSpec("5s");
-    public int denylist_initial_load_retry_seconds = 5;
+    public DurationSpec denylist_initial_load_retry = new DurationSpec("5s");
 
     /** We cap the number of denylisted keys allowed per table to keep things from growing unbounded. Operators will
      * receive warnings and only denylist_max_keys_per_table in natural query ordering will be processed on overflow.
