@@ -3668,7 +3668,7 @@ public class DatabaseDescriptor
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_refresh must be a positive integer.");
 
-        conf.denylist_refresh = (SmallestDurationSeconds) DurationSpec.inSeconds(seconds);
+        conf.denylist_refresh = SmallestDurationSeconds.inSeconds(seconds);
     }
 
     public static int getDenylistInitialLoadRetrySeconds()
