@@ -25,6 +25,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.primitives.Ints;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
@@ -34,15 +36,23 @@ import org.apache.cassandra.exceptions.ConfigurationException;
  * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
  * options. (CASSANDRA-15234)
  */
-public final class DurationSpec
+public class DurationSpec
 {
+    /**
+     * Immutable map that matches supported time units according to a provided smallest supported time unit
+     */
+    private static final ImmutableMap<TimeUnit, ImmutableSet<TimeUnit>> mapUnitsPerMinUnit =
+    ImmutableMap.of(TimeUnit.MILLISECONDS, ImmutableSet.of(TimeUnit.MILLISECONDS, TimeUnit.SECONDS, TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS),
+                    TimeUnit.SECONDS, ImmutableSet.of(TimeUnit.SECONDS, TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS),
+                    TimeUnit.MINUTES, ImmutableSet.of(TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS));
     /**
      * The Regexp used to parse the duration provided as String.
      */
-    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)"));
+    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)$"));
+
     private static final Pattern VALUES_PATTERN = Pattern.compile(("\\d+"));
 
-    public final long quantity;
+    private final long quantity;
 
     private final TimeUnit unit;
 
@@ -82,6 +92,36 @@ public final class DurationSpec
     private DurationSpec(double quantity, TimeUnit unit)
     {
         this(Math.round(quantity), unit);
+    }
+
+    public DurationSpec(String value, TimeUnit minUnit)
+    {
+        if (value == null || value.equals("null") || value.toLowerCase(Locale.ROOT).equals("nan"))
+        {
+            quantity = 0;
+            unit = minUnit;
+            return;
+        }
+
+        if (!mapUnitsPerMinUnit.containsKey(minUnit))
+            throw new ConfigurationException("Invalid smallest unit set for " + value);
+
+        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
+
+        if(matcher.find())
+        {
+            quantity = Long.parseLong(matcher.group(1));
+            unit = fromSymbol(matcher.group(2));
+
+            if (!mapUnitsPerMinUnit.get(minUnit).contains(unit))
+                throw new ConfigurationException("Invalid duration: " + value + " Accepted smallest unit is " + minUnit +
+                                                 "For more information, please, check NEWS.txt and the documentation");
+        }
+        else
+        {
+            throw new ConfigurationException("Invalid duration: " + value + " Accepted units: d, h, m, s, ms, us, µs," +
+                                             "ns where case matters and only non-negative values.");
+        }
     }
 
     /**
