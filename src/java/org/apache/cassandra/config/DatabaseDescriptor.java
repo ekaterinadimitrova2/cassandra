@@ -3681,7 +3681,7 @@ public class DatabaseDescriptor
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_initial_load_retry must be a positive integer.");
 
-        conf.denylist_initial_load_retry = (SmallestDurationSeconds) DurationSpec.inSeconds(seconds);
+        conf.denylist_initial_load_retry = SmallestDurationSeconds.inSeconds(seconds);
     }
 
     public static ConsistencyLevel getDenylistConsistencyLevel()
