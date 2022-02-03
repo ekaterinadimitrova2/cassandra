@@ -2828,11 +2828,11 @@ public class DatabaseDescriptor
 
     public static int getSSTablePreemptiveOpenIntervalInMB()
     {
-        return FBUtilities.isWindows ? -1 : conf.sstable_preemptive_open_interval_in_mb;
+        return FBUtilities.isWindows ? -1 : conf.sstable_preemptive_open_interval.toMebibytesAsInt();
     }
     public static void setSSTablePreemptiveOpenIntervalInMB(int mb)
     {
-        conf.sstable_preemptive_open_interval_in_mb = mb;
+        conf.sstable_preemptive_open_interval = SmallestDataStorageMebibytes.inMebibytes(mb);
     }
 
     public static boolean getTrickleFsync()
@@ -2842,7 +2842,7 @@ public class DatabaseDescriptor
 
     public static int getTrickleFsyncIntervalInKb()
     {
-        return conf.trickle_fsync_interval_in_kb;
+        return conf.trickle_fsync_interval.toKibibytesAsInt();
     }
 
     public static long getKeyCacheSizeInMB()
