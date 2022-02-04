@@ -130,7 +130,7 @@ public class DatabaseDescriptor
 
     private static long preparedStatementsCacheSizeInMB;
 
-    private static long keyCacheSizeInMB;
+    private static long keyCacheSizeInMiB;
     private static long counterCacheSizeInMB;
     private static long indexSummaryCapacityInMB;
 
@@ -702,18 +702,18 @@ public class DatabaseDescriptor
 
         try
         {
-            // if key_cache_size_in_mb option was set to "auto" then size of the cache should be "min(5% of Heap (in MB), 100MB)
-            keyCacheSizeInMB = (conf.key_cache_size_in_mb == null)
+            // if key_cache_size option was set to "auto" then size of the cache should be "min(5% of Heap (in MiB), 100MiB)
+            keyCacheSizeInMiB = (conf.key_cache_size == null)
                                ? Math.min(Math.max(1, (int) (Runtime.getRuntime().totalMemory() * 0.05 / 1024 / 1024)), 100)
-                               : conf.key_cache_size_in_mb;
+                               : conf.key_cache_size.toMebibytes();
 
-            if (keyCacheSizeInMB < 0)
+            if (keyCacheSizeInMiB < 0)
                 throw new NumberFormatException(); // to escape duplicating error message
         }
         catch (NumberFormatException e)
         {
-            throw new ConfigurationException("key_cache_size_in_mb option was set incorrectly to '"
-                                             + conf.key_cache_size_in_mb + "', supported values are <integer> >= 0.", false);
+            throw new ConfigurationException("key_cache_size option was set incorrectly to '"
+                                             + conf.key_cache_size.toString() + "', supported values are <integer> >= 0.", false);
         }
 
         try
@@ -2878,7 +2878,7 @@ public class DatabaseDescriptor
 
     public static long getKeyCacheSizeInMB()
     {
-        return keyCacheSizeInMB;
+        return keyCacheSizeInMiB;
     }
 
     public static long getIndexSummaryCapacityInMB()
@@ -2888,12 +2888,12 @@ public class DatabaseDescriptor
 
     public static int getKeyCacheSavePeriod()
     {
-        return conf.key_cache_save_period;
+        return conf.key_cache_save_period.toSecondsAsInt();
     }
 
     public static void setKeyCacheSavePeriod(int keyCacheSavePeriod)
     {
-        conf.key_cache_save_period = keyCacheSavePeriod;
+        conf.key_cache_save_period = SmallestDurationSeconds.inSeconds(keyCacheSavePeriod);
     }
 
     public static int getKeyCacheKeysToSave()
@@ -2911,25 +2911,25 @@ public class DatabaseDescriptor
         return conf.row_cache_class_name;
     }
 
-    public static long getRowCacheSizeInMB()
+    public static long getRowCacheSizeInMiB()
     {
-        return conf.row_cache_size_in_mb;
+        return conf.row_cache_size.toMebibytes();
     }
 
     @VisibleForTesting
-    public static void setRowCacheSizeInMB(long val)
+    public static void setRowCacheSizeInMiB(long val)
     {
-        conf.row_cache_size_in_mb = val;
+        conf.row_cache_size = SmallestDataStorageMebibytes.inMebibytes(val);
     }
 
     public static int getRowCacheSavePeriod()
     {
-        return conf.row_cache_save_period;
+        return conf.row_cache_save_period.toSecondsAsInt();
     }
 
     public static void setRowCacheSavePeriod(int rowCacheSavePeriod)
     {
-        conf.row_cache_save_period = rowCacheSavePeriod;
+        conf.row_cache_save_period = SmallestDurationSeconds.inSeconds(rowCacheSavePeriod);
     }
 
     public static int getRowCacheKeysToSave()

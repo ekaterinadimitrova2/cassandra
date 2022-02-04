@@ -121,10 +121,10 @@ public class CacheService implements CacheServiceMBean
      */
     private AutoSavingCache<RowCacheKey, IRowCacheEntry> initRowCache()
     {
-        logger.info("Initializing row cache with capacity of {} MBs", DatabaseDescriptor.getRowCacheSizeInMB());
+        logger.info("Initializing row cache with capacity of {} MBs", DatabaseDescriptor.getRowCacheSizeInMiB());
 
         CacheProvider<RowCacheKey, IRowCacheEntry> cacheProvider;
-        String cacheProviderClassName = DatabaseDescriptor.getRowCacheSizeInMB() > 0
+        String cacheProviderClassName = DatabaseDescriptor.getRowCacheSizeInMiB() > 0
                                         ? DatabaseDescriptor.getRowCacheClassName() : "org.apache.cassandra.cache.NopCacheProvider";
         try
         {

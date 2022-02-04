@@ -376,18 +376,24 @@ public class Config
 
     public volatile boolean incremental_backups = false;
     public boolean trickle_fsync = false;
+    @Replaces(oldName = "trickle_fsync_interval_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
     public SmallestDataStorageKibibytes trickle_fsync_interval = new SmallestDataStorageKibibytes("10240KiB");
 
+    @Replaces(oldName = "sstable_preemptive_open_interval_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE, deprecated = true)
     public volatile SmallestDataStorageMebibytes sstable_preemptive_open_interval = new SmallestDataStorageMebibytes("50MiB");
 
     public volatile boolean key_cache_migrate_during_compaction = true;
-    public Long key_cache_size_in_mb = null;
-    public volatile int key_cache_save_period = 14400;
     public volatile int key_cache_keys_to_save = Integer.MAX_VALUE;
+    @Replaces(oldName = "key_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE, deprecated = true)
+    public SmallestDataStorageMebibytes key_cache_size = null;
+    @Replaces(oldName = "key_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
+    public volatile SmallestDurationSeconds key_cache_save_period = new SmallestDurationSeconds("4h");
 
     public String row_cache_class_name = "org.apache.cassandra.cache.OHCProvider";
-    public long row_cache_size_in_mb = 0;
-    public volatile int row_cache_save_period = 0;
+    @Replaces(oldName = "row_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE, deprecated = true)
+    public SmallestDataStorageMebibytes row_cache_size = new SmallestDataStorageMebibytes("0MiB");
+    @Replaces(oldName = "row_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
+    public volatile SmallestDurationSeconds row_cache_save_period = new SmallestDurationSeconds("0s");
     public volatile int row_cache_keys_to_save = Integer.MAX_VALUE;
 
     public Long counter_cache_size_in_mb = null;
