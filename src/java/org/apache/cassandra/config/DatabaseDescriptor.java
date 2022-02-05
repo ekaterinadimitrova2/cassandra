@@ -128,11 +128,11 @@ public class DatabaseDescriptor
     // depend on the configured IAuthenticator, so defer creating it until that's been set.
     private static IRoleManager roleManager;
 
-    private static long preparedStatementsCacheSizeInMB;
+    private static long preparedStatementsCacheSizeInMiB;
 
     private static long keyCacheSizeInMiB;
-    private static long counterCacheSizeInMB;
-    private static long indexSummaryCapacityInMB;
+    private static long counterCacheSizeInMiB;
+    private static long indexSummaryCapacityInMiB;
 
     private static String localDC;
     private static Comparator<Replica> localComparator;
@@ -431,11 +431,6 @@ public class DatabaseDescriptor
             logger.info("DiskAccessMode is {}, indexAccessMode is {}", conf.disk_access_mode, indexAccessMode);
         }
 
-        if (conf.gc_warn_threshold_in_ms < 0)
-        {
-            throw new ConfigurationException("gc_warn_threshold_in_ms must be a positive integer");
-        }
-
         /* phi convict threshold for FailureDetector */
         if (conf.phi_convict_threshold < 5 || conf.phi_convict_threshold > 16)
         {
@@ -459,11 +454,11 @@ public class DatabaseDescriptor
         if (conf.concurrent_replicates != null)
             logger.warn("concurrent_replicates has been deprecated and should be removed from cassandra.yaml");
 
-        if (conf.networking_cache_size_in_mb == null)
-            conf.networking_cache_size_in_mb = Math.min(128, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576)));
+        if (conf.networking_cache_size == null)
+            conf.networking_cache_size = SmallestDataStorageMebibytes.inMebibytes(Math.min(128, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
-        if (conf.file_cache_size_in_mb == null)
-            conf.file_cache_size_in_mb = Math.min(512, (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
+        if (conf.file_cache_size == null)
+            conf.file_cache_size = SmallestDataStorageMebibytes.inMebibytes(Math.min(512, (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
 
         // round down for SSDs and round up for spinning disks
         if (conf.file_cache_round_up == null)
@@ -686,18 +681,18 @@ public class DatabaseDescriptor
 
         try
         {
-            // if prepared_statements_cache_size_mb option was set to "auto" then size of the cache should be "max(1/256 of Heap (in MB), 10MB)"
-            preparedStatementsCacheSizeInMB = (conf.prepared_statements_cache_size_mb == null)
+            // if prepared_statements_cache_size option was set to "auto" then size of the cache should be "max(1/256 of Heap (in MiB), 10MiB)"
+            preparedStatementsCacheSizeInMiB = (conf.prepared_statements_cache_size == null)
                                               ? Math.max(10, (int) (Runtime.getRuntime().maxMemory() / 1024 / 1024 / 256))
-                                              : conf.prepared_statements_cache_size_mb;
+                                              : conf.prepared_statements_cache_size.toMebibytes();
 
-            if (preparedStatementsCacheSizeInMB <= 0)
+            if (preparedStatementsCacheSizeInMiB <= 0)
                 throw new NumberFormatException(); // to escape duplicating error message
         }
         catch (NumberFormatException e)
         {
-            throw new ConfigurationException("prepared_statements_cache_size_mb option was set incorrectly to '"
-                                             + conf.prepared_statements_cache_size_mb + "', supported values are <integer> >= 0.", false);
+            throw new ConfigurationException("prepared_statements_cache_size option was set incorrectly to '"
+                                             + conf.prepared_statements_cache_size + "', supported values are <integer> >= 0.", false);
         }
 
         try
@@ -713,33 +708,33 @@ public class DatabaseDescriptor
         catch (NumberFormatException e)
         {
             throw new ConfigurationException("key_cache_size option was set incorrectly to '"
-                                             + conf.key_cache_size.toString() + "', supported values are <integer> >= 0.", false);
+                                             + (conf.key_cache_size != null ? conf.key_cache_size.toString() : null) + "', supported values are <integer> >= 0.", false);
         }
 
         try
         {
-            // if counter_cache_size_in_mb option was set to "auto" then size of the cache should be "min(2.5% of Heap (in MB), 50MB)
-            counterCacheSizeInMB = (conf.counter_cache_size_in_mb == null)
+            // if counter_cache_size option was set to "auto" then size of the cache should be "min(2.5% of Heap (in MiB), 50MiB)
+            counterCacheSizeInMiB = (conf.counter_cache_size == null)
                                    ? Math.min(Math.max(1, (int) (Runtime.getRuntime().totalMemory() * 0.025 / 1024 / 1024)), 50)
-                                   : conf.counter_cache_size_in_mb;
+                                   : conf.counter_cache_size.toMebibytes();
 
-            if (counterCacheSizeInMB < 0)
+            if (counterCacheSizeInMiB < 0)
                 throw new NumberFormatException(); // to escape duplicating error message
         }
         catch (NumberFormatException e)
         {
-            throw new ConfigurationException("counter_cache_size_in_mb option was set incorrectly to '"
-                                             + conf.counter_cache_size_in_mb + "', supported values are <integer> >= 0.", false);
+            throw new ConfigurationException("counter_cache_size option was set incorrectly to '"
+                                             + conf.counter_cache_size + "', supported values are <integer> >= 0.", false);
         }
 
         // if set to empty/"auto" then use 5% of Heap size
-        indexSummaryCapacityInMB = (conf.index_summary_capacity_in_mb == null)
+        indexSummaryCapacityInMiB = (conf.index_summary_capacity == null)
                                    ? Math.max(1, (int) (Runtime.getRuntime().totalMemory() * 0.05 / 1024 / 1024))
-                                   : conf.index_summary_capacity_in_mb;
+                                   : conf.index_summary_capacity.toMebibytes();
 
-        if (indexSummaryCapacityInMB < 0)
-            throw new ConfigurationException("index_summary_capacity_in_mb option was set incorrectly to '"
-                                             + conf.index_summary_capacity_in_mb + "', it should be a non-negative integer.", false);
+        if (indexSummaryCapacityInMiB < 0)
+            throw new ConfigurationException("index_summary_capacity option was set incorrectly to '"
+                                             + conf.index_summary_capacity.toString() + "', it should be a non-negative integer.", false);
 
         if (conf.user_defined_function_fail_timeout < 0)
             throw new ConfigurationException("user_defined_function_fail_timeout must not be negative", false);
@@ -2799,25 +2794,25 @@ public class DatabaseDescriptor
 
     public static int getFileCacheSizeInMB()
     {
-        if (conf.file_cache_size_in_mb == null)
+        if (conf.file_cache_size == null)
         {
             // In client mode the value is not set.
             assert DatabaseDescriptor.isClientInitialized();
             return 0;
         }
 
-        return conf.file_cache_size_in_mb;
+        return conf.file_cache_size.toMebibytesAsInt();
     }
 
     public static int getNetworkingCacheSizeInMB()
     {
-        if (conf.networking_cache_size_in_mb == null)
+        if (conf.networking_cache_size == null)
         {
             // In client mode the value is not set.
             assert DatabaseDescriptor.isClientInitialized();
             return 0;
         }
-        return conf.networking_cache_size_in_mb;
+        return conf.networking_cache_size.toMebibytesAsInt();
     }
 
     public static boolean getFileCacheRoundUp()
@@ -2883,7 +2878,7 @@ public class DatabaseDescriptor
 
     public static long getIndexSummaryCapacityInMB()
     {
-        return indexSummaryCapacityInMB;
+        return indexSummaryCapacityInMiB;
     }
 
     public static int getKeyCacheSavePeriod()
@@ -2937,9 +2932,9 @@ public class DatabaseDescriptor
         return conf.row_cache_keys_to_save;
     }
 
-    public static long getCounterCacheSizeInMB()
+    public static long getCounterCacheSizeInMiB()
     {
-        return counterCacheSizeInMB;
+        return counterCacheSizeInMiB;
     }
 
     public static void setRowCacheKeysToSave(int rowCacheKeysToSave)
@@ -2949,23 +2944,23 @@ public class DatabaseDescriptor
 
     public static int getCounterCacheSavePeriod()
     {
-        return conf.counter_cache_save_period;
+        return conf.counter_cache_save_period.toSecondsAsInt();
     }
 
     public static void setCounterCacheSavePeriod(int counterCacheSavePeriod)
     {
-        conf.counter_cache_save_period = counterCacheSavePeriod;
+        conf.counter_cache_save_period = SmallestDurationSeconds.inSeconds(counterCacheSavePeriod);
     }
 
     public static int getCacheLoadTimeout()
     {
-        return conf.cache_load_timeout_seconds;
+        return conf.cache_load_timeout.toSecondsAsInt();
     }
 
     @VisibleForTesting
     public static void setCacheLoadTimeout(int seconds)
     {
-        conf.cache_load_timeout_seconds = seconds;
+        conf.cache_load_timeout = SmallestDurationSeconds.inSeconds(seconds);
     }
 
     public static int getCounterCacheKeysToSave()
@@ -3073,7 +3068,7 @@ public class DatabaseDescriptor
 
     public static int getIndexSummaryResizeIntervalInMinutes()
     {
-        return conf.index_summary_resize_interval_in_minutes;
+        return conf.index_summary_resize_interval.toMinutesAsInt();
     }
 
     public static boolean hasLargeAddressSpace()
@@ -3094,12 +3089,12 @@ public class DatabaseDescriptor
 
     public static int getTracetypeRepairTTL()
     {
-        return conf.tracetype_repair_ttl;
+        return conf.trace_type_repair_ttl.toSecondsAsInt();
     }
 
     public static int getTracetypeQueryTTL()
     {
-        return conf.tracetype_query_ttl;
+        return conf.trace_type_query_ttl.toSecondsAsInt();
     }
 
     public static int getWindowsTimerInterval()
@@ -3109,7 +3104,7 @@ public class DatabaseDescriptor
 
     public static long getPreparedStatementsCacheSizeMB()
     {
-        return preparedStatementsCacheSizeInMB;
+        return preparedStatementsCacheSizeInMiB;
     }
 
     public static boolean enableUserDefinedFunctions()
@@ -3205,7 +3200,7 @@ public class DatabaseDescriptor
 
     public static long getGCLogThreshold()
     {
-        return conf.gc_log_threshold_in_ms;
+        return conf.gc_log_threshold.toMilliseconds();
     }
 
     public static EncryptionContext getEncryptionContext()
@@ -3215,7 +3210,7 @@ public class DatabaseDescriptor
 
     public static long getGCWarnThreshold()
     {
-        return conf.gc_warn_threshold_in_ms;
+        return conf.gc_warn_threshold.toMilliseconds();
     }
 
     public static boolean isCDCEnabled()

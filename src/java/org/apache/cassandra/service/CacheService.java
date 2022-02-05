@@ -150,9 +150,9 @@ public class CacheService implements CacheServiceMBean
 
     private AutoSavingCache<CounterCacheKey, ClockAndCount> initCounterCache()
     {
-        logger.info("Initializing counter cache with capacity of {} MBs", DatabaseDescriptor.getCounterCacheSizeInMB());
+        logger.info("Initializing counter cache with capacity of {} MBs", DatabaseDescriptor.getCounterCacheSizeInMiB());
 
-        long capacity = DatabaseDescriptor.getCounterCacheSizeInMB() * 1024 * 1024;
+        long capacity = DatabaseDescriptor.getCounterCacheSizeInMiB() * 1024 * 1024;
 
         AutoSavingCache<CounterCacheKey, ClockAndCount> cache =
             new AutoSavingCache<>(CaffeineCache.create(capacity),

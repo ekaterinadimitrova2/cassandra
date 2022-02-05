@@ -108,7 +108,7 @@ public class InstanceConfig implements IInstanceConfig
                 .set("counter_cache_size", "50MiB")
                 .set("key_cache_size", "50MiB")
                 // legacy parameters
-                .forceSet("commitlog_sync_batch_window_in_ms", 1.0);
+                .forceSet("commitlog_sync_batch_window_in_ms", "1");
         this.featureFlags = EnumSet.noneOf(Feature.class);
     }
 
