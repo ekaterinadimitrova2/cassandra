@@ -430,7 +430,7 @@ row_cache_save_period: 0s
 # specified in this configuration file.
 #
 # Default is 7200 or 2 hours.
-counter_cache_save_period: 7200
+counter_cache_save_period: 7200s
 
 # Number of keys from the counter cache to save
 # Disabled by default, meaning all keys are going to be saved
