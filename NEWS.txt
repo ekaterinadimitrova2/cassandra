@@ -81,12 +81,24 @@ New features
 
 Upgrading
 ---------
+    - There is a new cassandra.yaml version 2. Units suffixes should be provided for all rates(B/s|MiB/s|KiB/s|MiB/s),
+      memory (KiB|MiB|GiB|B) and duration(d|h|s|ms|us|µs|ns|m)
+      parameters. (CASSANDRA-15234)
+      Backward compatibility with the old cassandra.yaml file will be in place until at least the next major version.
+    - Many cassandra.yaml parameters' names have been changed. Full list can be found on ...... (ADD LINK LATER WHEN PAGE
+      IS CREATED) (CASSANDRA-15234)
     - Before you upgrade, if you are using `cassandra.auth_bcrypt_gensalt_log2_rounds` property,
       confirm it is set to value lower than 31 otherwise Cassandra will fail to start. See CASSANDRA-9384
       for further details. You also need to regenerate passwords for users for who the password
       was created while the above property was set to be more than 30 otherwise they will not be able to log in.
     - JNA library was updated from 5.6.0 to 5.9.0. In version 5.7.0, Darwin support for M1 devices
       was fixed but prebuild native library for Darwin x86 (32bit Java on Mac OS) was removed.
+    - The config properties for setting the streaming throughput `stream_throughput_outbound_megabits_per_sec` and
+      `inter_dc_stream_throughput_outbound_megabits_per_sec` were incorrectly interpreted as mebibits. This has
+      been fixed by CASSANDRA-17243, so the values for these properties will now indicate a throughput ~4.6% lower than
+      what was actually applied in previous versions. This also affects the setters and getters for these properties in
+      the JMX MBean `org.apache.cassandra.db:type=StorageService` and the nodetool commands `set/getstreamthroughput`
+      and `set/getinterdcstreamthroughput`.
 
 Deprecation
 -----------

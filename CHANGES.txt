@@ -1,4 +1,6 @@
 4.1
+ * Standardize storage configuration parameters' names. Support unit suffixes. (CASSANDRA-15234)
+ * Remove python 2.x support from cqlsh (CASSANDRA-17242)
  * Prewarm role and credential caches to avoid timeouts at startup (CASSANDRA-16958)
  * Make capacity/validity/updateinterval/activeupdate for Auth Caches configurable via nodetool (CASSANDRA-17063)
  * Added startup check for read_ahead_kb setting (CASSANDRA-16436)
@@ -111,6 +113,7 @@ Merged from 3.11:
  * Update Jackson from 2.9.10 to 2.12.5 (CASSANDRA-16851)
  * Make assassinate more resilient to missing tokens (CASSANDRA-16847)
 Merged from 3.0:
+ * Fix conversion from megabits to bytes in streaming rate limiter (CASSANDRA-17243)
  * Upgrade logback to 1.2.9 (CASSANDRA-17204)
  * Avoid race in AbstractReplicationStrategy endpoint caching (CASSANDRA-16673)
  * Fix abort when window resizing during cqlsh COPY (CASSANDRA-15230)
