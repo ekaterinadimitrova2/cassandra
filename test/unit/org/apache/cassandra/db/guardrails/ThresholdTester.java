@@ -39,40 +39,40 @@ public abstract class ThresholdTester extends GuardrailTester
 {
     private final String name;
     private final long warnThreshold;
-    private final long abortThreshold;
+    private final long failThreshold;
     private final TriConsumer<Guardrails, Long, Long> setter;
     private final ToLongFunction<Guardrails> warnGetter;
-    private final ToLongFunction<Guardrails> abortGetter;
+    private final ToLongFunction<Guardrails> failGetter;
     private final long maxValue = Integer.MAX_VALUE;
 
     protected ThresholdTester(long warnThreshold,
-                              long abortThreshold,
+                              long failThreshold,
                               String name,
                               TriConsumer<Guardrails, Long, Long> setter,
                               ToLongFunction<Guardrails> warnGetter,
-                              ToLongFunction<Guardrails> abortGetter)
+                              ToLongFunction<Guardrails> failGetter)
     {
         this.name = name;
         this.warnThreshold = warnThreshold;
-        this.abortThreshold = abortThreshold;
+        this.failThreshold = failThreshold;
         this.setter = setter;
         this.warnGetter = warnGetter;
-        this.abortGetter = abortGetter;
+        this.failGetter = failGetter;
     }
 
     protected ThresholdTester(int warnThreshold,
-                              int abortThreshold,
+                              int failThreshold,
                               String name,
                               TriConsumer<Guardrails, Integer, Integer> setter,
                               ToIntFunction<Guardrails> warnGetter,
-                              ToIntFunction<Guardrails> abortGetter)
+                              ToIntFunction<Guardrails> failGetter)
     {
         this.name = name;
         this.warnThreshold = warnThreshold;
-        this.abortThreshold = abortThreshold;
+        this.failThreshold = failThreshold;
         this.setter = (g, w, a) -> setter.accept(g, w.intValue(), a.intValue());
         this.warnGetter = g -> (long) warnGetter.applyAsInt(g);
-        this.abortGetter = g -> (long) abortGetter.applyAsInt(g);
+        this.failGetter = g -> (long) failGetter.applyAsInt(g);
     }
 
     protected abstract long currentValue();
@@ -85,25 +85,25 @@ public abstract class ThresholdTester extends GuardrailTester
     @Before
     public void before()
     {
-        setter.accept(guardrails(), warnThreshold, abortThreshold);
+        setter.accept(guardrails(), warnThreshold, failThreshold);
     }
 
     @Test
     public void testConfigValidation()
     {
-        testValidationOfThresholdProperties(name + "_warn_threshold", name + "_abort_threshold");
+        testValidationOfThresholdProperties(name + "_warn_threshold", name + "_fail_threshold");
     }
 
-    protected void testValidationOfThresholdProperties(String warnName, String abortName)
+    protected void testValidationOfThresholdProperties(String warnName, String failName)
     {
         setter.accept(guardrails(), -1L, -1L);
 
-        testValidationOfStrictlyPositiveProperty((g, a) -> setter.accept(g, -1L, a), abortName);
+        testValidationOfStrictlyPositiveProperty((g, a) -> setter.accept(g, -1L, a), failName);
         testValidationOfStrictlyPositiveProperty((g, w) -> setter.accept(g, w, -1L), warnName);
 
         setter.accept(guardrails(), -1L, -1L);
         Assertions.assertThatThrownBy(() -> setter.accept(guardrails(), 2L, 1L))
-                  .hasMessageContaining(format("The warn threshold 2 for %s should be lower than the abort threshold 1",
+                  .hasMessageContaining(format("The warn threshold 2 for %s should be lower than the fail threshold 1",
                                                name + "_warn_threshold"));
     }
 
@@ -113,7 +113,7 @@ public abstract class ThresholdTester extends GuardrailTester
 
         Assertions.assertThat(currentValue())
                   .isLessThanOrEqualTo(warnGetter.applyAsLong(guardrails()))
-                  .isLessThanOrEqualTo(abortGetter.applyAsLong(guardrails()));
+                  .isLessThanOrEqualTo(failGetter.applyAsLong(guardrails()));
     }
 
     protected void assertThresholdWarns(String message, String query) throws Throwable
@@ -122,16 +122,16 @@ public abstract class ThresholdTester extends GuardrailTester
 
         Assertions.assertThat(currentValue())
                   .isGreaterThan(warnGetter.applyAsLong(guardrails()))
-                  .isLessThanOrEqualTo(abortGetter.applyAsLong(guardrails()));
+                  .isLessThanOrEqualTo(failGetter.applyAsLong(guardrails()));
     }
 
-    protected void assertThresholdAborts(String message, String query) throws Throwable
+    protected void assertThresholdFails(String message, String query) throws Throwable
     {
-        assertAborts(message, query);
+        assertFails(message, query);
 
         Assertions.assertThat(currentValue())
                   .isGreaterThanOrEqualTo(warnGetter.applyAsLong(guardrails()))
-                  .isEqualTo(abortGetter.applyAsLong(guardrails()));
+                  .isEqualTo(failGetter.applyAsLong(guardrails()));
     }
 
     private void assertInvalidPositiveProperty(BiConsumer<Guardrails, Long> setter,

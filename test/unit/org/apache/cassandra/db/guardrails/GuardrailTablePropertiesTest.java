@@ -95,11 +95,11 @@ public class GuardrailTablePropertiesTest extends GuardrailTester
     {
         // most table properties are not allowed
         assertValid(this::createTableWithProperties);
-        assertAborts(() -> createTableWithProperties("with id = " + UUID.randomUUID()), "[id]");
-        assertAborts(() -> createTableWithProperties("with compression = { 'enabled': 'false' }"), "[compression]");
-        assertAborts(() -> createTableWithProperties("with compression = { 'enabled': 'false' } AND id = " + UUID.randomUUID()), "[compression, id]");
-        assertAborts(() -> createTableWithProperties("with compaction = { 'class': 'SizeTieredCompactionStrategy' }"), "[compaction]");
-        assertAborts(() -> createTableWithProperties("with gc_grace_seconds = 1000 and compression = { 'enabled': 'false' }"), "[compression]");
+        assertFails(() -> createTableWithProperties("with id = " + UUID.randomUUID()), "[id]");
+        assertFails(() -> createTableWithProperties("with compression = { 'enabled': 'false' }"), "[compression]");
+        assertFails(() -> createTableWithProperties("with compression = { 'enabled': 'false' } AND id = " + UUID.randomUUID()), "[compression, id]");
+        assertFails(() -> createTableWithProperties("with compaction = { 'class': 'SizeTieredCompactionStrategy' }"), "[compaction]");
+        assertFails(() -> createTableWithProperties("with gc_grace_seconds = 1000 and compression = { 'enabled': 'false' }"), "[compression]");
 
         // though gc_grace_seconds alone is
         assertValid(() -> createTableWithProperties("with gc_grace_seconds = 1000"));
@@ -125,15 +125,15 @@ public class GuardrailTablePropertiesTest extends GuardrailTester
         // view properties is not allowed
         createTableWithProperties();
         assertValid(() -> createViewWithProperties(""));
-        assertAborts(() -> createViewWithProperties("with compression = { 'enabled': 'false' }"), "[compression]");
+        assertFails(() -> createViewWithProperties("with compression = { 'enabled': 'false' }"), "[compression]");
         assertValid(() -> createViewWithProperties("with gc_grace_seconds = 1000"));
 
         // alter mv properties except "gc_grace_seconds" is not allowed
         assertValid(() -> alterViewWithProperties("gc_grace_seconds = 1000"));
-        assertAborts(() -> alterViewWithProperties("compaction = { 'class': 'SizeTieredCompactionStrategy' } AND default_time_to_live = 1"),
-                     "[compaction, default_time_to_live]");
-        assertAborts(() -> alterViewWithProperties("compaction = { 'class': 'SizeTieredCompactionStrategy' } AND crc_check_chance = 1"),
-                     "[compaction, crc_check_chance]");
+        assertFails(() -> alterViewWithProperties("compaction = { 'class': 'SizeTieredCompactionStrategy' } AND default_time_to_live = 1"),
+                    "[compaction, default_time_to_live]");
+        assertFails(() -> alterViewWithProperties("compaction = { 'class': 'SizeTieredCompactionStrategy' } AND crc_check_chance = 1"),
+                    "[compaction, crc_check_chance]");
     }
 
     @Test

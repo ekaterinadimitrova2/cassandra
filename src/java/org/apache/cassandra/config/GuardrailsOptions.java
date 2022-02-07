@@ -43,7 +43,7 @@ import static java.util.stream.Collectors.toSet;
  * <p>This contains a main setting, {@code enabled}, controlling if guardrails are globally active or not, and
  * individual settings to control each guardrail.
  *
- * <p>We have 2 variants of guardrails, soft (warn) and hard (abort) limits, each guardrail having either one of the
+ * <p>We have 2 variants of guardrails, soft (warn) and hard (fail) limits, each guardrail having either one of the
  * variants or both. Note in particular that hard limits only make sense for guardrails triggering during query
  * execution. For other guardrails, say one triggering during compaction, aborting that compaction does not make sense.
  *
@@ -59,14 +59,14 @@ public class GuardrailsOptions implements GuardrailsConfig
     public GuardrailsOptions(Config config)
     {
         this.config = config;
-        validateIntThreshold(config.keyspaces_warn_threshold, config.keyspaces_abort_threshold, "keyspaces");
-        validateIntThreshold(config.tables_warn_threshold, config.tables_abort_threshold, "tables");
-        validateIntThreshold(config.columns_per_table_warn_threshold, config.columns_per_table_abort_threshold, "columns_per_table");
-        validateIntThreshold(config.secondary_indexes_per_table_warn_threshold, config.secondary_indexes_per_table_abort_threshold, "secondary_indexes_per_table");
-        validateIntThreshold(config.materialized_views_per_table_warn_threshold, config.materialized_views_per_table_abort_threshold, "materialized_views_per_table");
+        validateIntThreshold(config.keyspaces_warn_threshold, config.keyspaces_fail_threshold, "keyspaces");
+        validateIntThreshold(config.tables_warn_threshold, config.tables_fail_threshold, "tables");
+        validateIntThreshold(config.columns_per_table_warn_threshold, config.columns_per_table_fail_threshold, "columns_per_table");
+        validateIntThreshold(config.secondary_indexes_per_table_warn_threshold, config.secondary_indexes_per_table_fail_threshold, "secondary_indexes_per_table");
+        validateIntThreshold(config.materialized_views_per_table_warn_threshold, config.materialized_views_per_table_fail_threshold, "materialized_views_per_table");
         config.table_properties_ignored = validateTableProperties(config.table_properties_ignored, "table_properties_ignored");
         config.table_properties_disallowed = validateTableProperties(config.table_properties_disallowed, "table_properties_disallowed");
-        validateIntThreshold(config.page_size_warn_threshold, config.page_size_abort_threshold, "page_size");
+        validateIntThreshold(config.page_size_warn_threshold, config.page_size_fail_threshold, "page_size");
     }
 
     @Override
@@ -95,22 +95,22 @@ public class GuardrailsOptions implements GuardrailsConfig
     }
 
     @Override
-    public int getKeyspacesAbortThreshold()
+    public int getKeyspacesFailThreshold()
     {
-        return config.keyspaces_abort_threshold;
+        return config.keyspaces_fail_threshold;
     }
 
-    public void setKeyspacesThreshold(int warn, int abort)
+    public void setKeyspacesThreshold(int warn, int fail)
     {
-        validateIntThreshold(warn, abort, "keyspaces");
+        validateIntThreshold(warn, fail, "keyspaces");
         updatePropertyWithLogging("keyspaces_warn_threshold",
                                   warn,
                                   () -> config.keyspaces_warn_threshold,
                                   x -> config.keyspaces_warn_threshold = x);
-        updatePropertyWithLogging("keyspaces_abort_threshold",
-                                  abort,
-                                  () -> config.keyspaces_abort_threshold,
-                                  x -> config.keyspaces_abort_threshold = x);
+        updatePropertyWithLogging("keyspaces_fail_threshold",
+                                  fail,
+                                  () -> config.keyspaces_fail_threshold,
+                                  x -> config.keyspaces_fail_threshold = x);
     }
 
     @Override
@@ -120,22 +120,22 @@ public class GuardrailsOptions implements GuardrailsConfig
     }
 
     @Override
-    public int getTablesAbortThreshold()
+    public int getTablesFailThreshold()
     {
-        return config.tables_abort_threshold;
+        return config.tables_fail_threshold;
     }
 
-    public void setTablesThreshold(int warn, int abort)
+    public void setTablesThreshold(int warn, int fail)
     {
-        validateIntThreshold(warn, abort, "tables");
+        validateIntThreshold(warn, fail, "tables");
         updatePropertyWithLogging("tables_warn_threshold",
                                   warn,
                                   () -> config.tables_warn_threshold,
                                   x -> config.tables_warn_threshold = x);
-        updatePropertyWithLogging("tables_abort_threshold",
-                                  abort,
-                                  () -> config.tables_abort_threshold,
-                                  x -> config.tables_abort_threshold = x);
+        updatePropertyWithLogging("tables_fail_threshold",
+                                  fail,
+                                  () -> config.tables_fail_threshold,
+                                  x -> config.tables_fail_threshold = x);
     }
 
     @Override
@@ -145,22 +145,22 @@ public class GuardrailsOptions implements GuardrailsConfig
     }
 
     @Override
-    public int getColumnsPerTableAbortThreshold()
+    public int getColumnsPerTableFailThreshold()
     {
-        return config.columns_per_table_abort_threshold;
+        return config.columns_per_table_fail_threshold;
     }
 
-    public void setColumnsPerTableThreshold(int warn, int abort)
+    public void setColumnsPerTableThreshold(int warn, int fail)
     {
-        validateIntThreshold(warn, abort, "columns_per_table");
+        validateIntThreshold(warn, fail, "columns_per_table");
         updatePropertyWithLogging("columns_per_table_warn_threshold",
                                   warn,
                                   () -> config.columns_per_table_warn_threshold,
                                   x -> config.columns_per_table_warn_threshold = x);
-        updatePropertyWithLogging("columns_per_table_abort_threshold",
-                                  abort,
-                                  () -> config.columns_per_table_abort_threshold,
-                                  x -> config.columns_per_table_abort_threshold = x);
+        updatePropertyWithLogging("columns_per_table_fail_threshold",
+                                  fail,
+                                  () -> config.columns_per_table_fail_threshold,
+                                  x -> config.columns_per_table_fail_threshold = x);
     }
 
     @Override
@@ -170,22 +170,22 @@ public class GuardrailsOptions implements GuardrailsConfig
     }
 
     @Override
-    public int getSecondaryIndexesPerTableAbortThreshold()
+    public int getSecondaryIndexesPerTableFailThreshold()
     {
-        return config.secondary_indexes_per_table_abort_threshold;
+        return config.secondary_indexes_per_table_fail_threshold;
     }
 
-    public void setSecondaryIndexesPerTableThreshold(int warn, int abort)
+    public void setSecondaryIndexesPerTableThreshold(int warn, int fail)
     {
-        validateIntThreshold(warn, abort, "secondary_indexes_per_table");
+        validateIntThreshold(warn, fail, "secondary_indexes_per_table");
         updatePropertyWithLogging("secondary_indexes_per_table_warn_threshold",
                                   warn,
                                   () -> config.secondary_indexes_per_table_warn_threshold,
                                   x -> config.secondary_indexes_per_table_warn_threshold = x);
-        updatePropertyWithLogging("secondary_indexes_per_table_abort_threshold",
-                                  abort,
-                                  () -> config.secondary_indexes_per_table_abort_threshold,
-                                  x -> config.secondary_indexes_per_table_abort_threshold = x);
+        updatePropertyWithLogging("secondary_indexes_per_table_fail_threshold",
+                                  fail,
+                                  () -> config.secondary_indexes_per_table_fail_threshold,
+                                  x -> config.secondary_indexes_per_table_fail_threshold = x);
     }
 
     @Override
@@ -195,22 +195,22 @@ public class GuardrailsOptions implements GuardrailsConfig
     }
 
     @Override
-    public int getMaterializedViewsPerTableAbortThreshold()
+    public int getMaterializedViewsPerTableFailThreshold()
     {
-        return config.materialized_views_per_table_abort_threshold;
+        return config.materialized_views_per_table_fail_threshold;
     }
 
-    public void setMaterializedViewsPerTableThreshold(int warn, int abort)
+    public void setMaterializedViewsPerTableThreshold(int warn, int fail)
     {
-        validateIntThreshold(warn, abort, "materialized_views_per_table");
+        validateIntThreshold(warn, fail, "materialized_views_per_table");
         updatePropertyWithLogging("materialized_views_per_table_warn_threshold",
                                   warn,
                                   () -> config.materialized_views_per_table_warn_threshold,
                                   x -> config.materialized_views_per_table_warn_threshold = x);
-        updatePropertyWithLogging("materialized_views_per_table_abort_threshold",
-                                  abort,
-                                  () -> config.materialized_views_per_table_abort_threshold,
-                                  x -> config.materialized_views_per_table_abort_threshold = x);
+        updatePropertyWithLogging("materialized_views_per_table_fail_threshold",
+                                  fail,
+                                  () -> config.materialized_views_per_table_fail_threshold,
+                                  x -> config.materialized_views_per_table_fail_threshold = x);
     }
 
     @Override
@@ -220,22 +220,22 @@ public class GuardrailsOptions implements GuardrailsConfig
     }
 
     @Override
-    public int getPageSizeAbortThreshold()
+    public int getPageSizeFailThreshold()
     {
-        return config.page_size_abort_threshold;
+        return config.page_size_fail_threshold;
     }
 
-    public void setPageSizeThreshold(int warn, int abort)
+    public void setPageSizeThreshold(int warn, int fail)
     {
-        validateIntThreshold(warn, abort, "page_size");
+        validateIntThreshold(warn, fail, "page_size");
         updatePropertyWithLogging("page_size_warn_threshold",
                                   warn,
                                   () -> config.page_size_warn_threshold,
                                   x -> config.page_size_warn_threshold = x);
-        updatePropertyWithLogging("page_size_abort_threshold",
-                                  abort,
-                                  () -> config.page_size_abort_threshold,
-                                  x -> config.page_size_abort_threshold = x);
+        updatePropertyWithLogging("page_size_fail_threshold",
+                                  fail,
+                                  () -> config.page_size_fail_threshold,
+                                  x -> config.page_size_fail_threshold = x);
     }
 
     @Override
@@ -330,21 +330,21 @@ public class GuardrailsOptions implements GuardrailsConfig
         validatePositiveNumeric(value, Integer.MAX_VALUE, false, name);
     }
 
-    private static void validateIntThreshold(int warn, int abort, String name)
+    private static void validateIntThreshold(int warn, int fail, String name)
     {
         validateStrictlyPositiveInteger(warn, name + "_warn_threshold");
-        validateStrictlyPositiveInteger(abort, name + "_abort_threshold");
-        validateWarnLowerThanAbort(warn, abort, name);
+        validateStrictlyPositiveInteger(fail, name + "_fail_threshold");
+        validateWarnLowerThanFail(warn, fail, name);
     }
 
-    private static void validateWarnLowerThanAbort(long warn, long abort, String name)
+    private static void validateWarnLowerThanFail(long warn, long fail, String name)
     {
-        if (warn == Config.DISABLED_GUARDRAIL || abort == Config.DISABLED_GUARDRAIL)
+        if (warn == Config.DISABLED_GUARDRAIL || fail == Config.DISABLED_GUARDRAIL)
             return;
 
-        if (abort < warn)
+        if (fail < warn)
             throw new IllegalArgumentException(format("The warn threshold %d for %s_warn_threshold should be lower " +
-                                                      "than the abort threshold %d", warn, name, abort));
+                                                      "than the fail threshold %d", warn, name, fail));
     }
 
     private static Set<String> validateTableProperties(Set<String> properties, String name)
