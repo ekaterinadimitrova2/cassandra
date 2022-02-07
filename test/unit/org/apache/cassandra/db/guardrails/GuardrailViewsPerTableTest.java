@@ -21,8 +21,6 @@ package org.apache.cassandra.db.guardrails;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
-
 import static java.lang.String.format;
 
 /**
@@ -41,7 +39,7 @@ public class GuardrailViewsPerTableTest extends ThresholdTester
     {
         super(VIEWS_PER_TABLE_WARN_THRESHOLD,
               VIEWS_PER_TABLE_ABORT_THRESHOLD,
-              DatabaseDescriptor.getGuardrailsConfig().getMaterializedViewsPerTable(),
+              "materialized_views_per_table",
               Guardrails::setMaterializedViewsPerTableThreshold,
               Guardrails::getMaterializedViewsPerTableWarnThreshold,
               Guardrails::getMaterializedViewsPerTableAbortThreshold);

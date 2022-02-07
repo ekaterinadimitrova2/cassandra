@@ -25,7 +25,7 @@ import java.util.function.ToLongFunction;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.cassandra.config.GuardrailsOptions;
+import org.apache.cassandra.config.Config;
 import org.assertj.core.api.Assertions;
 
 import static java.lang.String.format;
@@ -40,22 +40,21 @@ public abstract class ThresholdTester extends GuardrailTester
     private final String name;
     private final long warnThreshold;
     private final long abortThreshold;
-    private final GuardrailsOptions.Threshold config;
     private final TriConsumer<Guardrails, Long, Long> setter;
     private final ToLongFunction<Guardrails> warnGetter;
     private final ToLongFunction<Guardrails> abortGetter;
+    private final long maxValue = Integer.MAX_VALUE;
 
     protected ThresholdTester(long warnThreshold,
                               long abortThreshold,
-                              GuardrailsOptions.Threshold config,
+                              String name,
                               TriConsumer<Guardrails, Long, Long> setter,
                               ToLongFunction<Guardrails> warnGetter,
                               ToLongFunction<Guardrails> abortGetter)
     {
-        this.name = config.getName();
+        this.name = name;
         this.warnThreshold = warnThreshold;
         this.abortThreshold = abortThreshold;
-        this.config = config;
         this.setter = setter;
         this.warnGetter = warnGetter;
         this.abortGetter = abortGetter;
@@ -63,17 +62,17 @@ public abstract class ThresholdTester extends GuardrailTester
 
     protected ThresholdTester(int warnThreshold,
                               int abortThreshold,
-                              GuardrailsOptions.IntThreshold config,
+                              String name,
                               TriConsumer<Guardrails, Integer, Integer> setter,
                               ToIntFunction<Guardrails> warnGetter,
                               ToIntFunction<Guardrails> abortGetter)
     {
-        this(warnThreshold,
-             abortThreshold,
-             (GuardrailsOptions.Threshold) config,
-             (g, w, a) -> setter.accept(g, w.intValue(), a.intValue()),
-             g -> (long) warnGetter.applyAsInt(g),
-             g -> (long) abortGetter.applyAsInt(g));
+        this.name = name;
+        this.warnThreshold = warnThreshold;
+        this.abortThreshold = abortThreshold;
+        this.setter = (g, w, a) -> setter.accept(g, w.intValue(), a.intValue());
+        this.warnGetter = g -> (long) warnGetter.applyAsInt(g);
+        this.abortGetter = g -> (long) abortGetter.applyAsInt(g);
     }
 
     protected abstract long currentValue();
@@ -92,7 +91,7 @@ public abstract class ThresholdTester extends GuardrailTester
     @Test
     public void testConfigValidation()
     {
-        testValidationOfThresholdProperties(name + ".warn_threshold", name + ".abort_threshold");
+        testValidationOfThresholdProperties(name + "_warn_threshold", name + "_abort_threshold");
     }
 
     protected void testValidationOfThresholdProperties(String warnName, String abortName)
@@ -105,7 +104,7 @@ public abstract class ThresholdTester extends GuardrailTester
         setter.accept(guardrails(), -1L, -1L);
         Assertions.assertThatThrownBy(() -> setter.accept(guardrails(), 2L, 1L))
                   .hasMessageContaining(format("The warn threshold 2 for %s should be lower than the abort threshold 1",
-                                               name));
+                                               name + "_warn_threshold"));
     }
 
     protected void assertThresholdValid(String query) throws Throwable
@@ -155,12 +154,12 @@ public abstract class ThresholdTester extends GuardrailTester
                                          value, name, maxValue);
             if (value == 0 && !allowZero)
                 expectedMessage = format("Invalid value for %s: 0 is not allowed; if attempting to disable use %s",
-                                         name, GuardrailsOptions.Threshold.DISABLED);
+                                         name, Config.DISABLED_GUARDRAIL);
 
-            if (value < GuardrailsOptions.Threshold.DISABLED)
+            if (value < Config.DISABLED_GUARDRAIL)
                 expectedMessage = format("Invalid value %d for %s: negative values are not "
                                          + "allowed, outside of %s which disables the guardrail",
-                                         value, name, GuardrailsOptions.Threshold.DISABLED);
+                                         value, name, Config.DISABLED_GUARDRAIL);
 
             assertEquals(format("Exception message '%s' does not contain '%s'", e.getMessage(), expectedMessage),
                          expectedMessage, e.getMessage());
@@ -169,18 +168,18 @@ public abstract class ThresholdTester extends GuardrailTester
 
     private void assertInvalidStrictlyPositiveProperty(BiConsumer<Guardrails, Long> setter, long value, String name)
     {
-        assertInvalidPositiveProperty(setter, value, config.maxValue(), config.allowZero(), name);
+        assertInvalidPositiveProperty(setter, value, maxValue, false, name);
     }
 
     protected void testValidationOfStrictlyPositiveProperty(BiConsumer<Guardrails, Long> setter, String name)
     {
         assertInvalidStrictlyPositiveProperty(setter, Integer.MIN_VALUE, name);
         assertInvalidStrictlyPositiveProperty(setter, -2, name);
-        assertValidProperty(setter, GuardrailsOptions.Threshold.DISABLED); // disabled
+        assertValidProperty(setter, (long) Config.DISABLED_GUARDRAIL); // disabled
         assertInvalidStrictlyPositiveProperty(setter, 0, name);
         assertValidProperty(setter, 1L);
         assertValidProperty(setter, 2L);
-        assertValidProperty(setter, config.maxValue());
+        assertValidProperty(setter, maxValue);
     }
 
     @FunctionalInterface

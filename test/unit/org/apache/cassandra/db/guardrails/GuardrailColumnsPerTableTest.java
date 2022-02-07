@@ -20,8 +20,6 @@ package org.apache.cassandra.db.guardrails;
 
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
-
 import static java.lang.String.format;
 
 /**
@@ -36,7 +34,7 @@ public class GuardrailColumnsPerTableTest extends ThresholdTester
     {
         super(COLUMNS_PER_TABLE_WARN_THRESHOLD,
               COLUMNS_PER_TABLE_ABORT_THRESHOLD,
-              DatabaseDescriptor.getGuardrailsConfig().getColumnsPerTable(),
+              "columns_per_table",
               Guardrails::setColumnsPerTableThreshold,
               Guardrails::getColumnsPerTableWarnThreshold,
               Guardrails::getColumnsPerTableAbortThreshold);

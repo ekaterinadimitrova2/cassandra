@@ -23,7 +23,6 @@ import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.CQLStatement;
 import org.apache.cassandra.cql3.QueryOptions;
 import org.apache.cassandra.cql3.QueryProcessor;
@@ -46,7 +45,7 @@ public class GuardrailPageSizeTest extends ThresholdTester
     {
         super(PAGE_SIZE_WARN_THRESHOLD,
               PAGE_SIZE_ABORT_THRESHOLD,
-              DatabaseDescriptor.getGuardrailsConfig().getPageSize(),
+              "page_size",
               Guardrails::setPageSizeThreshold,
               Guardrails::getPageSizeWarnThreshold,
               Guardrails::getPageSizeAbortThreshold);

@@ -21,8 +21,6 @@ package org.apache.cassandra.db.guardrails;
 import com.google.common.base.Strings;
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
-
 import static java.lang.String.format;
 
 /**
@@ -37,7 +35,7 @@ public class GuardrailSecondaryIndexesPerTable extends ThresholdTester
     {
         super(INDEXES_PER_TABLE_WARN_THRESHOLD,
               INDEXES_PER_TABLE_ABORT_THRESHOLD,
-              DatabaseDescriptor.getGuardrailsConfig().getSecondaryIndexesPerTable(),
+              "secondary_indexes_per_table",
               Guardrails::setSecondaryIndexesPerTableThreshold,
               Guardrails::getSecondaryIndexesPerTableWarnThreshold,
               Guardrails::getSecondaryIndexesPerTableAbortThreshold);

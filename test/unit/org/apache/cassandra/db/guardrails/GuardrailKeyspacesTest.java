@@ -20,7 +20,6 @@ package org.apache.cassandra.db.guardrails;
 
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.schema.Schema;
 
 import static java.lang.String.format;
@@ -37,7 +36,7 @@ public class GuardrailKeyspacesTest extends ThresholdTester
     {
         super(WARN_THRESHOLD,
               ABORT_THRESHOLD,
-              DatabaseDescriptor.getGuardrailsConfig().getKeyspaces(),
+              "keyspaces",
               Guardrails::setKeyspacesThreshold,
               Guardrails::getKeyspacesWarnThreshold,
               Guardrails::getKeyspacesAbortThreshold);

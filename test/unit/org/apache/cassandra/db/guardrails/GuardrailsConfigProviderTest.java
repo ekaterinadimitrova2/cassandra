@@ -20,6 +20,8 @@ package org.apache.cassandra.db.guardrails;
 
 import org.junit.Test;
 
+import org.apache.cassandra.config.Config;
+import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.config.GuardrailsOptions;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.service.ClientState;
@@ -34,8 +36,8 @@ public class GuardrailsConfigProviderTest extends GuardrailTester
     {
         String name = getClass().getCanonicalName() + '$' + CustomProvider.class.getSimpleName();
         GuardrailsConfigProvider provider = GuardrailsConfigProvider.build(name);
-        Threshold guard = new Threshold(state -> provider.getOrCreate(state).getTables().getWarnThreshold(),
-                                        state -> provider.getOrCreate(state).getTables().getAbortThreshold(),
+        Threshold guard = new Threshold(state -> provider.getOrCreate(state).getTablesWarnThreshold(),
+                                        state -> provider.getOrCreate(state).getTablesAbortThreshold(),
                                         (isWarn, what, v, t) -> format("%s: for %s, %s > %s",
                                                                        isWarn ? "Warning" : "Aborting", what, v, t));
 
@@ -58,23 +60,27 @@ public class GuardrailsConfigProviderTest extends GuardrailTester
     {
         public GuardrailsConfig getOrCreate(ClientState state)
         {
-            return new CustomConfig();
+            return new CustomConfig(DatabaseDescriptor.getRawConfig());
         }
     }
 
     public static class CustomConfig extends GuardrailsOptions
     {
-        private final IntThreshold tables = new IntThreshold();
-
-        public CustomConfig()
+        public CustomConfig(Config config)
         {
-            tables.setThresholds(10, 100);
+            super(config);
         }
 
         @Override
-        public IntThreshold getTables()
+        public int getTablesWarnThreshold()
         {
-            return tables;
+            return 10;
+        }
+
+        @Override
+        public int getTablesAbortThreshold()
+        {
+            return 100;
         }
     }
 }

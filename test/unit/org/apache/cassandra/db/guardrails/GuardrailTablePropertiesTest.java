@@ -30,7 +30,6 @@ import com.google.common.collect.ImmutableSet;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.cassandra.config.DatabaseDescriptor;
 import org.apache.cassandra.cql3.statements.schema.TableAttributes;
 
 import static java.lang.String.format;
@@ -46,9 +45,8 @@ public class GuardrailTablePropertiesTest extends GuardrailTester
                                               "WHERE pk IS NOT null and ck IS NOT null PRIMARY KEY(ck, pk) %s";
     private static final String ALTER_VIEW = "ALTER MATERIALIZED VIEW %s.%s WITH %s";
 
-    private static final String PROPERTY_NAME = DatabaseDescriptor.getGuardrailsConfig().getTableProperties().getName();
-    private static final String IGNORED_PROPERTY_NAME = PROPERTY_NAME + ".ignored";
-    private static final String DISALLOWED_PROPERTY_NAME = PROPERTY_NAME + ".disallowed";
+    private static final String IGNORED_PROPERTY_NAME = "table_properties_ignored";
+    private static final String DISALLOWED_PROPERTY_NAME = "table_properties_disallowed";
 
     @Before
     public void before()
