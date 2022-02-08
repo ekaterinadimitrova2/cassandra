@@ -105,7 +105,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -280,7 +280,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -389,7 +389,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -433,9 +433,12 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -512,7 +515,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -555,9 +558,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
+          # source ~/env3.8/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -607,7 +614,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -650,9 +657,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -702,7 +713,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -746,9 +757,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -798,7 +813,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -842,9 +857,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
+          # source ~/env3.8/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -894,7 +913,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -938,9 +957,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -990,7 +1013,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1055,9 +1078,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -1134,7 +1161,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1178,9 +1205,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -1257,7 +1288,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1322,9 +1353,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -1355,7 +1390,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1399,9 +1434,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -1432,7 +1471,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1475,9 +1514,9 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
-          export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -1508,7 +1547,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1571,7 +1610,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1680,7 +1719,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1789,7 +1828,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1888,7 +1927,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -1943,7 +1982,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2119,7 +2158,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2163,9 +2202,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -2196,7 +2239,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2239,9 +2282,9 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
-          export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          # source ~/env3.8/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -2291,7 +2334,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2401,7 +2444,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2499,7 +2542,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2542,9 +2585,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -2594,7 +2641,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2637,9 +2684,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
+          # source ~/env3.8/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -2689,7 +2740,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2752,7 +2803,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2861,7 +2912,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2915,7 +2966,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -2978,7 +3029,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -3043,9 +3094,13 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
+          # source ~/env3.6/bin/activate
+          # export PATH=$JAVA_HOME/bin:$PATH
+          # pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          virtualenv --python=python3 venv
+          source venv/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w --upgrade -r ~/cassandra-dtest/requirements.txt
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 uninstall -y cqlsh
           pip3 freeze
     - run:
@@ -3076,7 +3131,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -3186,7 +3241,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -3361,7 +3416,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
@@ -3456,7 +3511,7 @@ jobs:
     - CASS_DRIVER_NO_EXTENSIONS: true
     - CASS_DRIVER_NO_CYTHON: true
     - CASSANDRA_SKIP_SYNC: true
-    - DTEST_REPO: https://github.com/adelapena/cassandra-dtest.git
+    - DTEST_REPO: https://github.com/ekaterinadimitrova2/cassandra-dtest.git
     - DTEST_BRANCH: CASSANDRA-15234
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
