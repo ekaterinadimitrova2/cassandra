@@ -117,7 +117,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -291,7 +291,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -411,7 +411,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -531,7 +531,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -628,7 +628,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -702,7 +702,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -817,7 +817,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -925,7 +925,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -999,7 +999,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -1107,7 +1107,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -1169,7 +1169,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -1277,7 +1277,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -1451,7 +1451,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
@@ -1545,7 +1545,7 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestProtoV4Upgrade_AllVersions_RandomPartitioner_EndsAt_Trunk_HEAD::test_rolling_upgrade_with_internode_ssl
     - REPEATED_UPGRADE_DTEST_COUNT: 20
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
