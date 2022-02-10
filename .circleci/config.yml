@@ -433,10 +433,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Run repeated Python dtest
@@ -555,10 +556,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_without_vnodes)
@@ -650,10 +652,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j11_with_vnodes)
@@ -746,10 +749,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j11_without_vnodes)
@@ -842,10 +846,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j11_with_vnodes)
@@ -938,10 +943,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_with_vnodes)
@@ -1055,10 +1061,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Run repeated Python dtest
@@ -1178,10 +1185,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Run repeated Python dtest
@@ -1322,10 +1330,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j11_with_vnodes)
@@ -1399,10 +1408,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_without_vnodes)
@@ -1475,10 +1485,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_upgradetests_without_vnodes)
@@ -2163,10 +2174,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_with_vnodes)
@@ -2239,10 +2251,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j11_without_vnodes)
@@ -2542,10 +2555,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_without_vnodes)
@@ -2637,10 +2651,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.8/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j8_with_vnodes)
@@ -3043,10 +3058,11 @@ jobs:
           # if additional dependencies were added to requirmeents.txt and the docker image hasn't been updated
           # we'd have to install it here at runtime -- which will make things slow, so do yourself a favor and
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
-          source ~/env3.6/bin/activate
           export PATH=$JAVA_HOME/bin:$PATH
-          pip3 install --exists-action w -r ~/cassandra-dtest/requirements.txt
-          pip3 uninstall -y cqlsh
+          set -e # enable immediate exit if venv setup fails
+          virtualenv --python=python3 venv
+          source venv/bin/activate
+          pip3 install --exists-action w -r cassandra-dtest/requirements.txt
           pip3 freeze
     - run:
         name: Determine Tests to Run (j11_without_vnodes)
