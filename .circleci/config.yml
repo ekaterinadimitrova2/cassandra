@@ -435,6 +435,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -558,6 +560,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -654,6 +658,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -751,6 +757,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -848,6 +856,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -945,6 +955,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -1063,6 +1075,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -1187,6 +1201,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -1332,6 +1348,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -1410,6 +1428,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -1487,6 +1507,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -2176,6 +2198,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -2253,6 +2277,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -2557,6 +2583,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -2653,6 +2681,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
@@ -3060,6 +3090,8 @@ jobs:
           # rebuild the docker image! (it automatically pulls the latest requirements.txt on build)
           export PATH=$JAVA_HOME/bin:$PATH
           set -e # enable immediate exit if venv setup fails
+          pip3 --version
+          virtualenv --version
           virtualenv --python=python3 venv
           source venv/bin/activate
           pip3 install --exists-action w -r cassandra-dtest/requirements.txt
