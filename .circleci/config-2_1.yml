@@ -104,13 +104,19 @@ j8_par_executor: &j8_par_executor
     #exec_resource_class: xlarge
   parallelism: 4
 
-j8_small_par_executor: &j8_small_par_executor
+j8_par_w_dependencies_executor: &j8_par_w_dependencies_executor
+  executor:
+    name: java8-executor
+    #exec_resource_class: xlarge
+  parallelism: 4
+
+j8_small_par_w_dependencies_executor: &j8_small_par_w_dependencies_executor
   executor:
     name: java8-executor
     #exec_resource_class: xlarge
   parallelism: 1
 
-j8_small_executor: &j8_small_executor
+j8_small_w_dependencies_executor: &j8_small_w_dependencies_executor
   executor:
     name: java8-executor
     exec_resource_class: medium
@@ -128,25 +134,37 @@ j8_seq_executor: &j8_seq_executor
     #exec_resource_class: xlarge
   parallelism: 1 # sequential, single container tests: no parallelism benefits
 
+j8_seq_w_dependencies_executor: &j8_seq_w_dependencies_executor
+  executor:
+    name: java8-executor
+    #exec_resource_class: xlarge
+  parallelism: 1 # sequential, single container tests: no parallelism benefits
+
 j11_par_executor: &j11_par_executor
   executor:
     name: java11-executor
     #exec_resource_class: xlarge
   parallelism: 4
 
-j11_small_par_executor: &j11_small_par_executor
+j11_par_w_dependencies_executor: &j11_par_w_dependencies_executor
+  executor:
+    name: java11-executor
+    #exec_resource_class: xlarge
+  parallelism: 4
+
+j11_small_par_w_dependencies_executor: &j11_small_par_w_dependencies_executor
   executor:
     name: java11-executor
     #exec_resource_class: xlarge
   parallelism: 1
 
-j11_small_executor: &j11_small_executor
+j11_small_w_dependencies_executor: &j11_small_w_dependencies_executor
   executor:
     name: java11-executor
     #exec_resource_class: medium
   parallelism: 1
 
-j8_repeated_utest_executor: &j8_repeated_utest_executor
+j8_repeated_utest_w_dependencies_executor: &j8_repeated_utest_w_dependencies_executor
   executor:
     name: java8-executor
   parallelism: 4
@@ -161,12 +179,12 @@ j8_repeated_upgrade_dtest_executor: &j8_repeated_upgrade_dtest_executor
     name: java8-executor
   parallelism: 4
 
-j8_repeated_jvm_upgrade_dtest_executor: &j8_repeated_jvm_upgrade_dtest_executor
+j8_repeated_jvm_upgrade_dtest_w_dependencies_executor: &j8_repeated_jvm_upgrade_dtest_w_dependencies_executor
   executor:
     name: java8-executor
   parallelism: 4
 
-j11_repeated_utest_executor: &j11_repeated_utest_executor
+j11_repeated_utest_w_dependencies_executor: &j11_repeated_utest_w_dependencies_executor
   executor:
     name: java11-executor
   parallelism: 4
@@ -655,6 +673,21 @@ executors:
         type: string
         default: medium
     docker:
+      - image: apache/cassandra-testing-ubuntu2004-java11:20210929
+    resource_class: << parameters.exec_resource_class >>
+    working_directory: ~/
+    shell: /bin/bash -eo pipefail -l
+    environment:
+      <<: *default_env_vars
+      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+      JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+
+  java8-w-dependencies-executor:
+    parameters:
+      exec_resource_class:
+        type: string
+        default: medium
+    docker:
       - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:20210929
     resource_class: << parameters.exec_resource_class >>
     working_directory: ~/
@@ -680,6 +713,22 @@ executors:
       JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
       CASSANDRA_USE_JDK11: true
 
+  java11-w-dependencies-executor:
+    parameters:
+      exec_resource_class:
+        type: string
+        default: medium
+    docker:
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:20210304
+    resource_class: << parameters.exec_resource_class >>
+    working_directory: ~/
+    shell: /bin/bash -eo pipefail -l
+    environment:
+      <<: *default_env_vars
+      JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+      JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+      CASSANDRA_USE_JDK11: true
+
 build_common: &build_common
   parallelism: 1 # This job doesn't benefit from parallelism
   steps:
@@ -695,15 +744,15 @@ build_common: &build_common
 
 jobs:
   j8_build:
-    executor: java8-executor
+    executor: java8-w-dependencies-executor
     <<: *build_common
 
   j11_build:
-    executor: java11-executor
+    executor: java11-w-dependencies-executor
     <<: *build_common
 
   j8_dtest_jars_build:
-    executor: java8-executor
+    executor: java8-w-dependencies-executor
     parallelism: 1
     steps:
       - attach_workspace:
@@ -715,7 +764,7 @@ jobs:
             - dtest_jars
 
   j8_unit_tests:
-    <<: *j8_par_executor
+    <<: *j8_par_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -724,7 +773,7 @@ jobs:
       - run_parallel_junit_tests
 
   j8_jvm_dtests:
-    <<: *j8_small_par_executor
+    <<: *j8_small_par_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -737,7 +786,7 @@ jobs:
           target: "testclasslist"
 
   j11_jvm_dtests:
-    <<: *j11_small_par_executor
+    <<: *j11_small_par_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -763,7 +812,7 @@ jobs:
           target: "testclasslist"
 
   j11_unit_tests:
-    <<: *j11_par_executor
+    <<: *j11_par_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -772,21 +821,21 @@ jobs:
       - run_parallel_junit_tests
 
   j8_cqlshlib_tests:
-    <<: *j8_small_executor
+    <<: *j8_small_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
       - run_cqlshlib_tests
 
   j11_cqlshlib_tests:
-    <<: *j11_small_executor
+    <<: *j11_small_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
       - run_cqlshlib_tests
 
   utests_long:
-    <<: *j8_seq_executor
+    <<: *j8_seq_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -794,7 +843,7 @@ jobs:
           target: long-test
 
   utests_compression:
-    <<: *j8_par_executor
+    <<: *j8_par_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -804,7 +853,7 @@ jobs:
           target: testclasslist-compression
 
   utests_stress:
-    <<: *j8_seq_executor
+    <<: *j8_seq_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -820,7 +869,7 @@ jobs:
           target: fqltool-test
 
   utests_system_keyspace_directory:
-    <<: *j8_par_executor
+    <<: *j8_par_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1034,7 +1083,7 @@ jobs:
           python_version: '3.8'
 
   j8_repeated_utest:
-    <<: *j8_repeated_utest_executor
+    <<: *j8_repeated_utest_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1047,7 +1096,7 @@ jobs:
           stop_on_failure: ${REPEATED_UTEST_STOP_ON_FAILURE}
 
   j11_repeated_utest:
-    <<: *j11_repeated_utest_executor
+    <<: *j11_repeated_utest_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1089,7 +1138,7 @@ jobs:
           stop_on_failure: ${REPEATED_DTEST_STOP_ON_FAILURE}
 
   repeated_jvm_upgrade_dtest:
-    <<: *j8_repeated_jvm_upgrade_dtest_executor
+    <<: *j8_repeated_jvm_upgrade_dtest_w_dependencies_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
