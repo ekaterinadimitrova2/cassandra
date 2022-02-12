@@ -67,12 +67,8 @@ public class ClientsTableTest extends CQLTester
             // the following are questionable if they belong here
             Assert.assertEquals("localhost", r.getString("hostname"));
             Assertions.assertThat(r.getMap("client_options", String.class, String.class))
-                    .hasEntrySatisfying("DRIVER_VERSION", value -> {
-                        assertThat(value.contains(r.getString("driver_name")));
-                    })
-                    .hasEntrySatisfying("DRIVER_VERSION", value -> {
-                        assertThat(value.contains(r.getString("driver_version")));
-                    });
+                    .hasEntrySatisfying("DRIVER_VERSION", value -> assertThat(value.contains(r.getString("driver_name"))))
+                    .hasEntrySatisfying("DRIVER_VERSION", value -> assertThat(value.contains(r.getString("driver_version"))));
         }
     }
 }
