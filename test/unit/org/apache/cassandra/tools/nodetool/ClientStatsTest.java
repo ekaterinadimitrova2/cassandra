@@ -127,13 +127,4 @@ public class ClientStatsTest extends CQLTester
         assertThat(stdout).contains("User      Connections");
         assertThat(stdout).contains("anonymous 2");
     }
-    
-    @Test
-    public void testClientStatsClearHistory() throws Throwable
-    {
-        ToolRunner.ToolResult tool = ToolRunner.invokeNodetool("clientstats", "--clear-history");
-        tool.assertOnCleanExit();
-        String stdout = tool.getStdout();
-        assertThat(stdout).contains("Clearing connection history");
-    }
 }
