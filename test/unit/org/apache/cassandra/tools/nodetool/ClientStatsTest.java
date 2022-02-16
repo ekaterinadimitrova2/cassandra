@@ -22,18 +22,32 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+
 import com.datastax.driver.core.ResultSet;
 import org.apache.cassandra.cql3.CQLTester;
+import org.apache.cassandra.service.CassandraDaemon;
+import org.apache.cassandra.service.StorageService;
 import org.apache.cassandra.tools.ToolRunner;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.groups.Tuple;
 
 public class ClientStatsTest extends CQLTester
 {
     @BeforeClass
     public static void setup() throws Throwable
     {
+        CassandraDaemon daemon = new CassandraDaemon();
         requireNetwork();
         startJMXServer();
+        daemon.activate();
+        daemon.startNativeTransport();
+        StorageService.instance.registerDaemon(daemon);
     }
     
     @Before
@@ -126,5 +140,23 @@ public class ClientStatsTest extends CQLTester
         assertThat(stdout).contains("Total connected clients: 2");
         assertThat(stdout).contains("User      Connections");
         assertThat(stdout).contains("anonymous 2");
+    }
+    
+    @Test
+    public void testClientStatsClearHistory() throws Throwable
+    {
+        ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
+        Logger ssLogger = (Logger) LoggerFactory.getLogger(StorageService.class);
+
+        ssLogger.addAppender(listAppender);
+        listAppender.start();
+        
+        ToolRunner.ToolResult tool = ToolRunner.invokeNodetool("clientstats", "--clear-history");
+        tool.assertOnCleanExit();
+        String stdout = tool.getStdout();
+        assertThat(stdout).contains("Clearing connection history");
+        assertThat(listAppender.list)
+                .extracting(ILoggingEvent::getMessage, ILoggingEvent::getLevel)
+                .contains(Tuple.tuple("Cleared connection history", Level.INFO));
     }
 }
