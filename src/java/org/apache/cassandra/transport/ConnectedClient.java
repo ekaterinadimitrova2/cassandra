@@ -140,8 +140,9 @@ public final class ConnectedClient
                            .put(ADDRESS, remoteAddress().toString())
                            .put(USER, username().orElse(UNDEFINED))
                            .put(VERSION, String.valueOf(protocolVersion()))
-                           .put(CLIENT_OPTIONS, Joiner.on(", ").withKeyValueSeparator('=').join(
-                                   clientOptions().orElse(Collections.<String, String>emptyMap())))
+                           .put(CLIENT_OPTIONS, Joiner.on(", ")
+                                                      .withKeyValueSeparator("=")
+                                                      .join(clientOptions().orElse(Collections.emptyMap())))
                            .put(DRIVER_NAME, driverName().orElse(UNDEFINED))
                            .put(DRIVER_VERSION, driverVersion().orElse(UNDEFINED))
                            .put(REQUESTS, String.valueOf(requestCount()))

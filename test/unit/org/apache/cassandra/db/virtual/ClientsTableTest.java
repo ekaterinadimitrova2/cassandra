@@ -60,15 +60,15 @@ public class ClientsTableTest extends CQLTester
         for (Row r : result)
         {
             Assert.assertEquals(InetAddress.getLoopbackAddress(), r.getInet("address"));
-            Assert.assertNotNull(r.getInt("port"));
+            r.getInt("port");
             Assert.assertTrue(r.getInt("port") > 0);
             Assert.assertNotNull(r.getMap("client_options", String.class, String.class));
             Assert.assertTrue(r.getLong("request_count") > 0 );
             // the following are questionable if they belong here
             Assert.assertEquals("localhost", r.getString("hostname"));
             Assertions.assertThat(r.getMap("client_options", String.class, String.class))
-                    .hasEntrySatisfying("DRIVER_VERSION", value -> assertThat(value.contains(r.getString("driver_name"))))
-                    .hasEntrySatisfying("DRIVER_VERSION", value -> assertThat(value.contains(r.getString("driver_version"))));
+                      .hasEntrySatisfying("DRIVER_VERSION", value -> assertThat(value.contains(r.getString("driver_name"))))
+                      .hasEntrySatisfying("DRIVER_VERSION", value -> assertThat(value.contains(r.getString("driver_version"))));
         }
     }
 }

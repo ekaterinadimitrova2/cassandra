@@ -49,7 +49,7 @@ public class ClientStatsTest extends CQLTester
         daemon.startNativeTransport();
         StorageService.instance.registerDaemon(daemon);
     }
-    
+
     @Before
     public void config() throws Throwable
     {
@@ -105,7 +105,7 @@ public class ClientStatsTest extends CQLTester
     }
     
     @Test
-    public void testClientStats() throws Throwable
+    public void testClientStats()
     {
         ToolRunner.ToolResult tool = ToolRunner.invokeNodetool("clientstats");
         tool.assertOnCleanExit();
@@ -116,7 +116,7 @@ public class ClientStatsTest extends CQLTester
     }
     
     @Test
-    public void testClientStatsByProtocol() throws Throwable
+    public void testClientStatsByProtocol()
     {
         ToolRunner.ToolResult tool = ToolRunner.invokeNodetool("clientstats", "--by-protocol");
         tool.assertOnCleanExit();
@@ -127,7 +127,7 @@ public class ClientStatsTest extends CQLTester
     }
     
     @Test
-    public void testClientStatsAll() throws Throwable
+    public void testClientStatsAll()
     {
         ToolRunner.ToolResult tool = ToolRunner.invokeNodetool("clientstats", "--all");
         tool.assertOnCleanExit();
@@ -143,7 +143,7 @@ public class ClientStatsTest extends CQLTester
     }
     
     @Test
-    public void testClientStatsClearHistory() throws Throwable
+    public void testClientStatsClearHistory()
     {
         ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
         Logger ssLogger = (Logger) LoggerFactory.getLogger(StorageService.class);
