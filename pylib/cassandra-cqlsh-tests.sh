@@ -73,7 +73,7 @@ set -e # enable immediate exit if venv setup fails
 virtualenv --python=$PYTHON_VERSION venv
 source venv/bin/activate
 
-pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
+/usr/bin/python3.8 -m pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
 pip freeze
 
 echo $PATH
