@@ -79,6 +79,8 @@ pip freeze
 echo $PATH
 export PATH=$PATH:$HOME/.local/bin
 echo $PATH
+echo " "
+ls -l $HOME/.local/bin
 
 if [ "$cython" = "yes" ]; then
     TESTSUITE_NAME="${TESTSUITE_NAME}.cython"
