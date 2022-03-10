@@ -73,12 +73,12 @@ set -e # enable immediate exit if venv setup fails
 virtualenv --python=$PYTHON_VERSION venv
 source venv/bin/activate
 
-pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt
-pip freeze
+python3 -m pip3 install -r ${CASSANDRA_DIR}/pylib/requirements.txt
+pip3 freeze
 
 if [ "$cython" = "yes" ]; then
     TESTSUITE_NAME="${TESTSUITE_NAME}.cython"
-    pip install "Cython>=0.20,<0.25"
+    pip3 install "Cython>=0.20,<0.25"
     cd pylib/; python setup.py build_ext --inplace
     cd ${WORKSPACE}
 else
