@@ -73,11 +73,12 @@ set -e # enable immediate exit if venv setup fails
 virtualenv --python=$PYTHON_VERSION venv
 source venv/bin/activate
 
-pip install --user -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
+pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
 pip freeze
 
 echo $PATH
-
+export PATH=$PATH:$HOME/.local/bin
+echo $PATH
 
 if [ "$cython" = "yes" ]; then
     TESTSUITE_NAME="${TESTSUITE_NAME}.cython"
