@@ -73,7 +73,7 @@ set -e # enable immediate exit if venv setup fails
 virtualenv --python=$PYTHON_VERSION venv
 source venv/bin/activate
 
-python3 -m pip3 install -r ${CASSANDRA_DIR}/pylib/requirements.txt
+python3 -m pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt
 pip3 freeze
 
 if [ "$cython" = "yes" ]; then
