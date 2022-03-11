@@ -76,15 +76,10 @@ source venv/bin/activate
 
 pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
 pip freeze
+echo " "
 
 whereis ccm
 which ccm
-
-echo $PATH
-export PATH=$PATH:$HOME/.local/bin
-echo $PATH
-echo " "
-ls -l $HOME/.local/bin
 
 if [ "$cython" = "yes" ]; then
     TESTSUITE_NAME="${TESTSUITE_NAME}.cython"
