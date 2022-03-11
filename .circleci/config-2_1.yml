@@ -29,7 +29,7 @@ default_env_vars: &default_env_vars
 
     ANT_HOME: /usr/share/ant
     JAVA11_HOME: /usr/lib/jvm/java-11-openjdk-amd64
-    JAVA8_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+    JAVA17_HOME: /usr/lib/jvm/java-17-openjdk-amd64
     LANG: en_US.UTF-8
     KEEP_TEST_DIR: true
     DEFAULT_DIR: /home/cassandra/cassandra-dtest
@@ -102,36 +102,6 @@ default_env_vars: &default_env_vars
     # Whether the JVM upgrade dtest iteration should stop on the first failure
     REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE: false
 
-j8_par_executor: &j8_par_executor
-  executor:
-    name: java8-executor
-    #exec_resource_class: xlarge
-  parallelism: 4
-
-j8_small_par_executor: &j8_small_par_executor
-  executor:
-    name: java8-executor
-    #exec_resource_class: xlarge
-  parallelism: 1
-
-j8_small_executor: &j8_small_executor
-  executor:
-    name: java8-executor
-    exec_resource_class: medium
-  parallelism: 1
-
-j8_medium_par_executor: &j8_medium_par_executor
-  executor:
-    name: java8-executor
-    #exec_resource_class: xlarge
-  parallelism: 1
-
-j8_seq_executor: &j8_seq_executor
-  executor:
-    name: java8-executor
-    #exec_resource_class: xlarge
-  parallelism: 1 # sequential, single container tests: no parallelism benefits
-
 j11_par_executor: &j11_par_executor
   executor:
     name: java11-executor
@@ -147,28 +117,38 @@ j11_small_par_executor: &j11_small_par_executor
 j11_small_executor: &j11_small_executor
   executor:
     name: java11-executor
-    #exec_resource_class: medium
+    exec_resource_class: medium
   parallelism: 1
 
-j8_repeated_utest_executor: &j8_repeated_utest_executor
+j11_medium_par_executor: &j11_medium_par_executor
   executor:
-    name: java8-executor
+    name: java11-executor
+    #exec_resource_class: xlarge
+  parallelism: 1
+
+j11_seq_executor: &j11_seq_executor
+  executor:
+    name: java11-executor
+    #exec_resource_class: xlarge
+  parallelism: 1 # sequential, single container tests: no parallelism benefits
+
+j17_par_executor: &j17_par_executor
+  executor:
+    name: java17-executor
+    #exec_resource_class: xlarge
   parallelism: 4
 
-j8_repeated_dtest_executor: &j8_repeated_dtest_executor
+j17_small_par_executor: &j17_small_par_executor
   executor:
-    name: java8-executor
-  parallelism: 4
+    name: java17-executor
+    #exec_resource_class: xlarge
+  parallelism: 1
 
-j8_repeated_upgrade_dtest_executor: &j8_repeated_upgrade_dtest_executor
+j17_small_executor: &j17_small_executor
   executor:
-    name: java8-executor
-  parallelism: 4
-
-j8_repeated_jvm_upgrade_dtest_executor: &j8_repeated_jvm_upgrade_dtest_executor
-  executor:
-    name: java8-executor
-  parallelism: 4
+    name: java17-executor
+    #exec_resource_class: medium
+  parallelism: 1
 
 j11_repeated_utest_executor: &j11_repeated_utest_executor
   executor:
@@ -180,356 +160,25 @@ j11_repeated_dtest_executor: &j11_repeated_dtest_executor
     name: java11-executor
   parallelism: 4
 
-j8_with_dtests_jobs: &j8_with_dtests_jobs
-  jobs:
-    - start_j8_build:
-        type: approval
-    - j8_build:
-        requires:
-          - start_j8_build
-    # Java 8 unit tests
-    - start_j8_unit_tests:
-        type: approval
-    - j8_unit_tests:
-        requires:
-          - start_j8_unit_tests
-          - j8_build
-    - start_j8_jvm_dtests:
-        type: approval
-    - j8_jvm_dtests:
-        requires:
-          - start_j8_jvm_dtests
-          - j8_build
-    - j8_simulator_dtests:
-        requires:
-          - start_j8_jvm_dtests
-          - j8_build
-    - j8_jvm_dtests_vnode:
-        requires:
-          - start_j8_jvm_dtests
-          - j8_build
-    - start_j8_cqlshlib_tests:
-        type: approval
-    - j8_cqlshlib_tests:
-        requires:
-          - start_j8_cqlshlib_tests
-          - j8_build
-    # Java 11 unit tests
-    - start_j11_unit_tests:
-        type: approval
-    - j11_unit_tests:
-        requires:
-          - start_j11_unit_tests
-          - j8_build
-    # specialized unit tests (all run on request using Java 8)
-    - start_utests_long:
-        type: approval
-    - utests_long:
-        requires:
-          - start_utests_long
-          - j8_build
-    - start_utests_compression:
-        type: approval
-    - utests_compression:
-        requires:
-          - start_utests_compression
-          - j8_build
-    - start_utests_stress:
-        type: approval
-    - utests_stress:
-        requires:
-          - start_utests_stress
-          - j8_build
-    - start_utests_fqltool:
-        type: approval
-    - utests_fqltool:
-        requires:
-          - start_utests_fqltool
-          - j8_build
-    - start_utests_system_keyspace_directory:
-        type: approval
-    - utests_system_keyspace_directory:
-        requires:
-          - start_utests_system_keyspace_directory
-          - j8_build
-    - start_j8_dtest_jars_build:
-        type: approval
-    - j8_dtest_jars_build:
-        requires:
-          - j8_build
-          - start_j8_dtest_jars_build
-    - start_jvm_upgrade_dtest:
-        type: approval
-    - j8_jvm_upgrade_dtests:
-        requires:
-          - start_jvm_upgrade_dtest
-          - j8_dtest_jars_build
-    # Java 8 dtests
-    - start_j8_dtests:
-        type: approval
-    - j8_dtests-with-vnodes:
-        requires:
-          - start_j8_dtests
-          - j8_build
-    - j8_dtests-no-vnodes:
-        requires:
-          - start_j8_dtests
-          - j8_build
-    # Java 11 dtests
-    - start_j11_dtests:
-        type: approval
-    - j11_dtests-with-vnodes:
-        requires:
-        - start_j11_dtests
-        - j8_build
-    - j11_dtests-no-vnodes:
-        requires:
-        - start_j11_dtests
-        - j8_build
-    # Java 8 upgrade tests
-    - start_upgrade_tests:
-        type: approval
-    - j8_upgradetests-no-vnodes:
-        requires:
-          - start_upgrade_tests
-          - j8_build
-    # Java 8 cqlsh dtests
-    - start_j8_cqlsh_tests:
-        type: approval
-    - j8_cqlsh-dtests-py3-with-vnodes:
-        requires:
-        - start_j8_cqlsh_tests
-        - j8_build
-    - j8_cqlsh-dtests-py38-with-vnodes:
-        requires:
-        - start_j8_cqlsh_tests
-        - j8_build
-    - j8_cqlsh-dtests-py3-no-vnodes:
-        requires:
-        - start_j8_cqlsh_tests
-        - j8_build
-    - j8_cqlsh-dtests-py38-no-vnodes:
-        requires:
-          - start_j8_cqlsh_tests
-          - j8_build
-    # Java 11 cqlsh dtests
-    - start_j11_cqlsh_tests:
-        type: approval
-    - j11_cqlsh-dtests-py3-with-vnodes:
-        requires:
-        - start_j11_cqlsh_tests
-        - j8_build
-    - j11_cqlsh-dtests-py38-with-vnodes:
-        requires:
-          - start_j11_cqlsh_tests
-          - j8_build
-    - j11_cqlsh-dtests-py3-no-vnodes:
-        requires:
-          - start_j11_cqlsh_tests
-          - j8_build
-    - j11_cqlsh-dtests-py38-no-vnodes:
-        requires:
-          - start_j11_cqlsh_tests
-          - j8_build
-    # Java 8 repeated utest
-    - start_j8_repeated_utest:
-        type: approval
-    - j8_repeated_utest:
-        requires:
-          - start_j8_repeated_utest
-          - j8_build
-    # Java 11 repeated utest
-    - start_j11_repeated_utest:
-        type: approval
-    - j11_repeated_utest:
-        requires:
-          - start_j11_repeated_utest
-          - j8_build
-    # Java 8 repeated dtest
-    - start_j8_repeated_dtest:
-        type: approval
-    - j8_repeated_dtest:
-        requires:
-          - start_j8_repeated_dtest
-          - j8_build
-    # Java 11 repeated dtest
-    - start_j11_repeated_dtest:
-        type: approval
-    - j11_repeated_dtest:
-        requires:
-          - start_j11_repeated_dtest
-          - j8_build
-    # Repeated Python upgrade dtest
-    - start_repeated_upgrade_dtest:
-        type: approval
-    - repeated_upgrade_dtest:
-        requires:
-            - start_repeated_upgrade_dtest
-            - j8_build
-    # Repeated JVM upgrade dtest
-    - start_repeated_jvm_upgrade_dtest:
-        type: approval
-    - repeated_jvm_upgrade_dtest:
-        requires:
-          - start_repeated_jvm_upgrade_dtest
-          - j8_dtest_jars_build
+j11_repeated_upgrade_dtest_executor: &j11_repeated_upgrade_dtest_executor
+  executor:
+    name: java11-executor
+  parallelism: 4
 
-j8_pre-commit_jobs: &j8_pre-commit_jobs
-  jobs:
-    - start_pre-commit_tests:
-        type: approval
-    - j8_build:
-        requires:
-          - start_pre-commit_tests
-    # Java 8 unit tests
-    - j8_unit_tests:
-        requires:
-          - j8_build
-    - j8_simulator_dtests:
-        requires:
-          - j8_build
-    - j8_jvm_dtests:
-        requires:
-          - j8_build
-    - j8_jvm_dtests_vnode:
-        requires:
-          - j8_build
-    - j8_cqlshlib_tests:
-        requires:
-          - j8_build
-    # Java 11 unit tests
-    - j11_unit_tests:
-        requires:
-          - j8_build
-    # specialized unit tests (all run on request using Java 8)
-    - start_utests_long:
-        type: approval
-    - utests_long:
-        requires:
-          - start_utests_long
-          - j8_build
-    - start_utests_compression:
-        type: approval
-    - utests_compression:
-        requires:
-          - start_utests_compression
-          - j8_build
-    - start_utests_stress:
-        type: approval
-    - utests_stress:
-        requires:
-          - start_utests_stress
-          - j8_build
-    - start_utests_fqltool:
-        type: approval
-    - utests_fqltool:
-        requires:
-          - start_utests_fqltool
-          - j8_build
-    - utests_system_keyspace_directory:
-        requires:
-          - j8_build
-    - start_j8_dtest_jars_build:
-        type: approval
-    - j8_dtest_jars_build:
-        requires:
-          - j8_build
-          - start_j8_dtest_jars_build
-    - start_jvm_upgrade_dtest:
-        type: approval
-    - j8_jvm_upgrade_dtests:
-        requires:
-          - start_jvm_upgrade_dtest
-          - j8_dtest_jars_build
-    # Java 8 dtests
-    - j8_dtests-with-vnodes:
-        requires:
-          - j8_build
-    - j8_dtests-no-vnodes:
-        requires:
-          - j8_build
-    # Java 11 dtests
-    - j11_dtests-with-vnodes:
-        requires:
-          - j8_build
-    - j11_dtests-no-vnodes:
-        requires:
-          - j8_build
-    # Java 8 upgrade tests (on request)
-    - start_upgrade_tests:
-        type: approval
-    - j8_upgradetests-no-vnodes:
-        requires:
-          - j8_build
-          - start_upgrade_tests
-    # Java 8 cqlsh dtests
-    - j8_cqlsh-dtests-py3-with-vnodes:
-        requires:
-          - j8_build
-    - j8_cqlsh-dtests-py38-with-vnodes:
-        requires:
-          - j8_build
-    - j8_cqlsh-dtests-py3-no-vnodes:
-        requires:
-          - j8_build
-    - j8_cqlsh-dtests-py38-no-vnodes:
-        requires:
-          - j8_build
-    # Java 11 cqlsh dtests
-    - j11_cqlsh-dtests-py3-with-vnodes:
-        requires:
-          - j8_build
-    - j11_cqlsh-dtests-py38-with-vnodes:
-        requires:
-          - j8_build
-    - j11_cqlsh-dtests-py3-no-vnodes:
-        requires:
-          - j8_build
-    - j11_cqlsh-dtests-py38-no-vnodes:
-        requires:
-          - j8_build
-    # Java 8 repeated utest (on request)
-    - start_j8_repeated_utest:
-        type: approval
-    - j8_repeated_utest:
-        requires:
-          - start_j8_repeated_utest
-          - j8_build
-    # Java 11 repeated utest (on request)
-    - start_j11_repeated_utest:
-        type: approval
-    - j11_repeated_utest:
-        requires:
-          - start_j11_repeated_utest
-          - j8_build
-    # Java 8 repeated dtest (on request)
-    - start_j8_repeated_dtest:
-        type: approval
-    - j8_repeated_dtest:
-        requires:
-          - start_j8_repeated_dtest
-          - j8_build
-    # Java 11 repeated dtest (on request)
-    - start_j11_repeated_dtest:
-        type: approval
-    - j11_repeated_dtest:
-        requires:
-          - start_j11_repeated_dtest
-          - j8_build
-    # Repeated Python upgrade dtest (on request)
-    - start_repeated_upgrade_dtest:
-        type: approval
-    - repeated_upgrade_dtest:
-        requires:
-          - start_repeated_upgrade_dtest
-          - j8_build
-    # Repeated JVM upgrade dtest (on request)
-    - start_repeated_jvm_upgrade_dtest:
-        type: approval
-    - repeated_jvm_upgrade_dtest:
-        requires:
-          - start_repeated_jvm_upgrade_dtest
-          - j8_dtest_jars_build
+j11_repeated_jvm_upgrade_dtest_executor: &j11_repeated_jvm_upgrade_dtest_executor
+  executor:
+    name: java11-executor
+  parallelism: 4
+
+j17_repeated_utest_executor: &j17_repeated_utest_executor
+  executor:
+    name: java17-executor
+  parallelism: 4
+
+j17_repeated_dtest_executor: &j17_repeated_dtest_executor
+  executor:
+    name: java17-executor
+  parallelism: 4
 
 j11_with_dtests_jobs: &j11_with_dtests_jobs
   jobs:
@@ -551,6 +200,10 @@ j11_with_dtests_jobs: &j11_with_dtests_jobs
         requires:
           - start_j11_jvm_dtests
           - j11_build
+    - j11_simulator_dtests:
+        requires:
+          - start_j11_jvm_dtests
+          - j11_build
     - j11_jvm_dtests_vnode:
         requires:
           - start_j11_jvm_dtests
@@ -561,6 +214,56 @@ j11_with_dtests_jobs: &j11_with_dtests_jobs
         requires:
           - start_j11_cqlshlib_tests
           - j11_build
+    # Java 17 unit tests
+    - start_j17_unit_tests:
+        type: approval
+    - j17_unit_tests:
+        requires:
+          - start_j17_unit_tests
+          - j11_build
+    # specialized unit tests (all run on request using Java 11)
+    - start_utests_long:
+        type: approval
+    - utests_long:
+        requires:
+          - start_utests_long
+          - j11_build
+    - start_utests_compression:
+        type: approval
+    - utests_compression:
+        requires:
+          - start_utests_compression
+          - j11_build
+    - start_utests_stress:
+        type: approval
+    - utests_stress:
+        requires:
+          - start_utests_stress
+          - j11_build
+    - start_utests_fqltool:
+        type: approval
+    - utests_fqltool:
+        requires:
+          - start_utests_fqltool
+          - j11_build
+    - start_utests_system_keyspace_directory:
+        type: approval
+    - utests_system_keyspace_directory:
+        requires:
+          - start_utests_system_keyspace_directory
+          - j11_build
+    - start_j11_dtest_jars_build:
+        type: approval
+    - j11_dtest_jars_build:
+        requires:
+          - j11_build
+          - start_j11_dtest_jars_build
+    - start_jvm_upgrade_dtest:
+        type: approval
+    - j11_jvm_upgrade_dtests:
+        requires:
+          - start_jvm_upgrade_dtest
+          - j11_dtest_jars_build
     # Java 11 dtests
     - start_j11_dtests:
         type: approval
@@ -572,23 +275,61 @@ j11_with_dtests_jobs: &j11_with_dtests_jobs
         requires:
           - start_j11_dtests
           - j11_build
+    # Java 17 dtests
+    - start_j17_dtests:
+        type: approval
+    - j17_dtests-with-vnodes:
+        requires:
+        - start_j17_dtests
+        - j11_build
+    - j17_dtests-no-vnodes:
+        requires:
+        - start_j17_dtests
+        - j11_build
+    # Java 11 upgrade tests
+    - start_upgrade_tests:
+        type: approval
+    - j11_upgradetests-no-vnodes:
+        requires:
+          - start_upgrade_tests
+          - j11_build
+    # Java 11 cqlsh dtests
     - start_j11_cqlsh_tests:
         type: approval
     - j11_cqlsh-dtests-py3-with-vnodes:
         requires:
-          - start_j11_cqlsh_tests
-          - j11_build
+        - start_j11_cqlsh_tests
+        - j11_build
     - j11_cqlsh-dtests-py38-with-vnodes:
         requires:
-          - start_j11_cqlsh_tests
-          - j11_build
+        - start_j11_cqlsh_tests
+        - j11_build
     - j11_cqlsh-dtests-py3-no-vnodes:
         requires:
-          - start_j11_cqlsh_tests
-          - j11_build
+        - start_j11_cqlsh_tests
+        - j11_build
     - j11_cqlsh-dtests-py38-no-vnodes:
         requires:
           - start_j11_cqlsh_tests
+          - j11_build
+    # Java 17 cqlsh dtests
+    - start_j17_cqlsh_tests:
+        type: approval
+    - j17_cqlsh-dtests-py3-with-vnodes:
+        requires:
+        - start_j17_cqlsh_tests
+        - j11_build
+    - j17_cqlsh-dtests-py38-with-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
+          - j11_build
+    - j17_cqlsh-dtests-py3-no-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
+          - j11_build
+    - j17_cqlsh-dtests-py38-no-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
           - j11_build
     # Java 11 repeated utest
     - start_j11_repeated_utest:
@@ -597,6 +338,13 @@ j11_with_dtests_jobs: &j11_with_dtests_jobs
         requires:
           - start_j11_repeated_utest
           - j11_build
+    # Java 17 repeated utest
+    - start_j17_repeated_utest:
+        type: approval
+    - j17_repeated_utest:
+        requires:
+          - start_j17_repeated_utest
+          - j11_build
     # Java 11 repeated dtest
     - start_j11_repeated_dtest:
         type: approval
@@ -604,6 +352,27 @@ j11_with_dtests_jobs: &j11_with_dtests_jobs
         requires:
           - start_j11_repeated_dtest
           - j11_build
+    # Java 17 repeated dtest
+    - start_j17_repeated_dtest:
+        type: approval
+    - j17_repeated_dtest:
+        requires:
+          - start_j17_repeated_dtest
+          - j11_build
+    # Repeated Python upgrade dtest
+    - start_repeated_upgrade_dtest:
+        type: approval
+    - repeated_upgrade_dtest:
+        requires:
+            - start_repeated_upgrade_dtest
+            - j11_build
+    # Repeated JVM upgrade dtest
+    - start_repeated_jvm_upgrade_dtest:
+        type: approval
+    - repeated_jvm_upgrade_dtest:
+        requires:
+          - start_repeated_jvm_upgrade_dtest
+          - j11_dtest_jars_build
 
 j11_pre-commit_jobs: &j11_pre-commit_jobs
   jobs:
@@ -612,7 +381,11 @@ j11_pre-commit_jobs: &j11_pre-commit_jobs
     - j11_build:
         requires:
           - start_pre-commit_tests
+    # Java 11 unit tests
     - j11_unit_tests:
+        requires:
+          - j11_build
+    - j11_simulator_dtests:
         requires:
           - j11_build
     - j11_jvm_dtests:
@@ -624,18 +397,72 @@ j11_pre-commit_jobs: &j11_pre-commit_jobs
     - j11_cqlshlib_tests:
         requires:
           - j11_build
-    - j11_jvm_dtests:
+    # Java 17 unit tests
+    - j17_unit_tests:
         requires:
           - j11_build
-    - j11_cqlshlib_tests:
+    # specialized unit tests (all run on request using Java 11)
+    - start_utests_long:
+        type: approval
+    - utests_long:
+        requires:
+          - start_utests_long
+          - j11_build
+    - start_utests_compression:
+        type: approval
+    - utests_compression:
+        requires:
+          - start_utests_compression
+          - j11_build
+    - start_utests_stress:
+        type: approval
+    - utests_stress:
+        requires:
+          - start_utests_stress
+          - j11_build
+    - start_utests_fqltool:
+        type: approval
+    - utests_fqltool:
+        requires:
+          - start_utests_fqltool
+          - j11_build
+    - utests_system_keyspace_directory:
         requires:
           - j11_build
+    - start_j11_dtest_jars_build:
+        type: approval
+    - j11_dtest_jars_build:
+        requires:
+          - j11_build
+          - start_j11_dtest_jars_build
+    - start_jvm_upgrade_dtest:
+        type: approval
+    - j11_jvm_upgrade_dtests:
+        requires:
+          - start_jvm_upgrade_dtest
+          - j11_dtest_jars_build
+    # Java 11 dtests
     - j11_dtests-with-vnodes:
         requires:
           - j11_build
     - j11_dtests-no-vnodes:
         requires:
           - j11_build
+    # Java 17 dtests
+    - j17_dtests-with-vnodes:
+        requires:
+          - j11_build
+    - j17_dtests-no-vnodes:
+        requires:
+          - j11_build
+    # Java 11 upgrade tests (on request)
+    - start_upgrade_tests:
+        type: approval
+    - j11_upgradetests-no-vnodes:
+        requires:
+          - j11_build
+          - start_upgrade_tests
+    # Java 11 cqlsh dtests
     - j11_cqlsh-dtests-py3-with-vnodes:
         requires:
           - j11_build
@@ -648,12 +475,32 @@ j11_pre-commit_jobs: &j11_pre-commit_jobs
     - j11_cqlsh-dtests-py38-no-vnodes:
         requires:
           - j11_build
+    # Java 17 cqlsh dtests
+    - j17_cqlsh-dtests-py3-with-vnodes:
+        requires:
+          - j11_build
+    - j17_cqlsh-dtests-py38-with-vnodes:
+        requires:
+          - j11_build
+    - j17_cqlsh-dtests-py3-no-vnodes:
+        requires:
+          - j11_build
+    - j17_cqlsh-dtests-py38-no-vnodes:
+        requires:
+          - j11_build
     # Java 11 repeated utest (on request)
     - start_j11_repeated_utest:
         type: approval
     - j11_repeated_utest:
         requires:
           - start_j11_repeated_utest
+          - j11_build
+    # Java 17 repeated utest (on request)
+    - start_j17_repeated_utest:
+        type: approval
+    - j17_repeated_utest:
+        requires:
+          - start_j17_repeated_utest
           - j11_build
     # Java 11 repeated dtest (on request)
     - start_j11_repeated_dtest:
@@ -662,37 +509,175 @@ j11_pre-commit_jobs: &j11_pre-commit_jobs
         requires:
           - start_j11_repeated_dtest
           - j11_build
+    # Java 17 repeated dtest (on request)
+    - start_j17_repeated_dtest:
+        type: approval
+    - j17_repeated_dtest:
+        requires:
+          - start_j17_repeated_dtest
+          - j11_build
+    # Repeated Python upgrade dtest (on request)
+    - start_repeated_upgrade_dtest:
+        type: approval
+    - repeated_upgrade_dtest:
+        requires:
+          - start_repeated_upgrade_dtest
+          - j11_build
+    # Repeated JVM upgrade dtest (on request)
+    - start_repeated_jvm_upgrade_dtest:
+        type: approval
+    - repeated_jvm_upgrade_dtest:
+        requires:
+          - start_repeated_jvm_upgrade_dtest
+          - j11_dtest_jars_build
+
+j17_with_dtests_jobs: &j17_with_dtests_jobs
+  jobs:
+    - start_j17_build:
+        type: approval
+    - j17_build:
+        requires:
+          - start_j17_build
+    # Java 17 unit tests
+    - start_j17_unit_tests:
+        type: approval
+    - j17_unit_tests:
+        requires:
+          - start_j17_unit_tests
+          - j17_build
+    - start_j17_jvm_dtests:
+        type: approval
+    - j17_jvm_dtests:
+        requires:
+          - start_j17_jvm_dtests
+          - j17_build
+    - j17_jvm_dtests_vnode:
+        requires:
+          - start_j17_jvm_dtests
+          - j17_build
+    - start_j17_cqlshlib_tests:
+        type: approval
+    - j17_cqlshlib_tests:
+        requires:
+          - start_j17_cqlshlib_tests
+          - j17_build
+    # Java 17 dtests
+    - start_j17_dtests:
+        type: approval
+    - j17_dtests-with-vnodes:
+        requires:
+          - start_j17_dtests
+          - j17_build
+    - j17_dtests-no-vnodes:
+        requires:
+          - start_j17_dtests
+          - j17_build
+    - start_j17_cqlsh_tests:
+        type: approval
+    - j17_cqlsh-dtests-py3-with-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
+          - j17_build
+    - j17_cqlsh-dtests-py38-with-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
+          - j17_build
+    - j17_cqlsh-dtests-py3-no-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
+          - j17_build
+    - j17_cqlsh-dtests-py38-no-vnodes:
+        requires:
+          - start_j17_cqlsh_tests
+          - j17_build
+    # Java 17 repeated utest
+    - start_j17_repeated_utest:
+        type: approval
+    - j17_repeated_utest:
+        requires:
+          - start_j17_repeated_utest
+          - j17_build
+    # Java 17 repeated dtest
+    - start_j17_repeated_dtest:
+        type: approval
+    - j17_repeated_dtest:
+        requires:
+          - start_j17_repeated_dtest
+          - j17_build
+
+j17_pre-commit_jobs: &j17_pre-commit_jobs
+  jobs:
+    - start_pre-commit_tests:
+        type: approval
+    - j17_build:
+        requires:
+          - start_pre-commit_tests
+    - j17_unit_tests:
+        requires:
+          - j17_build
+    - j17_jvm_dtests:
+        requires:
+          - j17_build
+    - j17_jvm_dtests_vnode:
+        requires:
+          - j17_build
+    - j17_cqlshlib_tests:
+        requires:
+          - j17_build
+    - j17_jvm_dtests:
+        requires:
+          - j17_build
+    - j17_cqlshlib_tests:
+        requires:
+          - j17_build
+    - j17_dtests-with-vnodes:
+        requires:
+          - j17_build
+    - j17_dtests-no-vnodes:
+        requires:
+          - j17_build
+    - j17_cqlsh-dtests-py3-with-vnodes:
+        requires:
+          - j17_build
+    - j17_cqlsh-dtests-py38-with-vnodes:
+        requires:
+          - j17_build
+    - j17_cqlsh-dtests-py3-no-vnodes:
+        requires:
+          - j17_build
+    - j17_cqlsh-dtests-py38-no-vnodes:
+        requires:
+          - j17_build
+    # Java 17 repeated utest (on request)
+    - start_j17_repeated_utest:
+        type: approval
+    - j17_repeated_utest:
+        requires:
+          - start_j17_repeated_utest
+          - j17_build
+    # Java 17 repeated dtest (on request)
+    - start_j17_repeated_dtest:
+        type: approval
+    - j17_repeated_dtest:
+        requires:
+          - start_j17_repeated_dtest
+          - j17_build
 
 workflows:
     version: 2
-    java8_separate_tests: *j8_with_dtests_jobs
-    java8_pre-commit_tests: *j8_pre-commit_jobs
     java11_separate_tests: *j11_with_dtests_jobs
     java11_pre-commit_tests: *j11_pre-commit_jobs
+    java17_separate_tests: *j17_with_dtests_jobs
+    java17_pre-commit_tests: *j17_pre-commit_jobs
 
 executors:
-  java8-executor:
-    parameters:
-      exec_resource_class:
-        type: string
-        default: medium
-    docker:
-      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: << parameters.exec_resource_class >>
-    working_directory: ~/
-    shell: /bin/bash -eo pipefail -l
-    environment:
-      <<: *default_env_vars
-      JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
-      JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
-
   java11-executor:
     parameters:
       exec_resource_class:
         type: string
         default: medium
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11:latest
+      - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: << parameters.exec_resource_class >>
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -700,7 +685,22 @@ executors:
       <<: *default_env_vars
       JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
       JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
-      CASSANDRA_USE_JDK11: true
+
+  java17-executor:
+    parameters:
+      exec_resource_class:
+        type: string
+        default: medium
+    docker:
+    - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+    resource_class: << parameters.exec_resource_class >>
+    working_directory: ~/
+    shell: /bin/bash -eo pipefail -l
+    environment:
+      <<: *default_env_vars
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      JDK_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      CASSANDRA_USE_JDK17: true
 
 build_common: &build_common
   parallelism: 1 # This job doesn't benefit from parallelism
@@ -716,16 +716,16 @@ build_common: &build_common
           - .m2
 
 jobs:
-  j8_build:
-    executor: java8-executor
-    <<: *build_common
-
   j11_build:
     executor: java11-executor
     <<: *build_common
 
-  j8_dtest_jars_build:
-    executor: java8-executor
+  j17_build:
+    executor: java17-executor
+    <<: *build_common
+
+  j11_dtest_jars_build:
+    executor: java11-executor
     parallelism: 1
     steps:
       - attach_workspace:
@@ -736,8 +736,8 @@ jobs:
           paths:
             - dtest_jars
 
-  j8_unit_tests:
-    <<: *j8_par_executor
+  j11_unit_tests:
+    <<: *j11_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -745,41 +745,14 @@ jobs:
       - log_environment
       - run_parallel_junit_tests
 
-  j8_simulator_dtests:
-    <<: *j8_small_executor
+  j11_simulator_dtests:
+    <<: *j11_small_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
       - create_junit_containers
       - log_environment
       - run_simulator_tests
-
-  j8_jvm_dtests:
-    <<: *j8_small_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - create_junit_containers:
-          classlistprefix: distributed
-          extra_filters: "| grep -v upgrade"
-      - log_environment
-      - run_parallel_junit_tests:
-          classlistprefix: distributed
-          target: "testclasslist"
-
-  j8_jvm_dtests_vnode:
-    <<: *j8_small_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - create_junit_containers:
-          classlistprefix: distributed
-          extra_filters: "| grep -v upgrade"
-      - log_environment
-      - run_parallel_junit_tests:
-          classlistprefix: distributed
-          target: "testclasslist"
-          arguments: "-Dtest.jvm.args='-Dcassandra.dtest.num_tokens=16'"
 
   j11_jvm_dtests:
     <<: *j11_small_par_executor
@@ -808,8 +781,35 @@ jobs:
           target: "testclasslist"
           arguments: "-Dtest.jvm.args='-Dcassandra.dtest.num_tokens=16'"
 
-  j8_jvm_upgrade_dtests:
-    <<: *j8_medium_par_executor
+  j17_jvm_dtests:
+    <<: *j17_small_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - create_junit_containers:
+          classlistprefix: distributed
+          extra_filters: "| grep -v upgrade"
+      - log_environment
+      - run_parallel_junit_tests:
+          classlistprefix: distributed
+          target: "testclasslist"
+
+  j17_jvm_dtests_vnode:
+    <<: *j17_small_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - create_junit_containers:
+          classlistprefix: distributed
+          extra_filters: "| grep -v upgrade"
+      - log_environment
+      - run_parallel_junit_tests:
+          classlistprefix: distributed
+          target: "testclasslist"
+          arguments: "-Dtest.jvm.args='-Dcassandra.dtest.num_tokens=16'"
+
+  j11_jvm_upgrade_dtests:
+    <<: *j11_medium_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -821,21 +821,14 @@ jobs:
           classlistprefix: distributed
           target: "testclasslist"
 
-  j11_unit_tests:
-    <<: *j11_par_executor
+  j17_unit_tests:
+    <<: *j17_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
       - create_junit_containers
       - log_environment
       - run_parallel_junit_tests
-
-  j8_cqlshlib_tests:
-    <<: *j8_small_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - run_cqlshlib_tests
 
   j11_cqlshlib_tests:
     <<: *j11_small_executor
@@ -844,8 +837,15 @@ jobs:
           at: /home/cassandra
       - run_cqlshlib_tests
 
+  j17_cqlshlib_tests:
+    <<: *j17_small_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - run_cqlshlib_tests
+
   utests_long:
-    <<: *j8_seq_executor
+    <<: *j11_seq_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -853,7 +853,7 @@ jobs:
           target: long-test
 
   utests_compression:
-    <<: *j8_par_executor
+    <<: *j11_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -863,7 +863,7 @@ jobs:
           target: testclasslist-compression
 
   utests_stress:
-    <<: *j8_seq_executor
+    <<: *j11_seq_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -871,7 +871,7 @@ jobs:
           target: stress-test
 
   utests_fqltool:
-    <<: *j8_seq_executor
+    <<: *j11_seq_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -879,7 +879,7 @@ jobs:
           target: fqltool-test
 
   utests_system_keyspace_directory:
-    <<: *j8_par_executor
+    <<: *j11_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -888,22 +888,22 @@ jobs:
       - run_parallel_junit_tests:
           target: testclasslist-system-keyspace-directory
 
-  j8_dtests-with-vnodes:
-    <<: *j8_par_executor
+  j11_dtests-with-vnodes:
+    <<: *j11_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
       - clone_dtest
       - create_venv
       - create_dtest_containers:
-          file_tag: j8_with_vnodes
+          file_tag: j11_with_vnodes
           run_dtests_extra_args: "--use-vnodes --skip-resource-intensive-tests --pytest-options '-k not cql'"
       - run_dtests:
-          file_tag: j8_with_vnodes
+          file_tag: j11_with_vnodes
           pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
 
-  j11_dtests-with-vnodes:
-    <<: *j11_par_executor
+  j17_dtests-with-vnodes:
+    <<: *j17_par_executor
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -911,120 +911,54 @@ jobs:
     - clone_dtest
     - create_venv
     - create_dtest_containers:
-        file_tag: j11_with_vnodes
+        file_tag: j17_with_vnodes
         run_dtests_extra_args: "--use-vnodes --skip-resource-intensive-tests --pytest-options '-k not cql'"
     - run_dtests:
-        file_tag: j11_with_vnodes
+        file_tag: j17_with_vnodes
         pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
-
-  j8_dtests-no-vnodes:
-    <<: *j8_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - clone_dtest
-      - create_venv
-      - create_dtest_containers:
-          file_tag: j8_without_vnodes
-          run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k not cql'"
-      - run_dtests:
-          file_tag: j8_without_vnodes
-          pytest_extra_args: '--skip-resource-intensive-tests'
 
   j11_dtests-no-vnodes:
     <<: *j11_par_executor
     steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv
+      - create_dtest_containers:
+          file_tag: j11_without_vnodes
+          run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k not cql'"
+      - run_dtests:
+          file_tag: j11_without_vnodes
+          pytest_extra_args: '--skip-resource-intensive-tests'
+
+  j17_dtests-no-vnodes:
+    <<: *j17_par_executor
+    steps:
     - attach_workspace:
         at: /home/cassandra
     - log_environment
     - clone_dtest
     - create_venv
     - create_dtest_containers:
-        file_tag: j11_without_vnodes
+        file_tag: j17_without_vnodes
         run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k not cql'"
     - run_dtests:
-        file_tag: j11_without_vnodes
+        file_tag: j17_without_vnodes
         pytest_extra_args: '--skip-resource-intensive-tests'
 
-  j8_upgradetests-no-vnodes:
-    <<: *j8_par_executor
+  j11_upgradetests-no-vnodes:
+    <<: *j11_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
       - clone_dtest
       - create_venv
       - create_dtest_containers:
-          file_tag: j8_upgradetests_without_vnodes
+          file_tag: j11_upgradetests_without_vnodes
           run_dtests_extra_args: '--execute-upgrade-tests-only --upgrade-target-version-only --upgrade-version-selection all'
       - run_dtests:
-          file_tag: j8_upgradetests_without_vnodes
+          file_tag: j11_upgradetests_without_vnodes
           pytest_extra_args: '--execute-upgrade-tests-only --upgrade-target-version-only --upgrade-version-selection all'
-
-  j8_cqlsh-dtests-py3-with-vnodes:
-    <<: *j8_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - clone_dtest
-      - create_venv
-      - create_dtest_containers:
-          file_tag: j8_with_vnodes
-          run_dtests_extra_args: "--use-vnodes --skip-resource-intensive-tests --pytest-options '-k cql'"
-      - run_dtests:
-          file_tag: j8_with_vnodes
-          pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
-          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.6'
-
-  j8_cqlsh-dtests-py38-with-vnodes:
-    <<: *j8_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - clone_dtest
-      - create_venv:
-          python_version: '3.8'
-      - create_dtest_containers:
-          file_tag: j8_with_vnodes
-          run_dtests_extra_args: "--use-vnodes --skip-resource-intensive-tests --pytest-options '-k cql'"
-          python_version: '3.8'
-      - run_dtests:
-          file_tag: j8_with_vnodes
-          pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
-          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
-          python_version: '3.8'
-
-  j8_cqlsh-dtests-py3-no-vnodes:
-    <<: *j8_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - clone_dtest
-      - create_venv
-      - create_dtest_containers:
-          file_tag: j8_without_vnodes
-          run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k cql'"
-      - run_dtests:
-          file_tag: j8_without_vnodes
-          pytest_extra_args: '--skip-resource-intensive-tests'
-          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.6'
-
-  j8_cqlsh-dtests-py38-no-vnodes:
-    <<: *j8_par_executor
-    steps:
-      - attach_workspace:
-          at: /home/cassandra
-      - clone_dtest
-      - create_venv:
-          python_version: '3.8'
-      - create_dtest_containers:
-          file_tag: j8_without_vnodes
-          run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k cql'"
-          python_version: '3.8'
-      - run_dtests:
-          file_tag: j8_without_vnodes
-          pytest_extra_args: '--skip-resource-intensive-tests'
-          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
-          python_version: '3.8'
 
   j11_cqlsh-dtests-py3-with-vnodes:
     <<: *j11_par_executor
@@ -1092,19 +1026,71 @@ jobs:
           extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
           python_version: '3.8'
 
-  j8_repeated_utest:
-    <<: *j8_repeated_utest_executor
+  j17_cqlsh-dtests-py3-with-vnodes:
+    <<: *j17_par_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
-      - log_environment
-      - run_repeated_utest:
-          target: ${REPEATED_UTEST_TARGET}
-          class: ${REPEATED_UTEST_CLASS}
-          methods: ${REPEATED_UTEST_METHODS}
-          vnodes: ${REPEATED_UTEST_VNODES}
-          count: ${REPEATED_UTEST_COUNT}
-          stop_on_failure: ${REPEATED_UTEST_STOP_ON_FAILURE}
+      - clone_dtest
+      - create_venv
+      - create_dtest_containers:
+          file_tag: j17_with_vnodes
+          run_dtests_extra_args: "--use-vnodes --skip-resource-intensive-tests --pytest-options '-k cql'"
+      - run_dtests:
+          file_tag: j17_with_vnodes
+          pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
+          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.6'
+
+  j17_cqlsh-dtests-py38-with-vnodes:
+    <<: *j17_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv:
+          python_version: '3.8'
+      - create_dtest_containers:
+          file_tag: j17_with_vnodes
+          run_dtests_extra_args: "--use-vnodes --skip-resource-intensive-tests --pytest-options '-k cql'"
+          python_version: '3.8'
+      - run_dtests:
+          file_tag: j17_with_vnodes
+          pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
+          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
+          python_version: '3.8'
+
+  j17_cqlsh-dtests-py3-no-vnodes:
+    <<: *j17_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv
+      - create_dtest_containers:
+          file_tag: j17_without_vnodes
+          run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k cql'"
+      - run_dtests:
+          file_tag: j17_without_vnodes
+          pytest_extra_args: '--skip-resource-intensive-tests'
+          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.6'
+
+  j17_cqlsh-dtests-py38-no-vnodes:
+    <<: *j17_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv:
+          python_version: '3.8'
+      - create_dtest_containers:
+          file_tag: j17_without_vnodes
+          run_dtests_extra_args: "--skip-resource-intensive-tests --pytest-options '-k cql'"
+          python_version: '3.8'
+      - run_dtests:
+          file_tag: j17_without_vnodes
+          pytest_extra_args: '--skip-resource-intensive-tests'
+          extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
+          python_version: '3.8'
 
   j11_repeated_utest:
     <<: *j11_repeated_utest_executor
@@ -1120,8 +1106,22 @@ jobs:
           count: ${REPEATED_UTEST_COUNT}
           stop_on_failure: ${REPEATED_UTEST_STOP_ON_FAILURE}
 
-  j8_repeated_dtest:
-    <<: *j8_repeated_dtest_executor
+  j17_repeated_utest:
+    <<: *j17_repeated_utest_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - log_environment
+      - run_repeated_utest:
+          target: ${REPEATED_UTEST_TARGET}
+          class: ${REPEATED_UTEST_CLASS}
+          methods: ${REPEATED_UTEST_METHODS}
+          vnodes: ${REPEATED_UTEST_VNODES}
+          count: ${REPEATED_UTEST_COUNT}
+          stop_on_failure: ${REPEATED_UTEST_STOP_ON_FAILURE}
+
+  j11_repeated_dtest:
+    <<: *j11_repeated_dtest_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1134,8 +1134,8 @@ jobs:
           count: ${REPEATED_DTEST_COUNT}
           stop_on_failure: ${REPEATED_DTEST_STOP_ON_FAILURE}
 
-  j11_repeated_dtest:
-    <<: *j11_repeated_dtest_executor
+  j17_repeated_dtest:
+    <<: *j17_repeated_dtest_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1150,7 +1150,7 @@ jobs:
           stop_on_failure: ${REPEATED_DTEST_STOP_ON_FAILURE}
 
   repeated_jvm_upgrade_dtest:
-    <<: *j8_repeated_jvm_upgrade_dtest_executor
+    <<: *j11_repeated_jvm_upgrade_dtest_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -1164,7 +1164,7 @@ jobs:
           stop_on_failure: ${REPEATED_JVM_UPGRADE_DTEST_STOP_ON_FAILURE}
 
   repeated_upgrade_dtest:
-    <<: *j8_repeated_upgrade_dtest_executor
+    <<: *j11_repeated_upgrade_dtest_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
