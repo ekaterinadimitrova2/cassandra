@@ -71,10 +71,14 @@ fi
 # Set up venv with dtest dependencies
 set -e # enable immediate exit if venv setup fails
 virtualenv --python=$PYTHON_VERSION venv
+echo $PYTHON_VERSION
 source venv/bin/activate
 
-/usr/bin/python3.8 -m pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
+pip install -r ${CASSANDRA_DIR}/pylib/requirements.txt --verbose
 pip freeze
+
+whereis ccm
+which ccm
 
 echo $PATH
 export PATH=$PATH:$HOME/.local/bin
