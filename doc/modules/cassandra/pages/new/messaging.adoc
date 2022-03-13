@@ -85,9 +85,9 @@ arrival from other nodes in the cluster. These limits are applied to the
 on-wire size of the message being sent or received.
 . The basic per-link limit is consumed in isolation before any endpoint
 or global limit is imposed. Each node-pair has three links: urgent,
-small and large. So any given node may have a maximum of
+small and large. Any given node may have a maximum of
 `N*3 * (internode_application_send_queue_capacity in bytes + internode_application_receive_queue_capacity in bytes)`
-messages queued without any coordination between them although in
+of messages data queued without any coordination between them although in
 practice, with token-aware routing, only RF*tokens nodes should need to
 communicate with significant bandwidth.
 . The per-endpoint limit is imposed on all messages exceeding the

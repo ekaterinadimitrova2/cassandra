@@ -95,7 +95,7 @@ is enabled. Currently this can be used with Leveled Compaction.
 Throttling would reduce the streaming speed. The
 `stream_throughput_outbound` throttles all outbound
 streaming file transfers on a node to the given total throughput in
-Mbps. When unset, the default is 200 Mbps or 24 MB/s.
+Mbps. When unset, the default is 200 Mbps or 24 MiB/s.
 
 ....
 stream_throughput_outbound: 24MiB/s

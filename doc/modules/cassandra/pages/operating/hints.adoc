@@ -39,7 +39,7 @@ replicas acknowledge the mutation the coordinator responds successfully
 to the client. If a replica node is unavailable, however, the
 coordinator stores a hint locally to the filesystem for later
 application. New hints will be retained for up to
-`max_hint_windowin_ms` of downtime (defaults to `3 hours`). If the
+`max_hint_windowin_ms` of downtime (defaults to `3 h`). If the
 unavailable replica does return to the cluster before the window
 expires, the coordinator applies any pending hinted mutations against
 the replica to ensure that eventual consistency is maintained.
@@ -128,7 +128,7 @@ hinted_handoff_disabled_datacenters:
 |`unset`
 
 |`max_hint_window` |Defines the maximum amount of time a node
-shall have hints generated after it has failed. |`3h` # 3 hours
+shall have hints generated after it has failed. |`3h` 
 
 |`hinted_handoff_throttle` |Maximum throttle in KiBs per second,
 per delivery thread. This will be reduced proportionally to the number

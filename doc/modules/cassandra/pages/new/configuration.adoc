@@ -1,4 +1,4 @@
-= Liberate cassandra.yaml Parameters' Names from Their Units
+= Liberating cassandra.yaml Parameters' Names from Their Units
 
 == Objective
 
@@ -8,12 +8,12 @@ Three big things happened as part of https://issues.apache.org/jira/browse/CASSA
 
 2) Liberating `cassandra.yaml` parameters from their units (DataStorage, DataRate and Duration) and introducing temporary smallest accepted unit per parameter (only for DataStorage and Duration ones)
 
-3) Backward compatibility framework to support the old names and lack of units’ support at least until the next major release.
+3) Backward compatibility framework to support the old names and lack of units support until at least the next major release.
 
 
 == Renamed Parameters
 
-The community took the decision to give the chance to people to decide what units to use for their Cassandra parameters of type duration, data storage, and data rate.
+The community has decided to allow operators to specify units for Cassandra parameters of types duration, data storage, and data rate.
 All parameters which had a particular unit (most of the time added as a suffix to their name) can be now set by using the format [value][unit]. The unit suffix has been removed from their names.
 
 *Example*:
@@ -31,16 +31,17 @@ permissions_update_interval: 0us
 permissions_update_interval: 0µs
 ....
 
-The work in https://issues.apache.org/jira/browse/CASSANDRA-15234[CASSANDRA-15234] was already quite big, so we decided to introduce the notion of the smallest allowed unit per parameter for duration and data storage parameters. What does this mean?
-Currently, Cassandra internals still use the old unit for parameters and in case, for example, you have seconds used internally, but you want to add a value in nanoseconds in cassandra.yaml,
-you will get a configuration exception that contains the following information:
+The work in https://issues.apache.org/jira/browse/CASSANDRA-15234[CASSANDRA-15234] was already quite big, so we decided
+to introduce the notion of the smallest allowed unit per parameter for duration and data storage parameters. What does this mean?
+Cassandra's internals still use the old units for parameters. If, for example, seconds are used internally, but you want
+to add a value in nanoseconds in `cassandra.yaml`, you will get a configuration exception that contains the following information:
 ....
 Accepted units: seconds, minutes, hours, days.
 ....
 
 Why was this needed?
 Because we can run into precision issues. The full solution to the problem is to convert internally all parameters’ values
-to be manipulated with the smallest supported by Cassandra unit. Series of tickets to assess and migrate to the smallest unit
+to be manipulated with the smallest supported by Cassandra unit. A series of tickets to assess and migrate to the smallest unit
 our parameters (incrementally, post https://issues.apache.org/jira/browse/CASSANDRA-15234[CASSANDRA-15234]) will be opened soon.
 
 
@@ -132,8 +133,8 @@ our parameters (incrementally, post https://issues.apache.org/jira/browse/CASSAN
 |enable_legacy_ssl_storage_port |legacy_ssl_storage_port_enabled |-
 |===
 
-Another TO DO is to add new JMX methods supporting the new format. This might never happen though if virtual tables provide
-support to change our configuration sooner than later. Discussions and preliminary work are in the making.
+Another TO DO is to add JMX methods supporting the new format. However, we may abandon this if virtual tables support for
+configuration changes in the near future.
 
 *Notes for Cassandra Developers*:
 
@@ -189,10 +190,3 @@ hinted_handoff_enabled: false
 ....
 
 https://issues.apache.org/jira/browse/CASSANDRA-17379[CASSANDRA-17379] was opened to improve the user experience and deprecate the overloading.
-The plan for improvement is:
-
-1. Fail startup if the duplicate parameters have different values.
-
-2. WARN on startup if duplicates exist but have the same value.
-
-3. Provide a system property to opt out of #1.

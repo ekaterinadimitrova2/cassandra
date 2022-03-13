@@ -22,9 +22,9 @@ to SSTables and remove the need to sync with the commitlogs on startup.
 * `commitlog_segment_size`: The default size is 32MiB, which is
 almost always fine, but if you are archiving commitlog segments (see
 commitlog_archiving.properties), then you probably want a finer
-granularity of archiving; 8 or 16 MiB is reasonable. Max mutation size is
-also configurable via `max_mutation_size` setting in `cassandra.yaml`.
-The default is half the size `commitlog_segment_size` in bytes.
+granularity of archiving; 8 or 16 MiB is reasonable. `commitlog_segment_size`
+also determines the default value of `max_mutation_size` in cassandra.yaml.
+By default, max_mutation_size is half the size of `commitlog_segment_size`.
 
 **NOTE: If `max_mutation_size` is set explicitly then
 `commitlog_segment_size` must be set to at least twice the size of
