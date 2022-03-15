@@ -20,8 +20,13 @@ version: 2
 jobs:
   repeated_jvm_upgrade_dtest:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -202,8 +207,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j17_cqlsh-dtests-py38-with-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -299,8 +309,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_unit_tests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -410,8 +425,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_cqlsh-dtests-py38-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -507,8 +527,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_dtests-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -607,8 +632,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j11_unit_tests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -717,7 +747,11 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   repeated_upgrade_dtest:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -840,8 +874,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_cqlsh-dtests-py3-with-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -936,8 +975,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j17_cqlsh-dtests-py3-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -1033,8 +1077,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_cqlsh-dtests-py3-with-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -1130,8 +1179,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j11_cqlsh-dtests-py3-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -1226,8 +1280,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j17_jvm_dtests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 5
@@ -1337,7 +1396,11 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_build:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1437,8 +1500,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j11_cqlsh-dtests-py38-with-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -1643,7 +1711,11 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_dtest_jars_build:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1845,8 +1917,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_jvm_upgrade_dtests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 2
@@ -1955,8 +2032,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_repeated_dtest:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -2078,8 +2160,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_dtests-with-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -2155,8 +2242,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j17_repeated_utest:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -2338,8 +2430,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_repeated_dtest:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -2484,7 +2581,11 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j17_cqlshlib_tests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2540,8 +2641,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   utests_stress:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -2604,8 +2710,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_jvm_dtests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 5
@@ -2714,8 +2825,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j17_dtests-with-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -2814,7 +2930,11 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j11_build:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2913,7 +3033,11 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_upgradetests-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2990,7 +3114,11 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_cqlshlib_tests:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+>>>>>>> image
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3156,8 +3284,13 @@ jobs:
     - CASSANDRA_USE_JDK17: true
   j11_repeated_utest:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -3338,8 +3471,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_cqlsh-dtests-py38-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -3434,8 +3572,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   utests_long:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -3498,8 +3641,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   utests_system_keyspace_directory:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -3608,8 +3756,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   utests_fqltool:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -3672,8 +3825,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_dtests-no-vnodes:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: large
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
@@ -3749,8 +3907,13 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   utests_compression:
     docker:
+<<<<<<< HEAD
     - image: edimitrova86/cassandra-testing-base-w-dependencies:latest
     resource_class: xlarge
+=======
+    - image: edimitrova86/cassandra-testing-ubuntu2004-java11:latest
+    resource_class: medium
+>>>>>>> image
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 100
