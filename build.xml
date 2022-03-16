@@ -140,11 +140,11 @@
     <property name="jflex.version" value="1.8.2"/>
 
     <!-- https://mvnrepository.com/artifact/net.openhft/chronicle-bom/1.16.23 -->
-    <property name="chronicle-queue.version" value="5.20.123" />
-    <property name="chronicle-core.version" value="2.20.126" />
-    <property name="chronicle-bytes.version" value="2.20.111" />
-    <property name="chronicle-wire.version" value="2.20.117" />
-    <property name="chronicle-threads.version" value="2.20.111" />
+    <property name="chronicle-queue.version" value="5.23ea1" />
+    <property name="chronicle-core.version" value="2.23ea4" />
+    <property name="chronicle-bytes.version" value="2.23ea2" />
+    <property name="chronicle-wire.version" value="2.23ea2" />
+    <property name="chronicle-threads.version" value="2.23ea2" />
 
     <property name="dtest-api.version" value="0.0.13" />
 
@@ -247,6 +247,8 @@
         <string>--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</string>
         <string>--add-exports java.base/java.util.concurrent.locks=ALL-UNNAMED</string>
         <string>--add-exports java.base/java.lang.invoke=ALL-UNNAMED</string>
+        <string>--add-exports java.base/sun.security.x509=ALL-UNNAMED</string>
+        <string>--add-exports java.base/java.util.jar=ALL-UNNAMED</string>
 
         <string>--add-opens java.base/java.lang.module=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.net=ALL-UNNAMED</string>
@@ -273,7 +275,8 @@
         <string>--add-opens java.base/sun.security.util=ALL-UNNAMED</string>
         <string>--add-opens jdk.compiler/com.sun.tools.javac=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.util.concurrent.locks=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.lang.invoke.TypeDescriptor=ALL-UNNAMED</string>
+        <string>--add-opens java.base/sun.security.x509=ALL-UNNAMED</string>
+        <string>--add-opens java.base/java.util.jar=ALL-UNNAMED</string>
     </resources>
     <pathconvert property="_jvm17_args_concat" refid="_jvm17_arg_items" pathsep=" "/>
     <condition property="java17-jvmargs" value="${_jvm17_args_concat}" else="">
