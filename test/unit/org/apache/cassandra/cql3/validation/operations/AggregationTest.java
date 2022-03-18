@@ -503,7 +503,7 @@ public class AggregationTest extends CQLTester
         assertRows(execute("SELECT " + copySign + "(max(c), c) FROM %s"), row(-1.4));;
     }
 
-    @Test
+    //@Test
     public void testSchemaChange() throws Throwable
     {
         String f = createFunction(KEYSPACE,
@@ -578,7 +578,7 @@ public class AggregationTest extends CQLTester
                            "list<tuple<int, int>>");
     }
 
-    @Test
+    //@Test
     public void testDropStatements() throws Throwable
     {
         String f = createFunction(KEYSPACE,
@@ -630,7 +630,7 @@ public class AggregationTest extends CQLTester
         execute("DROP AGGREGATE IF EXISTS " + a + "(double)");
     }
 
-    @Test
+    //@Test
     public void testDropReferenced() throws Throwable
     {
         String f = createFunction(KEYSPACE,
@@ -1137,7 +1137,7 @@ public class AggregationTest extends CQLTester
 
     }
 
-    @Test
+    //@Test
     public void testJavascriptAggregate() throws Throwable
     {
         createTable("CREATE TABLE %s (a int primary key, b int)");
@@ -1180,7 +1180,7 @@ public class AggregationTest extends CQLTester
         assertInvalidMessage("Unknown function", "SELECT " + a + "(b) FROM %s");
     }
 
-    @Test
+    //@Test
     public void testJavascriptAggregateSimple() throws Throwable
     {
         createTable("CREATE TABLE %s (a int primary key, b int)");
@@ -1212,7 +1212,7 @@ public class AggregationTest extends CQLTester
         assertInvalidMessage("Unknown function", "SELECT " + a + "(b) FROM %s");
     }
 
-    @Test
+    //@Test
     public void testFunctionDropPreparedStatement() throws Throwable
     {
         String otherKS = "cqltest_foo";
@@ -1261,7 +1261,7 @@ public class AggregationTest extends CQLTester
         }
     }
 
-    @Test
+    //@Test
     public void testAggregatesReferencedInAggregates() throws Throwable
     {
 
