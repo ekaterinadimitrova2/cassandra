@@ -225,13 +225,13 @@
         <string>--add-exports java.rmi/sun.rmi.registry=ALL-UNNAMED</string>
         <string>--add-exports java.rmi/sun.rmi.server=ALL-UNNAMED</string>
         <string>--add-exports java.sql/java.sql=ALL-UNNAMED</string>
-        <string>--add-exports java.base/sun.nio.ch=ALL-UNNAMED</string>
-        <string>--add-exports java.base/java.io=ALL-UNNAMED</string>
-        <string>--add-exports java.base/java.util.concurrent=ALL-UNNAMED</string>
-        <string>--add-exports java.base/java.util=ALL-UNNAMED</string>
-        <string>--add-exports java.base/java.util.concurrent.atomic=ALL-UNNAMED</string>
-        <string>--add-exports java.base/java.nio=ALL-UNNAMED</string>
-        <string>--add-exports java.base/java.lang=ALL-UNNAMED</string>
+        <!--<string>add-exports java.base/sun.nio.ch=ALL-UNNAMED</string>
+        <string>add-exports java.base/java.io=ALL-UNNAMED</string>
+        <string>add-exports java.base/java.util.concurrent=ALL-UNNAMED</string>
+        <string>add-exports java.base/java.util=ALL-UNNAMED</string>
+        <string>add-exports java.base/java.util.concurrent.atomic=ALL-UNNAMED</string>
+        <string>add-exports java.base/java.nio=ALL-UNNAMED</string>
+        <string>add-exports java.base/java.lang=ALL-UNNAMED</string>-->
 
         <string>--add-opens java.base/java.lang.module=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.net=ALL-UNNAMED</string>
@@ -242,33 +242,33 @@
         <string>--add-opens java.base/jdk.internal.module=ALL-UNNAMED</string>
         <string>--add-opens java.base/jdk.internal.util.jar=ALL-UNNAMED</string>
         <string>--add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED</string>
-        <string>--add-opens java.base/sun.nio.ch=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.io=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.util.concurrent=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.util=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.nio=ALL-UNNAMED</string>
-        <string>--add-opens java.base/java.lang=ALL-UNNAMED</string>
-    </resources>
-    <pathconvert property="_jvm17_args_concat" refid="_jvm17_arg_items" pathsep=" "/>
-    <condition property="java17-jvmargs" value="${_jvm17_args_concat}" else="${_jvm11_args_concat}">
-        <not>
-            <equals arg1="${ant.java.version}" arg2="11"/>
-        </not>
-    </condition>
+        <!--<string>add-opens java.base/sun.nio.ch=ALL-UNNAMED</string>
+        <string>add-opens java.base/java.io=ALL-UNNAMED</string>
+        <string>add-opens java.base/java.util.concurrent=ALL-UNNAMED</string>
+        <string>add-opens java.base/java.util=ALL-UNNAMED</string>
+        <string>add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED</string>
+        <string>add-opens java.base/java.nio=ALL-UNNAMED</string>
+        <string>add-opens java.base/java.lang=ALL-UNNAMED</string>-->
+</resources>
+<pathconvert property="_jvm17_args_concat" refid="_jvm17_arg_items" pathsep=" "/>
+<condition property="java17-jvmargs" value="${_jvm17_args_concat}" else="${_jvm11_args_concat}">
+    <not>
+        <equals arg1="${ant.java.version}" arg2="11"/>
+    </not>
+</condition>
 
-    <!--
-      JVM arguments for tests.
+<!--
+  JVM arguments for tests.
 
-      There is a race condition bug in java 11 (see CASSANDRA-15981) which causes a crash of the
-      JVM; this race is between CMS and class unloading.  In java 8 we can cap the metaspace to
-      make tests stable on low resource environments, but in java 11 we need to make it unlimited
-      (don't define MaxMetaspaceSize) and disable class unloading in CMS outside of a
-      stop-the-world pause.
+  There is a race condition bug in java 11 (see CASSANDRA-15981) which causes a crash of the
+  JVM; this race is between CMS and class unloading.  In java 8 we can cap the metaspace to
+  make tests stable on low resource environments, but in java 11 we need to make it unlimited
+  (don't define MaxMetaspaceSize) and disable class unloading in CMS outside of a
+  stop-the-world pause.
 
-      In java 11 we also need to set a system property to enable netty to use Unsafe direct byte
-      buffer construction (see CASSANDRA-16493)
-    -->
+  In java 11 we also need to set a system property to enable netty to use Unsafe direct byte
+  buffer construction (see CASSANDRA-16493)
+-->
     <resources id="_jvm11_test_arg_items">
         <string>-XX:-CMSClassUnloadingEnabled</string>
         <string>-Dio.netty.tryReflectionSetAccessible=true</string>
