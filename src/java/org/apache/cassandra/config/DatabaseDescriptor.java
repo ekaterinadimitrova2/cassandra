@@ -3672,7 +3672,7 @@ public class DatabaseDescriptor
         long valueInBytes = value.toBytes();
         if (valueInBytes > Integer.MAX_VALUE)
         {
-            throw new ConfigurationException(String.format("%s must be positive value < %dB, but was %dB",
+            throw new ConfigurationException(String.format("%s must be positive value <= %dB, but was %dB",
                                                            name,
                                                            Integer.MAX_VALUE,
                                                            valueInBytes),
