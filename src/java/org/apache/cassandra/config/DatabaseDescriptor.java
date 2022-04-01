@@ -551,14 +551,14 @@ public class DatabaseDescriptor
             conf.hints_directory = storagedirFor("hints");
         }
 
-        if (conf.native_transport_max_concurrent_requests.toBytes() == 0)
+        if (conf.native_transport_max_request_data_in_flight == null || conf.native_transport_max_request_data_in_flight.toBytes() == 0)
         {
-            conf.native_transport_max_concurrent_requests = DataStorageSpec.inBytes(Runtime.getRuntime().maxMemory() / 10);
+            conf.native_transport_max_request_data_in_flight = DataStorageSpec.inBytes(Runtime.getRuntime().maxMemory() / 10);
         }
 
-        if (conf.native_transport_max_concurrent_requests_per_ip.toBytes() == 0)
+        if (conf.native_transport_max_request_data_in_flight_per_ip == null || conf.native_transport_max_request_data_in_flight_per_ip.toBytes() == 0)
         {
-            conf.native_transport_max_concurrent_requests_per_ip = DataStorageSpec.inBytes(Runtime.getRuntime().maxMemory() / 40);
+            conf.native_transport_max_request_data_in_flight_per_ip = DataStorageSpec.inBytes(Runtime.getRuntime().maxMemory() / 40);
         }
         
         if (conf.native_transport_rate_limiting_enabled)
@@ -1362,7 +1362,7 @@ public class DatabaseDescriptor
         else if (updateInterval == -1)
             conf.permissions_update_interval = null;
         else
-            throw new IllegalArgumentException("permission_update_interval should be >= -1");
+            throw new IllegalArgumentException("permissions_update_interval should be >= -1");
     }
 
     public static int getPermissionsCacheMaxEntries()
@@ -2499,9 +2499,9 @@ public class DatabaseDescriptor
         conf.native_transport_receive_queue_capacity = DataStorageSpec.inBytes(queueSize);
     }
 
-    public static long getNativeTransportMaxConcurrentRequestsInBytesPerIp()
+    public static long getNativeTransportMaxRequestDataInFlightPerIpInBytes()
     {
-        return conf.native_transport_max_concurrent_requests_per_ip.toBytes();
+        return conf.native_transport_max_request_data_in_flight_per_ip.toBytes();
     }
 
     public static Config.PaxosVariant getPaxosVariant()
@@ -2634,25 +2634,25 @@ public class DatabaseDescriptor
         conf.paxos_auto_repair_threshold_mb = threshold;
     }
 
-    public static void setNativeTransportMaxConcurrentRequestsInBytesPerIp(long maxConcurrentRequestsInBytes)
+    public static void setNativeTransportMaxRequestDataInFlightPerIpInBytes(long maxRequestDataInFlightInBytes)
     {
-        if (maxConcurrentRequestsInBytes < 0)
-            maxConcurrentRequestsInBytes = 0;
+        if (maxRequestDataInFlightInBytes <= -1)
+            maxRequestDataInFlightInBytes = Runtime.getRuntime().maxMemory() / 40;
 
-        conf.native_transport_max_concurrent_requests_per_ip = DataStorageSpec.inBytes(maxConcurrentRequestsInBytes);
+        conf.native_transport_max_request_data_in_flight_per_ip = DataStorageSpec.inBytes(maxRequestDataInFlightInBytes);
     }
 
-    public static long getNativeTransportMaxConcurrentRequestsInBytes()
+    public static long getNativeTransportMaxRequestDataInFlightInBytes()
     {
-        return conf.native_transport_max_concurrent_requests.toBytes();
+        return conf.native_transport_max_request_data_in_flight.toBytes();
     }
 
-    public static void setNativeTransportMaxConcurrentRequestsInBytes(long maxConcurrentRequestsInBytes)
+    public static void setNativeTransportConcurrentRequestDataInFlightInBytes(long maxRequestDataInFlightInBytes)
     {
-        if (maxConcurrentRequestsInBytes < 0)
-            maxConcurrentRequestsInBytes = 0;
+        if (maxRequestDataInFlightInBytes <= -1)
+            maxRequestDataInFlightInBytes = Runtime.getRuntime().maxMemory() / 10;
 
-        conf.native_transport_max_concurrent_requests = DataStorageSpec.inBytes(maxConcurrentRequestsInBytes);
+        conf.native_transport_max_request_data_in_flight = DataStorageSpec.inBytes(maxRequestDataInFlightInBytes);
     }
 
     public static int getNativeTransportMaxRequestsPerSecond()

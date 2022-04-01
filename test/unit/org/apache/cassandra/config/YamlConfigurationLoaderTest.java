@@ -176,9 +176,9 @@ public class YamlConfigurationLoaderTest
         .hasRootCauseMessage("Invalid duration -2: value must be positive");
 
         // BYTES_CUSTOM_DATASTORAGE
-        assertThat(from("native_transport_max_concurrent_requests_in_bytes_per_ip", -1).native_transport_max_concurrent_requests_per_ip.toBytes()).isEqualTo(0);
-        assertThat(from("native_transport_max_concurrent_requests_in_bytes_per_ip", 0).native_transport_max_concurrent_requests_per_ip.toBytes()).isEqualTo(0);
-        assertThat(from("native_transport_max_concurrent_requests_in_bytes_per_ip", 42).native_transport_max_concurrent_requests_per_ip.toBytes()).isEqualTo(42);
+        assertThat(from("native_transport_max_concurrent_requests_in_bytes_per_ip", -1).native_transport_max_request_data_in_flight_per_ip).isEqualTo(null);
+        assertThat(from("native_transport_max_concurrent_requests_in_bytes_per_ip", 0).native_transport_max_request_data_in_flight_per_ip.toBytes()).isEqualTo(0);
+        assertThat(from("native_transport_max_concurrent_requests_in_bytes_per_ip", 42).native_transport_max_request_data_in_flight_per_ip.toBytes()).isEqualTo(42);
 
         // MEBIBYTES_DATA_STORAGE
         assertThat(from("memtable_heap_space_in_mb", "42").memtable_heap_space.toMebibytes()).isEqualTo(42);

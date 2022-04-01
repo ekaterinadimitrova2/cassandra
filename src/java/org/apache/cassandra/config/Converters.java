@@ -79,11 +79,11 @@ public enum Converters
                       DataStorageSpec::toBytes),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value
-     * Example: native_transport_max_concurrent_requests_in_bytes_per_ip = -1 and native_transport_max_concurrent_requests_per_ip = 0B
+     * Example: native_transport_max_concurrent_requests_in_bytes_per_ip = -1 and native_transport_max_request_data_in_flight_per_ip = null
      * are equal. All negative numbers are printed as 0 in virtual tables.
      */
     BYTES_CUSTOM_DATASTORAGE(Long.class, DataStorageSpec.class,
-                             o -> o < 0 ? DataStorageSpec.inBytes(0) : DataStorageSpec.inBytes(o),
+                             o -> o <= -1 ? null : DataStorageSpec.inBytes(o),
                              DataStorageSpec::toBytes),
     MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, DataRateSpec.class,
                                    DataRateSpec::inMebibytesPerSecond,

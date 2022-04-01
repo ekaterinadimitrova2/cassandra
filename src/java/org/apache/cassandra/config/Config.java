@@ -258,9 +258,9 @@ public class Config
     public boolean native_transport_flush_in_batches_legacy = false;
     public volatile boolean native_transport_allow_older_protocols = true;
     @Replaces(oldName = "native_transport_max_concurrent_requests_in_bytes_per_ip", converter = Converters.BYTES_CUSTOM_DATASTORAGE, deprecated = true)
-    public volatile DataStorageSpec native_transport_max_concurrent_requests_per_ip = new DataStorageSpec("0B");
+    public volatile DataStorageSpec native_transport_max_request_data_in_flight_per_ip = null;
     @Replaces(oldName = "native_transport_max_concurrent_requests_in_bytes", converter = Converters.BYTES_CUSTOM_DATASTORAGE, deprecated = true)
-    public volatile DataStorageSpec native_transport_max_concurrent_requests = new DataStorageSpec("0B");
+    public volatile DataStorageSpec native_transport_max_request_data_in_flight = null;
     public volatile boolean native_transport_rate_limiting_enabled = false;
     public volatile int native_transport_max_requests_per_second = 1000000;
     @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
