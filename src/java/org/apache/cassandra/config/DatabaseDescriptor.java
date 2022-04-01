@@ -2491,12 +2491,12 @@ public class DatabaseDescriptor
 
     public static int getNativeTransportReceiveQueueCapacityInBytes()
     {
-        return conf.native_transport_receive_queue_capacity_in_bytes;
+        return conf.native_transport_receive_queue_capacity.toBytesAsInt();
     }
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
     {
-        conf.native_transport_receive_queue_capacity_in_bytes = queueSize;
+        conf.native_transport_receive_queue_capacity = DataStorageSpec.inBytes(queueSize);
     }
 
     public static long getNativeTransportMaxConcurrentRequestsInBytesPerIp()

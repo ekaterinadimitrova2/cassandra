@@ -263,9 +263,8 @@ public class Config
     public volatile DataStorageSpec native_transport_max_concurrent_requests = new DataStorageSpec("0B");
     public volatile boolean native_transport_rate_limiting_enabled = false;
     public volatile int native_transport_max_requests_per_second = 1000000;
-    // not exposed in the yaml
-    // not sure about this one.... -1? Negative? I don't see anything that guards it?
-    public int native_transport_receive_queue_capacity_in_bytes = 1 << 20; // 1MiB
+    @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
+    public DataStorageSpec native_transport_receive_queue_capacity = new DataStorageSpec("1MiB");
 
     @Deprecated
     public Integer native_transport_max_negotiable_protocol_version = null;
