@@ -3670,12 +3670,11 @@ public class DatabaseDescriptor
     private static void checkValidForByteConversion(final SmallestDataStorageKibibytes value, String name)
     {
         long valueInBytes = value.toBytes();
-        if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
+        if (valueInBytes > Integer.MAX_VALUE)
         {
             throw new ConfigurationException(String.format("%s must be positive value < %dB, but was %dB",
                                                            name,
-                                                           DataStorageSpec.DataStorageUnit.BYTES
-                                                                .convert(Integer.MAX_VALUE, DataStorageSpec.DataStorageUnit.BYTES),
+                                                           Integer.MAX_VALUE,
                                                            valueInBytes),
                                              false);
         }
@@ -3683,8 +3682,7 @@ public class DatabaseDescriptor
 
     public static int getValidationPreviewPurgeHeadStartInSec()
     {
-        int seconds = conf.validation_preview_purge_head_start.toSecondsAsInt();
-        return Math.max(seconds, 0);
+        return conf.validation_preview_purge_head_start.toSecondsAsInt();
     }
 
     public static boolean checkForDuplicateRowsDuringReads()

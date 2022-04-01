@@ -69,11 +69,6 @@ final class SettingsTable extends AbstractVirtualTable
         }
     };
 
-    private static final ImmutableMap<String, String> SPECIAL_CASE_FIELDS =
-    ImmutableMap.of ("permissions_update_interval", "permissions_update_interval_in_ms",
-                     "credentials_update_interval", "credentials_update_interval_in_ms",
-                     "roles_update_interval", "roles_update_interval_in_ms");
-
     @VisibleForTesting
     final Map<String, BiConsumer<SimpleDataSet, Field>> overrides =
         ImmutableMap.<String, BiConsumer<SimpleDataSet, Field>>builder()
@@ -123,9 +118,6 @@ final class SettingsTable extends AbstractVirtualTable
         if (value == null)
         {
             result.row(f.getName());
-
-            if(SPECIAL_CASE_FIELDS.containsKey(f.getName()))
-                 result.row(SPECIAL_CASE_FIELDS.get(f.getName())).column(VALUE, "-1");
         }
         else if (overrides.containsKey(f.getName()))
         {
