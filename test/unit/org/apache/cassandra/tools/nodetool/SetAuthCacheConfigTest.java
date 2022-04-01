@@ -210,7 +210,7 @@ public class SetAuthCacheConfigTest extends CQLTester
                                                "Changed Update Interval to -1\n" +
                                                "Changed Max Entries to 3\n" +
                                                "Changed Active Update to false\n");
-
+        // -1 means disabled and means update_interval will be assigned the value of validity_period
         assertThat(authCache.getValidity()).isEqualTo(1);
         assertThat(authCache.getUpdateInterval()).isEqualTo(1);
         assertThat(authCache.getMaxEntries()).isEqualTo(3);
