@@ -1606,6 +1606,9 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportMaxConcurrentRequestsInBytesPerIp(long maxConcurrentRequestsInBytes)
     {
+        if (maxConcurrentRequestsInBytes <= 0)
+            maxConcurrentRequestsInBytes = Runtime.getRuntime().maxMemory() / 40;
+
         conf.native_transport_max_concurrent_requests_in_bytes_per_ip = maxConcurrentRequestsInBytes;
     }
 
@@ -1616,6 +1619,9 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportMaxConcurrentRequestsInBytes(long maxConcurrentRequestsInBytes)
     {
+        if (maxConcurrentRequestsInBytes <= 0)
+            maxConcurrentRequestsInBytes = Runtime.getRuntime().maxMemory() / 10;
+
         conf.native_transport_max_concurrent_requests_in_bytes = maxConcurrentRequestsInBytes;
     }
 
