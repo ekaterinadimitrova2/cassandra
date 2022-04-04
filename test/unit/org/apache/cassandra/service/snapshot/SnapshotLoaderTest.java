@@ -154,7 +154,7 @@ public class SnapshotLoaderTest
 
         // Write manifest for snapshot tag2 on random location
         Instant tag2Ts = Instant.now().plusSeconds(10);
-        DurationSpec tag2Ttl = new DurationSpec("10h");
+        DurationSpec.LongNanosecondsBound tag2Ttl = new DurationSpec.LongNanosecondsBound("10h");
         File tag2ManifestLocation = tag2Files.toArray(new File[0])[ThreadLocalRandom.current().nextInt(tag2Files.size())];
         writeManifest(tag2ManifestLocation, tag2Ts, tag2Ttl);
 

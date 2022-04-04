@@ -161,6 +161,10 @@ use the extended classes `SmallestDuration*`, `SmallestDataStorage*`.
 want to consider a separate flag parameter or null value. In case you use the null value, please, ensure that any default value
 introduced in the DatabaDescriptor to handle it is also duplicated in any related setters.
 
+- Parameters of type data storage, duration and data rate cannot be set to Long.MAX_VALUE (former parameters of long type)
+and Integer.MAX_VALUE (former parameters of int type). That numbers are used during conversion between units to prevent
+an overflow from happening.
+
 - Any time you add @Replaces with a name change, we need to add an entry in this https://github.com/riptano/ccm/blob/808b6ca13526785b0fddfe1ead2383c060c4b8b6/ccmlib/common.py#L62[Python dictionary in CCM] to support the same backward compatibility as SnakeYAML.
 
 Please follow the instructions in requirements.txt in the DTest repo how to retag CCM after committing any changes.

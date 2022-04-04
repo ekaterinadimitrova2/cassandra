@@ -99,7 +99,7 @@ public class RateLimitingTest extends CQLTester
             }
         };
 
-        ClientResourceLimits.setGlobalLimit(Long.MAX_VALUE);
+        ClientResourceLimits.setGlobalLimit(Long.MAX_VALUE-1);
     }
 
     @Test
