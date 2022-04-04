@@ -560,7 +560,7 @@ public class DatabaseDescriptor
         {
             conf.native_transport_max_request_data_in_flight_per_ip = DataStorageSpec.inBytes(Runtime.getRuntime().maxMemory() / 40);
         }
-        
+
         if (conf.native_transport_rate_limiting_enabled)
             logger.info("Native transport rate-limiting enabled at {} requests/second.", conf.native_transport_max_requests_per_second);
         else
@@ -1355,7 +1355,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = SmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.permissions_validity = SmallestDurationMillisecondsInt.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -2033,7 +2033,7 @@ public class DatabaseDescriptor
 
     public static void setStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.stream_throughput_outbound = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.stream_throughput_outbound = DataRateInt.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static int getEntireSSTableStreamThroughputOutboundMebibytesPerSecAsInt()
@@ -2063,7 +2063,7 @@ public class DatabaseDescriptor
 
     public static void setInterDCStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.inter_dc_stream_throughput_outbound = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.inter_dc_stream_throughput_outbound = DataRateInt.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static double getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec()
@@ -2527,7 +2527,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
     {
-        conf.native_transport_receive_queue_capacity = DataStorageSpec.inBytes(queueSize);
+        conf.native_transport_receive_queue_capacity = SmallestDataStorageBytesInt.inBytes(queueSize);
     }
 
     public static long getNativeTransportMaxRequestDataInFlightPerIpInBytes()
@@ -2600,9 +2600,9 @@ public class DatabaseDescriptor
         return conf.paxos_purge_grace_period.to(units);
     }
 
-    public static void setPaxosPurgeGrace(long value, TimeUnit units)
+    public static void setPaxosPurgeGrace(long value)
     {
-        conf.paxos_purge_grace_period = new DurationSpec(value, units);
+        conf.paxos_purge_grace_period = SmallestDurationSeconds.inSeconds(value);
     }
 
     public static PaxosOnLinearizabilityViolation paxosOnLinearizabilityViolations()
@@ -3613,7 +3613,7 @@ public class DatabaseDescriptor
         if (value > getConcurrentCompactors())
             logger.warn("max_concurrent_automatic_sstable_upgrades ({}) is larger than concurrent_compactors ({})", value, getConcurrentCompactors());
     }
-    
+
     public static AuditLogOptions getAuditLoggingOptions()
     {
         return conf.audit_logging_options;

@@ -18,6 +18,10 @@
 
 package org.apache.cassandra.config;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.KIBIBYTES;
+
 /**
  * Wrapper class for Cassandra data storage configuration parameters which are internally represented in Kibibytes. In order
  * not to lose precision while converting to smaller units (until we migrate those parameters to use internally the smallest
@@ -35,6 +39,13 @@ public final class SmallestDataStorageKibibytes extends DataStorageSpec
     public SmallestDataStorageKibibytes(String value)
     {
         super(value, DataStorageSpec.DataStorageUnit.KIBIBYTES);
+
+        if (value != null && !value.equals("null"))
+        {
+            if (toKibibytes() == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than" +
+                                                 +Long.MAX_VALUE + " in kibibytes");
+        }
     }
 
     private SmallestDataStorageKibibytes(long quantity, DataStorageSpec.DataStorageUnit unit)

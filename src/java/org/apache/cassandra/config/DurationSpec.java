@@ -34,6 +34,7 @@ import static java.util.concurrent.TimeUnit.DAYS;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -47,7 +48,8 @@ public class DurationSpec
      * Immutable map that matches supported time units according to a provided smallest supported time unit
      */
     private static final ImmutableMap<TimeUnit, ImmutableSet<TimeUnit>> MAP_UNITS_PER_MIN_UNIT =
-    ImmutableMap.of(MILLISECONDS, ImmutableSet.of(MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS),
+    ImmutableMap.of(NANOSECONDS,ImmutableSet.of(NANOSECONDS, SECONDS, MINUTES, HOURS, DAYS),
+                    MILLISECONDS, ImmutableSet.of(MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS),
                     SECONDS, ImmutableSet.of(SECONDS, MINUTES, HOURS, DAYS),
                     MINUTES, ImmutableSet.of(MINUTES, HOURS, DAYS));
     /**
@@ -76,12 +78,19 @@ public class DurationSpec
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units: d, h, m, s, ms, us, µs," +
                                              " ns where case matters and " + "only non-negative values");
         }
+
+        if (value != null && !value.equals("null"))
+        {
+            long nanoseconds = toNanoseconds();
+            if (nanoseconds == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+        }
     }
 
     DurationSpec(long quantity, TimeUnit unit)
     {
         if (quantity < 0)
-            throw new ConfigurationException("Invalid duration " + quantity + ": value must be positive");
+            throw new ConfigurationException("Invalid duration " + quantity + unit +": value must be positive");
 
         this.quantity = quantity;
         this.unit = unit;
@@ -99,7 +108,7 @@ public class DurationSpec
 
         Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
 
-        if(matcher.find())
+        if (matcher.find())
         {
             quantity = Long.parseLong(matcher.group(1));
             unit = fromSymbol(matcher.group(2));
@@ -112,6 +121,7 @@ public class DurationSpec
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit) +
                                              " where case matters and only non-negative values.");
         }
+        //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -135,11 +145,17 @@ public class DurationSpec
      */
     public static DurationSpec inMilliseconds(long milliseconds)
     {
+        if (MILLISECONDS.toNanos(milliseconds) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
         return new DurationSpec(milliseconds, MILLISECONDS);
     }
 
     public static DurationSpec inDoubleMilliseconds(double milliseconds)
     {
+        if (MILLISECONDS.toNanos((long)milliseconds) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
         return new DurationSpec(milliseconds, MILLISECONDS);
     }
 
@@ -151,6 +167,9 @@ public class DurationSpec
      */
     public static DurationSpec inSeconds(long seconds)
     {
+        if (SECONDS.toNanos(seconds) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
         return new DurationSpec(seconds, SECONDS);
     }
 
@@ -162,6 +181,9 @@ public class DurationSpec
      */
     public static DurationSpec inMinutes(long minutes)
     {
+        if (MINUTES.toNanos(minutes) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + minutes + "m, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
         return new DurationSpec(minutes, MINUTES);
     }
 
@@ -173,6 +195,9 @@ public class DurationSpec
      */
     public static DurationSpec inHours(long hours)
     {
+        if (HOURS.toNanos(hours) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + hours + "h, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
         return new DurationSpec(hours, HOURS);
     }
 
@@ -184,6 +209,9 @@ public class DurationSpec
      */
     public static DurationSpec inDays(long days)
     {
+        if (DAYS.toNanos(days) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + days + "d, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
         return new DurationSpec(days, DAYS);
     }
 
@@ -205,6 +233,10 @@ public class DurationSpec
         if (matcher.matches())
         {
             seconds = Long.parseLong(value);
+
+            if (SECONDS.toNanos(seconds) == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+
             return new DurationSpec(seconds, SECONDS);
         }
 
