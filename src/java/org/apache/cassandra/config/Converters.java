@@ -40,6 +40,9 @@ public enum Converters
     MILLIS_DURATION(Long.class, SmallestDurationMilliseconds.class,
                     SmallestDurationMilliseconds::inMilliseconds,
                     o -> o.toMilliseconds()),
+    MILLIS_DURATION_INT(Long.class, SmallestDurationMillisecondsInt.class,
+                    SmallestDurationMillisecondsInt::inMilliseconds,
+                    o -> o.toMilliseconds()),
     MILLIS_DOUBLE_DURATION(Double.class, SmallestDurationMilliseconds.class,
                            o -> Double.isNaN(o) ? SmallestDurationMilliseconds.inMilliseconds(0) : SmallestDurationMilliseconds.inDoubleMilliseconds(o),
                            o -> (double) o.toMilliseconds()),
@@ -74,6 +77,9 @@ public enum Converters
     KIBIBYTES_DATASTORAGE(Long.class, SmallestDataStorageKibibytes.class,
                           SmallestDataStorageKibibytes::inKibibytes,
                           DataStorageSpec::toKibibytes),
+    BYTES_DATASTORAGE_INT(Long.class, SmallestDataStorageBytesInt.class,
+                          SmallestDataStorageBytesInt::inBytes,
+                          SmallestDataStorageBytesInt::toBytes),
     BYTES_DATASTORAGE(Long.class, DataStorageSpec.class,
                       DataStorageSpec::inBytes,
                       DataStorageSpec::toBytes),
@@ -92,8 +98,8 @@ public enum Converters
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, DataRateSpec.class,
-                                               DataRateSpec::megabitsPerSecondInMebibytesPerSecond,
+    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Long.class, DataRateInt.class,
+                                               DataRateInt::megabitsPerSecondInMebibytesPerSecond,
                                                o -> (long) o.toMegabitsPerSecondAsInt());
 
     private final Class<?> oldType;
