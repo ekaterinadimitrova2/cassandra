@@ -31,7 +31,7 @@ import org.apache.cassandra.exceptions.ConfigurationException;
  * Represents a data rate type used for cassandra configuration. It supports the opportunity for the users to be able to
  * add units to the confiuration parameter value. (CASSANDRA-15234)
  */
-public final class DataRateSpec
+public class DataRateSpec
 {
     /**
      * The Regexp used to parse the rate provided as String in cassandra.yaml.
@@ -48,7 +48,7 @@ public final class DataRateSpec
         Matcher matcher = BIT_RATE_UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
-            throw new ConfigurationException("Invalid bit rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
+            throw new ConfigurationException("Invalid data rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
                                              "case matters and " + "only non-negative values are valid");
 
         quantity = Long.parseLong(matcher.group(1));
@@ -58,10 +58,10 @@ public final class DataRateSpec
     DataRateSpec(double quantity, DataRateUnit unit)
     {
         if (quantity < 0)
-            throw new ConfigurationException("Invalid bit rate: value must be non-negative");
+            throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
         if (quantity > Long.MAX_VALUE)
-            throw new NumberFormatException("Invalid bit rate: value must be between 0 and Long.MAX_VALUE = 9223372036854775807");
+            throw new NumberFormatException("Invalid data rate: value must be between 0 and Long.MAX_VALUE = 9223372036854775807");
 
         this.quantity = quantity;
         this.unit = unit;
