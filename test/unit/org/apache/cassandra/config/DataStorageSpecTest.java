@@ -25,6 +25,7 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 import org.quicktheories.core.Gen;
 import org.quicktheories.generators.SourceDSL;
 
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 import static org.quicktheories.QuickTheory.qt;
@@ -42,37 +43,9 @@ public class DataStorageSpecTest
     }
 
     @Test
-    public void testOverflowingDuringConversion()
-    {
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807B").toBytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807B").toBytesAsInt());
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toBytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toBytesAsInt());
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toBytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toBytesAsInt());
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toBytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toBytesAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toKibibytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807KiB").toKibibytesAsInt());
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toKibibytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toKibibytesAsInt());
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toKibibytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toKibibytesAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toMebibytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807MiB").toMebibytesAsInt());
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toMebibytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toMebibytesAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toGibibytes());
-        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775807GiB").toGibibytesAsInt());
-    }
-
-    @Test
     public void testFromSymbol()
     {
-        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("B"), DataStorageSpec.DataStorageUnit.BYTES);
+        assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("B"), BYTES);
         assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("KiB"), DataStorageSpec.DataStorageUnit.KIBIBYTES);
         assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("MiB"), DataStorageSpec.DataStorageUnit.MEBIBYTES);
         assertEquals(DataStorageSpec.DataStorageUnit.fromSymbol("GiB"), DataStorageSpec.DataStorageUnit.GIBIBYTES);
@@ -98,6 +71,26 @@ public class DataStorageSpecTest
     }
 
     @Test
+    public void testInvalidForConversion()
+    {
+       //just test the cast to Int
+        assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775806B").toBytesAsInt());
+
+        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE + "B")).isInstanceOf(ConfigurationException.class)
+                                                           .hasMessageContaining("Invalid data storage: 9223372036854775807 bytes. " +
+                                                                                 "It shouldn't be more than 9223372036854775806 in bytes");
+        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE + "KiB")).isInstanceOf(ConfigurationException.class)
+                                                               .hasMessageContaining("Invalid data storage: 9223372036854775807 kibibytes. " +
+                                                                                     "It shouldn't be more than 9223372036854775806 in bytes");
+        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE-5L + "MiB")).isInstanceOf(ConfigurationException.class)
+                                                             .hasMessageContaining("Invalid data storage: 9223372036854775802 mebibytes. " +
+                                                                                   "It shouldn't be more than 9223372036854775806 in bytes");
+        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE-5L + "GiB")).isInstanceOf(ConfigurationException.class)
+                                                             .hasMessageContaining("Invalid data storage: 9223372036854775802 gibibytes. " +
+                                                                                   "It shouldn't be more than 9223372036854775806 in bytes");
+    }
+
+    @Test
     public void testEquals()
     {
         assertEquals(new DataStorageSpec("10B"), new DataStorageSpec("10B"));
@@ -111,25 +104,7 @@ public class DataStorageSpecTest
         assertEquals(new DataStorageSpec("10GiB"), new DataStorageSpec("10240MiB"));
         assertEquals(new DataStorageSpec("10240MiB"), new DataStorageSpec("10GiB"));
 
-        assertNotEquals(DataStorageSpec.inBytes(Long.MAX_VALUE), DataStorageSpec.inGibibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inBytes(Long.MAX_VALUE), DataStorageSpec.inMebibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inBytes(Long.MAX_VALUE), DataStorageSpec.inKibibytes(Long.MAX_VALUE));
-        assertEquals(DataStorageSpec.inBytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
-
-        assertNotEquals(DataStorageSpec.inKibibytes(Long.MAX_VALUE), DataStorageSpec.inGibibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inKibibytes(Long.MAX_VALUE), DataStorageSpec.inMebibytes(Long.MAX_VALUE));
-        assertEquals(DataStorageSpec.inKibibytes(Long.MAX_VALUE), DataStorageSpec.inKibibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inKibibytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
-
-        assertNotEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inGibibytes(Long.MAX_VALUE));
-        assertEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inMebibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inMebibytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
-
-        assertEquals(DataStorageSpec.inGibibytes(Long.MAX_VALUE), DataStorageSpec.inGibibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inGibibytes(Long.MAX_VALUE), DataStorageSpec.inMebibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inGibibytes(Long.MAX_VALUE), DataStorageSpec.inKibibytes(Long.MAX_VALUE));
-        assertNotEquals(DataStorageSpec.inGibibytes(Long.MAX_VALUE), DataStorageSpec.inBytes(Long.MAX_VALUE));
+        assertEquals(new DataStorageSpec(Long.MAX_VALUE-1, BYTES), new DataStorageSpec(Long.MAX_VALUE - 1, BYTES));
 
         assertNotEquals(new DataStorageSpec("0MiB"), new DataStorageSpec("10KiB"));
     }
@@ -159,7 +134,7 @@ public class DataStorageSpecTest
     private static Gen<DataStorageSpec> gen()
     {
         Gen<DataStorageSpec.DataStorageUnit> unitGen = SourceDSL.arbitrary().enumValues(DataStorageSpec.DataStorageUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/1024L/1024/1024);
         Gen<DataStorageSpec> gen = rs -> new DataStorageSpec(valueGen.generate(rs), unitGen.generate(rs));
         return gen.describedAs(DataStorageSpec::toString);
     }
