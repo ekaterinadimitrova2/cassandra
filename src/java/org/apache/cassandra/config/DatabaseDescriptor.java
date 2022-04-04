@@ -1345,7 +1345,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = SmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.permissions_validity = SmallestDurationMillisecondsInt.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()

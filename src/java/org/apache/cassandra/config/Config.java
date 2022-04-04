@@ -74,7 +74,7 @@ public class Config
     public String role_manager;
     public String network_authorizer;
     @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds permissions_validity = new SmallestDurationMilliseconds("2s");
+    public volatile SmallestDurationMillisecondsInt permissions_validity = new SmallestDurationMillisecondsInt("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile SmallestDurationMilliseconds permissions_update_interval = null;

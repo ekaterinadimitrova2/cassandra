@@ -22,18 +22,18 @@ import java.util.concurrent.TimeUnit;
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents duration for Int bounded config which cannot be anything smaller than milliseconds
+ * Represents an amount of data storage for Int bounded config which cannot be anything less than seconds
  */
-public class SmallestDurationSpecMillisecondsInt extends IntDurationSpec
+public final class SmallestDurationSecondsInt extends IntDurationSpec
 {
-    public SmallestDurationSpecMillisecondsInt(String value)
+    public SmallestDurationSecondsInt(String value)
     {
-        super(value, TimeUnit.MILLISECONDS);
+        super(value, TimeUnit.SECONDS);
 
-        long milliseconds = toMilliseconds();
-        if (milliseconds > Integer.MAX_VALUE)
+        long seconds = toSeconds();
+        if (seconds > Integer.MAX_VALUE)
             throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                             "milliseconds, but it was " + milliseconds + "milliseconds");
+                                             "seconds, but it was " + seconds + "seconds");
     }
     // TO DO As int methods and whatever else is needed
 }

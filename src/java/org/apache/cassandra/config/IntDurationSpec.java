@@ -36,6 +36,11 @@ public class IntDurationSpec extends DurationSpec
                                              "nanoseconds, but it was " + nanoseconds + "nanoseconds");
     }
 
+    IntDurationSpec(long quantity, TimeUnit unit)
+    {
+        super(quantity, unit);
+    }
+
     IntDurationSpec(String value, TimeUnit unit)
     {
         super(value, unit);
