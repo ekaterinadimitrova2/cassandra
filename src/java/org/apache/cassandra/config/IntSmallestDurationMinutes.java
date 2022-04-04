@@ -15,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.cassandra.config;
 
 import java.util.concurrent.TimeUnit;
@@ -23,42 +22,38 @@ import java.util.concurrent.TimeUnit;
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Wrapper class for Cassandra duration configuration parameters which are internally represented in Minutes. In order
- * not to lose precision while converting to smaller units (until we migrate those parameters to use internally the smallest
- * supported unit) we restrict those parameters to use only Minutes or larger units. (CASSANDRA-15234)
+ * Represents duration for Int bounded config where we can't use anything less than minutes
  */
-public final class SmallestDurationMinutes extends DurationSpec
+public final class IntSmallestDurationMinutes extends DurationSpec
 {
-    /**
-     * Creates a {@code SmallestDurationMinutes} of the specified amount of minutes and provides the smallest
-     * required unit of minutes for the respective parameter of type {@code SmallestDurationMinutes}.
-     *
-     * @param value the duration
-     *
-     */
-    public SmallestDurationMinutes(String value)
+    public IntSmallestDurationMinutes(String value)
     {
         super(value, TimeUnit.MINUTES);
 
         long minutes = toMinutes();
-        if (minutes == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+        if (minutes > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
                                              " minutes, but it was " + minutes + " minutes");
     }
 
-    private SmallestDurationMinutes(long quantity, TimeUnit unit)
+    private IntSmallestDurationMinutes(long quantity, TimeUnit unit)
     {
         super(quantity, unit);
     }
 
     /**
-     * Creates a {@code SmallestDurationMinutes} of the specified amount of minutes.
+     * Creates a {@code IntSmallestDurationMinutes} of the specified amount of minutes.
      *
      * @param minutes the amount of minutes
      * @return a duration
      */
-    public static SmallestDurationMinutes inMinutes(long minutes)
+    public static IntSmallestDurationMinutes inMinutes(long minutes)
     {
-        return new SmallestDurationMinutes(minutes, TimeUnit.MINUTES);
+        if (minutes > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                             " minutes, but it was " + minutes + " minutes");
+
+        return new IntSmallestDurationMinutes(minutes, TimeUnit.MINUTES);
     }
+    // TO DO As int methods and whatever else is needed
 }

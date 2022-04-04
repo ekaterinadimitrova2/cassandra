@@ -40,8 +40,8 @@ public enum Converters
     MILLIS_DURATION_LONG(Long.class, SmallestDurationMilliseconds.class,
                          SmallestDurationMilliseconds::inMilliseconds,
                          o -> o.toMilliseconds()),
-    MILLIS_DURATION_INT(Integer.class, SmallestDurationMilliseconds.class,
-                        i -> SmallestDurationMilliseconds.inMilliseconds(i),
+    MILLIS_DURATION_INT(Integer.class, IntSmallestDurationMilliseconds.class,
+                        i -> IntSmallestDurationMilliseconds.inMilliseconds(i),
                         DurationSpec::toMillisecondsAsInt),
     MILLIS_DURATION_DOUBLE(Double.class, SmallestDurationMilliseconds.class,
                            o -> Double.isNaN(o) ? SmallestDurationMilliseconds.inMilliseconds(0) : SmallestDurationMilliseconds.inDoubleMilliseconds(o),
@@ -50,14 +50,14 @@ public enum Converters
      * This converter is used to support backward compatibility for parameters where in the past -1 was used as a value
      * Example: credentials_update_interval_in_ms = -1 and credentials_update_interval = null are equal.
      */
-    MILLIS_CUSTOM_DURATION(Integer.class, SmallestDurationMilliseconds.class,
-                           o -> o == -1 ? null : SmallestDurationMilliseconds.inMilliseconds(o),
+    MILLIS_CUSTOM_DURATION(Integer.class, IntSmallestDurationMilliseconds.class,
+                           o -> o == -1 ? null : IntSmallestDurationMilliseconds.inMilliseconds(o),
                            o -> o == null ? -1 : o.toMillisecondsAsInt()),
-    SECONDS_DURATION(Integer.class, SmallestDurationSeconds.class,
-                     i -> SmallestDurationSeconds.inSeconds(i),
+    SECONDS_DURATION(Integer.class, IntSmallestDurationSeconds.class,
+                     i -> IntSmallestDurationSeconds.inSeconds(i),
                      DurationSpec::toSecondsAsInt),
-    NEGATIVE_SECONDS_DURATION(Integer.class, SmallestDurationSeconds.class,
-                              o -> o < 0 ? SmallestDurationSeconds.inSeconds(0) : SmallestDurationSeconds.inSeconds(o),
+    NEGATIVE_SECONDS_DURATION(Integer.class, IntSmallestDurationSeconds.class,
+                              o -> o < 0 ? IntSmallestDurationSeconds.inSeconds(0) : IntSmallestDurationSeconds.inSeconds(o),
                               DurationSpec::toSecondsAsInt),
     /**
      * This converter is used to support backward compatibility for Duration parameters where we added the opportunity
@@ -65,23 +65,23 @@ public enum Converters
      * row_cache_save_period, counter_cache_save_period)
      * Example: row_cache_save_period = 0 and row_cache_save_period = 0s (quantity of 0s) are equal.
      */
-    SECONDS_CUSTOM_DURATION(String.class, SmallestDurationSeconds.class,
-                            SmallestDurationSeconds::inSecondsString,
+    SECONDS_CUSTOM_DURATION(String.class, IntSmallestDurationSeconds.class,
+                            IntSmallestDurationSeconds::inSecondsString,
                             o -> Long.toString(o.toSeconds())),
-    MINUTES_DURATION(Integer.class, SmallestDurationMinutes.class,
-                     i -> SmallestDurationMinutes.inMinutes(i),
+    MINUTES_DURATION(Integer.class, IntSmallestDurationMinutes.class,
+                     i -> IntSmallestDurationMinutes.inMinutes(i),
                      DurationSpec::toMinutesAsInt),
     MEBIBYTES_DATA_STORAGE_LONG(Long.class, SmallestDataStorageMebibytes.class,
                                 SmallestDataStorageMebibytes::inMebibytes,
                                 DataStorageSpec::toMebibytes),
-    MEBIBYTES_DATA_STORAGE_INT(Integer.class, SmallestDataStorageMebibytes.class,
-                               i -> SmallestDataStorageMebibytes.inMebibytes(i),
+    MEBIBYTES_DATA_STORAGE_INT(Integer.class, IntSmallestDataStorageMebibytes.class,
+                               i -> IntSmallestDataStorageMebibytes.inMebibytes(i),
                                DataStorageSpec::toMebibytesAsInt),
-    KIBIBYTES_DATASTORAGE(Integer.class, SmallestDataStorageKibibytes.class,
-                          i -> SmallestDataStorageKibibytes.inKibibytes(i),
+    KIBIBYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageKibibytes.class,
+                          i -> IntSmallestDataStorageKibibytes.inKibibytes(i),
                           DataStorageSpec::toKibibytesAsInt),
-    BYTES_DATASTORAGE(Integer.class, DataStorageSpec.class,
-                      i -> DataStorageSpec.inBytes(i),
+    BYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageBytes.class,
+                      i -> IntSmallestDataStorageBytes.inBytes(i),
                       DataStorageSpec::toBytesAsInt),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value
@@ -91,17 +91,16 @@ public enum Converters
     BYTES_CUSTOM_DATASTORAGE(Long.class, DataStorageSpec.class,
                              o -> o == -1 ? null : DataStorageSpec.inBytes(o),
                              DataStorageSpec::toBytes),
-    MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateSpec.class,
-                                   i -> DataRateSpec.inMebibytesPerSecond(i),
-                                   DataRateSpec::toMebibytesPerSecondAsInt),
+    MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, IntDataRate.class,
+                                   i -> IntDataRate.inMebibytesPerSecond(i),
+                                   IntDataRate::toMebibytesPerSecondAsInt),
     /**
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateSpec.class,
-                                               i -> DataRateSpec.megabitsPerSecondInMebibytesPerSecond(i),
-                                               DataRateSpec::toMegabitsPerSecondAsInt);
-
+    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, IntDataRate.class,
+                                               i -> IntDataRate.megabitsPerSecondInMebibytesPerSecond(i),
+                                               IntDataRate::toMegabitsPerSecondAsInt);
     private final Class<?> oldType;
     private final Class<?> newType;
     private final Function<Object, Object> convert;

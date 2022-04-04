@@ -18,6 +18,8 @@
 
 package org.apache.cassandra.config;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
 /**
  * Wrapper class for Cassandra data storage configuration parameters which are internally represented in mebibytes. In order
  * not to lose precision while converting to smaller units (until we migrate those parameters to use internally the smallest
@@ -35,6 +37,10 @@ public final class SmallestDataStorageMebibytes extends DataStorageSpec
     public SmallestDataStorageMebibytes(String value)
     {
         super(value, DataStorageSpec.DataStorageUnit.MEBIBYTES);
+
+        if (toMebibytes() == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than" +
+                                             + (Long.MAX_VALUE-1) + " in mebibytes");
     }
 
     private SmallestDataStorageMebibytes(long quantity, DataStorageSpec.DataStorageUnit unit)

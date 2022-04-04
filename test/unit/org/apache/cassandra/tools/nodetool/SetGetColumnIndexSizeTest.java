@@ -66,7 +66,7 @@ public class SetGetColumnIndexSizeTest extends CQLTester
     @Test
     public void testNegative()
     {
-        assertSetInvalidColumnIndexSize("-7", "Invalid data storage: value must be positive, but was -7", 2);
+        assertSetInvalidColumnIndexSize("-7", "Invalid data storage: value must be positive and less than 9223372036854775807, but was -7", 2);
     }
 
     @Test

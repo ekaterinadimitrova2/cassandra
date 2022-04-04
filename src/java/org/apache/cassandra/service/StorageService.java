@@ -6614,7 +6614,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
     public void setPaxosPurgeGraceSeconds(long v)
     {
-        DatabaseDescriptor.setPaxosPurgeGrace(v, SECONDS);
+        DatabaseDescriptor.setPaxosPurgeGrace(v);
         logger.info("paxos purging grace seconds set to {} via jmx", v);
     }
 

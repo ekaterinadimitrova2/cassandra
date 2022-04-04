@@ -20,6 +20,8 @@ package org.apache.cassandra.config;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
@@ -39,6 +41,11 @@ public final class SmallestDurationMilliseconds extends DurationSpec
     public SmallestDurationMilliseconds(String value)
     {
         super(value, TimeUnit.MILLISECONDS);
+
+        long milliseconds = toMilliseconds();
+        if (milliseconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+                                             " milliseconds, but it was " + milliseconds + " milliseconds");
     }
 
     private SmallestDurationMilliseconds(long quantity, TimeUnit unit)
