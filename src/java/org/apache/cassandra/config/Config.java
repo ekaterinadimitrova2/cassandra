@@ -39,6 +39,7 @@ import org.apache.cassandra.audit.AuditLogOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
 import org.apache.cassandra.fql.FullQueryLoggerOptions;
 import org.apache.cassandra.service.StartupChecks.StartupCheckType;
+import org.hyperic.sigar.cmd.Du;
 
 /**
  * A class that contains configuration properties for the cassandra node it runs within.
@@ -74,22 +75,22 @@ public class Config
     public String role_manager;
     public String network_authorizer;
     @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds permissions_validity = new SmallestDurationMilliseconds("2s");
+    public volatile SmallestDuration.IntMilliseconds permissions_validity = new SmallestDuration.IntMilliseconds("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds permissions_update_interval = null;
+    public volatile SmallestDuration.IntMilliseconds permissions_update_interval = null;
     public volatile boolean permissions_cache_active_update = false;
     @Replaces(oldName = "roles_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds roles_validity = new SmallestDurationMilliseconds("2s");
+    public volatile SmallestDuration.IntMilliseconds roles_validity = new SmallestDuration.IntMilliseconds("2s");
     public volatile int roles_cache_max_entries = 1000;
     @Replaces(oldName = "roles_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds roles_update_interval = null;
+    public volatile SmallestDuration.IntMilliseconds roles_update_interval = null;
     public volatile boolean roles_cache_active_update = false;
     @Replaces(oldName = "credentials_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds credentials_validity = new SmallestDurationMilliseconds("2s");
+    public volatile SmallestDuration.IntMilliseconds credentials_validity = new SmallestDuration.IntMilliseconds("2s");
     public volatile int credentials_cache_max_entries = 1000;
     @Replaces(oldName = "credentials_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds credentials_update_interval = null;
+    public volatile SmallestDuration.IntMilliseconds credentials_update_interval = null;
     public volatile boolean credentials_cache_active_update = false;
 
     /* Hashing strategy Random or OPHF */
@@ -99,7 +100,7 @@ public class Config
     public volatile boolean hinted_handoff_enabled = true;
     public Set<String> hinted_handoff_disabled_datacenters = Sets.newConcurrentHashSet();
     @Replaces(oldName = "max_hint_window_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds max_hint_window = new SmallestDurationMilliseconds("3h");
+    public volatile SmallestDuration.IntMilliseconds max_hint_window = new SmallestDuration.IntMilliseconds("3h");
     public String hints_directory;
     public boolean hint_window_persistent_enabled = true;
 
@@ -122,40 +123,40 @@ public class Config
     public Integer allocate_tokens_for_local_replication_factor = null;
 
     @Replaces(oldName = "native_transport_idle_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public SmallestDurationMilliseconds native_transport_idle_timeout = new SmallestDurationMilliseconds("0ms");
+    public SmallestDuration.Milliseconds native_transport_idle_timeout = new SmallestDuration.Milliseconds("0ms");
 
     @Replaces(oldName = "request_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds request_timeout = new SmallestDurationMilliseconds("10000ms");
+    public volatile SmallestDuration.Milliseconds request_timeout = new SmallestDuration.Milliseconds("10000ms");
 
     @Replaces(oldName = "read_request_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds read_request_timeout = new SmallestDurationMilliseconds("5000ms");
+    public volatile SmallestDuration.Milliseconds read_request_timeout = new SmallestDuration.Milliseconds("5000ms");
 
     @Replaces(oldName = "range_request_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds range_request_timeout = new SmallestDurationMilliseconds("10000ms");
+    public volatile SmallestDuration.Milliseconds range_request_timeout = new SmallestDuration.Milliseconds("10000ms");
 
     @Replaces(oldName = "write_request_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds write_request_timeout = new SmallestDurationMilliseconds("2000ms");
+    public volatile SmallestDuration.Milliseconds write_request_timeout = new SmallestDuration.Milliseconds("2000ms");
 
     @Replaces(oldName = "counter_write_request_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds counter_write_request_timeout = new SmallestDurationMilliseconds("5000ms");
+    public volatile SmallestDuration.Milliseconds counter_write_request_timeout = new SmallestDuration.Milliseconds("5000ms");
 
     @Replaces(oldName = "cas_contention_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds cas_contention_timeout = new SmallestDurationMilliseconds("1800ms");
+    public volatile SmallestDuration.Milliseconds cas_contention_timeout = new SmallestDuration.Milliseconds("1800ms");
 
     @Replaces(oldName = "truncate_request_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds truncate_request_timeout = new SmallestDurationMilliseconds("60000ms");
+    public volatile SmallestDuration.Milliseconds truncate_request_timeout = new SmallestDuration.Milliseconds("60000ms");
 
     public volatile SmallestDurationMilliseconds repair_request_timeout = new SmallestDurationMilliseconds("120000ms");
 
     public Integer streaming_connections_per_host = 1;
     @Replaces(oldName = "streaming_keep_alive_period_in_secs", converter = Converters.SECONDS_DURATION, deprecated = true)
-    public SmallestDurationSeconds streaming_keep_alive_period = new SmallestDurationSeconds("300s");
+    public SmallestDuration.IntSeconds streaming_keep_alive_period = new SmallestDuration.IntSeconds("300s");
 
     @Replaces(oldName = "cross_node_timeout", converter = Converters.IDENTITY, deprecated = true)
     public boolean internode_timeout = true;
 
     @Replaces(oldName = "slow_query_log_timeout_in_ms", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public volatile SmallestDurationMilliseconds slow_query_log_timeout = new SmallestDurationMilliseconds("500ms");
+    public volatile SmallestDuration.Milliseconds slow_query_log_timeout = new SmallestDuration.Milliseconds("500ms");
 
     public volatile double phi_convict_threshold = 8.0;
 
@@ -170,9 +171,9 @@ public class Config
 
     public int memtable_flush_writers = 0;
     @Replaces(oldName = "memtable_heap_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes memtable_heap_space;
+    public SmallestDataStorage.IntMebibytes memtable_heap_space;
     @Replaces(oldName = "memtable_offheap_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes memtable_offheap_space;
+    public SmallestDataStorage.IntMebibytes memtable_offheap_space;
     public Float memtable_cleanup_threshold = null;
 
     public static class MemtableOptions
@@ -190,7 +191,7 @@ public class Config
     @Deprecated
     public volatile Integer repair_session_max_tree_depth = null;
     @Replaces(oldName = "repair_session_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public volatile SmallestDataStorageMebibytes repair_session_space = null;
+    public volatile SmallestDataStorage.IntMebibytes repair_session_space = null;
 
     public volatile boolean use_offheap_merkle_trees = true;
 
@@ -219,51 +220,51 @@ public class Config
     public boolean rpc_keepalive = true;
 
     @Replaces(oldName = "internode_max_message_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated=true)
-    public DataStorageSpec internode_max_message_size;
+    public SmallestDataStorage.IntBytes internode_max_message_size;
 
     @Replaces(oldName = "internode_socket_send_buffer_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
     @Replaces(oldName = "internode_send_buff_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_socket_send_buffer_size = new DataStorageSpec("0B");
+    public SmallestDataStorage.IntBytes internode_socket_send_buffer_size = new SmallestDataStorage.IntBytes("0B");
     @Replaces(oldName = "internode_socket_receive_buffer_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
     @Replaces(oldName = "internode_recv_buff_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_socket_receive_buffer_size = new DataStorageSpec("0B");
+    public SmallestDataStorage.IntBytes internode_socket_receive_buffer_size = new SmallestDataStorage.IntBytes("0B");
 
     // TODO: derive defaults from system memory settings?
     @Replaces(oldName = "internode_application_send_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_capacity = new DataStorageSpec("4MiB");
+    public SmallestDataStorage.IntBytes internode_application_send_queue_capacity = new SmallestDataStorage.IntBytes("4MiB");
     @Replaces(oldName = "internode_application_send_queue_reserve_endpoint_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_reserve_endpoint_capacity = new DataStorageSpec("128MiB");
+    public SmallestDataStorage.IntBytes internode_application_send_queue_reserve_endpoint_capacity = new SmallestDataStorage.IntBytes("128MiB");
     @Replaces(oldName = "internode_application_send_queue_reserve_global_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_reserve_global_capacity = new DataStorageSpec("512MiB");
+    public SmallestDataStorage.IntBytes internode_application_send_queue_reserve_global_capacity = new SmallestDataStorage.IntBytes("512MiB");
 
     @Replaces(oldName = "internode_application_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_capacity = new DataStorageSpec("4MiB");
+    public SmallestDataStorage.IntBytes internode_application_receive_queue_capacity = new SmallestDataStorage.IntBytes("4MiB");
     @Replaces(oldName = "internode_application_receive_queue_reserve_endpoint_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_reserve_endpoint_capacity = new DataStorageSpec("128MiB");
+    public SmallestDataStorage.IntBytes internode_application_receive_queue_reserve_endpoint_capacity = new SmallestDataStorage.IntBytes("128MiB");
     @Replaces(oldName = "internode_application_receive_queue_reserve_global_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_reserve_global_capacity = new DataStorageSpec("512MiB");
+    public SmallestDataStorage.IntBytes internode_application_receive_queue_reserve_global_capacity = new SmallestDataStorage.IntBytes("512MiB");
 
     // Defensive settings for protecting Cassandra from true network partitions. See (CASSANDRA-14358) for details.
     // The amount of time to wait for internode tcp connections to establish.
     @Replaces(oldName = "internode_tcp_connect_timeout_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds internode_tcp_connect_timeout = new SmallestDurationMilliseconds("2s");
+    public volatile SmallestDuration.IntMilliseconds internode_tcp_connect_timeout = new SmallestDuration.IntMilliseconds("2s");
     // The amount of time unacknowledged data is allowed on a connection before we throw out the connection
     // Note this is only supported on Linux + epoll, and it appears to behave oddly above a setting of 30000
     // (it takes much longer than 30s) as of Linux 4.12. If you want something that high set this to 0
     // (which picks up the OS default) and configure the net.ipv4.tcp_retries2 sysctl to be ~8.
     @Replaces(oldName = "internode_tcp_user_timeout_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds internode_tcp_user_timeout = new SmallestDurationMilliseconds("30s");
+    public volatile SmallestDuration.IntMilliseconds internode_tcp_user_timeout = new SmallestDuration.IntMilliseconds("30s");
     // Similar to internode_tcp_user_timeout but used specifically for streaming connection.
     // The default is 5 minutes. Increase it or set it to 0 in order to increase the timeout.
     @Replaces(oldName = "internode_streaming_tcp_user_timeout_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds internode_streaming_tcp_user_timeout = new SmallestDurationMilliseconds("300s"); // 5 minutes
+    public volatile SmallestDuration.IntMilliseconds internode_streaming_tcp_user_timeout = new SmallestDuration.IntMilliseconds("300s"); // 5 minutes
 
     public boolean start_native_transport = true;
     public int native_transport_port = 9042;
     public Integer native_transport_port_ssl = null;
     public int native_transport_max_threads = 128;
     @Replaces(oldName = "native_transport_max_frame_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes native_transport_max_frame_size = new SmallestDataStorageMebibytes("16MiB");
+    public SmallestDataStorage.IntMebibytes native_transport_max_frame_size = new SmallestDataStorage.IntMebibytes("16MiB");
     public volatile long native_transport_max_concurrent_connections = -1L;
     public volatile long native_transport_max_concurrent_connections_per_ip = -1L;
     public boolean native_transport_flush_in_batches_legacy = false;
@@ -277,7 +278,7 @@ public class Config
     public volatile boolean native_transport_rate_limiting_enabled = false;
     public volatile int native_transport_max_requests_per_second = 1000000;
     @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec native_transport_receive_queue_capacity = new DataStorageSpec("1MiB");
+    public SmallestDataStorage.IntBytes native_transport_receive_queue_capacity = new SmallestDataStorage.IntBytes("1MiB");
 
     @Deprecated
     public Integer native_transport_max_negotiable_protocol_version = null;
@@ -288,7 +289,7 @@ public class Config
      * See AbstractType for how it is used.
      */
     @Replaces(oldName = "max_value_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes max_value_size = new SmallestDataStorageMebibytes("256MiB");
+    public SmallestDataStorage.IntMebibytes max_value_size = new SmallestDataStorage.IntMebibytes("256MiB");
 
     public boolean snapshot_before_compaction = false;
     public boolean auto_snapshot = true;
@@ -304,22 +305,22 @@ public class Config
 
     /* if the size of columns or super-columns are more than this, indexing will kick in */
     @Replaces(oldName = "column_index_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes column_index_size = new SmallestDataStorageKibibytes("64KiB");
+    public volatile SmallestDataStorage.IntKibibytes column_index_size = new SmallestDataStorage.IntKibibytes("64KiB");
     @Replaces(oldName = "column_index_cache_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes column_index_cache_size = new SmallestDataStorageKibibytes("2KiB");
+    public volatile SmallestDataStorage.IntKibibytes column_index_cache_size = new SmallestDataStorage.IntKibibytes("2KiB");
     @Replaces(oldName = "batch_size_warn_threshold_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes batch_size_warn_threshold = new SmallestDataStorageKibibytes("5KiB");
+    public volatile SmallestDataStorage.IntKibibytes batch_size_warn_threshold = new SmallestDataStorage.IntKibibytes("5KiB");
     @Replaces(oldName = "batch_size_fail_threshold_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes batch_size_fail_threshold = new SmallestDataStorageKibibytes("50KiB");
+    public volatile SmallestDataStorage.IntKibibytes batch_size_fail_threshold = new SmallestDataStorage.IntKibibytes("50KiB");
 
     public Integer unlogged_batch_across_partitions_warn_threshold = 10;
     public volatile Integer concurrent_compactors;
     @Replaces(oldName = "compaction_throughput_mb_per_sec", converter = Converters.MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile DataRateSpec compaction_throughput = new DataRateSpec("16MiB/s");
+    public volatile IntDataRate compaction_throughput = new IntDataRate("16MiB/s");
     @Replaces(oldName = "compaction_large_partition_warning_threshold_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public volatile SmallestDataStorageMebibytes compaction_large_partition_warning_threshold = new SmallestDataStorageMebibytes("100MiB");
+    public volatile SmallestDataStorage.IntMebibytes compaction_large_partition_warning_threshold = new SmallestDataStorage.IntMebibytes("100MiB");
     @Replaces(oldName = "min_free_space_per_drive_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes min_free_space_per_drive = new SmallestDataStorageMebibytes("50MiB");
+    public SmallestDataStorage.IntMebibytes min_free_space_per_drive = new SmallestDataStorage.IntMebibytes("50MiB");
     public volatile Integer compaction_tombstone_warning_threshold = 100000;
 
     public volatile int concurrent_materialized_view_builders = 1;
@@ -332,12 +333,12 @@ public class Config
     public int max_streaming_retries = 3;
 
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile DataRateSpec stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile IntDataRate stream_throughput_outbound = new IntDataRate("24MiB/s");
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile DataRateSpec inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile IntDataRate inter_dc_stream_throughput_outbound = new IntDataRate("24MiB/s");
 
-    public volatile DataRateSpec entire_sstable_stream_throughput_outbound = new DataRateSpec("24MiB/s");
-    public volatile DataRateSpec entire_sstable_inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile IntDataRate entire_sstable_stream_throughput_outbound = new IntDataRate("24MiB/s");
+    public volatile IntDataRate entire_sstable_inter_dc_stream_throughput_outbound = new IntDataRate("24MiB/s");
 
     public String[] data_file_directories = new String[0];
 
@@ -352,7 +353,7 @@ public class Config
     // Commit Log
     public String commitlog_directory;
     @Replaces(oldName = "commitlog_total_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes commitlog_total_space;
+    public SmallestDataStorage.IntMebibytes commitlog_total_space;
     public CommitLogSync commitlog_sync;
 
     /**
@@ -360,20 +361,20 @@ public class Config
      */
     public double commitlog_sync_batch_window_in_ms = Double.NaN;
     @Replaces(oldName = "commitlog_sync_group_window_in_ms", converter = Converters.MILLIS_DURATION_DOUBLE, deprecated = true)
-    public SmallestDurationMilliseconds commitlog_sync_group_window = new SmallestDurationMilliseconds("0ms");
+    public SmallestDuration.IntMilliseconds commitlog_sync_group_window = new SmallestDuration.IntMilliseconds("0ms");
     @Replaces(oldName = "commitlog_sync_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds commitlog_sync_period = new SmallestDurationMilliseconds("0ms");
+    public SmallestDuration.IntMilliseconds commitlog_sync_period = new SmallestDuration.IntMilliseconds("0ms");
     @Replaces(oldName = "commitlog_segment_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes commitlog_segment_size = new SmallestDataStorageMebibytes("32MiB");
+    public SmallestDataStorage.IntMebibytes commitlog_segment_size = new SmallestDataStorage.IntMebibytes("32MiB");
     public ParameterizedClass commitlog_compression;
     public FlushCompression flush_compression = FlushCompression.fast;
     public int commitlog_max_compression_buffers_in_pool = 3;
     @Replaces(oldName = "periodic_commitlog_sync_lag_block_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds periodic_commitlog_sync_lag_block;
+    public SmallestDuration.IntMilliseconds periodic_commitlog_sync_lag_block;
     public TransparentDataEncryptionOptions transparent_data_encryption_options = new TransparentDataEncryptionOptions();
 
     @Replaces(oldName = "max_mutation_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes max_mutation_size;
+    public SmallestDataStorage.IntKibibytes max_mutation_size;
 
     // Change-data-capture logs
     public boolean cdc_enabled = false;
@@ -382,9 +383,9 @@ public class Config
     public volatile boolean cdc_block_writes = true;
     public String cdc_raw_directory;
     @Replaces(oldName = "cdc_total_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes cdc_total_space = new SmallestDataStorageMebibytes("0MiB");
+    public SmallestDataStorage.IntMebibytes cdc_total_space = new SmallestDataStorage.IntMebibytes("0MiB");
     @Replaces(oldName = "cdc_free_space_check_interval_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds cdc_free_space_check_interval = new SmallestDurationMilliseconds("250ms");
+    public SmallestDuration.IntMilliseconds cdc_free_space_check_interval = new SmallestDuration.IntMilliseconds("250ms");
 
     @Deprecated
     public int commitlog_periodic_queue_size = -1;
@@ -392,9 +393,9 @@ public class Config
     public String endpoint_snitch;
     public boolean dynamic_snitch = true;
     @Replaces(oldName = "dynamic_snitch_update_interval_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds dynamic_snitch_update_interval = new SmallestDurationMilliseconds("100ms");
+    public SmallestDuration.IntMilliseconds dynamic_snitch_update_interval = new SmallestDuration.IntMilliseconds("100ms");
     @Replaces(oldName = "dynamic_snitch_reset_interval_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds dynamic_snitch_reset_interval = new SmallestDurationMilliseconds("10m");
+    public SmallestDuration.IntMilliseconds dynamic_snitch_reset_interval = new SmallestDuration.IntMilliseconds("10m");
     public double dynamic_snitch_badness_threshold = 1.0;
 
     public String failure_detector = "FailureDetector";
@@ -405,14 +406,14 @@ public class Config
     public InternodeCompression internode_compression = InternodeCompression.none;
 
     @Replaces(oldName = "hinted_handoff_throttle_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes hinted_handoff_throttle = new SmallestDataStorageKibibytes("1024KiB");
+    public SmallestDataStorage.IntKibibytes hinted_handoff_throttle = new SmallestDataStorage.IntKibibytes("1024KiB");
     @Replaces(oldName = "batchlog_replay_throttle_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes batchlog_replay_throttle = new SmallestDataStorageKibibytes("1024KiB");
+    public SmallestDataStorage.IntKibibytes batchlog_replay_throttle = new SmallestDataStorage.IntKibibytes("1024KiB");
     public int max_hints_delivery_threads = 2;
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds hints_flush_period = new SmallestDurationMilliseconds("10s");
+    public SmallestDuration.IntMilliseconds hints_flush_period = new SmallestDuration.IntMilliseconds("10s");
     @Replaces(oldName = "max_hints_file_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes max_hints_file_size = new SmallestDataStorageMebibytes("128MiB");
+    public SmallestDataStorage.IntMebibytes max_hints_file_size = new SmallestDataStorage.IntMebibytes("128MiB");
     public volatile DataStorageSpec max_hints_size_per_host = new DataStorageSpec("0B"); // 0 means disabled
 
     public ParameterizedClass hints_compression;
@@ -421,44 +422,44 @@ public class Config
     public volatile boolean incremental_backups = false;
     public boolean trickle_fsync = false;
     @Replaces(oldName = "trickle_fsync_interval_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes trickle_fsync_interval = new SmallestDataStorageKibibytes("10240KiB");
+    public SmallestDataStorage.IntKibibytes trickle_fsync_interval = new SmallestDataStorage.IntKibibytes("10240KiB");
 
     @Replaces(oldName = "sstable_preemptive_open_interval_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public volatile SmallestDataStorageMebibytes sstable_preemptive_open_interval = new SmallestDataStorageMebibytes("50MiB");
+    public volatile SmallestDataStorage.IntMebibytes sstable_preemptive_open_interval = new SmallestDataStorage.IntMebibytes("50MiB");
 
     public volatile boolean key_cache_migrate_during_compaction = true;
     public volatile int key_cache_keys_to_save = Integer.MAX_VALUE;
     @Replaces(oldName = "key_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
-    public SmallestDataStorageMebibytes key_cache_size = null;
+    public SmallestDataStorage.Mebibytes key_cache_size = null;
     @Replaces(oldName = "key_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds key_cache_save_period = new SmallestDurationSeconds("4h");
+    public volatile SmallestDuration.IntSeconds key_cache_save_period = new SmallestDuration.IntSeconds("4h");
 
     public String row_cache_class_name = "org.apache.cassandra.cache.OHCProvider";
     @Replaces(oldName = "row_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
-    public SmallestDataStorageMebibytes row_cache_size = new SmallestDataStorageMebibytes("0MiB");
+    public SmallestDataStorage.Mebibytes row_cache_size = new SmallestDataStorage.Mebibytes("0MiB");
     @Replaces(oldName = "row_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds row_cache_save_period = new SmallestDurationSeconds("0s");
+    public volatile SmallestDuration.IntSeconds row_cache_save_period = new SmallestDuration.IntSeconds("0s");
     public volatile int row_cache_keys_to_save = Integer.MAX_VALUE;
 
     @Replaces(oldName = "counter_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
-    public SmallestDataStorageMebibytes counter_cache_size = null;
+    public SmallestDataStorage.Mebibytes counter_cache_size = null;
     @Replaces(oldName = "counter_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds counter_cache_save_period = new SmallestDurationSeconds("7200s");
+    public volatile SmallestDuration.IntSeconds counter_cache_save_period = new SmallestDuration.IntSeconds("7200s");
     public volatile int counter_cache_keys_to_save = Integer.MAX_VALUE;
 
-    public SmallestDataStorageMebibytes paxos_cache_size = null;
+    public SmallestDataStorage.Mebibytes paxos_cache_size = null;
 
     @Replaces(oldName = "cache_load_timeout_seconds", converter = Converters.SECONDS_DURATION, deprecated = true)
-    public SmallestDurationSeconds cache_load_timeout = new SmallestDurationSeconds("30s");
+    public SmallestDuration.IntSeconds cache_load_timeout = new SmallestDuration.IntSeconds("30s");
 
     private static boolean isClientMode = false;
     private static Supplier<Config> overrideLoadConfig = null;
 
     @Replaces(oldName = "networking_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes networking_cache_size;
+    public SmallestDataStorage.IntMebibytes networking_cache_size;
 
     @Replaces(oldName = "file_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes file_cache_size;
+    public SmallestDataStorage.IntMebibytes file_cache_size;
 
     public boolean file_cache_enabled = Boolean.getBoolean("cassandra.file_cache_enabled");
 
@@ -500,20 +501,20 @@ public class Config
     public final ReplicaFilteringProtectionOptions replica_filtering_protection = new ReplicaFilteringProtectionOptions();
 
     @Replaces(oldName = "index_summary_capacity_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
-    public volatile SmallestDataStorageMebibytes index_summary_capacity;
+    public volatile SmallestDataStorage.Mebibytes index_summary_capacity;
     @Replaces(oldName = "index_summary_resize_interval_in_minutes", converter = Converters.MINUTES_DURATION, deprecated = true)
-    public volatile SmallestDurationMinutes index_summary_resize_interval = new SmallestDurationMinutes("60m");
+    public volatile SmallestDuration.IntMinutes index_summary_resize_interval = new SmallestDuration.IntMinutes("60m");
 
     @Replaces(oldName = "gc_log_threshold_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds gc_log_threshold = new SmallestDurationMilliseconds("200ms");
+    public SmallestDuration.IntMilliseconds gc_log_threshold = new SmallestDuration.IntMilliseconds("200ms");
     @Replaces(oldName = "gc_warn_threshold_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds gc_warn_threshold = new SmallestDurationMilliseconds("1s");
+    public SmallestDuration.IntMilliseconds gc_warn_threshold = new SmallestDuration.IntMilliseconds("1s");
 
     // TTL for different types of trace events.
     @Replaces(oldName = "tracetype_query_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
-    public SmallestDurationSeconds trace_type_query_ttl = new SmallestDurationSeconds("1d");
+    public SmallestDuration.IntSeconds trace_type_query_ttl = new SmallestDuration.IntSeconds("1d");
     @Replaces(oldName = "tracetype_repair_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
-    public SmallestDurationSeconds trace_type_repair_ttl = new SmallestDurationSeconds("7d");
+    public SmallestDuration.IntSeconds trace_type_repair_ttl = new SmallestDuration.IntSeconds("7d");
 
     /**
      * Maintain statistics on whether writes achieve the ideal consistency level
@@ -543,7 +544,7 @@ public class Config
      * Defaults to 1/256th of the heap size or 10MiB, whichever is greater.
      */
     @Replaces(oldName = "prepared_statements_cache_size_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
-    public SmallestDataStorageMebibytes prepared_statements_cache_size = null;
+    public SmallestDataStorage.Mebibytes prepared_statements_cache_size = null;
 
     @Replaces(oldName = "enable_user_defined_functions", converter = Converters.IDENTITY, deprecated = true)
     public boolean user_defined_functions_enabled = false;
@@ -595,14 +596,14 @@ public class Config
      * (Only valid, if user_defined_functions_threads_enabled==true)
      */
     @Replaces(oldName = "user_defined_function_warn_timeout", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public SmallestDurationMilliseconds user_defined_functions_warn_timeout = new SmallestDurationMilliseconds("500ms");
+    public SmallestDuration.Milliseconds user_defined_functions_warn_timeout = new SmallestDuration.Milliseconds("500ms");
     /**
      * Time in milliseconds after a fatal UDF run-time situation is detected and action according to
      * user_function_timeout_policy will take place.
      * (Only valid, if user_defined_functions_threads_enabled==true)
      */
     @Replaces(oldName = "user_defined_function_fail_timeout", converter = Converters.MILLIS_DURATION_LONG, deprecated = true)
-    public SmallestDurationMilliseconds user_defined_functions_fail_timeout = new SmallestDurationMilliseconds("1500ms");
+    public SmallestDuration.Milliseconds user_defined_functions_fail_timeout = new SmallestDuration.Milliseconds("1500ms");
     /**
      * Defines what to do when a UDF ran longer than user_defined_functions_fail_timeout.
      * Possible options are:
@@ -692,7 +693,7 @@ public class Config
      */
 
     @Replaces(oldName = "validation_preview_purge_head_start_in_sec", converter = Converters.NEGATIVE_SECONDS_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds validation_preview_purge_head_start = new SmallestDurationSeconds("3600s");
+    public volatile SmallestDuration.IntSeconds validation_preview_purge_head_start = new SmallestDuration.IntSeconds("3600s");
 
     public boolean auth_cache_warming_enabled = false;
 
@@ -712,9 +713,9 @@ public class Config
 
     public volatile boolean denylist_range_reads_enabled = true;
 
-    public SmallestDurationSeconds denylist_refresh = new SmallestDurationSeconds("600s");
+    public SmallestDuration.IntSeconds denylist_refresh = new SmallestDuration.IntSeconds("600s");
 
-    public SmallestDurationSeconds denylist_initial_load_retry = new SmallestDurationSeconds("5s");
+    public SmallestDuration.IntSeconds denylist_initial_load_retry = new SmallestDuration.IntSeconds("5s");
 
     /** We cap the number of denylisted keys allowed per table to keep things from growing unbounded. Operators will
      * receive warnings and only denylist_max_keys_per_table in natural query ordering will be processed on overflow.
@@ -844,13 +845,13 @@ public class Config
     public volatile int minimum_replication_factor_warn_threshold = -1;
     public volatile int minimum_replication_factor_fail_threshold = -1;
 
-    public volatile DurationSpec streaming_state_expires = DurationSpec.inDays(3);
-    public volatile DataStorageSpec streaming_state_size = DataStorageSpec.inMebibytes(40);
+    public volatile DurationSpec streaming_state_expires = new DurationSpec("3d");
+    public volatile DataStorageSpec streaming_state_size = new DataStorageSpec("40MiB");
 
     /** The configuration of startup checks. */
     public volatile Map<StartupCheckType, Map<String, Object>> startup_checks = new HashMap<>();
 
-    public volatile DurationSpec repair_state_expires = DurationSpec.inDays(3);
+    public volatile DurationSpec repair_state_expires = new DurationSpec("3d");
     public volatile int repair_state_size = 100_000;
 
     /**
@@ -949,7 +950,7 @@ public class Config
      * A safety margin when purging paxos state information that has been safely replicated to a quorum.
      * Data for transactions initiated within this grace period will not be expunged.
      */
-    public volatile DurationSpec paxos_purge_grace_period = new SmallestDurationSeconds("60s");
+    public volatile DurationSpec paxos_purge_grace_period = new SmallestDuration.Seconds("60s");
 
     /**
      * A safety mechanism for detecting incorrect paxos state, that may be down either to a bug or incorrect usage of LWTs
@@ -1033,7 +1034,7 @@ public class Config
 
     public volatile int max_top_size_partition_count = 10;
     public volatile int max_top_tombstone_partition_count = 10;
-    public volatile DataStorageSpec min_tracked_partition_size_bytes = DataStorageSpec.inMebibytes(1);
+    public volatile DataStorageSpec min_tracked_partition_size_bytes = new DataStorageSpec("1MiB");
     public volatile long min_tracked_partition_tombstone_count = 5000;
     public volatile boolean top_partitions_enabled = true;
 

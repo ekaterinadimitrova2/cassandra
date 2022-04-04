@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +30,7 @@ import com.google.common.primitives.Ints;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.GIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.KIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.MEBIBYTES;
@@ -44,12 +46,13 @@ public class DataStorageSpec
      * Immutable map that matches supported time units according to a provided smallest supported time unit
      */
     private static final ImmutableMap<DataStorageUnit, ImmutableSet<DataStorageUnit>> MAP_UNITS_PER_MIN_UNIT =
-    ImmutableMap.of(KIBIBYTES, ImmutableSet.of(KIBIBYTES, MEBIBYTES, GIBIBYTES),
+    ImmutableMap.of(BYTES, ImmutableSet.of(BYTES, KIBIBYTES, MEBIBYTES, GIBIBYTES),
+                    KIBIBYTES, ImmutableSet.of(KIBIBYTES, MEBIBYTES, GIBIBYTES),
                     MEBIBYTES, ImmutableSet.of(MEBIBYTES, GIBIBYTES));
     /**
      * The Regexp used to parse the storage provided as String.
      */
-    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(GiB|MiB|KiB|B)$");
+    private static final Pattern UNITS_PATTERN = Pattern.compile("^(\\d+)(GiB|MiB|KiB|B)$");
 
     private final long quantity;
 
@@ -58,7 +61,7 @@ public class DataStorageSpec
     public DataStorageSpec(String value)
     {
         //parse the string field value
-        Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
         {
@@ -68,12 +71,16 @@ public class DataStorageSpec
 
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
+
+        validateQuantity(quantity, unit);
     }
 
-    DataStorageSpec(long quantity, DataStorageUnit unit)
+    public DataStorageSpec(long quantity, DataStorageUnit unit)
     {
+        validateQuantity(quantity, unit);
+
         if (quantity < 0)
-            throw new ConfigurationException("Invalid data storage: value must be positive, but was " + quantity);
+            throw new ConfigurationException("Invalid data storage: value must be positive and less than " + Long.MAX_VALUE + ", but was " + quantity);
 
         this.quantity = quantity;
         this.unit = unit;
@@ -85,15 +92,17 @@ public class DataStorageSpec
             throw new ConfigurationException("Invalid smallest unit set for " + value);
 
         //parse the string field value
-        Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (matcher.find())
         {
             quantity = Long.parseLong(matcher.group(1));
             unit = DataStorageUnit.fromSymbol(matcher.group(2));
 
+            //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
+
             if (!MAP_UNITS_PER_MIN_UNIT.get(minUnit).contains(unit))
-                throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT);
+                throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit));
         }
         else
         {
@@ -101,54 +110,30 @@ public class DataStorageSpec
                                              " where case matters and only non-negative values are accepted");
         }
     }
+
+    // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
+    // imporant to be explicit about get/set as this changes how parsing is done; this class is a data-type, so is
+    // not nested, having get/set can confuse parsing thinking this is a nested type
     /**
-     * Creates a {@code DataStorageSpec} of the specified amount of bytes.
-     *
-     * @param bytes the amount of bytes
-     * @return a {@code DataStorageSpec}
+     * @return the data storage quantity.
      */
-    public static DataStorageSpec inBytes(long bytes)
+    public long quantity()
     {
-        return new DataStorageSpec(bytes, DataStorageUnit.BYTES);
+        return quantity;
     }
 
-    /**
-     * Creates a {@code DataStorageSpec} of the specified amount of kibibytes.
-     *
-     * @param kibibytes the amount of kibibytes
-     * @return a {@code DataStorageSpec}
-     */
-    public static DataStorageSpec inKibibytes(long kibibytes)
-    {
-        return new DataStorageSpec(kibibytes, KIBIBYTES);
-    }
 
-    /**
-     * Creates a {@code DataStorageSpec} of the specified amount of mebibytes.
-     *
-     * @param mebibytes the amount of mebibytes
-     * @return a {@code DataStorageSpec}
-     */
-    public static DataStorageSpec inMebibytes(long mebibytes)
+    private static void validateQuantity(long quantity, DataStorageUnit sourceUnit)
     {
-        return new DataStorageSpec(mebibytes, MEBIBYTES);
-    }
-
-    /**
-     * Creates a {@code DataStorageSpec} of the specified amount of gibibytes.
-     *
-     * @param gibibytes the amount of gibibytes
-     * @return a {@code DataStorageSpec}
-     */
-    public static DataStorageSpec inGibibytes(long gibibytes)
-    {
-        return new DataStorageSpec(gibibytes, GIBIBYTES);
+        if (sourceUnit.toBytes(quantity) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) +
+                                             ". It shouldn't be more than " + (Long.MAX_VALUE - 1) + " in bytes");
     }
 
     /**
      * @return the data storage unit.
      */
-    public DataStorageUnit getUnit()
+    public DataStorageUnit unit()
     {
         return unit;
     }
