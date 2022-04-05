@@ -160,23 +160,28 @@ public class FloatType extends NumberType<Float>
         return ByteBufferUtil.bytes(-toFloat(input));
     }
 
+    @Override
     public ByteBuffer abs(ByteBuffer input) {
         return ByteBufferUtil.bytes(Math.abs(toFloat(input)));
     }
 
+    @Override
     public ByteBuffer exp(ByteBuffer input) {
-        return ByteBufferUtil.bytes(Math.exp(toFloat(input)));
+        return ByteBufferUtil.bytes((float) Math.exp(toFloat(input)));
     }
 
+    @Override
     public ByteBuffer log(ByteBuffer input) {
-        return ByteBufferUtil.bytes(Math.log(toFloat(input)));
+        return ByteBufferUtil.bytes((float) Math.log(toFloat(input)));
     }
 
+    @Override
     public ByteBuffer log10(ByteBuffer input) {
-        return ByteBufferUtil.bytes(Math.log10(toFloat(input)));
+        return ByteBufferUtil.bytes((float) Math.log10(toFloat(input)));
     }
 
+    @Override
     public ByteBuffer round(ByteBuffer input) {
-        return ByteBufferUtil.bytes(Math.round(toFloat(input)));
+        return ByteBufferUtil.bytes((float) Math.round(toFloat(input)));
     }
 }

@@ -188,10 +188,12 @@ public class DecimalType extends NumberType<BigDecimal>
         return decompose(toBigDecimal(input).negate());
     }
 
+    @Override
     public ByteBuffer abs(ByteBuffer input) {
         return decompose(toBigDecimal(input).abs());
     }
 
+    @Override
     public ByteBuffer exp(ByteBuffer input) {
         return decompose(exp(toBigDecimal(input)));
     }
@@ -203,6 +205,7 @@ public class DecimalType extends NumberType<BigDecimal>
         return BigDecimalUtil.exp(input, scale);
     }
 
+    @Override
     public ByteBuffer log(ByteBuffer input) {
         return decompose(log(toBigDecimal(input)));
     }
@@ -214,6 +217,7 @@ public class DecimalType extends NumberType<BigDecimal>
         return BigDecimalUtil.ln(input, scale);
     }
 
+    @Override
     public ByteBuffer log10(ByteBuffer input) {
         return decompose(log10(toBigDecimal(input)));
     }
@@ -222,9 +226,9 @@ public class DecimalType extends NumberType<BigDecimal>
         return log(input).divide(log(new BigDecimal(10)), RoundingMode.HALF_EVEN);
     }
 
+    @Override
     public ByteBuffer round(ByteBuffer input) {
-        return IntegerType.instance.decompose(
-            toBigDecimal(input).setScale(0, RoundingMode.HALF_UP).toBigInteger()
-        );
+        return DecimalType.instance.decompose(
+            toBigDecimal(input).setScale(0, RoundingMode.HALF_UP));
     }
 }

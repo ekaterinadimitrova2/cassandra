@@ -33,6 +33,7 @@ import org.apache.cassandra.transport.ProtocolVersion;
 public class MathFcts
 {
     public static Logger logger = LoggerFactory.getLogger(MathFcts.class);
+
     private static final ImmutableList<NumberType<?>> numTypes = ImmutableList.of(ByteType.instance,
                                                                                   ShortType.instance,
                                                                                   Int32Type.instance,
@@ -73,11 +74,9 @@ public class MathFcts
         };
     }
 
-    public static NativeScalarFunction expFct(final NumberType<?> inputType)
+    public static NativeScalarFunction expFct(final NumberType<?> type)
     {
-        NumberType<?> outputType = (inputType == DecimalType.instance||inputType == IntegerType.instance) ?
-                     DecimalType.instance : DoubleType.instance;
-        return new NativeScalarFunction("exp", outputType, inputType)
+        return new NativeScalarFunction("exp", type, type)
         {
             @Override
             public ByteBuffer execute(ProtocolVersion protocolVersion, List<ByteBuffer> parameters)
@@ -85,7 +84,7 @@ public class MathFcts
                 ByteBuffer bb = parameters.get(0);
                 if (bb == null)
                     return null;
-                return inputType.exp(bb);
+                return type.exp(bb);
             }
         };
     }
