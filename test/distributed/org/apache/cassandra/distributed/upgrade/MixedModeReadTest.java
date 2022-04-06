@@ -20,9 +20,9 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.Feature;
 import org.apache.cassandra.distributed.api.IInvokableInstance;
-import org.apache.cassandra.distributed.shared.Versions;
 import org.apache.cassandra.gms.Gossiper;
 
 import static org.apache.cassandra.distributed.test.ReadDigestConsistencyTest.CREATE_TABLE;
@@ -38,7 +38,10 @@ public class MixedModeReadTest extends UpgradeTestBase
         .nodes(2)
         .nodesToUpgrade(1)
         .singleUpgrade(v30, v3X)
-        .withConfig(config -> config.with(Feature.GOSSIP, Feature.NETWORK))
+        .withConfig(config -> config.with(Feature.GOSSIP, Feature.NETWORK)
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(CREATE_TABLE);
             insertData(cluster.coordinator(1));

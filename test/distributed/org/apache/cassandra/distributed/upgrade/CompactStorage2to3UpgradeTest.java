@@ -23,12 +23,12 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.ICoordinator;
 import org.apache.cassandra.distributed.api.IMessageFilters;
 import org.apache.cassandra.distributed.api.NodeToolResult;
-import org.apache.cassandra.distributed.shared.Versions;
 
 import static org.apache.cassandra.distributed.shared.AssertUtils.assertRows;
 import static org.apache.cassandra.distributed.shared.AssertUtils.row;
@@ -44,6 +44,10 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
     public void multiColumn() throws Throwable
     {
         new TestCase()
+        .withConfig(config -> config
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .upgradesFrom(v22)
         .setup(cluster -> {
             assert cluster.size() == 3;
@@ -78,6 +82,10 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
     public void singleColumn() throws Throwable
     {
         new TestCase()
+        .withConfig(config -> config
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .upgradesFrom(v22)
         .setup(cluster -> {
             assert cluster.size() == 3;
@@ -120,7 +128,10 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .upgradesFrom(v22)
-        .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL))
+        .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL)
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(String.format(
             "CREATE TABLE %s.%s (key int, c1 int, c2 int, c3 int, PRIMARY KEY (key, c1, c2)) WITH COMPACT STORAGE",
@@ -210,7 +221,11 @@ public class CompactStorage2to3UpgradeTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .upgradesFrom(v22)
-        .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL).set("enable_drop_compact_storage", true))
+        .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL)
+                                    .set("enable_drop_compact_storage", true)
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(String.format(
             "CREATE TABLE %s.%s (key int, c1 int, c2 int, c3 int, PRIMARY KEY (key, c1, c2)) WITH COMPACT STORAGE",
