@@ -18,6 +18,7 @@
 
 package org.apache.cassandra.distributed.upgrade;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.Feature;
 import org.apache.cassandra.distributed.api.IInstanceConfig;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class Pre40MessageFilterTest extends UpgradeTestBase
 {
     public void reserializePre40RequestPaxosTest(Consumer<IInstanceConfig> configConsumer) throws Throwable
     {
-        new UpgradeTestBase.TestCase()
+        new TestCase()
         .nodes(2)
         .withConfig(configConsumer)
         .nodesToUpgrade(1)
@@ -54,12 +55,18 @@ public class Pre40MessageFilterTest extends UpgradeTestBase
     @Test
     public void reserializePre40RequestPaxosWithoutNetworkTest() throws Throwable
     {
-        reserializePre40RequestPaxosTest(config -> {});
+        reserializePre40RequestPaxosTest(config -> config
+                                                   // below property is conciesly set to false as we have new config in the next version
+                                                   // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                                   .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false));
     }
 
     @Test
     public void reserializePre40RequestPaxosWithNetworkTest() throws Throwable
     {
-        reserializePre40RequestPaxosTest(config -> config.with(Feature.NETWORK, Feature.GOSSIP));
+        reserializePre40RequestPaxosTest(config -> config.with(Feature.NETWORK, Feature.GOSSIP)
+                                                         // below property is conciesly set to false as we have new config in the next version
+                                                         // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                                         .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false));
     }
 }

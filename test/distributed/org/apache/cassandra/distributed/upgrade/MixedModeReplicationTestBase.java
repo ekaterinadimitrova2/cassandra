@@ -23,6 +23,7 @@ import java.util.List;
 
 import com.vdurmont.semver4j.Semver;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 
 import static org.apache.cassandra.distributed.shared.AssertUtils.assertRows;
@@ -47,6 +48,10 @@ public class MixedModeReplicationTestBase extends UpgradeTestBase
         .nodes(3)
         .nodesToUpgrade(1, 2)
         .upgrades(from, to)
+        .withConfig(config -> config
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange("CREATE KEYSPACE test_simple WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 2};");
             cluster.schemaChange("CREATE TABLE test_simple.names (key int PRIMARY KEY, name text)");

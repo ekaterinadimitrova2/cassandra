@@ -20,6 +20,7 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 
 import static org.apache.cassandra.distributed.shared.AssertUtils.assertRows;
@@ -44,6 +45,10 @@ public class MixedModeReadRepairDeleteTest extends UpgradeTestBase
         Object[] row2 = row(0, 2, 20, 8);
 
         allUpgrades(2, 1)
+        .withConfig(config -> config
+                              // below property is conciesly set to false as we have new config in the next version
+                              // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                              .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(withKeyspace("CREATE TABLE %s.t (k int, c int, v int, s int static, PRIMARY KEY (k, c))"));
 
@@ -83,6 +88,10 @@ public class MixedModeReadRepairDeleteTest extends UpgradeTestBase
         Object[][] partition2 = new Object[][]{ row(2, 1, 21, 20), row(2, 2, 22, 20) };
 
         allUpgrades(2, 1)
+        .withConfig(config -> config
+                              // below property is conciesly set to false as we have new config in the next version
+                              // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                              .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(withKeyspace("CREATE TABLE %s.t (k int, c int, v int, s int static, PRIMARY KEY (k, c))"));
 

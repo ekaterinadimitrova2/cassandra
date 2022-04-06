@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 
 import com.vdurmont.semver4j.Semver;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.IUpgradeableInstance;
@@ -57,7 +58,10 @@ public class MixedModeConsistencyTestBase extends UpgradeTestBase
         .nodesToUpgrade(1)
         .upgrades(initial, upgrade)
         .withConfig(config -> config.set("read_request_timeout_in_ms", SECONDS.toMillis(30))
-                                    .set("write_request_timeout_in_ms", SECONDS.toMillis(30)))
+                                    .set("write_request_timeout_in_ms", SECONDS.toMillis(30))
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             Tester.createTable(cluster);
             for (Tester tester : testers)

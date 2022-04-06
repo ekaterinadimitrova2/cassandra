@@ -20,6 +20,7 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.shared.Versions;
 
@@ -36,6 +37,10 @@ public class ReadRepairCompactStorageUpgradeTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .upgrades(v22, v3X)
+        .withConfig((cfg) -> cfg
+                    // below property is conciesly set to false as we have new config in the next version
+                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> cluster.schemaChange(withKeyspace("CREATE TABLE %s.tbl" +
                                                               " (pk ascii, b boolean, v blob, PRIMARY KEY (pk))" +
                                                               " WITH COMPACT STORAGE")))
