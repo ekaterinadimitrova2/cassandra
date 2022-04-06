@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.Feature;
@@ -79,7 +80,11 @@ public class MixedModeMessageForwardTest extends UpgradeTestBase
                                   .collect(Collectors.joining(","));
 
         new TestCase()
-        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK).set("request_timeout_in_ms", 30000))
+        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK)
+                          .set("request_timeout_in_ms", 30000)
+                          // below property is conciesly set to false as we have new config in the next version
+                          // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                          .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .withBuilder(b -> b.withRacks(numDCs, 1, nodesPerDc))
         .nodes(numDCs * nodesPerDc)
         .singleUpgrade(v30)

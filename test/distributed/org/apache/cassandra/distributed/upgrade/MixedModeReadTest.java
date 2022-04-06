@@ -20,9 +20,9 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.Feature;
 import org.apache.cassandra.distributed.api.IInvokableInstance;
-import org.apache.cassandra.distributed.shared.Versions;
 import org.apache.cassandra.gms.Gossiper;
 import org.apache.cassandra.utils.CassandraVersion;
 
@@ -36,7 +36,10 @@ public class MixedModeReadTest extends UpgradeTestBase
     public void mixedModeReadColumnSubsetDigestCheck() throws Throwable
     {
         new TestCase()
-        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK))
+        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK)
+                          // below property is conciesly set to false as we have new config in the next version
+                          // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                          .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .nodes(2)
         .nodesToUpgrade(1)
         // all upgrades from v30 up, excluding v30->v3X and from v40
