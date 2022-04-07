@@ -227,6 +227,9 @@ public enum CassandraRelevantProperties
 
     PAXOS_REPAIR_RETRY_TIMEOUT_IN_MS("cassandra.paxos_repair_retry_timeout_millis", "60000"),
 
+    ALLOW_DUPLICATE_CONFIG_KEYS("cassandra.allow_duplicate_config_keys", "true"),
+    ALLOW_CONFLICTING_CONFIG_VALUES("cassandra.allow_conflicting_config_values", "false"),
+
     // startup checks properties
     LIBJEMALLOC("cassandra.libjemalloc"),
     @Deprecated // should be removed in favor of enable flag of relevant startup check (checkDatacenter)

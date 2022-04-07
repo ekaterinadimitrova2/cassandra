@@ -42,14 +42,13 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.ByteStreams;
 
-import org.apache.commons.lang3.SystemUtils;
-
 import org.apache.cassandra.io.util.File;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.composer.Composer;
@@ -61,6 +60,9 @@ import org.yaml.snakeyaml.introspector.Property;
 import org.yaml.snakeyaml.introspector.PropertyUtils;
 import org.yaml.snakeyaml.nodes.Node;
 
+import static org.apache.cassandra.config.CassandraRelevantProperties.ALLOW_CONFLICTING_CONFIG_VALUES;
+import static org.apache.cassandra.config.CassandraRelevantProperties.ALLOW_DUPLICATE_CONFIG_KEYS;
+
 public class YamlConfigurationLoader implements ConfigurationLoader
 {
     private static final Logger logger = LoggerFactory.getLogger(YamlConfigurationLoader.class);
@@ -71,7 +73,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
      * Inspect the classpath to find storage configuration file
      */
     @VisibleForTesting
-    private static URL getStorageConfigURL() throws ConfigurationException
+    public static URL getStorageConfigURL() throws ConfigurationException
     {
         String configUrl = System.getProperty("cassandra.config");
         if (configUrl == null)
@@ -135,6 +137,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
 
             Constructor constructor = new CustomConstructor(Config.class, Yaml.class.getClassLoader());
             Map<Class<?>, Map<String, Replacement>> replacements = getNameReplacements(Config.class);
+            verifyReplacements(replacements, configBytes);
             PropertiesChecker propertiesChecker = new PropertiesChecker(replacements);
             constructor.setPropertyUtils(propertiesChecker);
             Yaml yaml = new Yaml(constructor);
@@ -146,6 +149,46 @@ public class YamlConfigurationLoader implements ConfigurationLoader
         {
             throw new ConfigurationException("Invalid yaml: " + url, e);
         }
+    }
+
+    private static void verifyReplacements(Map<Class<?>, Map<String, Replacement>> replacements, Map<String, Object> rawConfig)
+    {
+        List<String> errors = new ArrayList<>();
+        List<String> duplicates = new ArrayList<>();
+        for (Map.Entry<Class<?>, Map<String, Replacement>> outerEntry : replacements.entrySet())
+        {
+            for (Map.Entry<String, Replacement> entry : outerEntry.getValue().entrySet())
+            {
+                Replacement r = entry.getValue();
+                if (!r.isValueFormatReplacement() && rawConfig.containsKey(r.oldName) && rawConfig.containsKey(r.newName))
+                {
+                    boolean isSensitive = Config.SENSITIVE_KEYS.contains(r.oldName) || Config.SENSITIVE_KEYS.contains(r.newName);
+                    Object oldVal = rawConfig.get(r.oldName);
+                    Object newVal = rawConfig.get(r.newName);
+                    String msg = String.format("old: [%s: %s], new: [%s: %s]", r.oldName, isSensitive ? "<REDACTED>" : oldVal, r.newName, isSensitive ? "<REDACTED>" : newVal);
+                    if (!Objects.equals(oldVal, newVal))
+                        errors.add(msg);
+                    duplicates.add(msg);
+                    logger.warn("Config contains both new and old parameters: {}, please migrate config to use the new parameters", msg);
+                }
+            }
+        }
+
+        if (!errors.isEmpty() && !ALLOW_CONFLICTING_CONFIG_VALUES.getBoolean())
+            throw new ConfigurationException("Config contains conflicting values for old and new configuration parameters:\n" + String.join("\n", errors));
+        if (!duplicates.isEmpty() && !ALLOW_DUPLICATE_CONFIG_KEYS.getBoolean())
+            throw new ConfigurationException("Config contains duplicate keys for old and new configuration parameters:\n" + String.join("\n", duplicates));
+    }
+
+    private static void verifyReplacements(Map<Class<?>, Map<String, Replacement>> replacements, byte[] configBytes)
+    {
+        LoaderOptions loaderOptions = new LoaderOptions();
+        loaderOptions.setAllowDuplicateKeys(ALLOW_DUPLICATE_CONFIG_KEYS.getBoolean());
+        Yaml rawYaml = new Yaml(loaderOptions);
+
+        Map<String, Object> rawConfig = rawYaml.load(new ByteArrayInputStream(configBytes));
+        verifyReplacements(replacements, rawConfig);
+
     }
 
     private static String readStorageConfig(URL url)
@@ -199,6 +242,7 @@ public class YamlConfigurationLoader implements ConfigurationLoader
     {
         Constructor constructor = new YamlConfigurationLoader.CustomConstructor(klass, klass.getClassLoader());
         Map<Class<?>, Map<String, Replacement>> replacements = getNameReplacements(Config.class);
+        verifyReplacements(replacements, map);
         YamlConfigurationLoader.PropertiesChecker propertiesChecker = new YamlConfigurationLoader.PropertiesChecker(replacements);
         constructor.setPropertyUtils(propertiesChecker);
         Yaml yaml = new Yaml(constructor);
@@ -285,7 +329,6 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             if (typeReplacements.containsKey(name))
             {
                 Replacement replacement = typeReplacements.get(name);
-
                 final Property newProperty = super.getProperty(type, replacement.newName);
                 result = new Property(replacement.oldName, replacement.oldType)
                 {
@@ -518,6 +561,11 @@ public class YamlConfigurationLoader implements ConfigurationLoader
             this.converter = Objects.requireNonNull(converter);
             // by default deprecated is false
             this.deprecated = deprecated;
+        }
+
+        public boolean isValueFormatReplacement()
+        {
+            return oldName.equals(newName);
         }
     }
 }
