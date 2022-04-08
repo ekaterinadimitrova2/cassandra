@@ -24,6 +24,7 @@ import java.util.UUID;
 
 import com.vdurmont.semver4j.Semver;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.ICoordinator;
 import org.apache.cassandra.exceptions.ReadTimeoutException;
@@ -71,7 +72,10 @@ public class MixedModeAvailabilityTestBase extends UpgradeTestBase
         .nodesToUpgrade(upgradedCoordinator ? 1 : 2)
         .upgrades(initial, upgrade)
         .withConfig(config -> config.set("read_request_timeout_in_ms", SECONDS.toMillis(2))
-                                    .set("write_request_timeout_in_ms", SECONDS.toMillis(2)))
+                                    .set("write_request_timeout_in_ms", SECONDS.toMillis(2))
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(c -> c.schemaChange(withKeyspace("CREATE TABLE %s.t (k uuid, c int, v int, PRIMARY KEY (k, c))")))
         .runAfterNodeUpgrade((cluster, n) -> {
 

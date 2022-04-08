@@ -20,6 +20,7 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.shared.Versions;
 
 import static org.apache.cassandra.distributed.api.Feature.GOSSIP;
@@ -36,7 +37,11 @@ public class CompactStorage3to4UpgradeTest extends UpgradeTestBase
     {
         new TestCase().nodes(1)
                       .upgradesFrom(v30)
-                      .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL).set("enable_drop_compact_storage", true))
+                      .withConfig(config -> config.with(GOSSIP, NETWORK, NATIVE_PROTOCOL)
+                                                  .set("enable_drop_compact_storage", true)
+                                                  // below property is conciesly set to false as we have new config in the next version
+                                                  // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                                  .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
                       .setup(cluster -> {
                           String create = "CREATE TABLE %s.%s(k int, c1 int, c2 int, v int, PRIMARY KEY (k, c1, c2)) " +
                                           "WITH compaction = { 'class':'LeveledCompactionStrategy', 'enabled':'false'} AND COMPACT STORAGE";

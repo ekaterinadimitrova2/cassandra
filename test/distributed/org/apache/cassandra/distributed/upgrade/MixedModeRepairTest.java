@@ -27,6 +27,7 @@ import java.util.concurrent.TimeoutException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.IUpgradeableInstance;
 
@@ -55,7 +56,10 @@ public class MixedModeRepairTest extends UpgradeTestBase
         .nodes(2)
         .nodesToUpgrade(UPGRADED_NODE)
         .upgradesFrom(v3X)
-        .withConfig(config -> config.with(NETWORK, GOSSIP))
+        .withConfig(config -> config.with(NETWORK, GOSSIP)
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(CREATE_TABLE);
             cluster.setUncaughtExceptionsFilter(throwable -> throwable instanceof RejectedExecutionException);
