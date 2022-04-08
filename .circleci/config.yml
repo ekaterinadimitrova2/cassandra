@@ -107,7 +107,7 @@ jobs:
     - DTEST_REPO: https://github.com/apache/cassandra-dtest.git
     - DTEST_BRANCH: trunk
     - CCM_MAX_HEAP_SIZE: 1024M
-    - CCM_HEAP_NEWSIZE: 256M
+    - CCM_HEAP_NEWSIZE: 512M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: null
     - REPEATED_UTEST_METHODS: null
