@@ -20,9 +20,9 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.shared.DistributedTestBase;
-import org.apache.cassandra.distributed.shared.Versions;
 
 import static java.lang.String.format;
 import static org.apache.cassandra.distributed.shared.AssertUtils.assertRows;
@@ -56,6 +56,9 @@ public class MixedModeRangeTombstoneTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .singleUpgrade(v22, v30)
+        // below property is conciesly set to false as we have new config in the next version
+        // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+        .withConfig(c -> c.set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(schema);
             cluster.coordinator(1).execute(format("DELETE FROM %s USING TIMESTAMP 1 WHERE k = 0 AND c1 = 'A'", tableName), ConsistencyLevel.ALL);
