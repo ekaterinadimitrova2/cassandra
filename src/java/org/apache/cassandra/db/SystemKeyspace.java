@@ -57,6 +57,7 @@ import org.apache.cassandra.cql3.UntypedResultSet;
 import org.apache.cassandra.cql3.functions.AggregateFcts;
 import org.apache.cassandra.cql3.functions.BytesConversionFcts;
 import org.apache.cassandra.cql3.functions.CastFcts;
+import org.apache.cassandra.cql3.functions.MathFcts;
 import org.apache.cassandra.cql3.functions.OperationFcts;
 import org.apache.cassandra.cql3.functions.TimeFcts;
 import org.apache.cassandra.cql3.functions.UuidFcts;
