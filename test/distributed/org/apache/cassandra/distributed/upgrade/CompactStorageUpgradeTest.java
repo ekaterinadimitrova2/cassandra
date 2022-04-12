@@ -23,6 +23,7 @@ import java.util.Iterator;
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import static org.apache.cassandra.distributed.api.Feature.GOSSIP;
 import static org.apache.cassandra.distributed.api.Feature.NETWORK;
@@ -38,6 +39,10 @@ public class CompactStorageUpgradeTest extends UpgradeTestBase
         .nodes(2)
         .nodesToUpgrade(2)
         .upgradesFrom(v30)
+        .withConfig(config -> config
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> {
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck int, v int, PRIMARY KEY (pk, ck)) WITH COMPACT STORAGE");
         })
@@ -68,6 +73,10 @@ public class CompactStorageUpgradeTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .nodesToUpgrade(2)
+        .withConfig(config -> config
+                              // below property is conciesly set to false as we have new config in the next version
+                              // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                              .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .upgradesFrom(v30)
         .setup((cluster) -> {
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck int, v int, PRIMARY KEY (pk, ck)) WITH COMPACT STORAGE");
@@ -95,6 +104,10 @@ public class CompactStorageUpgradeTest extends UpgradeTestBase
         .nodes(2)
         .nodesToUpgrade(2)
         .upgradesFrom(v30)
+        .withConfig(config -> config
+                              // below property is conciesly set to false as we have new config in the next version
+                              // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                              .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> {
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck1 int, ck2 int, v int, PRIMARY KEY (pk, ck1, ck2)) WITH COMPACT STORAGE");
         })
@@ -114,6 +127,10 @@ public class CompactStorageUpgradeTest extends UpgradeTestBase
         .nodes(2)
         .nodesToUpgrade(2)
         .upgradesFrom(v30)
+        .withConfig(config -> config
+                              // below property is conciesly set to false as we have new config in the next version
+                              // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                              .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> {
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck int, PRIMARY KEY (pk, ck)) WITH COMPACT STORAGE");
         })
@@ -146,7 +163,11 @@ public class CompactStorageUpgradeTest extends UpgradeTestBase
         .nodes(2)
         .nodesToUpgrade(1, 2)
         .upgradesFrom(v30)
-        .withConfig(config -> config.with(GOSSIP, NETWORK).set("enable_drop_compact_storage", true))
+        .withConfig(config -> config.with(GOSSIP, NETWORK)
+                                    .set("enable_drop_compact_storage", true)
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> {
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck int, PRIMARY KEY (pk, ck)) WITH COMPACT STORAGE");
             cluster.coordinator(1).execute("INSERT INTO " + KEYSPACE + ".tbl (pk, ck) VALUES (1,1)", ConsistencyLevel.ALL);

@@ -30,10 +30,10 @@ import java.util.stream.Collectors;
 import com.google.common.util.concurrent.Uninterruptibles;
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.Feature;
 import org.apache.cassandra.distributed.api.IMessageFilters;
-import org.apache.cassandra.distributed.shared.Versions;
 import org.apache.cassandra.net.Verb;
 import org.assertj.core.api.Assertions;
 
@@ -47,7 +47,10 @@ public class MixedModeGossipTest extends UpgradeTestBase
     public void testStatusFieldShouldExistInOldVersionNodes() throws Throwable
     {
         new TestCase()
-        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK))
+        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK)
+                          // below property is conciesly set to false as we have new config in the next version
+                          // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                          .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .nodes(3)
         .nodesToUpgradeOrdered(1, 2, 3)
         // all upgrades from v30 up, excluding v30->v3X and from v40
@@ -83,7 +86,10 @@ public class MixedModeGossipTest extends UpgradeTestBase
     {
         AtomicReference<IMessageFilters.Filter> n1GossipSynBlocker = new AtomicReference<>();
         new TestCase()
-        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK))
+        .withConfig(c -> c.with(Feature.GOSSIP, Feature.NETWORK)
+                          // below property is conciesly set to false as we have new config in the next version
+                          // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                          .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .nodes(3)
         .nodesToUpgradeOrdered(1, 2, 3)
         // all upgrades from v30 up, excluding v30->v3X and from v40

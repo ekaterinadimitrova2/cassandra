@@ -20,8 +20,8 @@ package org.apache.cassandra.distributed.upgrade;
 
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
-import org.apache.cassandra.distributed.shared.Versions;
 
 import static org.apache.cassandra.distributed.api.Feature.GOSSIP;
 import static org.apache.cassandra.distributed.api.Feature.NETWORK;
@@ -38,7 +38,10 @@ public class GroupByTest extends UpgradeTestBase
         .nodes(2)
         .upgradesFrom(v3X)
         .nodesToUpgrade(1)
-        .withConfig(config -> config.with(GOSSIP, NETWORK))
+        .withConfig(config -> config.with(GOSSIP, NETWORK)
+                                    // below property is conciesly set to false as we have new config in the next version
+                                    // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                    .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup(cluster -> {
             cluster.schemaChange(withKeyspace("CREATE TABLE %s.t (a int, b int, c int, v int, primary key (a, b, c))"));
             String insert = withKeyspace("INSERT INTO %s.t (a, b, c, v) VALUES (?, ?, ?, ?)");
