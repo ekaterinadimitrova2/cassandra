@@ -10,6 +10,7 @@ Merged from 3.0:
 
 
 4.1
+ * Fix repair_request_timeout_in_ms and remove paxos_auto_repair_threshold_mb (CASSANDRA-17557)
  * Rename truncate_drop guardrail to drop_truncate_table (CASSANDRA-17592)
  * nodetool enablefullquerylog can NPE when directory has no files (CASSANDRA-17595)
  * Add auto_snapshot_ttl configuration (CASSANDRA-16790)
