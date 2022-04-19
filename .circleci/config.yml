@@ -110,11 +110,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -285,11 +285,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -394,11 +394,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -503,11 +503,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -626,11 +626,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -721,11 +721,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -816,11 +816,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -912,11 +912,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1008,11 +1008,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1118,11 +1118,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1214,11 +1214,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1358,11 +1358,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1481,11 +1481,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1579,11 +1579,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1656,11 +1656,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1732,11 +1732,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1795,11 +1795,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -1904,11 +1904,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2013,11 +2013,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2112,11 +2112,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2167,11 +2167,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2343,11 +2343,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2420,11 +2420,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2515,11 +2515,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2625,11 +2625,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2723,11 +2723,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2818,11 +2818,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2913,11 +2913,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -2976,11 +2976,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3085,11 +3085,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3139,11 +3139,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3202,11 +3202,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3300,11 +3300,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3410,11 +3410,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3585,11 +3585,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
@@ -3680,11 +3680,11 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
-    - REPEATED_UTEST_CLASS: null
+    - REPEATED_UTEST_CLASS: org.apache.cassandra.db.commitlog.CommitLogSegmentManagerCDCTest
     - REPEATED_UTEST_METHODS: null
-    - REPEATED_UTEST_COUNT: 100
+    - REPEATED_UTEST_COUNT: 400
     - REPEATED_UTEST_STOP_ON_FAILURE: false
-    - REPEATED_DTEST_NAME: null
+    - REPEATED_DTEST_NAME: transient_replication_test.py::TestTransientReplication::test_transient_noop_write
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
