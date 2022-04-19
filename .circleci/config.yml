@@ -118,8 +118,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -293,8 +293,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -402,8 +402,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -511,8 +511,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -634,8 +634,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -729,8 +729,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -824,8 +824,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -920,8 +920,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1016,8 +1016,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1126,8 +1126,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1222,8 +1222,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1366,8 +1366,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1489,8 +1489,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1587,8 +1587,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1664,8 +1664,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1740,8 +1740,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1803,8 +1803,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -1912,8 +1912,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2021,8 +2021,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2120,8 +2120,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2175,8 +2175,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2351,8 +2351,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2428,8 +2428,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2523,8 +2523,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2633,8 +2633,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2731,8 +2731,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2826,8 +2826,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2921,8 +2921,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -2984,8 +2984,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3093,8 +3093,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3147,8 +3147,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3210,8 +3210,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3308,8 +3308,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3418,8 +3418,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3593,8 +3593,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
@@ -3688,8 +3688,8 @@ jobs:
     - REPEATED_DTEST_VNODES: false
     - REPEATED_DTEST_COUNT: 100
     - REPEATED_DTEST_STOP_ON_FAILURE: false
-    - REPEATED_UPGRADE_DTEST_NAME: null
-    - REPEATED_UPGRADE_DTEST_COUNT: 100
+    - REPEATED_UPGRADE_DTEST_NAME: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_4_0_x_To_indev_trunk::test_parallel_upgrade_with_internode_ssl
+    - REPEATED_UPGRADE_DTEST_COUNT: 400
     - REPEATED_UPGRADE_DTEST_STOP_ON_FAILURE: false
     - REPEATED_JVM_UPGRADE_DTEST_CLASS: null
     - REPEATED_JVM_UPGRADE_DTEST_METHODS: null
