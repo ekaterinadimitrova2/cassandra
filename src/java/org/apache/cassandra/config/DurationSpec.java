@@ -76,12 +76,17 @@ public class DurationSpec
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units: d, h, m, s, ms, us, µs," +
                                              " ns where case matters and " + "only non-negative values");
         }
+
+        long nanoseconds = toNanoseconds();
+        if (nanoseconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
     }
 
     DurationSpec(long quantity, TimeUnit unit)
     {
-        if (quantity < 0 || quantity > unit.convert(Long.MAX_VALUE, TimeUnit.NANOSECONDS))
-            throw new ConfigurationException("Invalid duration " + quantity + ": value must be positive and less than " + Long.MAX_VALUE + "nanoseconds");
+        long nanoseconds = toNanoseconds();
+        if (quantity < 0 || nanoseconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration " + quantity + unit +": value must be positive and less than " + Long.MAX_VALUE + "nanoseconds");
 
         this.quantity = quantity;
         this.unit = unit;
@@ -112,6 +117,10 @@ public class DurationSpec
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit) +
                                              " where case matters and only non-negative values.");
         }
+
+        long nanoseconds = toNanoseconds();
+        if (nanoseconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is

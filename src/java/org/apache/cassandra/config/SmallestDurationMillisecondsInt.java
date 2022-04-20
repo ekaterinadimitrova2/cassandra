@@ -36,9 +36,9 @@ public class SmallestDurationMillisecondsInt extends IntDurationSpec
                                              "milliseconds, but it was " + milliseconds + "milliseconds");
     }
 
-    public SmallestDurationMillisecondsInt(long milliseconds, TimeUnit milliseconds1)
+    public SmallestDurationMillisecondsInt(long milliseconds, TimeUnit unit)
     {
-        super(milliseconds, milliseconds1);
+        super(milliseconds, unit);
 
         if (milliseconds > Integer.MAX_VALUE)
             throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
