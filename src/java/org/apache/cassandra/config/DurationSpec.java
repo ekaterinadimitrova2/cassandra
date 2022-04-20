@@ -80,8 +80,8 @@ public class DurationSpec
 
     DurationSpec(long quantity, TimeUnit unit)
     {
-        if (quantity < 0)
-            throw new ConfigurationException("Invalid duration " + quantity + ": value must be positive");
+        if (quantity < 0 || quantity > unit.convert(Long.MAX_VALUE, TimeUnit.NANOSECONDS))
+            throw new ConfigurationException("Invalid duration " + quantity + ": value must be positive and less than " + Long.MAX_VALUE + "nanoseconds");
 
         this.quantity = quantity;
         this.unit = unit;
