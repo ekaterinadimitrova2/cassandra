@@ -24,7 +24,7 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents duration for Int bounded config where we can't use anything less than minutes
  */
-public final class SmallestDurationSpecMinutesInt extends IntDurationSpec
+public final class SmallestDurationSpecMinutesInt extends DurationSpecNanosecondsInt
 {
     public SmallestDurationSpecMinutesInt(String value)
     {

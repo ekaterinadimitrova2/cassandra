@@ -24,7 +24,7 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents duration for Int bounded config which cannot be anything smaller than milliseconds
  */
-public class SmallestDurationMillisecondsInt extends IntDurationSpec
+public class SmallestDurationMillisecondsInt extends DurationSpec
 {
     public SmallestDurationMillisecondsInt(String value)
     {

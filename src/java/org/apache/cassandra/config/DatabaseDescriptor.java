@@ -560,7 +560,7 @@ public class DatabaseDescriptor
         {
             conf.native_transport_max_request_data_in_flight_per_ip = DataStorageSpec.inBytes(Runtime.getRuntime().maxMemory() / 40);
         }
-        
+
         if (conf.native_transport_rate_limiting_enabled)
             logger.info("Native transport rate-limiting enabled at {} requests/second.", conf.native_transport_max_requests_per_second);
         else
@@ -2590,9 +2590,9 @@ public class DatabaseDescriptor
         return conf.paxos_purge_grace_period.to(units);
     }
 
-    public static void setPaxosPurgeGrace(long value, TimeUnit units)
+    public static void setPaxosPurgeGrace(long value)
     {
-        conf.paxos_purge_grace_period = new DurationSpec(value, units);
+        conf.paxos_purge_grace_period = SmallestDurationSeconds.inSeconds(value);
     }
 
     public static PaxosOnLinearizabilityViolation paxosOnLinearizabilityViolations()
@@ -3603,7 +3603,7 @@ public class DatabaseDescriptor
         if (value > getConcurrentCompactors())
             logger.warn("max_concurrent_automatic_sstable_upgrades ({}) is larger than concurrent_compactors ({})", value, getConcurrentCompactors());
     }
-    
+
     public static AuditLogOptions getAuditLoggingOptions()
     {
         return conf.audit_logging_options;
