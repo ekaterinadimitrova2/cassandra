@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
 /**
  * Wrapper class for Cassandra duration configuration parameters which are internally represented in Seconds. In order
  * not to lose precision while converting to smaller units (until we migrate those parameters to use internally the smallest
@@ -41,6 +43,11 @@ public final class SmallestDurationSeconds extends DurationSpec
     public SmallestDurationSeconds(String value)
     {
         super(value, TimeUnit.SECONDS);
+
+        long seconds = toSeconds();
+        if (seconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                             "seconds, but it was " + seconds + "seconds");
     }
 
     private SmallestDurationSeconds(long quantity, TimeUnit unit)

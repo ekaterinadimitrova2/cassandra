@@ -50,12 +50,17 @@ public final class SmallestDurationMilliseconds extends DurationSpec
         long milliseconds = toMilliseconds();
         if (milliseconds == Long.MAX_VALUE)
             throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
-                                             "milliseconds, but it was " + milliseconds + "milliseconds");
+                                             "milliseconds, but it was " + quantity + unit);
     }
 
     private SmallestDurationMilliseconds(double quantity, TimeUnit unit)
     {
         super(quantity, unit);
+
+        long milliseconds = toMilliseconds();
+        if (milliseconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+                                             "milliseconds, but it was " + quantity + unit);
     }
 
     /**

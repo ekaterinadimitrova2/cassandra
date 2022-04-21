@@ -20,8 +20,10 @@ package org.apache.cassandra.config;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.cassandra.exceptions.ConfigurationException;
+
 /**
- * Wrapper class for Cassandra duration configuration parameters which are internally represented in Minuts. In order
+ * Wrapper class for Cassandra duration configuration parameters which are internally represented in Minutes. In order
  * not to lose precision while converting to smaller units (until we migrate those parameters to use internally the smallest
  * supported unit) we restrict those parameters to use only Minutes or larger units. (CASSANDRA-15234)
  */
@@ -37,11 +39,20 @@ public final class SmallestDurationMinutes extends DurationSpec
     public SmallestDurationMinutes(String value)
     {
         super(value, TimeUnit.MINUTES);
+
+        long minutes = toMinutes();
+        if (minutes == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+                                             "minutes, but it was " + minutes + "minutes");
     }
 
     private SmallestDurationMinutes(long quantity, TimeUnit unit)
     {
         super(quantity, unit);
+
+        if (toMinutes() == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+                                             "minutes, but it was " + quantity + "minutes");
     }
 
     /**

@@ -24,9 +24,9 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents duration for Int bounded config in nanoseconds
  */
-public class DurationSpecNanosecondsInt extends DurationSpec
+public class DurationNanosecondsInt extends DurationSpec
 {
-    public DurationSpecNanosecondsInt(String value)
+    public DurationNanosecondsInt(String value)
     {
         super(value, TimeUnit.NANOSECONDS);
 
@@ -36,7 +36,7 @@ public class DurationSpecNanosecondsInt extends DurationSpec
                                              "nanoseconds, but it was " + nanoseconds + "nanoseconds");
     }
 
-    DurationSpecNanosecondsInt(String value, TimeUnit unit)
+    DurationNanosecondsInt(String value, TimeUnit unit)
     {
         super(value, unit);
     }
