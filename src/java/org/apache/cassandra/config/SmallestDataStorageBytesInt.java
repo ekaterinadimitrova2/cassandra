@@ -22,21 +22,30 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents an amount of data storage for Int bounded config
  */
-public class IntDataStorageSpec extends DataStorageSpec
+public class SmallestDataStorageBytesInt extends DataStorageSpec
 {
-    public IntDataStorageSpec(String value)
+    public SmallestDataStorageBytesInt(String value)
     {
         super(value, DataStorageUnit.BYTES);
 
-        long bytes = toBytes();
-        if (bytes > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                             "bytes, but it was " + bytes + "bytes");
+        if (value != null && !value.equals("null"))
+        {
+            long bytes = toBytes();
+            if (bytes > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
+                                                "bytes, but it was " + bytes + "bytes");
+        }
     }
 
-    IntDataStorageSpec(String value, DataStorageSpec.DataStorageUnit unit)
+    public SmallestDataStorageBytesInt(long quantity, DataStorageUnit unit)
     {
-        super(value, unit);
+        super(quantity, unit);
     }
+
+    public static SmallestDataStorageBytesInt inBytes(long bytes)
+    {
+        return new SmallestDataStorageBytesInt(bytes, DataStorageUnit.BYTES);
+    }
+
     // TO DO As int methods and whatever else is needed
 }

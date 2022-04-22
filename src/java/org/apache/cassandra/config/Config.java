@@ -73,7 +73,7 @@ public class Config
     public String authorizer;
     public String role_manager;
     public String network_authorizer;
-    @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION, deprecated = true)
+    @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public volatile SmallestDurationMillisecondsInt permissions_validity = new SmallestDurationMillisecondsInt("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
@@ -265,8 +265,8 @@ public class Config
     public volatile DataStorageSpec native_transport_max_request_data_in_flight = null;
     public volatile boolean native_transport_rate_limiting_enabled = false;
     public volatile int native_transport_max_requests_per_second = 1000000;
-    @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec native_transport_receive_queue_capacity = new DataStorageSpec("1MiB");
+    @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE_INT, deprecated = true)
+    public SmallestDataStorageBytesInt native_transport_receive_queue_capacity = new SmallestDataStorageBytesInt("1MiB");
 
     @Deprecated
     public Integer native_transport_max_negotiable_protocol_version = null;
@@ -313,9 +313,9 @@ public class Config
     public int max_streaming_retries = 3;
 
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile DataRateSpec stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile DataRateInt stream_throughput_outbound = new DataRateInt("24MiB/s");
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile DataRateSpec inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
+    public volatile DataRateInt inter_dc_stream_throughput_outbound = new DataRateInt("24MiB/s");
 
     public volatile DataRateSpec entire_sstable_stream_throughput_outbound = new DataRateSpec("24MiB/s");
     public volatile DataRateSpec entire_sstable_inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");

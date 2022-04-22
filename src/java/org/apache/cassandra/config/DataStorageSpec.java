@@ -29,6 +29,7 @@ import com.google.common.primitives.Ints;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.GIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.KIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.MEBIBYTES;
@@ -44,7 +45,8 @@ public class DataStorageSpec
      * Immutable map that matches supported time units according to a provided smallest supported time unit
      */
     private static final ImmutableMap<DataStorageUnit, ImmutableSet<DataStorageUnit>> MAP_UNITS_PER_MIN_UNIT =
-    ImmutableMap.of(KIBIBYTES, ImmutableSet.of(KIBIBYTES, MEBIBYTES, GIBIBYTES),
+    ImmutableMap.of(BYTES, ImmutableSet.of(BYTES, KIBIBYTES, MEBIBYTES, GIBIBYTES),
+                    KIBIBYTES, ImmutableSet.of(KIBIBYTES, MEBIBYTES, GIBIBYTES),
                     MEBIBYTES, ImmutableSet.of(MEBIBYTES, GIBIBYTES));
     /**
      * The Regexp used to parse the storage provided as String.
@@ -68,6 +70,14 @@ public class DataStorageSpec
 
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
+
+        if (value != null && !value.equals("null"))
+        {
+            long bytes = toBytes();
+
+            if (bytes == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in bytes");
+        }
     }
 
     DataStorageSpec(long quantity, DataStorageUnit unit)
@@ -109,7 +119,7 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inBytes(long bytes)
     {
-        return new DataStorageSpec(bytes, DataStorageUnit.BYTES);
+        return new DataStorageSpec(bytes, BYTES);
     }
 
     /**
@@ -120,6 +130,10 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inKibibytes(long kibibytes)
     {
+        if (KIBIBYTES.toBytes(kibibytes) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + kibibytes + "kibibytes. It shouldn't be more than" +
+                                             + Long.MAX_VALUE + " in bytes");
+
         return new DataStorageSpec(kibibytes, KIBIBYTES);
     }
 
@@ -131,6 +145,10 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inMebibytes(long mebibytes)
     {
+        if (MEBIBYTES.toBytes(mebibytes) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + mebibytes + "mebibytes. It shouldn't be more than" +
+                                             + Long.MAX_VALUE + " in bytes");
+
         return new DataStorageSpec(mebibytes, MEBIBYTES);
     }
 

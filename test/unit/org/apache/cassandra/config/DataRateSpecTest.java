@@ -80,14 +80,26 @@ public class DataRateSpecTest
     public void testInvalidInputs()
     {
         assertThatThrownBy(() -> new DataRateSpec("10")).isInstanceOf(ConfigurationException.class)
-                                                        .hasMessageContaining("Invalid bit rate: 10");
+                                                        .hasMessageContaining("Invalid data rate: 10");
         assertThatThrownBy(() -> new DataRateSpec("-10b/s")).isInstanceOf(ConfigurationException.class)
-                                                            .hasMessageContaining("Invalid bit rate: -10b/s");
+                                                            .hasMessageContaining("Invalid data rate: -10b/s");
         assertThatThrownBy(() -> new DataRateSpec("10xb/s")).isInstanceOf(ConfigurationException.class)
-                                                            .hasMessageContaining("Invalid bit rate: 10xb/s");
+                                                            .hasMessageContaining("Invalid data rate: 10xb/s");
         assertThatThrownBy(() -> new DataRateSpec("9223372036854775809B/s")
                                  .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
                                                      .hasMessageContaining("For input string: \"9223372036854775809\"");
+        assertThatThrownBy(() -> new DataRateSpec("9223372036854775809KiB/s")
+                                 .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
+                                                     .hasMessageContaining("For input string: \"9223372036854775809\"");
+        assertThatThrownBy(() -> new DataRateSpec("9223372036854775809MiB/s")
+                                 .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
+                                                     .hasMessageContaining("For input string: \"9223372036854775809\"");
+        //assertThatThrownBy(() -> new DataRateInt("2147483648KiB/s")
+        //                         .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
+        //                                             .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647bytes per second");
+        assertThatThrownBy(() -> new DataRateInt("2147483648MiB/s")
+                                 .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
+                                                     .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647bytes per second");
     }
 
     @Test
@@ -96,8 +108,8 @@ public class DataRateSpecTest
         assertEquals(new DataRateSpec("10B/s"), new DataRateSpec("10B/s"));
         assertEquals(new DataRateSpec("10KiB/s"), new DataRateSpec("10240B/s"));
         assertEquals(new DataRateSpec("10240B/s"), new DataRateSpec("10KiB/s"));
-        assertEquals(DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE), DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE));
-        assertNotEquals(DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE), DataRateSpec.inBytesPerSecond(Long.MAX_VALUE));
+        assertEquals(DataRateSpec.inMebibytesPerSecond((Long.MAX_VALUE/1024/1024)), DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE/1024/1024));
+        assertNotEquals(DataRateSpec.inKibibytesPerSecond(Long.MAX_VALUE/1024), DataRateSpec.inBytesPerSecond(Long.MAX_VALUE));
         assertNotEquals(new DataRateSpec("0KiB/s"), new DataRateSpec("10MiB/s"));
     }
 

@@ -24,16 +24,20 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents duration for Int bounded config where we can't use anything less than minutes
  */
-public final class SmallestDurationMinutesInt extends DurationNanosecondsInt
+public final class SmallestDurationMinutesInt extends DurationSpec
 {
     public SmallestDurationMinutesInt(String value)
     {
         super(value, TimeUnit.MINUTES);
 
-        long minutes = toMinutes();
-        if (minutes > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                             "minutes, but it was " + minutes + "minutes");
+        if (!value.equals("null"))
+        {
+            long minutes = toMinutes();
+
+            if (minutes > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                                 "minutes, but it was " + minutes + "minutes");
+        }
     }
     // TO DO As int methods and whatever else is needed
 }

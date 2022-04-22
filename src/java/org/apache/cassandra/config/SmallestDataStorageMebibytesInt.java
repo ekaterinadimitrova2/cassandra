@@ -22,16 +22,19 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents an amount of data storage for Int bounded config which cannot be anything smaller than mebibytes
  */
-public final class SmallestDataStorageMebibytesInt extends IntDataStorageSpec
+public final class SmallestDataStorageMebibytesInt extends DataStorageSpec
 {
     public SmallestDataStorageMebibytesInt(String value)
     {
         super(value, DataStorageUnit.MEBIBYTES);
 
-        long mebibytes = toMebibytes();
-        if (mebibytes > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                             "mebibytes, but it was " + mebibytes + "mebibytes");
+        if (value != null && !value.equals("null"))
+        {
+            long mebibytes = toMebibytes();
+            if (mebibytes > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
+                                                 "mebibytes, but it was " + mebibytes + "mebibytes");
+        }
     }
     // TO DO As int methods and whatever else is needed
 }

@@ -40,19 +40,18 @@ public final class SmallestDurationMinutes extends DurationSpec
     {
         super(value, TimeUnit.MINUTES);
 
-        long minutes = toMinutes();
-        if (minutes == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
-                                             "minutes, but it was " + minutes + "minutes");
+        if (!value.equals("null"))
+        {
+            long minutes = toMinutes();
+            if (minutes == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+                                                 "minutes, but it was " + minutes + "minutes");
+        }
     }
 
     private SmallestDurationMinutes(long quantity, TimeUnit unit)
     {
         super(quantity, unit);
-
-        if (toMinutes() == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
-                                             "minutes, but it was " + quantity + "minutes");
     }
 
     /**

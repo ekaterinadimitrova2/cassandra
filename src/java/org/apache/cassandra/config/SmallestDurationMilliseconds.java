@@ -41,26 +41,24 @@ public final class SmallestDurationMilliseconds extends DurationSpec
     public SmallestDurationMilliseconds(String value)
     {
         super(value, TimeUnit.MILLISECONDS);
+
+        if (value != null && !value.equals("null"))
+        {
+            long milliseconds = toMilliseconds();
+            if (milliseconds == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
+                                                 "milliseconds, but it was " + milliseconds + "milliseconds");
+        }
     }
 
     private SmallestDurationMilliseconds(long quantity, TimeUnit unit)
     {
         super(quantity, unit);
-
-        long milliseconds = toMilliseconds();
-        if (milliseconds == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
-                                             "milliseconds, but it was " + quantity + unit);
     }
 
     private SmallestDurationMilliseconds(double quantity, TimeUnit unit)
     {
         super(quantity, unit);
-
-        long milliseconds = toMilliseconds();
-        if (milliseconds == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Long.MAX_VALUE +
-                                             "milliseconds, but it was " + quantity + unit);
     }
 
     /**

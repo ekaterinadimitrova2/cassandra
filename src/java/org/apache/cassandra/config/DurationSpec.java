@@ -34,6 +34,7 @@ import static java.util.concurrent.TimeUnit.DAYS;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
@@ -47,7 +48,8 @@ public class DurationSpec
      * Immutable map that matches supported time units according to a provided smallest supported time unit
      */
     private static final ImmutableMap<TimeUnit, ImmutableSet<TimeUnit>> MAP_UNITS_PER_MIN_UNIT =
-    ImmutableMap.of(MILLISECONDS, ImmutableSet.of(MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS),
+    ImmutableMap.of(NANOSECONDS,ImmutableSet.of(NANOSECONDS, SECONDS, MINUTES, HOURS, DAYS),
+                    MILLISECONDS, ImmutableSet.of(MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS),
                     SECONDS, ImmutableSet.of(SECONDS, MINUTES, HOURS, DAYS),
                     MINUTES, ImmutableSet.of(MINUTES, HOURS, DAYS));
     /**
@@ -77,9 +79,12 @@ public class DurationSpec
                                              " ns where case matters and " + "only non-negative values");
         }
 
-        long nanoseconds = toNanoseconds();
-        if (nanoseconds == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+        if (value != null && !value.equals("null"))
+        {
+            long nanoseconds = toNanoseconds();
+            if (nanoseconds == Long.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+        }
     }
 
     DurationSpec(long quantity, TimeUnit unit)
@@ -103,7 +108,7 @@ public class DurationSpec
 
         Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
 
-        if(matcher.find())
+        if (matcher.find())
         {
             quantity = Long.parseLong(matcher.group(1));
             unit = fromSymbol(matcher.group(2));
@@ -116,6 +121,7 @@ public class DurationSpec
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit) +
                                              " where case matters and only non-negative values.");
         }
+        //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is

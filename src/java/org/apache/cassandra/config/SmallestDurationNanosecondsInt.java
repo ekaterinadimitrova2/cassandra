@@ -24,19 +24,23 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents duration for Int bounded config in nanoseconds
  */
-public class DurationNanosecondsInt extends DurationSpec
+public class SmallestDurationNanosecondsInt extends DurationSpec
 {
-    public DurationNanosecondsInt(String value)
+    public SmallestDurationNanosecondsInt(String value)
     {
         super(value, TimeUnit.NANOSECONDS);
 
-        long nanoseconds = toNanoseconds();
-        if (nanoseconds > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                             "nanoseconds, but it was " + nanoseconds + "nanoseconds");
+        if (!value.equals("null"))
+        {
+            long nanoseconds = toNanoseconds();
+
+            if (nanoseconds > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                                 "nanoseconds, but it was " + nanoseconds + "nanoseconds");
+        }
     }
 
-    DurationNanosecondsInt(String value, TimeUnit unit)
+    SmallestDurationNanosecondsInt(String value, TimeUnit unit)
     {
         super(value, unit);
     }
