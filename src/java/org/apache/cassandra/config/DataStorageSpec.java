@@ -74,7 +74,6 @@ public class DataStorageSpec
         if (value != null)
         {
             long bytes = toBytes();
-
             if (bytes == Long.MAX_VALUE)
                 throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in bytes");
         }
