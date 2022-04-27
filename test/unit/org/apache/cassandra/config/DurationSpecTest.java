@@ -33,15 +33,15 @@ public class DurationSpecTest
     public void testConversions()
     {
         assertEquals(10L, new DurationSpec("10s").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationSeconds("2147483647s").toSecondsAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationSeconds(Integer.MAX_VALUE+"s").toSecondsAsInt());
         assertEquals(10000, new DurationSpec("10s").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE, new SmallestDurationMilliseconds("2147483647ms").toMillisecondsAsInt());
+        assertEquals(Integer.MAX_VALUE, new SmallestDurationMilliseconds(Integer.MAX_VALUE+"ms").toMillisecondsAsInt());
         assertEquals(0, new DurationSpec("10s").toMinutes());
         assertEquals(10, new DurationSpec("10m").toMinutes());
-        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationMinutes("2147483647m").toMinutesAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationMinutes(Integer.MAX_VALUE+"m").toMinutesAsInt());
         assertEquals(600000, new DurationSpec("10m").toMilliseconds());
         assertEquals(600, new DurationSpec("10m").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationSeconds("2147483647s").toSecondsAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationSeconds(Integer.MAX_VALUE+"s").toSecondsAsInt());
         assertEquals(DurationSpec.inDoubleMilliseconds(0.7), new DurationSpec("1ms"));
         assertEquals(DurationSpec.inDoubleMilliseconds(0.33), new DurationSpec("0ms"));
         assertEquals(DurationSpec.inDoubleMilliseconds(0.333), new DurationSpec("0ms"));
