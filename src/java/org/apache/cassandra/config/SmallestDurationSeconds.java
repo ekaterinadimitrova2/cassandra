@@ -79,7 +79,6 @@ public final class SmallestDurationSeconds extends DurationSpec
      * @return a duration
      */
 
-    //check this one later whether those were int before or not...
     public static SmallestDurationSeconds inSecondsString(String value)
     {
         //parse the string field value
@@ -92,6 +91,8 @@ public final class SmallestDurationSeconds extends DurationSpec
             seconds = Long.parseLong(value);
             return new SmallestDurationSeconds(seconds, TimeUnit.SECONDS);
         }
+
+
 
         //otherwise we just use the standard constructors
         return new SmallestDurationSeconds(value);
