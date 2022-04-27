@@ -44,13 +44,13 @@ public final class SmallestDurationSeconds extends DurationSpec
     {
         super(value, TimeUnit.SECONDS);
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long seconds = toSeconds();
 
             if (seconds == Long.MAX_VALUE)
                 throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                                 "seconds, but it was " + seconds + "seconds");
+                                                 " seconds, but it was " + seconds + " seconds");
         }
     }
 
@@ -91,8 +91,6 @@ public final class SmallestDurationSeconds extends DurationSpec
             seconds = Long.parseLong(value);
             return new SmallestDurationSeconds(seconds, TimeUnit.SECONDS);
         }
-
-
 
         //otherwise we just use the standard constructors
         return new SmallestDurationSeconds(value);

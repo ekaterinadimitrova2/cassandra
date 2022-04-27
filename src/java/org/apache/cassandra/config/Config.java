@@ -431,7 +431,7 @@ public class Config
     @Replaces(oldName = "key_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
     public SmallestDataStorageMebibytes key_cache_size = null;
     @Replaces(oldName = "key_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds key_cache_save_period = new SmallestDurationSeconds("4h");
+    public volatile IntSmallestDurationSeconds key_cache_save_period = new IntSmallestDurationSeconds("4h");
 
     public String row_cache_class_name = "org.apache.cassandra.cache.OHCProvider";
     @Replaces(oldName = "row_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)

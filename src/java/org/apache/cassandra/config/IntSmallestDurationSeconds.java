@@ -38,5 +38,15 @@ public final class IntSmallestDurationSeconds extends DurationSpec
                                                  " seconds, but it was " + seconds + " seconds");
         }
     }
+
+    private IntSmallestDurationSeconds(long quantity, TimeUnit unit)
+    {
+        super(quantity, unit);
+    }
+
+    public static IntSmallestDurationSeconds inSeconds(long seconds)
+    {
+        return new IntSmallestDurationSeconds(seconds, TimeUnit.SECONDS);
+    }
     // TO DO As int methods and whatever else is needed
 }
