@@ -28,12 +28,12 @@ public final class IntSmallestDataStorageMebibytes extends DataStorageSpec
     {
         super(value, DataStorageUnit.MEBIBYTES);
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long mebibytes = toMebibytes();
             if (mebibytes > Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                                 "mebibytes, but it was " + mebibytes + "mebibytes");
+                                                 " mebibytes, but it was " + mebibytes + " mebibytes");
         }
     }
     // TO DO As int methods and whatever else is needed

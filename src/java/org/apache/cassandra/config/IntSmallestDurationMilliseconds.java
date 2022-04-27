@@ -30,12 +30,12 @@ public class IntSmallestDurationMilliseconds extends DurationSpec
     {
         super(value, TimeUnit.MILLISECONDS);
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long milliseconds = toMilliseconds();
             if (milliseconds > Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                                 "milliseconds, but it was " + milliseconds + "milliseconds");
+                                                 " milliseconds, but it was " + milliseconds + " milliseconds");
         }
     }
 
@@ -45,7 +45,7 @@ public class IntSmallestDurationMilliseconds extends DurationSpec
 
         if (milliseconds > Integer.MAX_VALUE)
             throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                             "milliseconds, but it was " + milliseconds + "milliseconds");
+                                             " milliseconds, but it was " + milliseconds + " milliseconds");
     }
     // TO DO As int methods and whatever else is needed
     /**

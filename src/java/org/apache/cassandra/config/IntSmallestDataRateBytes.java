@@ -28,10 +28,13 @@ public final class IntSmallestDataRateBytes extends DataRateSpec
     {
         super(value);
 
-        double bytespersecond = toBytesPerSecond();
-        if (bytespersecond > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate: values must be less than " + Integer.MAX_VALUE +
-                                             "B/s, but it was " + bytespersecond + "B/s");
+        if (value != null)
+        {
+            double bytespersecond = toBytesPerSecond();
+            if (bytespersecond > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid data rate: values must be less than " + Integer.MAX_VALUE +
+                                                 " B/s, but it was " + bytespersecond + " B/s");
+        }
     }
     // TO DO As int methods and whatever else is needed
 }

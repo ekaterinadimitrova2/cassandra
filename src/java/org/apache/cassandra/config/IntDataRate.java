@@ -20,7 +20,7 @@ package org.apache.cassandra.config;
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents a data rate type used for cassandra configuration. It supports the opportunity for the users to be able to
+ * Represents a data rate int type used for cassandra configuration. It supports the opportunity for the users to be able to
  * add units to the confiuration parameter value. (CASSANDRA-15234)
  */
 public class IntDataRate extends DataRateSpec
@@ -29,17 +29,20 @@ public class IntDataRate extends DataRateSpec
     {
         super(value);
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             // as we store in double and we don't have issues with precision we can afford this for int parameters
             if (toMebibytesPerSecond() > Integer.MAX_VALUE)
-                throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + "bytes per second");
+                throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + " mebibytes per second");
         }
     }
 
     public IntDataRate(double quantity, DataRateUnit unit)
     {
         super(quantity, unit);
+        // as we store in double and we don't have issues with precision we can afford this for int parameters
+        if (toMebibytesPerSecond() > Integer.MAX_VALUE)
+            throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + " mebibytes per second");
     }
 
     public static IntDataRate megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
@@ -58,8 +61,8 @@ public class IntDataRate extends DataRateSpec
     public static IntDataRate inMebibytesPerSecond(long mebibytesPerSecond)
     {
         if (mebibytesPerSecond > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate:" + mebibytesPerSecond + "mebibytes per second; value must be" +
-                                             " between 0 and " + Integer.MAX_VALUE + "in bytes per second");
+            throw new ConfigurationException("Invalid data rate:" + mebibytesPerSecond + " mebibytes per second; value must be" +
+                                             " between 0 and " + Integer.MAX_VALUE + " in bytes per second");
 
         return new IntDataRate(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
     }

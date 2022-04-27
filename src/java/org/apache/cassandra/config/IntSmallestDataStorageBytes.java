@@ -28,7 +28,7 @@ public class IntSmallestDataStorageBytes extends DataStorageSpec
     {
         super(value, DataStorageUnit.BYTES);
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long bytes = toBytes();
             if (bytes > Integer.MAX_VALUE)

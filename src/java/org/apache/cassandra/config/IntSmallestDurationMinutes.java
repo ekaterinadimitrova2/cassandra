@@ -30,13 +30,12 @@ public final class IntSmallestDurationMinutes extends DurationSpec
     {
         super(value, TimeUnit.MINUTES);
 
-        if (!value.equals("null"))
+        if (value != null)
         {
             long minutes = toMinutes();
-
             if (minutes > Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                                 "minutes, but it was " + minutes + "minutes");
+                                                 " minutes, but it was " + minutes + " minutes");
         }
     }
     // TO DO As int methods and whatever else is needed
