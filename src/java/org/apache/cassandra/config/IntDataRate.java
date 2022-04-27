@@ -40,9 +40,6 @@ public class IntDataRate extends DataRateSpec
     public IntDataRate(double quantity, DataRateUnit unit)
     {
         super(quantity, unit);
-        // as we store in double and we don't have issues with precision we can afford this for int parameters
-        if (toMebibytesPerSecond() > Integer.MAX_VALUE)
-            throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + " mebibytes per second");
     }
 
     public static IntDataRate megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
