@@ -36,7 +36,7 @@ public class DataRateSpec
     /**
      * The Regexp used to parse the rate provided as String in cassandra.yaml.
      */
-    private static final Pattern DATA_RATE_UNITS_PATTERN = Pattern.compile("^(\\d+)(MiB/s|KiB/s|B/s)$");
+    private static final Pattern UNITS_PATTERN = Pattern.compile("^(\\d+)(MiB/s|KiB/s|B/s)$");
 
     private final double quantity;
 
@@ -45,7 +45,7 @@ public class DataRateSpec
     public DataRateSpec(String value)
     {
         //parse the string field value
-        Matcher matcher = DATA_RATE_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
             throw new ConfigurationException("Invalid data rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
@@ -54,7 +54,7 @@ public class DataRateSpec
         quantity = Long.parseLong(matcher.group(1));
         unit = DataRateUnit.fromSymbol(matcher.group(2));
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
             if (toBytesPerSecond() > Long.MAX_VALUE)
                 throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Long.MAX_VALUE + " bytes per second");
     }

@@ -30,13 +30,12 @@ public class IntSmallestDurationNanoseconds extends DurationSpec
     {
         super(value, TimeUnit.NANOSECONDS);
 
-        if (!value.equals("null"))
+        if (value != null)
         {
             long nanoseconds = toNanoseconds();
-
             if (nanoseconds > Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                                 "nanoseconds, but it was " + nanoseconds + "nanoseconds");
+                                                 " nanoseconds, but it was " + nanoseconds + " nanoseconds");
         }
     }
 

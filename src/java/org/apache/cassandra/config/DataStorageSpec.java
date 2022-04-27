@@ -51,7 +51,7 @@ public class DataStorageSpec
     /**
      * The Regexp used to parse the storage provided as String.
      */
-    private static final Pattern STORAGE_UNITS_PATTERN = Pattern.compile("^(\\d+)(GiB|MiB|KiB|B)$");
+    private static final Pattern UNITS_PATTERN = Pattern.compile("^(\\d+)(GiB|MiB|KiB|B)$");
 
     private final long quantity;
 
@@ -60,7 +60,7 @@ public class DataStorageSpec
     public DataStorageSpec(String value)
     {
         //parse the string field value
-        Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (!matcher.find())
         {
@@ -71,7 +71,7 @@ public class DataStorageSpec
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long bytes = toBytes();
 
@@ -95,7 +95,7 @@ public class DataStorageSpec
             throw new ConfigurationException("Invalid smallest unit set for " + value);
 
         //parse the string field value
-        Matcher matcher = STORAGE_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (matcher.find())
         {

@@ -28,7 +28,7 @@ public final class IntSmallestDataStorageKibibytes extends DataStorageSpec
     {
         super(value, DataStorageSpec.DataStorageUnit.KIBIBYTES);
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long kibibytes = toKibibytes();
             if (kibibytes > Integer.MAX_VALUE)

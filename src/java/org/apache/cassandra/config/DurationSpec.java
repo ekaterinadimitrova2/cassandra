@@ -55,7 +55,7 @@ public class DurationSpec
     /**
      * The Regexp used to parse the duration provided as String.
      */
-    private static final Pattern TIME_UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)$"));
+    private static final Pattern UNITS_PATTERN = Pattern.compile(("^(\\d+)(d|h|s|ms|us|µs|ns|m)$"));
 
     private static final Pattern VALUES_PATTERN = Pattern.compile(("\\d+"));
 
@@ -66,7 +66,7 @@ public class DurationSpec
     public DurationSpec(String value)
     {
         //parse the string field value
-        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (matcher.find())
         {
@@ -79,7 +79,7 @@ public class DurationSpec
                                              " ns where case matters and " + "only non-negative values");
         }
 
-        if (value != null && !value.equals("null"))
+        if (value != null)
         {
             long nanoseconds = toNanoseconds();
             if (nanoseconds == Long.MAX_VALUE)
@@ -106,7 +106,7 @@ public class DurationSpec
         if (!MAP_UNITS_PER_MIN_UNIT.containsKey(minUnit))
             throw new ConfigurationException("Invalid smallest unit set for " + value);
 
-        Matcher matcher = TIME_UNITS_PATTERN.matcher(value);
+        Matcher matcher = UNITS_PATTERN.matcher(value);
 
         if (matcher.find())
         {
