@@ -17,27 +17,35 @@
  */
 package org.apache.cassandra.config;
 
-import java.util.concurrent.TimeUnit;
-
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents duration for Int bounded config where we can't use anything less than minutes
+ * Represents an amount of data storage for Int bounded config
  */
-public final class SmallestDurationMinutesInt extends DurationSpec
+public class IntSmallestDataStorageBytes extends DataStorageSpec
 {
-    public SmallestDurationMinutesInt(String value)
+    public IntSmallestDataStorageBytes(String value)
     {
-        super(value, TimeUnit.MINUTES);
+        super(value, DataStorageUnit.BYTES);
 
-        if (!value.equals("null"))
+        if (value != null && !value.equals("null"))
         {
-            long minutes = toMinutes();
-
-            if (minutes > Integer.MAX_VALUE)
-                throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                                 "minutes, but it was " + minutes + "minutes");
+            long bytes = toBytes();
+            if (bytes > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
+                                                "bytes, but it was " + bytes + "bytes");
         }
     }
+
+    public IntSmallestDataStorageBytes(long quantity, DataStorageUnit unit)
+    {
+        super(quantity, unit);
+    }
+
+    public static IntSmallestDataStorageBytes inBytes(long bytes)
+    {
+        return new IntSmallestDataStorageBytes(bytes, DataStorageUnit.BYTES);
+    }
+
     // TO DO As int methods and whatever else is needed
 }

@@ -17,23 +17,26 @@
  */
 package org.apache.cassandra.config;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents an amount of data storage for Int bounded config which cannot be anything smaller than mebibytes
+ * Represents duration for Int bounded config where we can't use anything less than minutes
  */
-public final class SmallestDataStorageMebibytesInt extends DataStorageSpec
+public final class IntSmallestDurationMinutes extends DurationSpec
 {
-    public SmallestDataStorageMebibytesInt(String value)
+    public IntSmallestDurationMinutes(String value)
     {
-        super(value, DataStorageUnit.MEBIBYTES);
+        super(value, TimeUnit.MINUTES);
 
-        if (value != null && !value.equals("null"))
+        if (!value.equals("null"))
         {
-            long mebibytes = toMebibytes();
-            if (mebibytes > Integer.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                                 "mebibytes, but it was " + mebibytes + "mebibytes");
+            long minutes = toMinutes();
+
+            if (minutes > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                                 "minutes, but it was " + minutes + "minutes");
         }
     }
     // TO DO As int methods and whatever else is needed

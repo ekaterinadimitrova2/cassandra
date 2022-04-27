@@ -23,9 +23,9 @@ import org.apache.cassandra.exceptions.ConfigurationException;
  * Represents a data rate type used for cassandra configuration. It supports the opportunity for the users to be able to
  * add units to the confiuration parameter value. (CASSANDRA-15234)
  */
-public class DataRateInt extends DataRateSpec
+public class IntDataRate extends DataRateSpec
 {
-    public DataRateInt(String value)
+    public IntDataRate(String value)
     {
         super(value);
 
@@ -37,12 +37,12 @@ public class DataRateInt extends DataRateSpec
         }
     }
 
-    public DataRateInt(double quantity, DataRateUnit unit)
+    public IntDataRate(double quantity, DataRateUnit unit)
     {
         super(quantity, unit);
     }
 
-    public static DataRateInt megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
+    public static IntDataRate megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
     {
         final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;
         double mebibytesPerSecond = (double)megabitsPerSecond * MEBIBYTES_PER_MEGABIT;
@@ -52,15 +52,15 @@ public class DataRateInt extends DataRateSpec
                                              "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
                                              " should be between 0 and " + Integer.MAX_VALUE + " in megabits per second");
 
-        return new DataRateInt(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
+        return new IntDataRate(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
     }
 
-    public static DataRateInt inMebibytesPerSecond(long mebibytesPerSecond)
+    public static IntDataRate inMebibytesPerSecond(long mebibytesPerSecond)
     {
         if (mebibytesPerSecond > Integer.MAX_VALUE)
             throw new ConfigurationException("Invalid data rate:" + mebibytesPerSecond + "mebibytes per second; value must be" +
                                              " between 0 and " + Integer.MAX_VALUE + "in bytes per second");
 
-        return new DataRateInt(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
+        return new IntDataRate(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
     }
 }

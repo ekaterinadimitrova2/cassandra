@@ -22,27 +22,22 @@ import java.util.concurrent.TimeUnit;
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents duration for Int bounded config in nanoseconds
+ * Represents an amount of data storage for Int bounded config which cannot be anything less than seconds
  */
-public class SmallestDurationNanosecondsInt extends DurationSpec
+public final class IntSmallestDurationSeconds extends DurationSpec
 {
-    public SmallestDurationNanosecondsInt(String value)
+    public IntSmallestDurationSeconds(String value)
     {
-        super(value, TimeUnit.NANOSECONDS);
+        super(value, TimeUnit.SECONDS);
 
-        if (!value.equals("null"))
+        if (value !=null && !value.equals("null"))
         {
-            long nanoseconds = toNanoseconds();
+            long seconds = toSeconds();
 
-            if (nanoseconds > Integer.MAX_VALUE)
+            if (seconds > Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
-                                                 "nanoseconds, but it was " + nanoseconds + "nanoseconds");
+                                                 "seconds, but it was " + seconds + "seconds");
         }
-    }
-
-    SmallestDurationNanosecondsInt(String value, TimeUnit unit)
-    {
-        super(value, unit);
     }
     // TO DO As int methods and whatever else is needed
 }

@@ -40,8 +40,8 @@ public enum Converters
     MILLIS_DURATION_LONG(Long.class, SmallestDurationMilliseconds.class,
                          SmallestDurationMilliseconds::inMilliseconds,
                          o -> o.toMilliseconds()),
-    MILLIS_DURATION_INT(Integer.class, SmallestDurationMillisecondsInt.class,
-                        i -> SmallestDurationMillisecondsInt.inMilliseconds(i),
+    MILLIS_DURATION_INT(Integer.class, IntSmallestDurationMilliseconds.class,
+                        i -> IntSmallestDurationMilliseconds.inMilliseconds(i),
                         DurationSpec::toMillisecondsAsInt),
     MILLIS_DURATION_DOUBLE(Double.class, SmallestDurationMilliseconds.class,
                            o -> Double.isNaN(o) ? SmallestDurationMilliseconds.inMilliseconds(0) : SmallestDurationMilliseconds.inDoubleMilliseconds(o),
@@ -80,9 +80,9 @@ public enum Converters
     KIBIBYTES_DATASTORAGE(Integer.class, SmallestDataStorageKibibytes.class,
                           i -> SmallestDataStorageKibibytes.inKibibytes(i),
                           DataStorageSpec::toKibibytesAsInt),
-    BYTES_DATASTORAGE(Integer.class, SmallestDataStorageBytesInt.class,
-                      i -> SmallestDataStorageBytesInt.inBytes(i),
-                      SmallestDataStorageBytesInt::toBytesAsInt),
+    BYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageBytes.class,
+                      i -> IntSmallestDataStorageBytes.inBytes(i),
+                      IntSmallestDataStorageBytes::toBytesAsInt),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value
      * Example: native_transport_max_concurrent_requests_in_bytes_per_ip = -1 and native_transport_max_request_data_in_flight_per_ip = null
@@ -98,8 +98,8 @@ public enum Converters
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateInt.class,
-                                               i -> DataRateInt.megabitsPerSecondInMebibytesPerSecond(i),
+    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, IntDataRate.class,
+                                               i -> IntDataRate.megabitsPerSecondInMebibytesPerSecond(i),
                                                DataRateSpec::toMegabitsPerSecondAsInt);
     private final Class<?> oldType;
     private final Class<?> newType;
