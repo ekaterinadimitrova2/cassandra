@@ -17,21 +17,32 @@
  */
 package org.apache.cassandra.config;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents data rate for Int bounded config
+ * Represents duration for Int bounded config in nanoseconds
  */
-public final class SmallestDataRateBytesInt extends DataRateSpec
+public class IntSmallestDurationNanoseconds extends DurationSpec
 {
-    public SmallestDataRateBytesInt(String value)
+    public IntSmallestDurationNanoseconds(String value)
     {
-        super(value);
+        super(value, TimeUnit.NANOSECONDS);
 
-        double bytespersecond = toBytesPerSecond();
-        if (bytespersecond > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate: values must be less than " + Integer.MAX_VALUE +
-                                             "B/s, but it was " + bytespersecond + "B/s");
+        if (!value.equals("null"))
+        {
+            long nanoseconds = toNanoseconds();
+
+            if (nanoseconds > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                                 "nanoseconds, but it was " + nanoseconds + "nanoseconds");
+        }
+    }
+
+    IntSmallestDurationNanoseconds(String value, TimeUnit unit)
+    {
+        super(value, unit);
     }
     // TO DO As int methods and whatever else is needed
 }

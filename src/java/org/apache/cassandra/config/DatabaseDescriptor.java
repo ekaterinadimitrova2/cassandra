@@ -1355,7 +1355,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = SmallestDurationMillisecondsInt.inMilliseconds(timeout);
+        conf.permissions_validity = IntSmallestDurationMilliseconds.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -2033,7 +2033,7 @@ public class DatabaseDescriptor
 
     public static void setStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.stream_throughput_outbound = DataRateInt.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.stream_throughput_outbound = IntDataRate.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static int getEntireSSTableStreamThroughputOutboundMebibytesPerSecAsInt()
@@ -2063,7 +2063,7 @@ public class DatabaseDescriptor
 
     public static void setInterDCStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.inter_dc_stream_throughput_outbound = DataRateInt.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.inter_dc_stream_throughput_outbound = IntDataRate.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static double getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec()
@@ -2527,7 +2527,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
     {
-        conf.native_transport_receive_queue_capacity = SmallestDataStorageBytesInt.inBytes(queueSize);
+        conf.native_transport_receive_queue_capacity = IntSmallestDataStorageBytes.inBytes(queueSize);
     }
 
     public static long getNativeTransportMaxRequestDataInFlightPerIpInBytes()

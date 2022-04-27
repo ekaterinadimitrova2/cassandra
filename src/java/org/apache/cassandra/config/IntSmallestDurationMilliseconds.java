@@ -24,9 +24,9 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 /**
  * Represents duration for Int bounded config which cannot be anything smaller than milliseconds
  */
-public class SmallestDurationMillisecondsInt extends DurationSpec
+public class IntSmallestDurationMilliseconds extends DurationSpec
 {
-    public SmallestDurationMillisecondsInt(String value)
+    public IntSmallestDurationMilliseconds(String value)
     {
         super(value, TimeUnit.MILLISECONDS);
 
@@ -39,7 +39,7 @@ public class SmallestDurationMillisecondsInt extends DurationSpec
         }
     }
 
-    public SmallestDurationMillisecondsInt(long milliseconds, TimeUnit unit)
+    public IntSmallestDurationMilliseconds(long milliseconds, TimeUnit unit)
     {
         super(milliseconds, unit);
 
@@ -49,13 +49,13 @@ public class SmallestDurationMillisecondsInt extends DurationSpec
     }
     // TO DO As int methods and whatever else is needed
     /**
-     * Creates a {@code SmallestDurationMillisecondsInt} of the specified amount of milliseconds.
+     * Creates a {@code IntSmallestDurationMilliseconds} of the specified amount of milliseconds.
      *
      * @param milliseconds the amount of milliseconds
      * @return a duration
      */
-    public static SmallestDurationMillisecondsInt inMilliseconds(long milliseconds)
+    public static IntSmallestDurationMilliseconds inMilliseconds(long milliseconds)
     {
-        return new SmallestDurationMillisecondsInt(milliseconds, TimeUnit.MILLISECONDS);
+        return new IntSmallestDurationMilliseconds(milliseconds, TimeUnit.MILLISECONDS);
     }
 }

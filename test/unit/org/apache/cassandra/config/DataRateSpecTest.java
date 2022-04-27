@@ -94,10 +94,10 @@ public class DataRateSpecTest
         assertThatThrownBy(() -> new DataRateSpec("9223372036854775809MiB/s")
                                  .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
                                                      .hasMessageContaining("For input string: \"9223372036854775809\"");
-        //assertThatThrownBy(() -> new DataRateInt("2147483648KiB/s")
+        //assertThatThrownBy(() -> new IntDataRate("2147483648KiB/s")
         //                         .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
         //                                             .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647bytes per second");
-        assertThatThrownBy(() -> new DataRateInt("2147483648MiB/s")
+        assertThatThrownBy(() -> new IntDataRate("2147483648MiB/s")
                                  .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
                                                      .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647bytes per second");
     }

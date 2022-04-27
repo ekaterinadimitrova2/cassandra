@@ -20,21 +20,18 @@ package org.apache.cassandra.config;
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 /**
- * Represents an amount of data storage for Int bounded config which cannot be anything smaller than kibibytes
+ * Represents data rate for Int bounded config
  */
-public final class SmallestDataStorageKibibytesInt extends DataStorageSpec
+public final class IntSmallestDataRateBytes extends DataRateSpec
 {
-    public SmallestDataStorageKibibytesInt(String value)
+    public IntSmallestDataRateBytes(String value)
     {
-        super(value, DataStorageSpec.DataStorageUnit.KIBIBYTES);
+        super(value);
 
-        if (value != null && !value.equals("null"))
-        {
-            long kibibytes = toKibibytes();
-            if (kibibytes > Integer.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                                 "kibibytes, but it was " + kibibytes + "kibibytes");
-        }
+        double bytespersecond = toBytesPerSecond();
+        if (bytespersecond > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data rate: values must be less than " + Integer.MAX_VALUE +
+                                             "B/s, but it was " + bytespersecond + "B/s");
     }
     // TO DO As int methods and whatever else is needed
 }
