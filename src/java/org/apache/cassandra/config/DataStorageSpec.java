@@ -76,14 +76,14 @@ public class DataStorageSpec
             long bytes = toBytes();
 
             if (bytes == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in bytes");
+                throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in bytes");
         }
     }
 
     DataStorageSpec(long quantity, DataStorageUnit unit)
     {
-        if (quantity < 0)
-            throw new ConfigurationException("Invalid data storage: value must be positive, but was " + quantity);
+        if (quantity < 0 || quantity == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: value must be positive and less than" + Long.MAX_VALUE + ", but was " + quantity);
 
         this.quantity = quantity;
         this.unit = unit;
@@ -131,7 +131,7 @@ public class DataStorageSpec
     public static DataStorageSpec inKibibytes(long kibibytes)
     {
         if (KIBIBYTES.toBytes(kibibytes) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: " + kibibytes + "kibibytes. It shouldn't be more than" +
+            throw new ConfigurationException("Invalid data storage: " + kibibytes + " kibibytes. It shouldn't be more than" +
                                              + Long.MAX_VALUE + " in bytes");
 
         return new DataStorageSpec(kibibytes, KIBIBYTES);
@@ -146,7 +146,7 @@ public class DataStorageSpec
     public static DataStorageSpec inMebibytes(long mebibytes)
     {
         if (MEBIBYTES.toBytes(mebibytes) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: " + mebibytes + "mebibytes. It shouldn't be more than" +
+            throw new ConfigurationException("Invalid data storage: " + mebibytes + " mebibytes. It shouldn't be more than" +
                                              + Long.MAX_VALUE + " in bytes");
 
         return new DataStorageSpec(mebibytes, MEBIBYTES);

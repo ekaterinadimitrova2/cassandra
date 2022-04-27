@@ -55,8 +55,8 @@ public class DataRateSpec
         unit = DataRateUnit.fromSymbol(matcher.group(2));
 
         if (value != null)
-            if (toBytesPerSecond() > Long.MAX_VALUE)
-                throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Long.MAX_VALUE + " bytes per second");
+            if (toBytesPerSecond() > (Long.MAX_VALUE-1))
+                throw new NumberFormatException("Invalid data rate: value must be between 0 and " + (Long.MAX_VALUE-1) + " bytes per second");
     }
 
     DataRateSpec(double quantity, DataRateUnit unit)
@@ -64,8 +64,8 @@ public class DataRateSpec
         if (quantity < 0)
             throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
-        if (quantity > Long.MAX_VALUE)
-            throw new NumberFormatException("Invalid data rate: value must be between 0 and" + Long.MAX_VALUE);
+        if (quantity >= Long.MAX_VALUE)
+            throw new NumberFormatException("Invalid data rate: value must be between 0 and" + (Long.MAX_VALUE-1));
 
         this.quantity = quantity;
         this.unit = unit;
@@ -92,7 +92,7 @@ public class DataRateSpec
     {
         if (DataRateUnit.KIBIBYTES_PER_SECOND.toBytesPerSecond(kibibytesPerSecond) == Long.MAX_VALUE)
             throw new ConfigurationException("Invalid data rate:" + kibibytesPerSecond + "kibibytes per second; value must be" +
-                                             " between 0 and " + Long.MAX_VALUE + "in bytes per second");
+                                             " between 0 and " + (Long.MAX_VALUE-1) + "in bytes per second");
 
         return new DataRateSpec(kibibytesPerSecond, DataRateUnit.KIBIBYTES_PER_SECOND);
     }
@@ -107,7 +107,7 @@ public class DataRateSpec
     {
         if (DataRateUnit.MEBIBYTES_PER_SECOND.toBytesPerSecond(mebibytesPerSecond) == Long.MAX_VALUE)
             throw new ConfigurationException("Invalid data rate:" + mebibytesPerSecond + "mebibytes per second; value must be" +
-                                             " between 0 and " + Long.MAX_VALUE + "in bytes per second");
+                                             " between 0 and " + (Long.MAX_VALUE-1) + "in bytes per second");
 
         return new DataRateSpec(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
     }
@@ -123,10 +123,10 @@ public class DataRateSpec
         final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;
         double mebibytesPerSecond = (double)megabitsPerSecond * MEBIBYTES_PER_MEGABIT;
 
-        if (DataRateUnit.MEBIBYTES_PER_SECOND.toBytesPerSecond(mebibytesPerSecond) > Long.MAX_VALUE)
+        if (DataRateUnit.MEBIBYTES_PER_SECOND.toBytesPerSecond(mebibytesPerSecond) >= Long.MAX_VALUE)
             throw new ConfigurationException("Invalid data rate: " + megabitsPerSecond +"megabits per second; " +
                                              "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
-                                             " should be between 0 and " + Long.MAX_VALUE + " in megabits per second");
+                                             " should be between 0 and " + (Long.MAX_VALUE-1) + " in megabits per second");
 
         return new DataRateSpec(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
     }
