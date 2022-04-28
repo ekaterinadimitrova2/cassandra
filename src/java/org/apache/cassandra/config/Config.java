@@ -149,7 +149,7 @@ public class Config
 
     public Integer streaming_connections_per_host = 1;
     @Replaces(oldName = "streaming_keep_alive_period_in_secs", converter = Converters.SECONDS_DURATION, deprecated = true)
-    public SmallestDurationSeconds streaming_keep_alive_period = new SmallestDurationSeconds("300s");
+    public IntSmallestDurationSeconds streaming_keep_alive_period = new IntSmallestDurationSeconds("300s");
 
     @Replaces(oldName = "cross_node_timeout", converter = Converters.IDENTITY, deprecated = true)
     public boolean internode_timeout = true;
@@ -430,7 +430,7 @@ public class Config
     public SmallestDataStorageMebibytes paxos_cache_size = null;
 
     @Replaces(oldName = "cache_load_timeout_seconds", converter = Converters.SECONDS_DURATION, deprecated = true)
-    public SmallestDurationSeconds cache_load_timeout = new SmallestDurationSeconds("30s");
+    public IntSmallestDurationSeconds cache_load_timeout = new IntSmallestDurationSeconds("30s");
 
     private static boolean isClientMode = false;
     private static Supplier<Config> overrideLoadConfig = null;
@@ -492,9 +492,9 @@ public class Config
 
     // TTL for different types of trace events.
     @Replaces(oldName = "tracetype_query_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
-    public SmallestDurationSeconds trace_type_query_ttl = new SmallestDurationSeconds("1d");
+    public IntSmallestDurationSeconds trace_type_query_ttl = new IntSmallestDurationSeconds("1d");
     @Replaces(oldName = "tracetype_repair_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
-    public SmallestDurationSeconds trace_type_repair_ttl = new SmallestDurationSeconds("7d");
+    public IntSmallestDurationSeconds trace_type_repair_ttl = new IntSmallestDurationSeconds("7d");
 
     /**
      * Maintain statistics on whether writes achieve the ideal consistency level
