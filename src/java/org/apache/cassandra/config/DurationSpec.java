@@ -32,6 +32,7 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 
 import static java.util.concurrent.TimeUnit.DAYS;
 import static java.util.concurrent.TimeUnit.HOURS;
+import static java.util.concurrent.TimeUnit.MICROSECONDS;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
@@ -48,7 +49,7 @@ public class DurationSpec
      * Immutable map that matches supported time units according to a provided smallest supported time unit
      */
     private static final ImmutableMap<TimeUnit, ImmutableSet<TimeUnit>> MAP_UNITS_PER_MIN_UNIT =
-    ImmutableMap.of(NANOSECONDS,ImmutableSet.of(NANOSECONDS, SECONDS, MINUTES, HOURS, DAYS),
+    ImmutableMap.of(NANOSECONDS,ImmutableSet.of(NANOSECONDS, MICROSECONDS, MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS),
                     MILLISECONDS, ImmutableSet.of(MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS),
                     SECONDS, ImmutableSet.of(SECONDS, MINUTES, HOURS, DAYS),
                     MINUTES, ImmutableSet.of(MINUTES, HOURS, DAYS));
@@ -83,7 +84,7 @@ public class DurationSpec
         {
             long nanoseconds = toNanoseconds();
             if (nanoseconds == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+                throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
         }
     }
 
@@ -146,7 +147,7 @@ public class DurationSpec
     public static DurationSpec inMilliseconds(long milliseconds)
     {
         if (MILLISECONDS.toNanos(milliseconds) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
         return new DurationSpec(milliseconds, MILLISECONDS);
     }
@@ -154,7 +155,7 @@ public class DurationSpec
     public static DurationSpec inDoubleMilliseconds(double milliseconds)
     {
         if (MILLISECONDS.toNanos((long)milliseconds) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
         return new DurationSpec(milliseconds, MILLISECONDS);
     }
@@ -168,7 +169,7 @@ public class DurationSpec
     public static DurationSpec inSeconds(long seconds)
     {
         if (SECONDS.toNanos(seconds) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+            throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
         return new DurationSpec(seconds, SECONDS);
     }
@@ -182,7 +183,7 @@ public class DurationSpec
     public static DurationSpec inMinutes(long minutes)
     {
         if (MINUTES.toNanos(minutes) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + minutes + "m, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+            throw new ConfigurationException("Invalid duration: " + minutes + "m, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
         return new DurationSpec(minutes, MINUTES);
     }
@@ -196,7 +197,7 @@ public class DurationSpec
     public static DurationSpec inHours(long hours)
     {
         if (HOURS.toNanos(hours) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + hours + "h, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+            throw new ConfigurationException("Invalid duration: " + hours + "h, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
         return new DurationSpec(hours, HOURS);
     }
@@ -210,7 +211,7 @@ public class DurationSpec
     public static DurationSpec inDays(long days)
     {
         if (DAYS.toNanos(days) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + days + "d, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+            throw new ConfigurationException("Invalid duration: " + days + "d, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
         return new DurationSpec(days, DAYS);
     }
@@ -235,7 +236,7 @@ public class DurationSpec
             seconds = Long.parseLong(value);
 
             if (SECONDS.toNanos(seconds) == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + Long.MAX_VALUE + " in nanoseconds");
+                throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
 
             return new DurationSpec(seconds, SECONDS);
         }
@@ -258,7 +259,7 @@ public class DurationSpec
             case "s": return SECONDS;
             case "ms": return MILLISECONDS;
             case "us":
-            case "µs": return TimeUnit.MICROSECONDS;
+            case "µs": return MICROSECONDS;
             case "ns": return TimeUnit.NANOSECONDS;
         }
         throw new ConfigurationException(String.format("Unsupported time unit: %s. Supported units are: %s",

@@ -51,21 +51,19 @@ public class DataRateSpec
             throw new ConfigurationException("Invalid data rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
                                              "case matters and " + "only non-negative values are valid");
 
-        quantity = Long.parseLong(matcher.group(1));
+        quantity = (double)Long.parseLong(matcher.group(1));
         unit = DataRateUnit.fromSymbol(matcher.group(2));
 
+        final double MAX = Long.MAX_VALUE;
         if (value != null)
-            if (toBytesPerSecond() > (Long.MAX_VALUE-1))
-                throw new NumberFormatException("Invalid data rate: value must be between 0 and " + (Long.MAX_VALUE-1) + " bytes per second");
+            if (toBytesPerSecond() >= MAX)
+                throw new NumberFormatException("Invalid data rate: value " + toBytesPerSecond() + " must be between 0 and " + (Long.MAX_VALUE - 1) + " bytes per second");
     }
 
     DataRateSpec(double quantity, DataRateUnit unit)
     {
         if (quantity < 0)
             throw new ConfigurationException("Invalid data rate: value must be non-negative");
-
-        if (quantity >= Long.MAX_VALUE)
-            throw new NumberFormatException("Invalid data rate: value must be between 0 and" + (Long.MAX_VALUE-1));
 
         this.quantity = quantity;
         this.unit = unit;
@@ -79,6 +77,9 @@ public class DataRateSpec
      */
     public static DataRateSpec inBytesPerSecond(long bytesPerSecond)
     {
+        if (bytesPerSecond >= Long.MAX_VALUE)
+            throw new NumberFormatException("Invalid data rate: value " + bytesPerSecond + "  must be between 0 and " + (Long.MAX_VALUE-1));
+
         return new DataRateSpec(bytesPerSecond, DataRateUnit.BYTES_PER_SECOND);
     }
 
