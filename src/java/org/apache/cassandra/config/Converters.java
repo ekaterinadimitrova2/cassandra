@@ -50,8 +50,8 @@ public enum Converters
      * This converter is used to support backward compatibility for parameters where in the past -1 was used as a value
      * Example: credentials_update_interval_in_ms = -1 and credentials_update_interval = null are equal.
      */
-    MILLIS_CUSTOM_DURATION(Integer.class, SmallestDurationMilliseconds.class,
-                           o -> o == -1 ? null : SmallestDurationMilliseconds.inMilliseconds(o),
+    MILLIS_CUSTOM_DURATION(Integer.class, IntSmallestDurationMilliseconds.class,
+                           o -> o == -1 ? null : IntSmallestDurationMilliseconds.inMilliseconds(o),
                            o -> o == null ? -1 : o.toMillisecondsAsInt()),
     SECONDS_DURATION(Integer.class, SmallestDurationSeconds.class,
                      i -> SmallestDurationSeconds.inSeconds(i),

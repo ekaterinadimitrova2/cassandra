@@ -77,19 +77,19 @@ public class Config
     public volatile IntSmallestDurationMilliseconds permissions_validity = new IntSmallestDurationMilliseconds("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds permissions_update_interval = null;
+    public volatile IntSmallestDurationMilliseconds permissions_update_interval = null;
     public volatile boolean permissions_cache_active_update = false;
     @Replaces(oldName = "roles_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public volatile IntSmallestDurationMilliseconds roles_validity = new IntSmallestDurationMilliseconds("2s");
     public volatile int roles_cache_max_entries = 1000;
     @Replaces(oldName = "roles_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds roles_update_interval = null;
+    public volatile IntSmallestDurationMilliseconds roles_update_interval = null;
     public volatile boolean roles_cache_active_update = false;
     @Replaces(oldName = "credentials_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public volatile IntSmallestDurationMilliseconds credentials_validity = new IntSmallestDurationMilliseconds("2s");
     public volatile int credentials_cache_max_entries = 1000;
     @Replaces(oldName = "credentials_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationMilliseconds credentials_update_interval = null;
+    public volatile IntSmallestDurationMilliseconds credentials_update_interval = null;
     public volatile boolean credentials_cache_active_update = false;
 
     /* Hashing strategy Random or OPHF */
