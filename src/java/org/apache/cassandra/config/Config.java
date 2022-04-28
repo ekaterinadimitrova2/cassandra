@@ -692,7 +692,7 @@ public class Config
      */
 
     @Replaces(oldName = "validation_preview_purge_head_start_in_sec", converter = Converters.NEGATIVE_SECONDS_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds validation_preview_purge_head_start = new SmallestDurationSeconds("3600s");
+    public volatile IntSmallestDurationSeconds validation_preview_purge_head_start = new IntSmallestDurationSeconds("3600s");
 
     public boolean auth_cache_warming_enabled = false;
 
