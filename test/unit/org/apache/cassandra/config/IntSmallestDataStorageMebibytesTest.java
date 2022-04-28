@@ -49,6 +49,14 @@ public class IntSmallestDataStorageMebibytesTest
         assertThatThrownBy(() -> new IntSmallestDataStorageMebibytes("2097152GiB")).isInstanceOf(ConfigurationException.class)
                                                                                  .hasMessageContaining("Invalid data storage: values must be less than 2147483647 " +
                                                                                                        "mebibytes, but it was 2147483648 mebibytes");
+        assertThatThrownBy(() -> IntSmallestDataStorageMebibytes.inMebibytes(2147483648L)).isInstanceOf(ConfigurationException.class)
+                                                                                             .hasMessageContaining("Invalid data storage: values must be " +
+                                                                                                                   "less than 2147483647 mebibytes, " +
+                                                                                                                   "but it was 2147483648 mebibytes");
+        assertThatThrownBy(() -> IntSmallestDataStorageMebibytes.inBytes(2147483648L * 1024L * 1024)).isInstanceOf(ConfigurationException.class)
+                                                                                          .hasMessageContaining("Invalid data storage: values must be " +
+                                                                                                                "less than 2147483647 mebibytes, " +
+                                                                                                                "but it was 2147483648 mebibytes");
     }
 
     @Test

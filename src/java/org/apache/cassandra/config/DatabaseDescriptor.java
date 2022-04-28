@@ -475,20 +475,20 @@ public class DatabaseDescriptor
             logger.warn("concurrent_replicates has been deprecated and should be removed from cassandra.yaml");
 
         if (conf.networking_cache_size == null)
-            conf.networking_cache_size = SmallestDataStorageMebibytes.inMebibytes(Math.min(128, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.networking_cache_size = IntSmallestDataStorageMebibytes.inMebibytes(Math.min(128, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
         if (conf.file_cache_size == null)
-            conf.file_cache_size = SmallestDataStorageMebibytes.inMebibytes(Math.min(512, (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
+            conf.file_cache_size = IntSmallestDataStorageMebibytes.inMebibytes(Math.min(512, (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
 
         // round down for SSDs and round up for spinning disks
         if (conf.file_cache_round_up == null)
             conf.file_cache_round_up = conf.disk_optimization_strategy == Config.DiskOptimizationStrategy.spinning;
 
         if (conf.memtable_offheap_space == null)
-            conf.memtable_offheap_space = SmallestDataStorageMebibytes.inMebibytes( (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
+            conf.memtable_offheap_space = IntSmallestDataStorageMebibytes.inMebibytes( (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
         // for the moment, we default to twice as much on-heap space as off-heap, as heap overhead is very large
         if (conf.memtable_heap_space == null)
-            conf.memtable_heap_space = SmallestDataStorageMebibytes.inMebibytes((int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
+            conf.memtable_heap_space = IntSmallestDataStorageMebibytes.inMebibytes((int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
         if (conf.memtable_heap_space.toMebibytesAsInt() == 0)
             throw new ConfigurationException("memtable_heap_space must be positive, but was " + conf.memtable_heap_space, false);
         logger.info("Global memtable on-heap threshold is enabled at {}", conf.memtable_heap_space);
@@ -511,7 +511,7 @@ public class DatabaseDescriptor
         }
 
         if (conf.repair_session_space == null)
-            conf.repair_session_space = SmallestDataStorageMebibytes.inMebibytes(Math.max(1, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.repair_session_space = IntSmallestDataStorageMebibytes.inMebibytes(Math.max(1, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
 
         if (conf.repair_session_space.toMebibytes() < 1)
             throw new ConfigurationException("repair_session_space must be > 0, but was " + conf.repair_session_space);
@@ -576,7 +576,7 @@ public class DatabaseDescriptor
                                                                "commitlog_total_space",
                                                                preferredSizeInMiB,
                                                                totalSpaceInBytes, 1, 4);
-            conf.commitlog_total_space = SmallestDataStorageMebibytes.inMebibytes(defaultSpaceInMiB);
+            conf.commitlog_total_space = IntSmallestDataStorageMebibytes.inMebibytes(defaultSpaceInMiB);
         }
 
         if (conf.cdc_enabled)
@@ -596,7 +596,7 @@ public class DatabaseDescriptor
                                                                    "cdc_total_space",
                                                                    preferredSizeInMiB,
                                                                    totalSpaceInBytes, 1, 8);
-                conf.cdc_total_space = SmallestDataStorageMebibytes.inMebibytes(defaultSpaceInMiB);
+                conf.cdc_total_space = IntSmallestDataStorageMebibytes.inMebibytes(defaultSpaceInMiB);
             }
 
             logger.info("cdc_enabled is true. Starting casssandra node with Change-Data-Capture enabled.");
@@ -1517,7 +1517,7 @@ public class DatabaseDescriptor
 
     public static void setMaxValueSize(int maxValueSizeInBytes)
     {
-        conf.max_value_size = SmallestDataStorageMebibytes.inBytes(maxValueSizeInBytes);
+        conf.max_value_size = IntSmallestDataStorageMebibytes.inBytes(maxValueSizeInBytes);
     }
 
     /**
@@ -2240,7 +2240,7 @@ public class DatabaseDescriptor
     @VisibleForTesting /* Only for testing */
     public static void setCommitLogSegmentSize(int sizeMebibytes)
     {
-        conf.commitlog_segment_size = SmallestDataStorageMebibytes.inMebibytes(sizeMebibytes);
+        conf.commitlog_segment_size = IntSmallestDataStorageMebibytes.inMebibytes(sizeMebibytes);
     }
 
     public static String getSavedCachesLocation()
@@ -2472,7 +2472,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportMaxFrameSize(int bytes)
     {
-        conf.native_transport_max_frame_size = SmallestDataStorageMebibytes.inMebibytes(bytes);
+        conf.native_transport_max_frame_size = IntSmallestDataStorageMebibytes.inMebibytes(bytes);
     }
 
     public static long getNativeTransportMaxConcurrentConnections()
@@ -3102,7 +3102,7 @@ public class DatabaseDescriptor
 
     public static void setSSTablePreemptiveOpenIntervalInMiB(int mib)
     {
-        conf.sstable_preemptive_open_interval = SmallestDataStorageMebibytes.inMebibytes(mib);
+        conf.sstable_preemptive_open_interval = IntSmallestDataStorageMebibytes.inMebibytes(mib);
     }
 
     public static boolean getTrickleFsync()
@@ -3307,7 +3307,7 @@ public class DatabaseDescriptor
             logger.warn("A repair_session_space of " + conf.repair_session_space +
                         " is likely to cause heap pressure.");
 
-        conf.repair_session_space = SmallestDataStorageMebibytes.inMebibytes(sizeInMiB);
+        conf.repair_session_space = IntSmallestDataStorageMebibytes.inMebibytes(sizeInMiB);
     }
 
     public static int getPaxosRepairParallelism()
@@ -3512,7 +3512,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setCDCSpaceInMiB(int input)
     {
-        conf.cdc_total_space = SmallestDataStorageMebibytes.inMebibytes(input);
+        conf.cdc_total_space = IntSmallestDataStorageMebibytes.inMebibytes(input);
     }
 
     public static int getCDCDiskCheckInterval()
