@@ -87,18 +87,18 @@ public class ParseAndConvertUnitsTest
         assertEquals(DataStorageSpec.inBytes(536870912), config.internode_application_receive_queue_reserve_global_capacity);
         assertEquals(DataStorageSpec.inMebibytes(16), config.native_transport_max_frame_size);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(256), config.max_value_size);
-        assertEquals(DataStorageSpec.inKibibytes(4), config.column_index_size);
-        assertEquals(DataStorageSpec.inKibibytes(2), config.column_index_cache_size);
-        assertEquals(DataStorageSpec.inKibibytes(5), config.batch_size_warn_threshold);
-        assertEquals(DataStorageSpec.inKibibytes(50), config.batch_size_fail_threshold);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(4), config.column_index_size);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(2), config.column_index_cache_size);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(5), config.batch_size_warn_threshold);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(50), config.batch_size_fail_threshold);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(100), config.compaction_large_partition_warning_threshold);
         assertNull(config.commitlog_total_space);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(5), config.commitlog_segment_size);
         assertNull(config.max_mutation_size); //not set explicitly in the default yaml, check the config; not set there too
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(0), config.cdc_total_space);
-        assertEquals(DataStorageSpec.inKibibytes(1024), config.hinted_handoff_throttle);
-        assertEquals(DataStorageSpec.inKibibytes(1024), config.batchlog_replay_throttle);
-        assertEquals(DataStorageSpec.inKibibytes(10240), config.trickle_fsync_interval);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(1024), config.hinted_handoff_throttle);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(1024), config.batchlog_replay_throttle);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(10240), config.trickle_fsync_interval);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(50), config.sstable_preemptive_open_interval);
         assertNull(config.counter_cache_size);
         assertNull(config.file_cache_size);

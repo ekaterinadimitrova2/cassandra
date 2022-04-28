@@ -33,5 +33,21 @@ public final class IntSmallestDataStorageKibibytes extends DataStorageSpec
             throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
                                              " kibibytes, but it was " + kibibytes + " kibibytes");
     }
+
+    private IntSmallestDataStorageKibibytes(long quantity, DataStorageSpec.DataStorageUnit unit)
+    {
+        super(quantity, unit);
+    }
+
+    /**
+     * Creates a {@code IntSmallestDataStorageKibibytes} of the specified amount of kibibytes.
+     *
+     * @param kibibytes the amount of kibibytes
+     * @return a data storage
+     */
+    public static IntSmallestDataStorageKibibytes inKibibytes(long kibibytes)
+    {
+        return new IntSmallestDataStorageKibibytes(kibibytes, DataStorageSpec.DataStorageUnit.KIBIBYTES);
+    }
     // TO DO As int methods and whatever else is needed
 }

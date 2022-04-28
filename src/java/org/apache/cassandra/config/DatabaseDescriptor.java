@@ -807,7 +807,7 @@ public class DatabaseDescriptor
                                              + conf.commitlog_segment_size.toString(), false);
 
         if (conf.max_mutation_size == null)
-            conf.max_mutation_size = SmallestDataStorageKibibytes.inKibibytes(conf.commitlog_segment_size.toKibibytes() / 2);
+            conf.max_mutation_size = IntSmallestDataStorageKibibytes.inKibibytes(conf.commitlog_segment_size.toKibibytes() / 2);
         else if (conf.commitlog_segment_size.toKibibytes() < 2 * conf.max_mutation_size.toKibibytes())
             throw new ConfigurationException("commitlog_segment_size must be at least twice the size of max_mutation_size / 1024", false);
 
@@ -1627,9 +1627,9 @@ public class DatabaseDescriptor
 
     public static void setColumnIndexSize(int val)
     {
-        SmallestDataStorageKibibytes memory = SmallestDataStorageKibibytes.inKibibytes(val);
+        IntSmallestDataStorageKibibytes memory = IntSmallestDataStorageKibibytes.inKibibytes(val);
         checkValidForByteConversion(memory, "column_index_size");
-        conf.column_index_size = SmallestDataStorageKibibytes.inKibibytes(val);
+        conf.column_index_size = IntSmallestDataStorageKibibytes.inKibibytes(val);
     }
 
     public static int getColumnIndexCacheSize()
@@ -1644,9 +1644,9 @@ public class DatabaseDescriptor
 
     public static void setColumnIndexCacheSize(int val)
     {
-        SmallestDataStorageKibibytes memory = SmallestDataStorageKibibytes.inKibibytes(val);
+        IntSmallestDataStorageKibibytes memory = IntSmallestDataStorageKibibytes.inKibibytes(val);
         checkValidForByteConversion(memory, "column_index_cache_size");
-        conf.column_index_cache_size = SmallestDataStorageKibibytes.inKibibytes(val);
+        conf.column_index_cache_size = IntSmallestDataStorageKibibytes.inKibibytes(val);
     }
 
     public static int getBatchSizeWarnThreshold()
@@ -1676,14 +1676,14 @@ public class DatabaseDescriptor
 
     public static void setBatchSizeWarnThresholdInKiB(int threshold)
     {
-        SmallestDataStorageKibibytes storage = SmallestDataStorageKibibytes.inKibibytes(threshold);
+        IntSmallestDataStorageKibibytes storage = IntSmallestDataStorageKibibytes.inKibibytes(threshold);
         checkValidForByteConversion(storage, "batch_size_warn_threshold");
-        conf.batch_size_warn_threshold = SmallestDataStorageKibibytes.inKibibytes(threshold);
+        conf.batch_size_warn_threshold = IntSmallestDataStorageKibibytes.inKibibytes(threshold);
     }
 
     public static void setBatchSizeFailThresholdInKiB(int threshold)
     {
-        conf.batch_size_fail_threshold = SmallestDataStorageKibibytes.inKibibytes(threshold);
+        conf.batch_size_fail_threshold = IntSmallestDataStorageKibibytes.inKibibytes(threshold);
     }
 
     public static Collection<String> getInitialTokens()
@@ -2996,7 +2996,7 @@ public class DatabaseDescriptor
 
     public static void setHintedHandoffThrottleInKiB(int throttleInKiB)
     {
-        conf.hinted_handoff_throttle = SmallestDataStorageKibibytes.inKibibytes(throttleInKiB);
+        conf.hinted_handoff_throttle = IntSmallestDataStorageKibibytes.inKibibytes(throttleInKiB);
     }
 
     public static int getBatchlogReplayThrottleInKiB()
@@ -3006,7 +3006,7 @@ public class DatabaseDescriptor
 
     public static void setBatchlogReplayThrottleInKiB(int throttleInKiB)
     {
-        conf.batchlog_replay_throttle = SmallestDataStorageKibibytes.inKibibytes(throttleInKiB);
+        conf.batchlog_replay_throttle = IntSmallestDataStorageKibibytes.inKibibytes(throttleInKiB);
     }
 
     public static int getMaxHintsDeliveryThreads()
@@ -3744,7 +3744,7 @@ public class DatabaseDescriptor
     /**
      * Ensures passed in configuration value is positive and will not overflow when converted to Bytes
      */
-    private static void checkValidForByteConversion(final SmallestDataStorageKibibytes value, String name)
+    private static void checkValidForByteConversion(final IntSmallestDataStorageKibibytes value, String name)
     {
         long valueInBytes = value.toBytes();
         if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
