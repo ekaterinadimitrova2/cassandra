@@ -33,7 +33,7 @@ public class IntSmallestDataStorageBytes extends DataStorageSpec
             long bytes = toBytes();
             if (bytes > Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                                " bytes, but it was " + bytes + "bytes");
+                                                " bytes, but it was " + bytes + " bytes");
         }
     }
 
@@ -44,6 +44,10 @@ public class IntSmallestDataStorageBytes extends DataStorageSpec
 
     public static IntSmallestDataStorageBytes inBytes(long bytes)
     {
+        if (bytes > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
+                                             " bytes, but it was " + bytes + " bytes");
+
         return new IntSmallestDataStorageBytes(bytes, DataStorageUnit.BYTES);
     }
 

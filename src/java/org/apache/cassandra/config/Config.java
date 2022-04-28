@@ -74,7 +74,7 @@ public class Config
     public String role_manager;
     public String network_authorizer;
     @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile IntSmallestDurationMilliseconds permissions_validity = new IntSmallestDurationMilliseconds("2s");
+    public volatile SmallestDurationMilliseconds permissions_validity = new SmallestDurationMilliseconds("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile SmallestDurationMilliseconds permissions_update_interval = null;
@@ -277,7 +277,7 @@ public class Config
     public volatile boolean native_transport_rate_limiting_enabled = false;
     public volatile int native_transport_max_requests_per_second = 1000000;
     @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public IntSmallestDataStorageBytes native_transport_receive_queue_capacity = new IntSmallestDataStorageBytes("1MiB");
+    public DataStorageSpec native_transport_receive_queue_capacity = new DataStorageSpec("1MiB");
 
     @Deprecated
     public Integer native_transport_max_negotiable_protocol_version = null;
@@ -332,9 +332,9 @@ public class Config
     public int max_streaming_retries = 3;
 
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile IntDataRate stream_throughput_outbound = new IntDataRate("24MiB/s");
+    public volatile DataRateSpec stream_throughput_outbound = new DataRateSpec("24MiB/s");
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile IntDataRate inter_dc_stream_throughput_outbound = new IntDataRate("24MiB/s");
+    public volatile DataRateSpec inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
 
     public volatile DataRateSpec entire_sstable_stream_throughput_outbound = new DataRateSpec("24MiB/s");
     public volatile DataRateSpec entire_sstable_inter_dc_stream_throughput_outbound = new DataRateSpec("24MiB/s");
@@ -437,13 +437,13 @@ public class Config
     @Replaces(oldName = "row_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
     public SmallestDataStorageMebibytes row_cache_size = new SmallestDataStorageMebibytes("0MiB");
     @Replaces(oldName = "row_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds row_cache_save_period = new SmallestDurationSeconds("0s");
+    public volatile IntSmallestDurationSeconds row_cache_save_period = new IntSmallestDurationSeconds("0s");
     public volatile int row_cache_keys_to_save = Integer.MAX_VALUE;
 
     @Replaces(oldName = "counter_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
     public SmallestDataStorageMebibytes counter_cache_size = null;
     @Replaces(oldName = "counter_cache_save_period", converter = Converters.SECONDS_CUSTOM_DURATION, deprecated = true)
-    public volatile SmallestDurationSeconds counter_cache_save_period = new SmallestDurationSeconds("7200s");
+    public volatile IntSmallestDurationSeconds counter_cache_save_period = new IntSmallestDurationSeconds("7200s");
     public volatile int counter_cache_keys_to_save = Integer.MAX_VALUE;
 
     public SmallestDataStorageMebibytes paxos_cache_size = null;

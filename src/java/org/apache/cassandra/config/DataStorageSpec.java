@@ -82,7 +82,7 @@ public class DataStorageSpec
     DataStorageSpec(long quantity, DataStorageUnit unit)
     {
         if (quantity < 0 || quantity == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: value must be positive and less than" + Long.MAX_VALUE + ", but was " + quantity);
+            throw new ConfigurationException("Invalid data storage: value must be positive and less than " + Long.MAX_VALUE + ", but was " + quantity);
 
         this.quantity = quantity;
         this.unit = unit;
@@ -102,7 +102,7 @@ public class DataStorageSpec
             unit = DataStorageUnit.fromSymbol(matcher.group(2));
 
             if (!MAP_UNITS_PER_MIN_UNIT.get(minUnit).contains(unit))
-                throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT);
+                throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit));
         }
         else
         {
@@ -129,7 +129,7 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inKibibytes(long kibibytes)
     {
-        if (KIBIBYTES.toBytes(kibibytes) == Long.MAX_VALUE)
+        if (KIBIBYTES.toBytes(kibibytes) >= Long.MAX_VALUE)
             throw new ConfigurationException("Invalid data storage: " + kibibytes + " kibibytes. It shouldn't be more than" +
                                              + Long.MAX_VALUE + " in bytes");
 
@@ -144,7 +144,7 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inMebibytes(long mebibytes)
     {
-        if (MEBIBYTES.toBytes(mebibytes) == Long.MAX_VALUE)
+        if (MEBIBYTES.toBytes(mebibytes) >= Long.MAX_VALUE)
             throw new ConfigurationException("Invalid data storage: " + mebibytes + " mebibytes. It shouldn't be more than" +
                                              + Long.MAX_VALUE + " in bytes");
 
@@ -159,6 +159,10 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inGibibytes(long gibibytes)
     {
+        if (GIBIBYTES.toBytes(gibibytes) >= Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + gibibytes + " gibibytes. It shouldn't be more than" +
+                                             + Long.MAX_VALUE + " in bytes");
+
         return new DataStorageSpec(gibibytes, GIBIBYTES);
     }
 

@@ -18,6 +18,8 @@
 package org.apache.cassandra.config;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 
@@ -26,6 +28,8 @@ import org.apache.cassandra.exceptions.ConfigurationException;
  */
 public final class IntSmallestDurationSeconds extends DurationSpec
 {
+    private static final Pattern VALUES_PATTERN = Pattern.compile(("\\d+"));
+
     public IntSmallestDurationSeconds(String value)
     {
         super(value, TimeUnit.SECONDS);
@@ -44,8 +48,28 @@ public final class IntSmallestDurationSeconds extends DurationSpec
         super(quantity, unit);
     }
 
+    public static IntSmallestDurationSeconds inSecondsString(String value)
+    {
+        //parse the string field value
+        Matcher matcher = VALUES_PATTERN.matcher(value);
+
+        long seconds;
+        //if the provided string value is just a number, then we create a Duration Spec value in seconds
+        if (matcher.matches())
+        {
+            seconds = Integer.parseInt(value);
+            return new IntSmallestDurationSeconds(seconds, TimeUnit.SECONDS);
+        }
+
+        //otherwise we just use the standard constructors
+        return new IntSmallestDurationSeconds(value);
+    }
+
     public static IntSmallestDurationSeconds inSeconds(long seconds)
     {
+        if (seconds > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                             " seconds, but it was " + seconds + " seconds");
         return new IntSmallestDurationSeconds(seconds, TimeUnit.SECONDS);
     }
     // TO DO As int methods and whatever else is needed

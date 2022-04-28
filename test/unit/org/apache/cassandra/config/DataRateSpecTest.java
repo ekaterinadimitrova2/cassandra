@@ -44,25 +44,16 @@ public class DataRateSpecTest
     @Test
     public void testOverflowingDuringConversion()
     {
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807B/s").toBytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807B/s").toBytesPerSecondAsInt(), 0);
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toBytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toBytesPerSecondAsInt(), 0);
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecondAsInt(), 0);
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toBytesPerSecondAsInt(), 0);
+        assertEquals(Integer.MAX_VALUE, new IntDataRate("2147483649B/s").toBytesPerSecondAsInt(), 0);
+        assertEquals(Integer.MAX_VALUE, new IntDataRate(2147483649L/1024L + "KiB/s").toBytesPerSecondAsInt(), 0);
+        assertEquals(Integer.MAX_VALUE, new IntDataRate(2147483649L/1024L/1024 + "MiB/s").toBytesPerSecondAsInt(), 0);
 
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toMegabitsPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toMegabitsPerSecondAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntDataRate(2147483647L + "MiB/s").toMegabitsPerSecondAsInt());
 
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toKibibytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807KiB/s").toKibibytesPerSecondAsInt());
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toKibibytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toKibibytesPerSecondAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntDataRate(2147483647L + "KiB/s").toKibibytesPerSecondAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntDataRate(2147483649L/1024L + "MiB/s").toKibibytesPerSecondAsInt());
 
-        assertEquals(Long.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toMebibytesPerSecond(), 0);
-        assertEquals(Integer.MAX_VALUE, new DataRateSpec("9223372036854775807MiB/s").toMebibytesPerSecondAsInt());
+        assertEquals(Integer.MAX_VALUE, new IntDataRate(2147483647L + "MiB/s").toMebibytesPerSecondAsInt());
     }
 
     @Test
@@ -94,12 +85,26 @@ public class DataRateSpecTest
         assertThatThrownBy(() -> new DataRateSpec("9223372036854775809MiB/s")
                                  .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
                                                      .hasMessageContaining("For input string: \"9223372036854775809\"");
-        //assertThatThrownBy(() -> new IntDataRate("2147483648KiB/s")
-        //                         .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
-        //                                             .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647bytes per second");
         assertThatThrownBy(() -> new IntDataRate("2147483648MiB/s")
                                  .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
-                                                     .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647bytes per second");
+                                                     .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647 mebibytes per second");
+    }
+
+    @Test
+    public void testInvalidForConversion()
+    {
+        //just test the cast to Int
+        assertEquals(Integer.MAX_VALUE, new DataRateSpec("92233720368547758B/s").toBytesPerSecondAsInt());
+
+        assertThatThrownBy(() -> new DataRateSpec(Long.MAX_VALUE + "B/s")).isInstanceOf(NumberFormatException.class)
+                                                                         .hasMessageContaining("Invalid data rate: value 9.223372036854776E18 " +
+                                                                                               "must be between 0 and 9223372036854775806 bytes per second");
+        assertThatThrownBy(() -> new DataRateSpec(Long.MAX_VALUE + "MiB/s")).isInstanceOf(NumberFormatException.class)
+                                                                         .hasMessageContaining("Invalid data rate: value 9.223372036854776E18 " +
+                                                                                               "must be between 0 and 9223372036854775806 bytes per second");
+        assertThatThrownBy(() -> new DataRateSpec(Long.MAX_VALUE-5 + "KiB/s")).isInstanceOf(NumberFormatException.class)
+                                                                           .hasMessageContaining("Invalid data rate: value 9.223372036854776E18 " +
+                                                                                                 "must be between 0 and 9223372036854775806 bytes per second");
     }
 
     @Test
@@ -108,8 +113,9 @@ public class DataRateSpecTest
         assertEquals(new DataRateSpec("10B/s"), new DataRateSpec("10B/s"));
         assertEquals(new DataRateSpec("10KiB/s"), new DataRateSpec("10240B/s"));
         assertEquals(new DataRateSpec("10240B/s"), new DataRateSpec("10KiB/s"));
-        assertEquals(DataRateSpec.inMebibytesPerSecond((Long.MAX_VALUE/1024/1024)), DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE/1024/1024));
-        assertNotEquals(DataRateSpec.inKibibytesPerSecond(Long.MAX_VALUE/1024), DataRateSpec.inBytesPerSecond(Long.MAX_VALUE));
+        assertEquals(DataRateSpec.inMebibytesPerSecond((Long.MAX_VALUE/1024L/1024)), DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE/1024L/1024));
+        long tmp = Long.MAX_VALUE-1L;
+        assertNotEquals(DataRateSpec.inKibibytesPerSecond(Long.MAX_VALUE/1024L), DataRateSpec.inBytesPerSecond(tmp));
         assertNotEquals(new DataRateSpec("0KiB/s"), new DataRateSpec("10MiB/s"));
     }
 
@@ -117,7 +123,7 @@ public class DataRateSpecTest
     public void thereAndBack()
     {
         Gen<DataRateSpec.DataRateUnit> unitGen = SourceDSL.arbitrary().enumValues(DataRateSpec.DataRateUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/1024L/1024/1024); // the biggest value in GiB/s that won't lead to B/s overflow
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
             DataRateSpec there = new DataRateSpec(value, unit);
             DataRateSpec back = new DataRateSpec(there.toString());
@@ -141,7 +147,7 @@ public class DataRateSpecTest
     private static Gen<DataRateSpec> gen()
     {
         Gen<DataRateSpec.DataRateUnit> unitGen = SourceDSL.arbitrary().enumValues(DataRateSpec.DataRateUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/1024L/1024/1024);
         Gen<DataRateSpec> gen = rs -> new DataRateSpec(valueGen.generate(rs), unitGen.generate(rs));
         return gen.describedAs(DataRateSpec::toString);
     }

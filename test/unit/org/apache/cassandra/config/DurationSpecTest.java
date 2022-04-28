@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
+import org.quicktheories.core.Gen;
+import org.quicktheories.generators.SourceDSL;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
@@ -88,6 +90,35 @@ public class DurationSpecTest
     }
 
     @Test
+    public void testInvalidForConversion()
+    {
+        //just test the cast to Int
+        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806ns").toNanosecondsAsInt());
+
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE + "ns")).isInstanceOf(ConfigurationException.class)
+                                                                           .hasMessageContaining("Invalid duration: 9223372036854775807ns, " +
+                                                                                                 "it shouldn't be more than 9223372036854775806 in nanoseconds");
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE + "ms")).isInstanceOf(ConfigurationException.class)
+                                                                             .hasMessageContaining("Invalid duration: 9223372036854775807ms, " +
+                                                                                                   "it shouldn't be more than 9223372036854775806 in nanoseconds");
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "µs")).isInstanceOf(ConfigurationException.class)
+                                                                               .hasMessageContaining("Invalid duration: 9223372036854775802µs, " +
+                                                                                                     "it shouldn't be more than 9223372036854775806 in nanoseconds");
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "us")).isInstanceOf(ConfigurationException.class)
+                                                                               .hasMessageContaining("Invalid duration: 9223372036854775802us, " +
+                                                                                                     "it shouldn't be more than 9223372036854775806 in nanoseconds");
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "s")).isInstanceOf(ConfigurationException.class)
+                                                                           .hasMessageContaining("Invalid duration: 9223372036854775802s, " +
+                                                                                                 "it shouldn't be more than 9223372036854775806 in nanoseconds");
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "h")).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 9223372036854775802h, " +
+                                                                                                "it shouldn't be more than 9223372036854775806 in nanoseconds");
+        assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "d")).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 9223372036854775802d, " +
+                                                                                                "it shouldn't be more than 9223372036854775806 in nanoseconds");
+    }
+
+    @Test
     public void testEquals()
     {
         assertEquals(new DurationSpec("10s"), new DurationSpec("10s"));
@@ -99,60 +130,19 @@ public class DurationSpecTest
         assertEquals(DurationSpec.inSecondsString("4h"), new DurationSpec("14400s"));
         assertEquals(DurationSpec.inSecondsString("14400s"), new DurationSpec("14400s"));
         assertNotEquals(new DurationSpec("0m"), new DurationSpec("10ms"));
+        assertEquals(Long.MAX_VALUE-1, new DurationSpec("9223372036854775806ns").toNanoseconds());
+        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806ns").toNanosecondsAsInt());
     }
 
-    //I think I will have to remove below one as it doesn't serve anymore our needs
-    /* @Test
+    @Test
     public void thereAndBack()
     {
         Gen<TimeUnit> unitGen = SourceDSL.arbitrary().enumValues(TimeUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/24/60/60/1000L/1000L/1000L);
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
             DurationSpec there = new DurationSpec(value, unit);
             DurationSpec back = new DurationSpec(there.toString());
             return there.equals(back);
         });
-    }*/
-
-    //Have to update below one to verify the right error messages and upper values
-    /*@Test
-    public void testOverflowingDuringConversion()
-    {
-        // we are heavily dependent on the Java TimeUnit for our configuration of type duration. We want to be sure
-        // that any regression in handlining overflow will be caught quickly on our end
-        assertEquals(Long.MAX_VALUE-1, new DurationSpec("9223372036854775806ns").toNanoseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806ns").toNanosecondsAsInt());
-        assertEquals(Long.MAX_VALUE-1, new DurationSpec("9223372036854775806ms").toNanoseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806ms").toNanosecondsAsInt());
-        assertEquals(Long.MAX_VALUE-1, new DurationSpec("9223372036854775806s").toNanoseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806s").toNanosecondsAsInt());
-        assertEquals(Long.MAX_VALUE-1, new DurationSpec("9223372036854775806m").toNanoseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806m").toNanosecondsAsInt());
-        assertEquals(Long.MAX_VALUE-1, new DurationSpec("9223372036854775806h").toNanoseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806h").toNanosecondsAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807ms").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807ms").toMillisecondsAsInt());
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807s").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807s").toMillisecondsAsInt());
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807m").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807m").toMillisecondsAsInt());
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807h").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807h").toMillisecondsAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807s").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807s").toSecondsAsInt());
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807m").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807m").toSecondsAsInt());
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807h").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807h").toSecondsAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807m").toMinutes());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807m").toMinutesAsInt());
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807h").toMinutes());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807h").toMinutesAsInt());
-
-        assertEquals(Long.MAX_VALUE, new DurationSpec("9223372036854775807h").toHours());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775807h").toHoursAsInt());
-    }*/
+    }
 }

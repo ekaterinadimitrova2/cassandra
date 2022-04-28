@@ -1368,7 +1368,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = IntSmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.permissions_validity = SmallestDurationMilliseconds.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -2046,7 +2046,7 @@ public class DatabaseDescriptor
 
     public static void setStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.stream_throughput_outbound = IntDataRate.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.stream_throughput_outbound = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static int getEntireSSTableStreamThroughputOutboundMebibytesPerSecAsInt()
@@ -2076,7 +2076,7 @@ public class DatabaseDescriptor
 
     public static void setInterDCStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.inter_dc_stream_throughput_outbound = IntDataRate.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.inter_dc_stream_throughput_outbound = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static double getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec()
@@ -2540,7 +2540,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
     {
-        conf.native_transport_receive_queue_capacity = IntSmallestDataStorageBytes.inBytes(queueSize);
+        conf.native_transport_receive_queue_capacity = DataStorageSpec.inBytes(queueSize);
     }
 
     public static long getNativeTransportMaxRequestDataInFlightPerIpInBytes()
@@ -3192,7 +3192,7 @@ public class DatabaseDescriptor
 
     public static void setRowCacheSavePeriod(int rowCacheSavePeriod)
     {
-        conf.row_cache_save_period = SmallestDurationSeconds.inSeconds(rowCacheSavePeriod);
+        conf.row_cache_save_period = IntSmallestDurationSeconds.inSeconds(rowCacheSavePeriod);
     }
 
     public static int getRowCacheKeysToSave()
@@ -3222,7 +3222,7 @@ public class DatabaseDescriptor
 
     public static void setCounterCacheSavePeriod(int counterCacheSavePeriod)
     {
-        conf.counter_cache_save_period = SmallestDurationSeconds.inSeconds(counterCacheSavePeriod);
+        conf.counter_cache_save_period = IntSmallestDurationSeconds.inSeconds(counterCacheSavePeriod);
     }
 
     public static int getCacheLoadTimeout()
