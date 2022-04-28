@@ -35,5 +35,25 @@ public final class IntSmallestDurationMinutes extends DurationSpec
             throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
                                              " minutes, but it was " + minutes + " minutes");
     }
+
+    private IntSmallestDurationMinutes(long quantity, TimeUnit unit)
+    {
+        super(quantity, unit);
+    }
+
+    /**
+     * Creates a {@code IntSmallestDurationMinutes} of the specified amount of minutes.
+     *
+     * @param minutes the amount of minutes
+     * @return a duration
+     */
+    public static IntSmallestDurationMinutes inMinutes(long minutes)
+    {
+        if (minutes > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: values must be less than " + Integer.MAX_VALUE +
+                                             " minutes, but it was " + minutes + " minutes");
+
+        return new IntSmallestDurationMinutes(minutes, TimeUnit.MINUTES);
+    }
     // TO DO As int methods and whatever else is needed
 }
