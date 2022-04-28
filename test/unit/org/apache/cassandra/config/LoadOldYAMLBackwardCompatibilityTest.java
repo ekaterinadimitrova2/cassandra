@@ -72,9 +72,9 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertEquals(DataStorageSpec.inKibibytes(5), config.batch_size_warn_threshold);
         assertEquals(DataRateSpec.inMebibytesPerSecond(64), config.compaction_throughput);
         assertEquals(DataStorageSpec.inMebibytes(50), config.min_free_space_per_drive);
-        assertEquals(DataRateSpec.inMebibytesPerSecond(23841858).toString(), config.stream_throughput_outbound.toString());
-        assertEquals(DataRateSpec.megabitsPerSecondInMebibytesPerSecond(200000000).toString(), config.stream_throughput_outbound.toString());
-        assertEquals(DataRateSpec.inMebibytesPerSecond(24), config.inter_dc_stream_throughput_outbound);
+        assertEquals(IntDataRate.inMebibytesPerSecond(23841858).toString(), config.stream_throughput_outbound.toString());
+        assertEquals(IntDataRate.megabitsPerSecondInMebibytesPerSecond(200000000).toString(), config.stream_throughput_outbound.toString());
+        assertEquals(IntDataRate.inMebibytesPerSecond(24), config.inter_dc_stream_throughput_outbound);
         assertNull(config.commitlog_total_space);
         assertEquals(DurationSpec.inDoubleMilliseconds(0), config.commitlog_sync_group_window);
         assertEquals(DurationSpec.inMilliseconds(0), config.commitlog_sync_period);

@@ -1970,7 +1970,7 @@ public class DatabaseDescriptor
 
     public static void setCompactionThroughputMebibytesPerSec(int value)
     {
-        conf.compaction_throughput = DataRateSpec.inMebibytesPerSecond(value);
+        conf.compaction_throughput = IntDataRate.inMebibytesPerSecond(value);
     }
 
     public static long getCompactionLargePartitionWarningThreshold() { return conf.compaction_large_partition_warning_threshold.toBytes(); }
@@ -2033,7 +2033,7 @@ public class DatabaseDescriptor
 
     public static void setStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.stream_throughput_outbound = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.stream_throughput_outbound = IntDataRate.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static int getEntireSSTableStreamThroughputOutboundMebibytesPerSecAsInt()
@@ -2048,7 +2048,7 @@ public class DatabaseDescriptor
 
     public static void setEntireSSTableStreamThroughputOutboundMebibytesPerSec(int value)
     {
-        conf.entire_sstable_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(value);
+        conf.entire_sstable_stream_throughput_outbound = IntDataRate.inMebibytesPerSecond(value);
     }
 
     public static int getInterDCStreamThroughputOutboundMegabitsPerSec()
@@ -2063,7 +2063,7 @@ public class DatabaseDescriptor
 
     public static void setInterDCStreamThroughputOutboundMegabitsPerSec(int value)
     {
-        conf.inter_dc_stream_throughput_outbound = DataRateSpec.megabitsPerSecondInMebibytesPerSecond(value);
+        conf.inter_dc_stream_throughput_outbound = IntDataRate.megabitsPerSecondInMebibytesPerSecond(value);
     }
 
     public static double getEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec()
@@ -2078,7 +2078,7 @@ public class DatabaseDescriptor
 
     public static void setEntireSSTableInterDCStreamThroughputOutboundMebibytesPerSec(int value)
     {
-        conf.entire_sstable_inter_dc_stream_throughput_outbound = DataRateSpec.inMebibytesPerSecond(value);
+        conf.entire_sstable_inter_dc_stream_throughput_outbound = IntDataRate.inMebibytesPerSecond(value);
     }
 
     /**
@@ -2697,7 +2697,7 @@ public class DatabaseDescriptor
         }
         catch (ConfigurationException e)
         {
-            throw new IllegalArgumentException("native_transport_max_request_data_in_flight can be only -1 which gets default value or >= 0");
+            throw new IllegalArgumentException("native_transport_max_request_data_in_flight can be only -1 which gets default value or [0; " + (Long.MAX_VALUE-1) +"]");
         }
     }
 
