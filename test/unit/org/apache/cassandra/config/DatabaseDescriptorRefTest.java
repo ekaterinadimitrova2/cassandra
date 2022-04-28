@@ -46,6 +46,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
+ *
  * Verifies that {@link DatabaseDescriptor#clientInitialization()} } and a couple of <i>apply</i> methods
  * do not somehow lazily initialize any unwanted part of Cassandra like schema, commit log or start
  * unexpected threads.
@@ -221,7 +222,10 @@ public class DatabaseDescriptorRefTest
     "org.apache.cassandra.config.IntSmallestDurationSeconds",
     "org.apache.cassandra.config.IntDataRate",
     "org.apache.cassandra.config.IntSmallestDataStorageMebibytes",
-    "org.apache.cassandra.config.IntSmallestDurationMinutes"
+    "org.apache.cassandra.config.IntSmallestDurationMinutes",
+    "IntSmallestDataStorageKibibytes",
+    "org.apache.cassandra.config.IntSmallestDataStorageKibibytes",
+    "org.apache.cassandra.config.IntSmallestDataStorageBytes"
     };
 
     static final Set<String> checkedClasses = new HashSet<>(Arrays.asList(validClasses));

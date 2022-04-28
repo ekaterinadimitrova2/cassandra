@@ -219,29 +219,29 @@ public class Config
     public boolean rpc_keepalive = true;
 
     @Replaces(oldName = "internode_max_message_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated=true)
-    public DataStorageSpec internode_max_message_size;
+    public IntSmallestDataStorageBytes internode_max_message_size;
 
     @Replaces(oldName = "internode_socket_send_buffer_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
     @Replaces(oldName = "internode_send_buff_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_socket_send_buffer_size = new DataStorageSpec("0B");
+    public IntSmallestDataStorageBytes internode_socket_send_buffer_size = new IntSmallestDataStorageBytes("0B");
     @Replaces(oldName = "internode_socket_receive_buffer_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
     @Replaces(oldName = "internode_recv_buff_size_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_socket_receive_buffer_size = new DataStorageSpec("0B");
+    public IntSmallestDataStorageBytes internode_socket_receive_buffer_size = new IntSmallestDataStorageBytes("0B");
 
     // TODO: derive defaults from system memory settings?
     @Replaces(oldName = "internode_application_send_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_capacity = new DataStorageSpec("4MiB");
+    public IntSmallestDataStorageBytes internode_application_send_queue_capacity = new IntSmallestDataStorageBytes("4MiB");
     @Replaces(oldName = "internode_application_send_queue_reserve_endpoint_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_reserve_endpoint_capacity = new DataStorageSpec("128MiB");
+    public IntSmallestDataStorageBytes internode_application_send_queue_reserve_endpoint_capacity = new IntSmallestDataStorageBytes("128MiB");
     @Replaces(oldName = "internode_application_send_queue_reserve_global_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_send_queue_reserve_global_capacity = new DataStorageSpec("512MiB");
+    public IntSmallestDataStorageBytes internode_application_send_queue_reserve_global_capacity = new IntSmallestDataStorageBytes("512MiB");
 
     @Replaces(oldName = "internode_application_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_capacity = new DataStorageSpec("4MiB");
+    public IntSmallestDataStorageBytes internode_application_receive_queue_capacity = new IntSmallestDataStorageBytes("4MiB");
     @Replaces(oldName = "internode_application_receive_queue_reserve_endpoint_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_reserve_endpoint_capacity = new DataStorageSpec("128MiB");
+    public IntSmallestDataStorageBytes internode_application_receive_queue_reserve_endpoint_capacity = new IntSmallestDataStorageBytes("128MiB");
     @Replaces(oldName = "internode_application_receive_queue_reserve_global_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec internode_application_receive_queue_reserve_global_capacity = new DataStorageSpec("512MiB");
+    public IntSmallestDataStorageBytes internode_application_receive_queue_reserve_global_capacity = new IntSmallestDataStorageBytes("512MiB");
 
     // Defensive settings for protecting Cassandra from true network partitions. See (CASSANDRA-14358) for details.
     // The amount of time to wait for internode tcp connections to establish.
@@ -277,7 +277,7 @@ public class Config
     public volatile boolean native_transport_rate_limiting_enabled = false;
     public volatile int native_transport_max_requests_per_second = 1000000;
     @Replaces(oldName = "native_transport_receive_queue_capacity_in_bytes", converter = Converters.BYTES_DATASTORAGE, deprecated = true)
-    public DataStorageSpec native_transport_receive_queue_capacity = new DataStorageSpec("1MiB");
+    public IntSmallestDataStorageBytes native_transport_receive_queue_capacity = new IntSmallestDataStorageBytes("1MiB");
 
     @Deprecated
     public Integer native_transport_max_negotiable_protocol_version = null;

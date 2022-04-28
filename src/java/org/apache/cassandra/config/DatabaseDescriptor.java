@@ -876,7 +876,7 @@ public class DatabaseDescriptor
             Math.min(conf.internode_application_receive_queue_reserve_endpoint_capacity.toBytes(),
                      conf.internode_application_send_queue_reserve_endpoint_capacity.toBytes());
 
-            conf.internode_max_message_size = DataStorageSpec.inBytes(maxMessageSizeInBytes);
+            conf.internode_max_message_size = IntSmallestDataStorageBytes.inBytes(maxMessageSizeInBytes);
         }
 
         validateMaxConcurrentAutoUpgradeTasksConf(conf.max_concurrent_automatic_sstable_upgrades);
@@ -2434,7 +2434,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setInternodeMaxMessageSizeInBytes(int value)
     {
-        conf.internode_max_message_size = DataStorageSpec.inBytes(value);
+        conf.internode_max_message_size = IntSmallestDataStorageBytes.inBytes(value);
     }
 
     public static boolean startNativeTransport()
@@ -2540,7 +2540,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
     {
-        conf.native_transport_receive_queue_capacity = DataStorageSpec.inBytes(queueSize);
+        conf.native_transport_receive_queue_capacity = IntSmallestDataStorageBytes.inBytes(queueSize);
     }
 
     public static long getNativeTransportMaxRequestDataInFlightPerIpInBytes()
