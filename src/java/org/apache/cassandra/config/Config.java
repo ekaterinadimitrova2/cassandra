@@ -483,7 +483,7 @@ public class Config
     @Replaces(oldName = "index_summary_capacity_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_LONG, deprecated = true)
     public volatile SmallestDataStorageMebibytes index_summary_capacity;
     @Replaces(oldName = "index_summary_resize_interval_in_minutes", converter = Converters.MINUTES_DURATION, deprecated = true)
-    public volatile SmallestDurationMinutes index_summary_resize_interval = new SmallestDurationMinutes("60m");
+    public volatile IntSmallestDurationMinutes index_summary_resize_interval = new IntSmallestDurationMinutes("60m");
 
     @Replaces(oldName = "gc_log_threshold_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public IntSmallestDurationMilliseconds gc_log_threshold = new IntSmallestDurationMilliseconds("200ms");

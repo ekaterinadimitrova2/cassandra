@@ -51,17 +51,21 @@ public class IntSmallestDurationMinutesTest
                                                                                .hasMessageContaining("Invalid duration: 2147483648s " +
                                                                                                      "Accepted units:[MINUTES, HOURS, DAYS]");
         assertThatThrownBy(() -> new IntSmallestDurationMinutes("2147483648m")).isInstanceOf(ConfigurationException.class)
+                                                                                .hasMessageContaining("Invalid duration: values must be " +
+                                                                                                      "less than 2147483647 minutes, " +
+                                                                                                      "but it was 2147483648 minutes");
+        assertThatThrownBy(() -> new IntSmallestDurationMinutes("35791395h")).isInstanceOf(ConfigurationException.class)
                                                                              .hasMessageContaining("Invalid duration: values must be " +
                                                                                                    "less than 2147483647 minutes, " +
-                                                                                                   "but it was 2147483648 minutes");
-        assertThatThrownBy(() -> new IntSmallestDurationMinutes("35791395h")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: values must be " +
-                                                                                                 "less than 2147483647 minutes, " +
-                                                                                                 "but it was 2147483700 minutes");
+                                                                                                   "but it was 2147483700 minutes");
         assertThatThrownBy(() -> new IntSmallestDurationMinutes("1491309d")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: values must be " +
-                                                                                                "less than 2147483647 minutes, " +
-                                                                                                "but it was 2147484960 minutes");
+                                                                            .hasMessageContaining("Invalid duration: values must be " +
+                                                                                                  "less than 2147483647 minutes, " +
+                                                                                                  "but it was 2147484960 minutes");
+        assertThatThrownBy(() -> IntSmallestDurationMinutes.inMinutes(2147483648L)).isInstanceOf(ConfigurationException.class)
+                                                                                   .hasMessageContaining("Invalid duration: values must be " +
+                                                                                                         "less than 2147483647 minutes, " +
+                                                                                                         "but it was 2147483648 minutes");
     }
 
     @Test
