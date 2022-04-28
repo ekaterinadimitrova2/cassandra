@@ -1368,7 +1368,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = SmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.permissions_validity = IntSmallestDurationMilliseconds.inMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -1422,7 +1422,7 @@ public class DatabaseDescriptor
 
     public static void setRolesValidity(int validity)
     {
-        conf.roles_validity = SmallestDurationMilliseconds.inMilliseconds(validity);
+        conf.roles_validity = IntSmallestDurationMilliseconds.inMilliseconds(validity);
     }
 
     public static int getRolesUpdateInterval()
@@ -1476,7 +1476,7 @@ public class DatabaseDescriptor
 
     public static void setCredentialsValidity(int timeout)
     {
-        conf.credentials_validity = SmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.credentials_validity = IntSmallestDurationMilliseconds.inMilliseconds(timeout);
     }
 
     public static int getCredentialsUpdateInterval()
@@ -2403,7 +2403,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpConnectTimeoutInMS(int value)
     {
-        conf.internode_tcp_connect_timeout = SmallestDurationMilliseconds.inMilliseconds(value);
+        conf.internode_tcp_connect_timeout = IntSmallestDurationMilliseconds.inMilliseconds(value);
     }
 
     public static int getInternodeTcpUserTimeoutInMS()
@@ -2413,7 +2413,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpUserTimeoutInMS(int value)
     {
-        conf.internode_tcp_user_timeout = SmallestDurationMilliseconds.inMilliseconds(value);
+        conf.internode_tcp_user_timeout = IntSmallestDurationMilliseconds.inMilliseconds(value);
     }
 
     public static int getInternodeStreamingTcpUserTimeoutInMS()
@@ -2423,7 +2423,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeStreamingTcpUserTimeoutInMS(int value)
     {
-        conf.internode_streaming_tcp_user_timeout = SmallestDurationMilliseconds.inMilliseconds(value);
+        conf.internode_streaming_tcp_user_timeout = IntSmallestDurationMilliseconds.inMilliseconds(value);
     }
 
     public static int getInternodeMaxMessageSizeInBytes()
@@ -2743,7 +2743,7 @@ public class DatabaseDescriptor
 
     public static long getPeriodicCommitLogSyncBlock()
     {
-        SmallestDurationMilliseconds blockMillis = conf.periodic_commitlog_sync_lag_block;
+        IntSmallestDurationMilliseconds blockMillis = conf.periodic_commitlog_sync_lag_block;
         return blockMillis == null
                ? (long)(getCommitLogSyncPeriod() * 1.5)
                : blockMillis.toMilliseconds();
@@ -2751,7 +2751,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncPeriod(int periodMillis)
     {
-        conf.commitlog_sync_period = SmallestDurationMilliseconds.inMilliseconds(periodMillis);
+        conf.commitlog_sync_period = IntSmallestDurationMilliseconds.inMilliseconds(periodMillis);
     }
 
     public static Config.CommitLogSync getCommitLogSync()
@@ -2900,7 +2900,7 @@ public class DatabaseDescriptor
 
     public static void setMaxHintWindow(int ms)
     {
-        conf.max_hint_window = SmallestDurationMilliseconds.inMilliseconds(ms);
+        conf.max_hint_window = IntSmallestDurationMilliseconds.inMilliseconds(ms);
     }
 
     public static int getMaxHintWindow()
@@ -2946,7 +2946,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicUpdateInterval(int dynamicUpdateInterval)
     {
-        conf.dynamic_snitch_update_interval = SmallestDurationMilliseconds.inMilliseconds(dynamicUpdateInterval);
+        conf.dynamic_snitch_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(dynamicUpdateInterval);
     }
 
     public static int getDynamicResetInterval()
@@ -2955,7 +2955,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicResetInterval(int dynamicResetInterval)
     {
-        conf.dynamic_snitch_reset_interval = SmallestDurationMilliseconds.inMilliseconds(dynamicResetInterval);
+        conf.dynamic_snitch_reset_interval = IntSmallestDurationMilliseconds.inMilliseconds(dynamicResetInterval);
     }
 
     public static double getDynamicBadnessThreshold()
