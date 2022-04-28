@@ -56,8 +56,8 @@ public enum Converters
     SECONDS_DURATION(Integer.class, IntSmallestDurationSeconds.class,
                      i -> IntSmallestDurationSeconds.inSeconds(i),
                      DurationSpec::toSecondsAsInt),
-    NEGATIVE_SECONDS_DURATION(Integer.class, SmallestDurationSeconds.class,
-                              o -> o < 0 ? SmallestDurationSeconds.inSeconds(0) : SmallestDurationSeconds.inSeconds(o),
+    NEGATIVE_SECONDS_DURATION(Integer.class, IntSmallestDurationSeconds.class,
+                              o -> o < 0 ? IntSmallestDurationSeconds.inSeconds(0) : IntSmallestDurationSeconds.inSeconds(o),
                               DurationSpec::toSecondsAsInt),
     /**
      * This converter is used to support backward compatibility for Duration parameters where we added the opportunity
