@@ -523,10 +523,9 @@ public class DatabaseDescriptor
         long valueInBytes = conf.native_transport_max_frame_size.toBytes();
         if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
         {
-            throw new ConfigurationException(String.format("%s must be positive value < %dB, but was %dB",
+            throw new ConfigurationException(String.format("%s must be positive value <= %dB, but was %dB",
                                                            "native_transport_max_frame_size",
-                                                           conf.native_transport_max_frame_size.getUnit()
-                                                                .convert(Integer.MAX_VALUE, DataStorageSpec.DataStorageUnit.BYTES),
+                                                           Integer.MAX_VALUE,
                                                            valueInBytes),
                                              false);
         }
