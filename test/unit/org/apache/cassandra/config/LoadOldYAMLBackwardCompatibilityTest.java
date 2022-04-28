@@ -67,9 +67,9 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertEquals(DurationSpec.inMilliseconds(300000), config.internode_streaming_tcp_user_timeout);
         assertEquals(DataStorageSpec.inMebibytes(16), config.native_transport_max_frame_size);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(256), config.max_value_size);
-        assertEquals(DataStorageSpec.inKibibytes(4), config.column_index_size);
-        assertEquals(DataStorageSpec.inKibibytes(2), config.column_index_cache_size);
-        assertEquals(DataStorageSpec.inKibibytes(5), config.batch_size_warn_threshold);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(4), config.column_index_size);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(2), config.column_index_cache_size);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(5), config.batch_size_warn_threshold);
         assertEquals(DataRateSpec.inMebibytesPerSecond(64), config.compaction_throughput);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(50), config.min_free_space_per_drive);
         assertEquals(IntDataRate.inMebibytesPerSecond(23841858).toString(), config.stream_throughput_outbound.toString());
@@ -85,11 +85,11 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertEquals(DurationSpec.inMilliseconds(250), config.cdc_free_space_check_interval);
         assertEquals(DurationSpec.inMilliseconds(100), config.dynamic_snitch_update_interval);
         assertEquals(DurationSpec.inMilliseconds(600000), config.dynamic_snitch_reset_interval);
-        assertEquals(DataStorageSpec.inKibibytes(1024), config.hinted_handoff_throttle);
-        assertEquals(DataStorageSpec.inKibibytes(1024), config.batchlog_replay_throttle);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(1024), config.hinted_handoff_throttle);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(1024), config.batchlog_replay_throttle);
         assertEquals(DurationSpec.inMilliseconds(10000), config.hints_flush_period);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(128), config.max_hints_file_size);
-        assertEquals(DataStorageSpec.inKibibytes(10240), config.trickle_fsync_interval);
+        assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(10240), config.trickle_fsync_interval);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(50), config.sstable_preemptive_open_interval);
         assertNull( config.key_cache_size);
         assertEquals(DataStorageSpec.inMebibytes(16), config.row_cache_size);

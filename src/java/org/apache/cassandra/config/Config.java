@@ -285,13 +285,13 @@ public class Config
 
     /* if the size of columns or super-columns are more than this, indexing will kick in */
     @Replaces(oldName = "column_index_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes column_index_size = new SmallestDataStorageKibibytes("64KiB");
+    public volatile IntSmallestDataStorageKibibytes column_index_size = new IntSmallestDataStorageKibibytes("64KiB");
     @Replaces(oldName = "column_index_cache_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes column_index_cache_size = new SmallestDataStorageKibibytes("2KiB");
+    public volatile IntSmallestDataStorageKibibytes column_index_cache_size = new IntSmallestDataStorageKibibytes("2KiB");
     @Replaces(oldName = "batch_size_warn_threshold_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes batch_size_warn_threshold = new SmallestDataStorageKibibytes("5KiB");
+    public volatile IntSmallestDataStorageKibibytes batch_size_warn_threshold = new IntSmallestDataStorageKibibytes("5KiB");
     @Replaces(oldName = "batch_size_fail_threshold_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public volatile SmallestDataStorageKibibytes batch_size_fail_threshold = new SmallestDataStorageKibibytes("50KiB");
+    public volatile IntSmallestDataStorageKibibytes batch_size_fail_threshold = new IntSmallestDataStorageKibibytes("50KiB");
 
     public Integer unlogged_batch_across_partitions_warn_threshold = 10;
     public volatile Integer concurrent_compactors;
@@ -354,7 +354,7 @@ public class Config
     public TransparentDataEncryptionOptions transparent_data_encryption_options = new TransparentDataEncryptionOptions();
 
     @Replaces(oldName = "max_mutation_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes max_mutation_size;
+    public IntSmallestDataStorageKibibytes max_mutation_size;
 
     // Change-data-capture logs
     public boolean cdc_enabled = false;
@@ -386,9 +386,9 @@ public class Config
     public InternodeCompression internode_compression = InternodeCompression.none;
 
     @Replaces(oldName = "hinted_handoff_throttle_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes hinted_handoff_throttle = new SmallestDataStorageKibibytes("1024KiB");
+    public IntSmallestDataStorageKibibytes hinted_handoff_throttle = new IntSmallestDataStorageKibibytes("1024KiB");
     @Replaces(oldName = "batchlog_replay_throttle_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes batchlog_replay_throttle = new SmallestDataStorageKibibytes("1024KiB");
+    public IntSmallestDataStorageKibibytes batchlog_replay_throttle = new IntSmallestDataStorageKibibytes("1024KiB");
     public int max_hints_delivery_threads = 2;
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public IntSmallestDurationMilliseconds hints_flush_period = new IntSmallestDurationMilliseconds("10s");
@@ -402,7 +402,7 @@ public class Config
     public volatile boolean incremental_backups = false;
     public boolean trickle_fsync = false;
     @Replaces(oldName = "trickle_fsync_interval_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
-    public SmallestDataStorageKibibytes trickle_fsync_interval = new SmallestDataStorageKibibytes("10240KiB");
+    public IntSmallestDataStorageKibibytes trickle_fsync_interval = new IntSmallestDataStorageKibibytes("10240KiB");
 
     @Replaces(oldName = "sstable_preemptive_open_interval_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
     public volatile IntSmallestDataStorageMebibytes sstable_preemptive_open_interval = new IntSmallestDataStorageMebibytes("50MiB");
