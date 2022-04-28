@@ -56,12 +56,12 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertNull(config.memtable_heap_space);
         assertNull(config.memtable_offheap_space);
         assertNull( config.repair_session_space);
-        assertEquals(DataStorageSpec.inBytes(4194304), config.internode_application_send_queue_capacity);
-        assertEquals(DataStorageSpec.inBytes(134217728), config.internode_application_send_queue_reserve_endpoint_capacity);
-        assertEquals(DataStorageSpec.inBytes(536870912), config.internode_application_send_queue_reserve_global_capacity);
-        assertEquals(DataStorageSpec.inBytes(4194304), config.internode_application_receive_queue_capacity);
-        assertEquals(DataStorageSpec.inBytes(134217728), config.internode_application_receive_queue_reserve_endpoint_capacity);
-        assertEquals(DataStorageSpec.inBytes(536870912), config.internode_application_receive_queue_reserve_global_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(4194304), config.internode_application_send_queue_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(134217728), config.internode_application_send_queue_reserve_endpoint_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(536870912), config.internode_application_send_queue_reserve_global_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(4194304), config.internode_application_receive_queue_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(134217728), config.internode_application_receive_queue_reserve_endpoint_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(536870912), config.internode_application_receive_queue_reserve_global_capacity);
         assertEquals(DurationSpec.inMilliseconds(2000), config.internode_tcp_connect_timeout);
         assertEquals(DurationSpec.inMilliseconds(30000), config.internode_tcp_user_timeout);
         assertEquals(DurationSpec.inMilliseconds(300000), config.internode_streaming_tcp_user_timeout);
@@ -70,7 +70,7 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(4), config.column_index_size);
         assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(2), config.column_index_cache_size);
         assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(5), config.batch_size_warn_threshold);
-        assertEquals(DataRateSpec.inMebibytesPerSecond(64), config.compaction_throughput);
+        assertEquals(IntDataRate.inMebibytesPerSecond(64), config.compaction_throughput);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(50), config.min_free_space_per_drive);
         assertEquals(IntDataRate.inMebibytesPerSecond(23841858).toString(), config.stream_throughput_outbound.toString());
         assertEquals(IntDataRate.megabitsPerSecondInMebibytesPerSecond(200000000).toString(), config.stream_throughput_outbound.toString());

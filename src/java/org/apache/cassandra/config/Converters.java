@@ -80,8 +80,8 @@ public enum Converters
     KIBIBYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageKibibytes.class,
                           i -> IntSmallestDataStorageKibibytes.inKibibytes(i),
                           DataStorageSpec::toKibibytesAsInt),
-    BYTES_DATASTORAGE(Integer.class, DataStorageSpec.class,
-                      i -> DataStorageSpec.inBytes(i),
+    BYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageBytes.class,
+                      i -> IntSmallestDataStorageBytes.inBytes(i),
                       DataStorageSpec::toBytesAsInt),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value

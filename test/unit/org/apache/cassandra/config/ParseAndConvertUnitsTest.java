@@ -79,12 +79,12 @@ public class ParseAndConvertUnitsTest
         assertNull(config.memtable_heap_space);
         assertNull(config.memtable_offheap_space);
         assertNull(config.repair_session_space); //null everywhere so should be correct, let's check whether it will bomb
-        assertEquals(DataStorageSpec.inBytes(4194304), config.internode_application_send_queue_capacity);
-        assertEquals(DataStorageSpec.inBytes(134217728), config.internode_application_send_queue_reserve_endpoint_capacity);
-        assertEquals(DataStorageSpec.inBytes(536870912), config.internode_application_send_queue_reserve_global_capacity);
-        assertEquals(DataStorageSpec.inBytes(4194304), config.internode_application_receive_queue_capacity);
-        assertEquals(DataStorageSpec.inBytes(134217728), config.internode_application_receive_queue_reserve_endpoint_capacity);
-        assertEquals(DataStorageSpec.inBytes(536870912), config.internode_application_receive_queue_reserve_global_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(4194304), config.internode_application_send_queue_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(134217728), config.internode_application_send_queue_reserve_endpoint_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(536870912), config.internode_application_send_queue_reserve_global_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(4194304), config.internode_application_receive_queue_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(134217728), config.internode_application_receive_queue_reserve_endpoint_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inBytes(536870912), config.internode_application_receive_queue_reserve_global_capacity);
         assertEquals(DataStorageSpec.inMebibytes(16), config.native_transport_max_frame_size);
         assertEquals(IntSmallestDataStorageMebibytes.inMebibytes(256), config.max_value_size);
         assertEquals(IntSmallestDataStorageKibibytes.inKibibytes(4), config.column_index_size);
@@ -108,11 +108,11 @@ public class ParseAndConvertUnitsTest
         assertEquals(DataStorageSpec.inMebibytes(16), config.row_cache_size);
         assertNull(config.native_transport_max_request_data_in_flight);
         assertNull(config.native_transport_max_request_data_in_flight_per_ip);
-        assertEquals(DataStorageSpec.inMebibytes(1), config.native_transport_receive_queue_capacity);
+        assertEquals(IntSmallestDataStorageBytes.inMebibytes(1), config.native_transport_receive_queue_capacity);
 
         //Confirm rate parameters were successfully parsed with the default values in cassandra.yaml
-        assertEquals(DataRateSpec.inMebibytesPerSecond(0), config.compaction_throughput);
-        assertEquals(DataRateSpec.inMebibytesPerSecond(23841858), config.stream_throughput_outbound);
-        assertEquals(DataRateSpec.inMebibytesPerSecond(24), config.inter_dc_stream_throughput_outbound);
+        assertEquals(IntDataRate.inMebibytesPerSecond(0), config.compaction_throughput);
+        assertEquals(IntDataRate.inMebibytesPerSecond(23841858), config.stream_throughput_outbound);
+        assertEquals(IntDataRate.inMebibytesPerSecond(24), config.inter_dc_stream_throughput_outbound);
     }
 }
