@@ -74,19 +74,19 @@ public class Config
     public String role_manager;
     public String network_authorizer;
     @Replaces(oldName = "permissions_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds permissions_validity = new SmallestDurationMilliseconds("2s");
+    public volatile IntSmallestDurationMilliseconds permissions_validity = new IntSmallestDurationMilliseconds("2s");
     public volatile int permissions_cache_max_entries = 1000;
     @Replaces(oldName = "permissions_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile SmallestDurationMilliseconds permissions_update_interval = null;
     public volatile boolean permissions_cache_active_update = false;
     @Replaces(oldName = "roles_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds roles_validity = new SmallestDurationMilliseconds("2s");
+    public volatile IntSmallestDurationMilliseconds roles_validity = new IntSmallestDurationMilliseconds("2s");
     public volatile int roles_cache_max_entries = 1000;
     @Replaces(oldName = "roles_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile SmallestDurationMilliseconds roles_update_interval = null;
     public volatile boolean roles_cache_active_update = false;
     @Replaces(oldName = "credentials_validity_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds credentials_validity = new SmallestDurationMilliseconds("2s");
+    public volatile IntSmallestDurationMilliseconds credentials_validity = new IntSmallestDurationMilliseconds("2s");
     public volatile int credentials_cache_max_entries = 1000;
     @Replaces(oldName = "credentials_update_interval_in_ms", converter = Converters.MILLIS_CUSTOM_DURATION, deprecated = true)
     public volatile SmallestDurationMilliseconds credentials_update_interval = null;
@@ -99,7 +99,7 @@ public class Config
     public volatile boolean hinted_handoff_enabled = true;
     public Set<String> hinted_handoff_disabled_datacenters = Sets.newConcurrentHashSet();
     @Replaces(oldName = "max_hint_window_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds max_hint_window = new SmallestDurationMilliseconds("3h");
+    public volatile IntSmallestDurationMilliseconds max_hint_window = new IntSmallestDurationMilliseconds("3h");
     public String hints_directory;
     public boolean hint_window_persistent_enabled = true;
 
@@ -235,17 +235,17 @@ public class Config
     // Defensive settings for protecting Cassandra from true network partitions. See (CASSANDRA-14358) for details.
     // The amount of time to wait for internode tcp connections to establish.
     @Replaces(oldName = "internode_tcp_connect_timeout_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds internode_tcp_connect_timeout = new SmallestDurationMilliseconds("2s");
+    public volatile IntSmallestDurationMilliseconds internode_tcp_connect_timeout = new IntSmallestDurationMilliseconds("2s");
     // The amount of time unacknowledged data is allowed on a connection before we throw out the connection
     // Note this is only supported on Linux + epoll, and it appears to behave oddly above a setting of 30000
     // (it takes much longer than 30s) as of Linux 4.12. If you want something that high set this to 0
     // (which picks up the OS default) and configure the net.ipv4.tcp_retries2 sysctl to be ~8.
     @Replaces(oldName = "internode_tcp_user_timeout_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds internode_tcp_user_timeout = new SmallestDurationMilliseconds("30s");
+    public volatile IntSmallestDurationMilliseconds internode_tcp_user_timeout = new IntSmallestDurationMilliseconds("30s");
     // Similar to internode_tcp_user_timeout but used specifically for streaming connection.
     // The default is 5 minutes. Increase it or set it to 0 in order to increase the timeout.
     @Replaces(oldName = "internode_streaming_tcp_user_timeout_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public volatile SmallestDurationMilliseconds internode_streaming_tcp_user_timeout = new SmallestDurationMilliseconds("300s"); // 5 minutes
+    public volatile IntSmallestDurationMilliseconds internode_streaming_tcp_user_timeout = new IntSmallestDurationMilliseconds("300s"); // 5 minutes
 
     public boolean start_native_transport = true;
     public int native_transport_port = 9042;
@@ -343,14 +343,14 @@ public class Config
     @Replaces(oldName = "commitlog_sync_group_window_in_ms", converter = Converters.MILLIS_DURATION_DOUBLE, deprecated = true)
     public SmallestDurationMilliseconds commitlog_sync_group_window = new SmallestDurationMilliseconds("0ms");
     @Replaces(oldName = "commitlog_sync_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds commitlog_sync_period = new SmallestDurationMilliseconds("0ms");
+    public IntSmallestDurationMilliseconds commitlog_sync_period = new IntSmallestDurationMilliseconds("0ms");
     @Replaces(oldName = "commitlog_segment_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
     public SmallestDataStorageMebibytes commitlog_segment_size = new SmallestDataStorageMebibytes("32MiB");
     public ParameterizedClass commitlog_compression;
     public FlushCompression flush_compression = FlushCompression.fast;
     public int commitlog_max_compression_buffers_in_pool = 3;
     @Replaces(oldName = "periodic_commitlog_sync_lag_block_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds periodic_commitlog_sync_lag_block;
+    public IntSmallestDurationMilliseconds periodic_commitlog_sync_lag_block;
     public TransparentDataEncryptionOptions transparent_data_encryption_options = new TransparentDataEncryptionOptions();
 
     @Replaces(oldName = "max_mutation_size_in_kb", converter = Converters.KIBIBYTES_DATASTORAGE, deprecated = true)
@@ -365,7 +365,7 @@ public class Config
     @Replaces(oldName = "cdc_total_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
     public SmallestDataStorageMebibytes cdc_total_space = new SmallestDataStorageMebibytes("0MiB");
     @Replaces(oldName = "cdc_free_space_check_interval_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds cdc_free_space_check_interval = new SmallestDurationMilliseconds("250ms");
+    public IntSmallestDurationMilliseconds cdc_free_space_check_interval = new IntSmallestDurationMilliseconds("250ms");
 
     @Deprecated
     public int commitlog_periodic_queue_size = -1;
@@ -373,9 +373,9 @@ public class Config
     public String endpoint_snitch;
     public boolean dynamic_snitch = true;
     @Replaces(oldName = "dynamic_snitch_update_interval_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds dynamic_snitch_update_interval = new SmallestDurationMilliseconds("100ms");
+    public IntSmallestDurationMilliseconds dynamic_snitch_update_interval = new IntSmallestDurationMilliseconds("100ms");
     @Replaces(oldName = "dynamic_snitch_reset_interval_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds dynamic_snitch_reset_interval = new SmallestDurationMilliseconds("10m");
+    public IntSmallestDurationMilliseconds dynamic_snitch_reset_interval = new IntSmallestDurationMilliseconds("10m");
     public double dynamic_snitch_badness_threshold = 1.0;
 
     public String failure_detector = "FailureDetector";
@@ -391,7 +391,7 @@ public class Config
     public SmallestDataStorageKibibytes batchlog_replay_throttle = new SmallestDataStorageKibibytes("1024KiB");
     public int max_hints_delivery_threads = 2;
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds hints_flush_period = new SmallestDurationMilliseconds("10s");
+    public IntSmallestDurationMilliseconds hints_flush_period = new IntSmallestDurationMilliseconds("10s");
     @Replaces(oldName = "max_hints_file_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
     public SmallestDataStorageMebibytes max_hints_file_size = new SmallestDataStorageMebibytes("128MiB");
     public volatile DataStorageSpec max_hints_size_per_host = new DataStorageSpec("0B"); // 0 means disabled
@@ -486,9 +486,9 @@ public class Config
     public volatile SmallestDurationMinutes index_summary_resize_interval = new SmallestDurationMinutes("60m");
 
     @Replaces(oldName = "gc_log_threshold_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds gc_log_threshold = new SmallestDurationMilliseconds("200ms");
+    public IntSmallestDurationMilliseconds gc_log_threshold = new IntSmallestDurationMilliseconds("200ms");
     @Replaces(oldName = "gc_warn_threshold_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
-    public SmallestDurationMilliseconds gc_warn_threshold = new SmallestDurationMilliseconds("1s");
+    public IntSmallestDurationMilliseconds gc_warn_threshold = new IntSmallestDurationMilliseconds("1s");
 
     // TTL for different types of trace events.
     @Replaces(oldName = "tracetype_query_ttl", converter = Converters.SECONDS_DURATION, deprecated=true)
