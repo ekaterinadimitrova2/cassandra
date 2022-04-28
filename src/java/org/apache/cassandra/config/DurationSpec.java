@@ -80,12 +80,10 @@ public class DurationSpec
                                              " ns where case matters and " + "only non-negative values");
         }
 
-        if (value != null)
-        {
-            long nanoseconds = toNanoseconds();
-            if (nanoseconds == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
-        }
+        long nanoseconds = toNanoseconds();
+        if (nanoseconds == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+
     }
 
     DurationSpec(long quantity, TimeUnit unit)

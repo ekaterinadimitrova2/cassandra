@@ -29,13 +29,10 @@ public class IntDataRate extends DataRateSpec
     {
         super(value);
 
-        if (value != null)
-        {
-            // as we store in double and we don't have issues with precision we can afford this for int parameters
-            // we chose mebibytes per second, int as the new streaming parameters added 4.1 were supposed to be int mebibytes
-            if (toMegabitsPerSecond() > Integer.MAX_VALUE)
-                throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + " mebibytes per second");
-        }
+        // as we store in double and we don't have issues with precision we can afford this for int parameters
+        // we chose mebibytes per second, int as the new streaming parameters added 4.1 were supposed to be int mebibytes
+        if (toMebibytesPerSecond() > Integer.MAX_VALUE)
+            throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + " mebibytes per second");
     }
 
     public IntDataRate(double quantity, DataRateUnit unit)
@@ -49,7 +46,7 @@ public class IntDataRate extends DataRateSpec
         double mebibytesPerSecond = (double)megabitsPerSecond * MEBIBYTES_PER_MEGABIT;
 
         if (megabitsPerSecond > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate: " + megabitsPerSecond +"megabits per second; " +
+            throw new ConfigurationException("Invalid data rate: " + megabitsPerSecond +" megabits per second; " +
                                              "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
                                              " should be between 0 and " + Integer.MAX_VALUE + " in megabits per second");
 

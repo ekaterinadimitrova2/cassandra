@@ -28,13 +28,10 @@ public final class IntSmallestDataStorageKibibytes extends DataStorageSpec
     {
         super(value, DataStorageSpec.DataStorageUnit.KIBIBYTES);
 
-        if (value != null)
-        {
-            long kibibytes = toKibibytes();
-            if (kibibytes > Integer.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
-                                                 " kibibytes, but it was " + kibibytes + " kibibytes");
-        }
+        long kibibytes = toKibibytes();
+        if (kibibytes > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
+                                             " kibibytes, but it was " + kibibytes + " kibibytes");
     }
     // TO DO As int methods and whatever else is needed
 }
