@@ -71,12 +71,10 @@ public class DataStorageSpec
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
 
-        if (value != null)
-        {
-            long bytes = toBytes();
-            if (bytes == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in bytes");
-        }
+
+        long bytes = toBytes();
+        if (bytes == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in bytes");
     }
 
     DataStorageSpec(long quantity, DataStorageUnit unit)

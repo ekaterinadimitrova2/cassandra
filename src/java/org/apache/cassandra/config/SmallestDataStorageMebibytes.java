@@ -38,12 +38,9 @@ public final class SmallestDataStorageMebibytes extends DataStorageSpec
     {
         super(value, DataStorageSpec.DataStorageUnit.MEBIBYTES);
 
-        if (value != null)
-        {
-            if (toMebibytes() == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than" +
-                                                 + (Long.MAX_VALUE-1) + " in mebibytes");
-        }
+        if (toMebibytes() == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than" +
+                                             + (Long.MAX_VALUE-1) + " in mebibytes");
     }
 
     private SmallestDataStorageMebibytes(long quantity, DataStorageSpec.DataStorageUnit unit)

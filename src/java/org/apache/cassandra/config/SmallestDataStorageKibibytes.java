@@ -40,12 +40,9 @@ public final class SmallestDataStorageKibibytes extends DataStorageSpec
     {
         super(value, DataStorageSpec.DataStorageUnit.KIBIBYTES);
 
-        if (value != null)
-        {
-            if (toKibibytes() == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than" +
-                                                 + (Long.MAX_VALUE-1) + " in kibibytes");
-        }
+        if (toKibibytes() == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than" +
+                                             + (Long.MAX_VALUE-1) + " in kibibytes");
     }
 
     private SmallestDataStorageKibibytes(long quantity, DataStorageSpec.DataStorageUnit unit)

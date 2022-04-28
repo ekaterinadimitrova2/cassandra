@@ -54,10 +54,8 @@ public class DataRateSpec
         quantity = (double)Long.parseLong(matcher.group(1));
         unit = DataRateUnit.fromSymbol(matcher.group(2));
 
-        final double MAX = Long.MAX_VALUE;
-        if (value != null)
-            if (toBytesPerSecond() >= MAX)
-                throw new NumberFormatException("Invalid data rate: value " + toBytesPerSecond() + " must be between 0 and " + (Long.MAX_VALUE - 1) + " bytes per second");
+        if (toBytesPerSecond() >= Long.MAX_VALUE)
+            throw new NumberFormatException("Invalid data rate: value " + toBytesPerSecond() + " must be between 0 and " + (Long.MAX_VALUE - 1) + " bytes per second");
     }
 
     DataRateSpec(double quantity, DataRateUnit unit)
@@ -77,7 +75,7 @@ public class DataRateSpec
      */
     public static DataRateSpec inBytesPerSecond(long bytesPerSecond)
     {
-        if (bytesPerSecond >= Long.MAX_VALUE)
+        if (bytesPerSecond == Long.MAX_VALUE)
             throw new NumberFormatException("Invalid data rate: value " + bytesPerSecond + "  must be between 0 and " + (Long.MAX_VALUE-1));
 
         return new DataRateSpec(bytesPerSecond, DataRateUnit.BYTES_PER_SECOND);
