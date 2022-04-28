@@ -3233,7 +3233,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setCacheLoadTimeout(int seconds)
     {
-        conf.cache_load_timeout = SmallestDurationSeconds.inSeconds(seconds);
+        conf.cache_load_timeout = IntSmallestDurationSeconds.inSeconds(seconds);
     }
 
     public static int getCounterCacheKeysToSave()
