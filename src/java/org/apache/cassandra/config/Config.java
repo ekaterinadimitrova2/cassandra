@@ -712,9 +712,9 @@ public class Config
 
     public volatile boolean denylist_range_reads_enabled = true;
 
-    public SmallestDurationSeconds denylist_refresh = new SmallestDurationSeconds("600s");
+    public IntSmallestDurationSeconds denylist_refresh = new IntSmallestDurationSeconds("600s");
 
-    public SmallestDurationSeconds denylist_initial_load_retry = new SmallestDurationSeconds("5s");
+    public IntSmallestDurationSeconds denylist_initial_load_retry = new IntSmallestDurationSeconds("5s");
 
     /** We cap the number of denylisted keys allowed per table to keep things from growing unbounded. Operators will
      * receive warnings and only denylist_max_keys_per_table in natural query ordering will be processed on overflow.
