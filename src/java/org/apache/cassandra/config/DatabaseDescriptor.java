@@ -1373,7 +1373,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                conf.permissions_update_interval = SmallestDurationMilliseconds.inMilliseconds(updateInterval);
+                conf.permissions_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(updateInterval);
             }
             catch (ConfigurationException e)
             {
@@ -1437,7 +1437,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                conf.roles_update_interval = SmallestDurationMilliseconds.inMilliseconds(interval);
+                conf.roles_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(interval);
             }
             catch(ConfigurationException e)
             {
@@ -1481,7 +1481,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                conf.credentials_update_interval = SmallestDurationMilliseconds.inMilliseconds(updateInterval);
+                conf.credentials_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(updateInterval);
             }
             catch (ConfigurationException e)
             {
