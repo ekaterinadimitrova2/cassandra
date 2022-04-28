@@ -170,9 +170,9 @@ public class Config
 
     public int memtable_flush_writers = 0;
     @Replaces(oldName = "memtable_heap_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes memtable_heap_space;
+    public IntSmallestDataStorageMebibytes memtable_heap_space;
     @Replaces(oldName = "memtable_offheap_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes memtable_offheap_space;
+    public IntSmallestDataStorageMebibytes memtable_offheap_space;
     public Float memtable_cleanup_threshold = null;
 
     public static class MemtableOptions
@@ -190,7 +190,7 @@ public class Config
     @Deprecated
     public volatile Integer repair_session_max_tree_depth = null;
     @Replaces(oldName = "repair_session_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public volatile SmallestDataStorageMebibytes repair_session_space = null;
+    public volatile IntSmallestDataStorageMebibytes repair_session_space = null;
 
     public volatile boolean use_offheap_merkle_trees = true;
 
@@ -263,7 +263,7 @@ public class Config
     public Integer native_transport_port_ssl = null;
     public int native_transport_max_threads = 128;
     @Replaces(oldName = "native_transport_max_frame_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes native_transport_max_frame_size = new SmallestDataStorageMebibytes("16MiB");
+    public IntSmallestDataStorageMebibytes native_transport_max_frame_size = new IntSmallestDataStorageMebibytes("16MiB");
     public volatile long native_transport_max_concurrent_connections = -1L;
     public volatile long native_transport_max_concurrent_connections_per_ip = -1L;
     public boolean native_transport_flush_in_batches_legacy = false;
@@ -288,7 +288,7 @@ public class Config
      * See AbstractType for how it is used.
      */
     @Replaces(oldName = "max_value_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes max_value_size = new SmallestDataStorageMebibytes("256MiB");
+    public IntSmallestDataStorageMebibytes max_value_size = new IntSmallestDataStorageMebibytes("256MiB");
 
     public boolean snapshot_before_compaction = false;
     public boolean auto_snapshot = true;
@@ -317,9 +317,9 @@ public class Config
     @Replaces(oldName = "compaction_throughput_mb_per_sec", converter = Converters.MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
     public volatile IntDataRate compaction_throughput = new IntDataRate("16MiB/s");
     @Replaces(oldName = "compaction_large_partition_warning_threshold_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public volatile SmallestDataStorageMebibytes compaction_large_partition_warning_threshold = new SmallestDataStorageMebibytes("100MiB");
+    public volatile IntSmallestDataStorageMebibytes compaction_large_partition_warning_threshold = new IntSmallestDataStorageMebibytes("100MiB");
     @Replaces(oldName = "min_free_space_per_drive_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes min_free_space_per_drive = new SmallestDataStorageMebibytes("50MiB");
+    public IntSmallestDataStorageMebibytes min_free_space_per_drive = new IntSmallestDataStorageMebibytes("50MiB");
     public volatile Integer compaction_tombstone_warning_threshold = 100000;
 
     public volatile int concurrent_materialized_view_builders = 1;
@@ -352,7 +352,7 @@ public class Config
     // Commit Log
     public String commitlog_directory;
     @Replaces(oldName = "commitlog_total_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes commitlog_total_space;
+    public IntSmallestDataStorageMebibytes commitlog_total_space;
     public CommitLogSync commitlog_sync;
 
     /**
@@ -364,7 +364,7 @@ public class Config
     @Replaces(oldName = "commitlog_sync_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public IntSmallestDurationMilliseconds commitlog_sync_period = new IntSmallestDurationMilliseconds("0ms");
     @Replaces(oldName = "commitlog_segment_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes commitlog_segment_size = new SmallestDataStorageMebibytes("32MiB");
+    public IntSmallestDataStorageMebibytes commitlog_segment_size = new IntSmallestDataStorageMebibytes("32MiB");
     public ParameterizedClass commitlog_compression;
     public FlushCompression flush_compression = FlushCompression.fast;
     public int commitlog_max_compression_buffers_in_pool = 3;
@@ -382,7 +382,7 @@ public class Config
     public volatile boolean cdc_block_writes = true;
     public String cdc_raw_directory;
     @Replaces(oldName = "cdc_total_space_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes cdc_total_space = new SmallestDataStorageMebibytes("0MiB");
+    public IntSmallestDataStorageMebibytes cdc_total_space = new IntSmallestDataStorageMebibytes("0MiB");
     @Replaces(oldName = "cdc_free_space_check_interval_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public IntSmallestDurationMilliseconds cdc_free_space_check_interval = new IntSmallestDurationMilliseconds("250ms");
 
@@ -412,7 +412,7 @@ public class Config
     @Replaces(oldName = "hints_flush_period_in_ms", converter = Converters.MILLIS_DURATION_INT, deprecated = true)
     public IntSmallestDurationMilliseconds hints_flush_period = new IntSmallestDurationMilliseconds("10s");
     @Replaces(oldName = "max_hints_file_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes max_hints_file_size = new SmallestDataStorageMebibytes("128MiB");
+    public IntSmallestDataStorageMebibytes max_hints_file_size = new IntSmallestDataStorageMebibytes("128MiB");
     public volatile DataStorageSpec max_hints_size_per_host = new DataStorageSpec("0B"); // 0 means disabled
 
     public ParameterizedClass hints_compression;
@@ -424,7 +424,7 @@ public class Config
     public SmallestDataStorageKibibytes trickle_fsync_interval = new SmallestDataStorageKibibytes("10240KiB");
 
     @Replaces(oldName = "sstable_preemptive_open_interval_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public volatile SmallestDataStorageMebibytes sstable_preemptive_open_interval = new SmallestDataStorageMebibytes("50MiB");
+    public volatile IntSmallestDataStorageMebibytes sstable_preemptive_open_interval = new IntSmallestDataStorageMebibytes("50MiB");
 
     public volatile boolean key_cache_migrate_during_compaction = true;
     public volatile int key_cache_keys_to_save = Integer.MAX_VALUE;
@@ -455,10 +455,10 @@ public class Config
     private static Supplier<Config> overrideLoadConfig = null;
 
     @Replaces(oldName = "networking_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes networking_cache_size;
+    public IntSmallestDataStorageMebibytes networking_cache_size;
 
     @Replaces(oldName = "file_cache_size_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
-    public SmallestDataStorageMebibytes file_cache_size;
+    public IntSmallestDataStorageMebibytes file_cache_size;
 
     public boolean file_cache_enabled = Boolean.getBoolean("cassandra.file_cache_enabled");
 

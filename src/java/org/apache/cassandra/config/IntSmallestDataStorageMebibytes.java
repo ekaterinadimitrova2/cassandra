@@ -33,5 +33,37 @@ public final class IntSmallestDataStorageMebibytes extends DataStorageSpec
             throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
                                              " mebibytes, but it was " + mebibytes + " mebibytes");
     }
+
+    private IntSmallestDataStorageMebibytes(long quantity, DataStorageSpec.DataStorageUnit unit)
+    {
+        super(quantity, unit);
+
+        long mebibytes = toMebibytes();
+        if (mebibytes > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: values must be less than " + Integer.MAX_VALUE +
+                                             " mebibytes, but it was " + mebibytes + " mebibytes");
+    }
+
+    /**
+     * Creates a {@code IntSmallestDataStorageMebibytes} of the specified amount of mebibytes.
+     *
+     * @param mebibytes the amount of mebibytes
+     * @return a data storage
+     */
+    public static IntSmallestDataStorageMebibytes inMebibytes(long mebibytes)
+    {
+        return new IntSmallestDataStorageMebibytes(mebibytes, DataStorageSpec.DataStorageUnit.MEBIBYTES);
+    }
+
+    /**
+     * Creates a {@code IntSmallestDataStorageBytes} of the specified amount of bytes.
+     *
+     * @param bytes the amount of bytes
+     * @return a data storage
+     */
+    public static IntSmallestDataStorageMebibytes inBytes(long bytes)
+    {
+        return new IntSmallestDataStorageMebibytes(bytes, DataStorageSpec.DataStorageUnit.BYTES);
+    }
     // TO DO As int methods and whatever else is needed
 }
