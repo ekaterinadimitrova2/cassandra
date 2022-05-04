@@ -19,6 +19,7 @@
 package org.apache.cassandra.config;
 
 import java.util.function.Function;
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit;
 
 /**
  * Converters for backward compatibility with the old cassandra.yaml where duration, data rate and
@@ -71,17 +72,17 @@ public enum Converters
     MINUTES_DURATION(Integer.class, IntSmallestDurationMinutes.class,
                      i -> IntSmallestDurationMinutes.inMinutes(i),
                      DurationSpec::toMinutesAsInt),
-    MEBIBYTES_DATA_STORAGE_LONG(Long.class, SmallestDataStorageMebibytes.class,
-                                SmallestDataStorageMebibytes::inMebibytes,
+    MEBIBYTES_DATA_STORAGE_LONG(Long.class, SmallestDataStorage.Mebibytes.class,
+                                x -> new SmallestDataStorage.Mebibytes(x, DataStorageUnit.MEBIBYTES),
                                 DataStorageSpec::toMebibytes),
-    MEBIBYTES_DATA_STORAGE_INT(Integer.class, IntSmallestDataStorageMebibytes.class,
-                               i -> IntSmallestDataStorageMebibytes.inMebibytes(i),
+    MEBIBYTES_DATA_STORAGE_INT(Integer.class, SmallestDataStorage.IntMebibytes.class,
+                               x -> new SmallestDataStorage.IntMebibytes(x, DataStorageUnit.MEBIBYTES),
                                DataStorageSpec::toMebibytesAsInt),
-    KIBIBYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageKibibytes.class,
-                          i -> IntSmallestDataStorageKibibytes.inKibibytes(i),
+    KIBIBYTES_DATASTORAGE(Integer.class, SmallestDataStorage.IntKibibytes.class,
+                          x -> new SmallestDataStorage.IntKibibytes(x, DataStorageUnit.KIBIBYTES),
                           DataStorageSpec::toKibibytesAsInt),
-    BYTES_DATASTORAGE(Integer.class, IntSmallestDataStorageBytes.class,
-                      i -> IntSmallestDataStorageBytes.inBytes(i),
+    BYTES_DATASTORAGE(Integer.class, SmallestDataStorage.IntBytes.class,
+                      x -> new SmallestDataStorage.IntBytes(x, DataStorageUnit.BYTES),
                       DataStorageSpec::toBytesAsInt),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value

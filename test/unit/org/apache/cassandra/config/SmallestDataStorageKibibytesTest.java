@@ -30,13 +30,13 @@ public class SmallestDataStorageKibibytesTest
     @Test
     public void testInvalidUnits()
     {
-        assertThatThrownBy(() -> new SmallestDataStorageKibibytes("10B")).isInstanceOf(ConfigurationException.class)
+        assertThatThrownBy(() -> new SmallestDataStorage.Kibibytes("10B")).isInstanceOf(ConfigurationException.class)
                                                                           .hasMessageContaining("Invalid data storage: 10B");
     }
 
     @Test
     public void testValidUnits()
     {
-        assertEquals(10L, new SmallestDataStorageKibibytes("10KiB").toKibibytes());
+        assertEquals(10L, new SmallestDataStorage.Kibibytes("10KiB").toKibibytes());
     }
 }

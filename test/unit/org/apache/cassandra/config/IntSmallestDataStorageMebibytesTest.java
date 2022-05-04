@@ -24,44 +24,45 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit;
 
 public class IntSmallestDataStorageMebibytesTest
 {
     @Test
     public void testInvalidUnits()
     {
-        assertThatThrownBy(() -> new IntSmallestDataStorageMebibytes("10B")).isInstanceOf(ConfigurationException.class)
-                                                                         .hasMessageContaining("Invalid data storage: 10B");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes("10B")).isInstanceOf(ConfigurationException.class)
+                                                                             .hasMessageContaining("Invalid data storage: 10B");
     }
 
     @Test
     public void testOverflowingConversion()
     {
-        assertThatThrownBy(() -> new IntSmallestDataStorageMebibytes("2147483648B")).isInstanceOf(ConfigurationException.class)
-                                                                                    .hasMessageContaining("Invalid data storage: 2147483648B " +
-                                                                                                          "Accepted units:[MEBIBYTES, GIBIBYTES]");
-        assertThatThrownBy(() -> new IntSmallestDataStorageMebibytes("2147483648KiB")).isInstanceOf(ConfigurationException.class)
-                                                                                      .hasMessageContaining("Invalid data storage: 2147483648KiB " +
-                                                                                                            "Accepted units:[MEBIBYTES, GIBIBYTES]");
-        assertThatThrownBy(() -> new IntSmallestDataStorageMebibytes("2147483648MiB")).isInstanceOf(ConfigurationException.class)
-                                                                                    .hasMessageContaining("Invalid data storage: values must be less than 2147483647" +
-                                                                                                          " mebibytes, but it was 2147483648 mebibytes");
-        assertThatThrownBy(() -> new IntSmallestDataStorageMebibytes("2097152GiB")).isInstanceOf(ConfigurationException.class)
-                                                                                 .hasMessageContaining("Invalid data storage: values must be less than 2147483647 " +
-                                                                                                       "mebibytes, but it was 2147483648 mebibytes");
-        assertThatThrownBy(() -> IntSmallestDataStorageMebibytes.inMebibytes(2147483648L)).isInstanceOf(ConfigurationException.class)
-                                                                                             .hasMessageContaining("Invalid data storage: values must be " +
-                                                                                                                   "less than 2147483647 mebibytes, " +
-                                                                                                                   "but it was 2147483648 mebibytes");
-        assertThatThrownBy(() -> IntSmallestDataStorageMebibytes.inBytes(2147483648L * 1024L * 1024)).isInstanceOf(ConfigurationException.class)
-                                                                                          .hasMessageContaining("Invalid data storage: values must be " +
-                                                                                                                "less than 2147483647 mebibytes, " +
-                                                                                                                "but it was 2147483648 mebibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes("2147483648B")).isInstanceOf(ConfigurationException.class)
+                                                                                     .hasMessageContaining("Invalid data storage: 2147483648B " +
+                                                                                                           "Accepted units:[MEBIBYTES, GIBIBYTES]");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes("2147483648KiB")).isInstanceOf(ConfigurationException.class)
+                                                                                       .hasMessageContaining("Invalid data storage: 2147483648KiB " +
+                                                                                                             "Accepted units:[MEBIBYTES, GIBIBYTES]");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes("2147483648MiB")).isInstanceOf(ConfigurationException.class)
+                                                                                       .hasMessageContaining("Invalid data storage: values must be less than 2147483647" +
+                                                                                                             " mebibytes, but it was 2147483648 mebibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes("2097152GiB")).isInstanceOf(ConfigurationException.class)
+                                                                                    .hasMessageContaining("Invalid data storage: values must be less than 2147483647 " +
+                                                                                                          "mebibytes, but it was 2147483648 mebibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes(2147483648L, DataStorageUnit.MEBIBYTES)).isInstanceOf(ConfigurationException.class)
+                                                                                                                              .hasMessageContaining("Invalid data storage: values must be " +
+                                                                                                                 "less than 2147483647 mebibytes, " +
+                                                                                                                 "but it was 2147483648 mebibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntMebibytes(2147483648L * 1024L * 1024, DataStorageUnit.BYTES)).isInstanceOf(ConfigurationException.class)
+                                                                                                                                         .hasMessageContaining("Invalid data storage: values must be " +
+                                                                                                                            "less than 2147483647 mebibytes, " +
+                                                                                                                            "but it was 2147483648 mebibytes");
     }
 
     @Test
     public void testValidUnits()
     {
-        assertEquals(10L, new IntSmallestDataStorageMebibytes("10MiB").toMebibytes());
+        assertEquals(10L, new SmallestDataStorage.IntMebibytes("10MiB").toMebibytes());
     }
 }

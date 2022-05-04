@@ -30,26 +30,26 @@ public class IntSmallestDataStorageBytesTest
     @Test
     public void testOverflowingConversion()
     {
-        assertThatThrownBy(() -> new IntSmallestDataStorageBytes("2147483648B")).isInstanceOf(ConfigurationException.class)
-                                                                                     .hasMessageContaining("Invalid data storage: values must be less " +
-                                                                                                           "than 2147483647 bytes, but it was 2147483648 bytes");
-        assertThatThrownBy(() -> IntSmallestDataStorageBytes.inBytes(2147483648L)).isInstanceOf(ConfigurationException.class)
-                                                                                .hasMessageContaining("Invalid data storage: values must be less " +
-                                                                                                      "than 2147483647 bytes, but it was 2147483648 bytes");
-        assertThatThrownBy(() -> new IntSmallestDataStorageBytes("2147483648KiB")).isInstanceOf(ConfigurationException.class)
-                                                                                    .hasMessageContaining("Invalid data storage: values must be " +
-                                                                                                          "less than 2147483647 bytes, but it was 2199023255552 bytes");
-        assertThatThrownBy(() -> new IntSmallestDataStorageBytes("35791395MiB")).isInstanceOf(ConfigurationException.class)
-                                                                                  .hasMessageContaining("Invalid data storage: values must be less " +
-                                                                                                        "than 2147483647 bytes, but it was 37529997803520 bytes");
-        assertThatThrownBy(() -> new IntSmallestDataStorageBytes("34954GiB")).isInstanceOf(ConfigurationException.class)
-                                                                             .hasMessageContaining("Invalid data storage: values must be " +
-                                                                                                   "less than 2147483647 bytes, but it was 37531571716096 bytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntBytes("2147483648B")).isInstanceOf(ConfigurationException.class)
+                                                                                 .hasMessageContaining("Invalid data storage: values must be less " +
+                                                                                                       "than 2147483647 bytes, but it was 2147483648 bytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntBytes(2147483648L)).isInstanceOf(ConfigurationException.class)
+                                                                                   .hasMessageContaining("Invalid data storage: values must be less " +
+                                                                                                         "than 2147483647 bytes, but it was 2147483648 bytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntBytes("2147483648KiB")).isInstanceOf(ConfigurationException.class)
+                                                                                   .hasMessageContaining("Invalid data storage: values must be " +
+                                                                                                         "less than 2147483647 bytes, but it was 2199023255552 bytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntBytes("35791395MiB")).isInstanceOf(ConfigurationException.class)
+                                                                                 .hasMessageContaining("Invalid data storage: values must be less " +
+                                                                                                       "than 2147483647 bytes, but it was 37529997803520 bytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntBytes("34954GiB")).isInstanceOf(ConfigurationException.class)
+                                                                              .hasMessageContaining("Invalid data storage: values must be " +
+                                                                                                    "less than 2147483647 bytes, but it was 37531571716096 bytes");
     }
 
     @Test
     public void testValidUnits()
     {
-        assertEquals(10240L, new IntSmallestDataStorageBytes("10KiB").toBytes());
+        assertEquals(10240L, new SmallestDataStorage.IntBytes("10KiB").toBytes());
     }
 }

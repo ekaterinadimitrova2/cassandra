@@ -30,30 +30,30 @@ public class IntSmallestDataStorageKibibytesTest
     @Test
     public void testInvalidUnits()
     {
-        assertThatThrownBy(() -> new IntSmallestDataStorageKibibytes("10B")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid data storage: 10B");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntKibibytes("10B")).isInstanceOf(ConfigurationException.class)
+                                                                             .hasMessageContaining("Invalid data storage: 10B");
     }
 
     @Test
     public void testOverflowingConversion()
     {
-        assertThatThrownBy(() -> new IntSmallestDataStorageKibibytes("2147483648B")).isInstanceOf(ConfigurationException.class)
+        assertThatThrownBy(() -> new SmallestDataStorage.IntKibibytes("2147483648B")).isInstanceOf(ConfigurationException.class)
                                                                                      .hasMessageContaining("Invalid data storage: 2147483648B " +
                                                                                                            "Accepted units:[KIBIBYTES, MEBIBYTES, GIBIBYTES]");
-        assertThatThrownBy(() -> new IntSmallestDataStorageKibibytes("2147483648KiB")).isInstanceOf(ConfigurationException.class)
-                                                                                    .hasMessageContaining("Invalid data storage: values must be less than " +
-                                                                                                          "2147483647 kibibytes, but it was 2147483648 kibibytes");
-        assertThatThrownBy(() -> new IntSmallestDataStorageKibibytes("35791395MiB")).isInstanceOf(ConfigurationException.class)
-                                                                                  .hasMessageContaining("Invalid data storage: values must be less than 2147483647" +
-                                                                                                        " kibibytes, but it was 36650388480 kibibytes");
-        assertThatThrownBy(() -> new IntSmallestDataStorageKibibytes("34954GiB")).isInstanceOf(ConfigurationException.class)
-                                                                             .hasMessageContaining("Invalid data storage: values must be less than 2147483647 " +
-                                                                                                   "kibibytes, but it was 36651925504 kibibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntKibibytes("2147483648KiB")).isInstanceOf(ConfigurationException.class)
+                                                                                       .hasMessageContaining("Invalid data storage: values must be less than " +
+                                                                                                             "2147483647 kibibytes, but it was 2147483648 kibibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntKibibytes("35791395MiB")).isInstanceOf(ConfigurationException.class)
+                                                                                     .hasMessageContaining("Invalid data storage: values must be less than 2147483647" +
+                                                                                                           " kibibytes, but it was 36650388480 kibibytes");
+        assertThatThrownBy(() -> new SmallestDataStorage.IntKibibytes("34954GiB")).isInstanceOf(ConfigurationException.class)
+                                                                                  .hasMessageContaining("Invalid data storage: values must be less than 2147483647 " +
+                                                                                                        "kibibytes, but it was 36651925504 kibibytes");
     }
 
     @Test
     public void testValidUnits()
     {
-        assertEquals(10L, new IntSmallestDataStorageKibibytes("10KiB").toKibibytes());
+        assertEquals(10L, new SmallestDataStorage.IntKibibytes("10KiB").toKibibytes());
     }
 }
