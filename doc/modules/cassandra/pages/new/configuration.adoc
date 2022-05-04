@@ -161,7 +161,7 @@ use the extended classes `SmallestDuration*`, `SmallestDataStorage*`.
 want to consider a separate flag parameter or null value. In case you use the null value, please, ensure that any default value
 introduced in the DatabaDescriptor to handle it is also duplicated in any related setters.
 
-- Parameters of type data storage, duration and data rate cannot be set to Long.MAX_VALUE (former parameters of long type).
+- Parameters of type data storage, duration and data rate cannot be set to Long.MAX_VALUE (former parameters of int type).
 The only reason to see this number assigned to a parameter will be a bug. That number is used during conversion between units to
 prevent an overflow from happening.
 

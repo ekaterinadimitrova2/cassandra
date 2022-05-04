@@ -91,6 +91,7 @@ import org.apache.cassandra.utils.FBUtilities;
 import static org.apache.cassandra.config.CassandraRelevantProperties.OS_ARCH;
 import static org.apache.cassandra.config.CassandraRelevantProperties.SUN_ARCH_DATA_MODEL;
 import static org.apache.cassandra.config.CassandraRelevantProperties.TEST_JVM_DTEST_DISABLE_SSL;
+import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit;
 import static org.apache.cassandra.io.util.FileUtils.ONE_GIB;
 import static org.apache.cassandra.io.util.FileUtils.ONE_MIB;
 import static org.apache.cassandra.utils.Clock.Global.logInitializationOutcome;
@@ -488,20 +489,24 @@ public class DatabaseDescriptor
             logger.warn("concurrent_replicates has been deprecated and should be removed from cassandra.yaml");
 
         if (conf.networking_cache_size == null)
-            conf.networking_cache_size = IntSmallestDataStorageMebibytes.inMebibytes(Math.min(128, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.networking_cache_size = new SmallestDataStorage.IntMebibytes(Math.min(128, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))),
+                                                                              DataStorageUnit.MEBIBYTES);
 
         if (conf.file_cache_size == null)
-            conf.file_cache_size = IntSmallestDataStorageMebibytes.inMebibytes(Math.min(512, (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576))));
+            conf.file_cache_size = new SmallestDataStorage.IntMebibytes(Math.min(512, (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576))),
+                                                                        DataStorageUnit.MEBIBYTES);
 
         // round down for SSDs and round up for spinning disks
         if (conf.file_cache_round_up == null)
             conf.file_cache_round_up = conf.disk_optimization_strategy == Config.DiskOptimizationStrategy.spinning;
 
         if (conf.memtable_offheap_space == null)
-            conf.memtable_offheap_space = IntSmallestDataStorageMebibytes.inMebibytes( (int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
+            conf.memtable_offheap_space = new SmallestDataStorage.IntMebibytes((int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)),
+                                                                               DataStorageUnit.MEBIBYTES);
         // for the moment, we default to twice as much on-heap space as off-heap, as heap overhead is very large
         if (conf.memtable_heap_space == null)
-            conf.memtable_heap_space = IntSmallestDataStorageMebibytes.inMebibytes((int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
+            conf.memtable_heap_space = new SmallestDataStorage.IntMebibytes((int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)),
+                                                                            DataStorageUnit.MEBIBYTES);
         if (conf.memtable_heap_space.toMebibytesAsInt() == 0)
             throw new ConfigurationException("memtable_heap_space must be positive, but was " + conf.memtable_heap_space, false);
         logger.info("Global memtable on-heap threshold is enabled at {}", conf.memtable_heap_space);
@@ -524,7 +529,8 @@ public class DatabaseDescriptor
         }
 
         if (conf.repair_session_space == null)
-            conf.repair_session_space = IntSmallestDataStorageMebibytes.inMebibytes(Math.max(1, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))));
+            conf.repair_session_space = new SmallestDataStorage.IntMebibytes(Math.max(1, (int) (Runtime.getRuntime().maxMemory() / (16 * 1048576))),
+                                                                             DataStorageUnit.MEBIBYTES);
 
         if (conf.repair_session_space.toMebibytes() < 1)
             throw new ConfigurationException("repair_session_space must be > 0, but was " + conf.repair_session_space);
@@ -588,7 +594,7 @@ public class DatabaseDescriptor
                                                                "commitlog_total_space",
                                                                preferredSizeInMiB,
                                                                totalSpaceInBytes, 1, 4);
-            conf.commitlog_total_space = IntSmallestDataStorageMebibytes.inMebibytes(defaultSpaceInMiB);
+            conf.commitlog_total_space = new SmallestDataStorage.IntMebibytes(defaultSpaceInMiB, DataStorageUnit.MEBIBYTES);
         }
 
         if (conf.cdc_enabled)
@@ -608,7 +614,7 @@ public class DatabaseDescriptor
                                                                    "cdc_total_space",
                                                                    preferredSizeInMiB,
                                                                    totalSpaceInBytes, 1, 8);
-                conf.cdc_total_space = IntSmallestDataStorageMebibytes.inMebibytes(defaultSpaceInMiB);
+                conf.cdc_total_space = new SmallestDataStorage.IntMebibytes(defaultSpaceInMiB, DataStorageUnit.MEBIBYTES);
             }
 
             logger.info("cdc_enabled is true. Starting casssandra node with Change-Data-Capture enabled.");
@@ -806,7 +812,7 @@ public class DatabaseDescriptor
                                              + conf.commitlog_segment_size.toString(), false);
 
         if (conf.max_mutation_size == null)
-            conf.max_mutation_size = IntSmallestDataStorageKibibytes.inKibibytes(conf.commitlog_segment_size.toKibibytes() / 2);
+            conf.max_mutation_size = new SmallestDataStorage.IntKibibytes(conf.commitlog_segment_size.toKibibytes() / 2, DataStorageUnit.KIBIBYTES);
         else if (conf.commitlog_segment_size.toKibibytes() < 2 * conf.max_mutation_size.toKibibytes())
             throw new ConfigurationException("commitlog_segment_size must be at least twice the size of max_mutation_size / 1024", false);
 
@@ -875,7 +881,7 @@ public class DatabaseDescriptor
             Math.min(conf.internode_application_receive_queue_reserve_endpoint_capacity.toBytes(),
                      conf.internode_application_send_queue_reserve_endpoint_capacity.toBytes());
 
-            conf.internode_max_message_size = IntSmallestDataStorageBytes.inBytes(maxMessageSizeInBytes);
+            conf.internode_max_message_size = new SmallestDataStorage.IntBytes(maxMessageSizeInBytes, DataStorageUnit.BYTES);
         }
 
         validateMaxConcurrentAutoUpgradeTasksConf(conf.max_concurrent_automatic_sstable_upgrades);
@@ -1529,7 +1535,7 @@ public class DatabaseDescriptor
 
     public static void setMaxValueSize(int maxValueSizeInBytes)
     {
-        conf.max_value_size = IntSmallestDataStorageMebibytes.inBytes(maxValueSizeInBytes);
+        conf.max_value_size = new SmallestDataStorage.IntMebibytes(maxValueSizeInBytes, DataStorageUnit.BYTES);
     }
 
     /**
@@ -1626,9 +1632,9 @@ public class DatabaseDescriptor
 
     public static void setColumnIndexSize(int val)
     {
-        IntSmallestDataStorageKibibytes memory = IntSmallestDataStorageKibibytes.inKibibytes(val);
+        SmallestDataStorage.IntKibibytes memory = new SmallestDataStorage.IntKibibytes(val, DataStorageUnit.KIBIBYTES);
         checkValidForByteConversion(memory, "column_index_size");
-        conf.column_index_size = IntSmallestDataStorageKibibytes.inKibibytes(val);
+        conf.column_index_size = new SmallestDataStorage.IntKibibytes(val, DataStorageUnit.KIBIBYTES);
     }
 
     public static int getColumnIndexCacheSize()
@@ -1643,9 +1649,9 @@ public class DatabaseDescriptor
 
     public static void setColumnIndexCacheSize(int val)
     {
-        IntSmallestDataStorageKibibytes memory = IntSmallestDataStorageKibibytes.inKibibytes(val);
+        SmallestDataStorage.IntKibibytes memory = new SmallestDataStorage.IntKibibytes(val, DataStorageUnit.KIBIBYTES);
         checkValidForByteConversion(memory, "column_index_cache_size");
-        conf.column_index_cache_size = IntSmallestDataStorageKibibytes.inKibibytes(val);
+        conf.column_index_cache_size = new SmallestDataStorage.IntKibibytes(val, DataStorageUnit.KIBIBYTES);
     }
 
     public static int getBatchSizeWarnThreshold()
@@ -1675,14 +1681,14 @@ public class DatabaseDescriptor
 
     public static void setBatchSizeWarnThresholdInKiB(int threshold)
     {
-        IntSmallestDataStorageKibibytes storage = IntSmallestDataStorageKibibytes.inKibibytes(threshold);
+        SmallestDataStorage.IntKibibytes storage = new SmallestDataStorage.IntKibibytes(threshold, DataStorageUnit.KIBIBYTES);
         checkValidForByteConversion(storage, "batch_size_warn_threshold");
-        conf.batch_size_warn_threshold = IntSmallestDataStorageKibibytes.inKibibytes(threshold);
+        conf.batch_size_warn_threshold = new SmallestDataStorage.IntKibibytes(threshold, DataStorageUnit.KIBIBYTES);
     }
 
     public static void setBatchSizeFailThresholdInKiB(int threshold)
     {
-        conf.batch_size_fail_threshold = IntSmallestDataStorageKibibytes.inKibibytes(threshold);
+        conf.batch_size_fail_threshold = new SmallestDataStorage.IntKibibytes(threshold, DataStorageUnit.KIBIBYTES);
     }
 
     public static Collection<String> getInitialTokens()
@@ -2252,7 +2258,7 @@ public class DatabaseDescriptor
     @VisibleForTesting /* Only for testing */
     public static void setCommitLogSegmentSize(int sizeMebibytes)
     {
-        conf.commitlog_segment_size = IntSmallestDataStorageMebibytes.inMebibytes(sizeMebibytes);
+        conf.commitlog_segment_size = new SmallestDataStorage.IntMebibytes(sizeMebibytes, DataStorageUnit.MEBIBYTES);
     }
 
     public static String getSavedCachesLocation()
@@ -2433,7 +2439,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setInternodeMaxMessageSizeInBytes(int value)
     {
-        conf.internode_max_message_size = IntSmallestDataStorageBytes.inBytes(value);
+        conf.internode_max_message_size = new SmallestDataStorage.IntBytes(value, DataStorageUnit.BYTES);
     }
 
     public static boolean startNativeTransport()
@@ -2484,7 +2490,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportMaxFrameSize(int bytes)
     {
-        conf.native_transport_max_frame_size = IntSmallestDataStorageMebibytes.inMebibytes(bytes);
+        conf.native_transport_max_frame_size = new SmallestDataStorage.IntMebibytes(bytes, DataStorageUnit.MEBIBYTES);
     }
 
     public static long getNativeTransportMaxConcurrentConnections()
@@ -2539,7 +2545,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
     {
-        conf.native_transport_receive_queue_capacity = IntSmallestDataStorageBytes.inBytes(queueSize);
+        conf.native_transport_receive_queue_capacity = new SmallestDataStorage.IntBytes(queueSize, DataStorageUnit.BYTES);
     }
 
     public static long getNativeTransportMaxRequestDataInFlightPerIpInBytes()
@@ -2995,7 +3001,7 @@ public class DatabaseDescriptor
 
     public static void setHintedHandoffThrottleInKiB(int throttleInKiB)
     {
-        conf.hinted_handoff_throttle = IntSmallestDataStorageKibibytes.inKibibytes(throttleInKiB);
+        conf.hinted_handoff_throttle = new SmallestDataStorage.IntKibibytes(throttleInKiB, DataStorageUnit.KIBIBYTES);
     }
 
     public static int getBatchlogReplayThrottleInKiB()
@@ -3005,7 +3011,7 @@ public class DatabaseDescriptor
 
     public static void setBatchlogReplayThrottleInKiB(int throttleInKiB)
     {
-        conf.batchlog_replay_throttle = IntSmallestDataStorageKibibytes.inKibibytes(throttleInKiB);
+        conf.batchlog_replay_throttle = new SmallestDataStorage.IntKibibytes(throttleInKiB, DataStorageUnit.KIBIBYTES);
     }
 
     public static int getMaxHintsDeliveryThreads()
@@ -3125,7 +3131,7 @@ public class DatabaseDescriptor
 
     public static void setSSTablePreemptiveOpenIntervalInMiB(int mib)
     {
-        conf.sstable_preemptive_open_interval = IntSmallestDataStorageMebibytes.inMebibytes(mib);
+        conf.sstable_preemptive_open_interval = new SmallestDataStorage.IntMebibytes(mib, DataStorageUnit.MEBIBYTES);
     }
 
     public static boolean getTrickleFsync()
@@ -3181,7 +3187,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setRowCacheSizeInMiB(long val)
     {
-        conf.row_cache_size = SmallestDataStorageMebibytes.inMebibytes(val);
+        conf.row_cache_size = new SmallestDataStorage.Mebibytes(val, DataStorageUnit.MEBIBYTES);
     }
 
     public static int getRowCacheSavePeriod()
@@ -3330,7 +3336,7 @@ public class DatabaseDescriptor
             logger.warn("A repair_session_space of " + conf.repair_session_space +
                         " is likely to cause heap pressure.");
 
-        conf.repair_session_space = IntSmallestDataStorageMebibytes.inMebibytes(sizeInMiB);
+        conf.repair_session_space = new SmallestDataStorage.IntMebibytes(sizeInMiB, DataStorageUnit.MEBIBYTES);
     }
 
     public static int getPaxosRepairParallelism()
@@ -3542,7 +3548,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setCDCSpaceInMiB(int input)
     {
-        conf.cdc_total_space = IntSmallestDataStorageMebibytes.inMebibytes(input);
+        conf.cdc_total_space = new SmallestDataStorage.IntMebibytes(input, DataStorageUnit.MEBIBYTES);
     }
 
     public static int getCDCDiskCheckInterval()
@@ -3743,7 +3749,7 @@ public class DatabaseDescriptor
     /**
      * Ensures passed in configuration value is positive and will not overflow when converted to Bytes
      */
-    private static void checkValidForByteConversion(final IntSmallestDataStorageKibibytes value, String name)
+    private static void checkValidForByteConversion(final SmallestDataStorage.IntKibibytes value, String name)
     {
         long valueInBytes = value.toBytes();
         if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
