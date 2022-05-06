@@ -133,6 +133,16 @@ public abstract class SmallestDataStorage extends DataStorageSpec
         {
             super(quantity, unit, DataStorageUnit.MEBIBYTES, false);
         }
+
+        /**
+         * Creates a {@code SmallestDataStorage.Mebibytes} of the specified amount in mebibytes.
+         *
+         * @param quantityInMiB where quantityInMiB shouldn't be bigger than Integer.MAX_VALUE
+         */
+        public Mebibytes(long quantityInMiB)
+        {
+            this(quantityInMiB, DataStorageUnit.MEBIBYTES);
+        }
     }
 
     public static class IntBytes extends SmallestDataStorage

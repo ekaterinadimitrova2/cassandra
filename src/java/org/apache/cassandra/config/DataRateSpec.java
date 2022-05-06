@@ -20,7 +20,6 @@ package org.apache.cassandra.config;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -66,7 +65,7 @@ public class DataRateSpec
 
     DataRateSpec(double quantity, DataRateUnit unit)
     {
-        if (quantity < 0 || quantity >= Long.MAX_VALUE)
+        if (quantity < 0)
             throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
         this.quantity = quantity;
@@ -114,9 +113,9 @@ public class DataRateSpec
 
     private static void validateQuantity(long quantity, DataRateUnit sourceUnit)
     {
-        if (sourceUnit.toBytesPerSecond(quantity) == Long.MAX_VALUE)
+        if (sourceUnit.toBytesPerSecond(quantity) >= Long.MAX_VALUE)
             throw new ConfigurationException("Invalid data rate: " + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) +
-                                             "; value must be between 0 and " + (Long.MAX_VALUE-1) + "in bytes per second");
+                                             "; value must be between 0 and " + (Long.MAX_VALUE-1) + " in bytes per second");
     }
 
     /**

@@ -171,9 +171,9 @@ public class YamlConfigurationLoaderTest
         Config latest = YamlConfigurationLoader.fromMap(ImmutableMap.of("key_cache_save_period", "42s",
                                                                         "row_cache_save_period", "42s",
                                                                         "counter_cache_save_period", "42s"), Config.class);
-        assertThat(old.key_cache_save_period).isEqualTo(latest.key_cache_save_period).isEqualTo(IntSmallestDurationSeconds.inSeconds(42));
-        assertThat(old.row_cache_save_period).isEqualTo(latest.row_cache_save_period).isEqualTo(IntSmallestDurationSeconds.inSeconds(42));
-        assertThat(old.counter_cache_save_period).isEqualTo(latest.counter_cache_save_period).isEqualTo(IntSmallestDurationSeconds.inSeconds(42));
+        assertThat(old.key_cache_save_period).isEqualTo(latest.key_cache_save_period).isEqualTo(new SmallestDuration.IntSeconds(42));
+        assertThat(old.row_cache_save_period).isEqualTo(latest.row_cache_save_period).isEqualTo(new SmallestDuration.IntSeconds(42));
+        assertThat(old.counter_cache_save_period).isEqualTo(latest.counter_cache_save_period).isEqualTo(new SmallestDuration.IntSeconds(42));
     }
 
     @Test
@@ -204,7 +204,7 @@ public class YamlConfigurationLoaderTest
         .hasRootCauseMessage("Invalid duration -2MILLISECONDS: value must be positive");
 
         // MILLIS_CUSTOM_DURATION
-        assertThat(from("permissions_update_interval_in_ms", 42).permissions_update_interval).isEqualTo(SmallestDurationMilliseconds.inMilliseconds(42));
+        assertThat(from("permissions_update_interval_in_ms", 42).permissions_update_interval).isEqualTo(new SmallestDuration.IntMilliseconds(42));
         assertThat(from("permissions_update_interval_in_ms", -1).permissions_update_interval).isNull();
         assertThatThrownBy(() -> from("permissions_update_interval_in_ms", -2))
         .hasRootCauseInstanceOf(ConfigurationException.class)

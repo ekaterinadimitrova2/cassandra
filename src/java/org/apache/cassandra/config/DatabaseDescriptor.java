@@ -118,7 +118,7 @@ public class DatabaseDescriptor
     /**
      * Request timeouts can not be less than below defined value (see CASSANDRA-9375)
      */
-    static final SmallestDurationMilliseconds LOWEST_ACCEPTED_TIMEOUT = SmallestDurationMilliseconds.inMilliseconds(10L);
+    static final SmallestDuration.Milliseconds LOWEST_ACCEPTED_TIMEOUT = new SmallestDuration.Milliseconds(10L);
 
     private static Supplier<IFailureDetector> newFailureDetector;
     private static IEndpointSnitch snitch;
@@ -1147,37 +1147,37 @@ public class DatabaseDescriptor
         if(conf.read_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
             logInfo("read_request_timeout", conf.read_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
-            conf.read_request_timeout = new SmallestDurationMilliseconds("10ms");
+            conf.read_request_timeout = new SmallestDuration.Milliseconds("10ms");
         }
 
         if(conf.range_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
             logInfo("range_request_timeout", conf.range_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
-            conf.range_request_timeout = new SmallestDurationMilliseconds("10ms");
+            conf.range_request_timeout = new SmallestDuration.Milliseconds("10ms");
         }
 
         if(conf.request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
             logInfo("request_timeout", conf.request_timeout, LOWEST_ACCEPTED_TIMEOUT);
-            conf.request_timeout = new SmallestDurationMilliseconds("10ms");
+            conf.request_timeout = new SmallestDuration.Milliseconds("10ms");
         }
 
         if(conf.write_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
             logInfo("write_request_timeout", conf.write_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
-            conf.write_request_timeout = new SmallestDurationMilliseconds("10ms");
+            conf.write_request_timeout = new SmallestDuration.Milliseconds("10ms");
         }
 
         if(conf.cas_contention_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
             logInfo("cas_contention_timeout", conf.cas_contention_timeout, LOWEST_ACCEPTED_TIMEOUT);
-            conf.cas_contention_timeout = new SmallestDurationMilliseconds("10ms");
+            conf.cas_contention_timeout = new SmallestDuration.Milliseconds("10ms");
         }
 
         if(conf.counter_write_request_timeout.toMillisecondsAsInt()< LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
             logInfo("counter_write_request_timeout", conf.counter_write_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
-            conf.counter_write_request_timeout = new SmallestDurationMilliseconds("10ms");
+            conf.counter_write_request_timeout = new SmallestDuration.Milliseconds("10ms");
         }
         if(conf.truncate_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
         {
@@ -1186,7 +1186,7 @@ public class DatabaseDescriptor
         }
     }
 
-    private static void logInfo(String property, SmallestDurationMilliseconds actualValue, SmallestDurationMilliseconds lowestAcceptedValue)
+    private static void logInfo(String property, SmallestDuration.Milliseconds actualValue, SmallestDuration.Milliseconds lowestAcceptedValue)
     {
         logger.info("found {}::{} less than lowest acceptable value {}, continuing with {}",
                     property,
@@ -1373,7 +1373,7 @@ public class DatabaseDescriptor
 
     public static void setPermissionsValidity(int timeout)
     {
-        conf.permissions_validity = IntSmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.permissions_validity = new SmallestDuration.IntMilliseconds(timeout);
     }
 
     public static int getPermissionsUpdateInterval()
@@ -1391,7 +1391,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                conf.permissions_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(updateInterval);
+                conf.permissions_update_interval = new SmallestDuration.IntMilliseconds(updateInterval);
             }
             catch (ConfigurationException e)
             {
@@ -1427,7 +1427,7 @@ public class DatabaseDescriptor
 
     public static void setRolesValidity(int validity)
     {
-        conf.roles_validity = IntSmallestDurationMilliseconds.inMilliseconds(validity);
+        conf.roles_validity = new SmallestDuration.IntMilliseconds(validity);
     }
 
     public static int getRolesUpdateInterval()
@@ -1455,7 +1455,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                conf.roles_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(interval);
+                conf.roles_update_interval = new SmallestDuration.IntMilliseconds(interval);
             }
             catch(ConfigurationException e)
             {
@@ -1481,7 +1481,7 @@ public class DatabaseDescriptor
 
     public static void setCredentialsValidity(int timeout)
     {
-        conf.credentials_validity = IntSmallestDurationMilliseconds.inMilliseconds(timeout);
+        conf.credentials_validity = new SmallestDuration.IntMilliseconds(timeout);
     }
 
     public static int getCredentialsUpdateInterval()
@@ -1499,7 +1499,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                conf.credentials_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(updateInterval);
+                conf.credentials_update_interval = new SmallestDuration.IntMilliseconds(updateInterval);
             }
             catch (ConfigurationException e)
             {
@@ -1774,7 +1774,7 @@ public class DatabaseDescriptor
 
     public static void setNativeTransportIdleTimeout(long nativeTransportTimeout)
     {
-        conf.native_transport_idle_timeout= SmallestDurationMilliseconds.inMilliseconds(nativeTransportTimeout);
+        conf.native_transport_idle_timeout= new SmallestDuration.Milliseconds(nativeTransportTimeout);
     }
 
     public static long getRpcTimeout(TimeUnit unit)
@@ -1784,7 +1784,7 @@ public class DatabaseDescriptor
 
     public static void setRpcTimeout(long timeOutInMillis)
     {
-        conf.request_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.request_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getReadRpcTimeout(TimeUnit unit)
@@ -1794,7 +1794,7 @@ public class DatabaseDescriptor
 
     public static void setReadRpcTimeout(long timeOutInMillis)
     {
-        conf.read_request_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.read_request_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getRangeRpcTimeout(TimeUnit unit)
@@ -1804,7 +1804,7 @@ public class DatabaseDescriptor
 
     public static void setRangeRpcTimeout(long timeOutInMillis)
     {
-        conf.range_request_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.range_request_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getWriteRpcTimeout(TimeUnit unit)
@@ -1814,7 +1814,7 @@ public class DatabaseDescriptor
 
     public static void setWriteRpcTimeout(long timeOutInMillis)
     {
-        conf.write_request_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.write_request_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getCounterWriteRpcTimeout(TimeUnit unit)
@@ -1824,7 +1824,7 @@ public class DatabaseDescriptor
 
     public static void setCounterWriteRpcTimeout(long timeOutInMillis)
     {
-        conf.counter_write_request_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.counter_write_request_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getCasContentionTimeout(TimeUnit unit)
@@ -1834,7 +1834,7 @@ public class DatabaseDescriptor
 
     public static void setCasContentionTimeout(long timeOutInMillis)
     {
-        conf.cas_contention_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.cas_contention_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getTruncateRpcTimeout(TimeUnit unit)
@@ -1844,7 +1844,7 @@ public class DatabaseDescriptor
 
     public static void setTruncateRpcTimeout(long timeOutInMillis)
     {
-        conf.truncate_request_timeout = SmallestDurationMilliseconds.inMilliseconds(timeOutInMillis);
+        conf.truncate_request_timeout = new SmallestDuration.Milliseconds(timeOutInMillis);
     }
 
     public static long getRepairRpcTimeout()
@@ -2408,7 +2408,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpConnectTimeoutInMS(int value)
     {
-        conf.internode_tcp_connect_timeout = IntSmallestDurationMilliseconds.inMilliseconds(value);
+        conf.internode_tcp_connect_timeout = new SmallestDuration.IntMilliseconds(value);
     }
 
     public static int getInternodeTcpUserTimeoutInMS()
@@ -2418,7 +2418,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeTcpUserTimeoutInMS(int value)
     {
-        conf.internode_tcp_user_timeout = IntSmallestDurationMilliseconds.inMilliseconds(value);
+        conf.internode_tcp_user_timeout = new SmallestDuration.IntMilliseconds(value);
     }
 
     public static int getInternodeStreamingTcpUserTimeoutInMS()
@@ -2428,7 +2428,7 @@ public class DatabaseDescriptor
 
     public static void setInternodeStreamingTcpUserTimeoutInMS(int value)
     {
-        conf.internode_streaming_tcp_user_timeout = IntSmallestDurationMilliseconds.inMilliseconds(value);
+        conf.internode_streaming_tcp_user_timeout = new SmallestDuration.IntMilliseconds(value);
     }
 
     public static int getInternodeMaxMessageSizeInBytes()
@@ -2535,7 +2535,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncGroupWindow(long windowMillis)
     {
-        conf.commitlog_sync_group_window = SmallestDurationMilliseconds.inMilliseconds(windowMillis);
+        conf.commitlog_sync_group_window = new SmallestDuration.IntMilliseconds(windowMillis);
     }
 
     public static int getNativeTransportReceiveQueueCapacityInBytes()
@@ -2620,7 +2620,7 @@ public class DatabaseDescriptor
 
     public static void setPaxosPurgeGrace(long value)
     {
-        conf.paxos_purge_grace_period = SmallestDurationSeconds.inSeconds(value);
+        conf.paxos_purge_grace_period = new SmallestDuration.Seconds(value);
     }
 
     public static PaxosOnLinearizabilityViolation paxosOnLinearizabilityViolations()
@@ -2748,7 +2748,7 @@ public class DatabaseDescriptor
 
     public static long getPeriodicCommitLogSyncBlock()
     {
-        IntSmallestDurationMilliseconds blockMillis = conf.periodic_commitlog_sync_lag_block;
+        SmallestDuration.IntMilliseconds blockMillis = conf.periodic_commitlog_sync_lag_block;
         return blockMillis == null
                ? (long)(getCommitLogSyncPeriod() * 1.5)
                : blockMillis.toMilliseconds();
@@ -2756,7 +2756,7 @@ public class DatabaseDescriptor
 
     public static void setCommitLogSyncPeriod(int periodMillis)
     {
-        conf.commitlog_sync_period = IntSmallestDurationMilliseconds.inMilliseconds(periodMillis);
+        conf.commitlog_sync_period = new SmallestDuration.IntMilliseconds(periodMillis);
     }
 
     public static Config.CommitLogSync getCommitLogSync()
@@ -2905,7 +2905,7 @@ public class DatabaseDescriptor
 
     public static void setMaxHintWindow(int ms)
     {
-        conf.max_hint_window = IntSmallestDurationMilliseconds.inMilliseconds(ms);
+        conf.max_hint_window = new SmallestDuration.IntMilliseconds(ms);
     }
 
     public static int getMaxHintWindow()
@@ -2951,7 +2951,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicUpdateInterval(int dynamicUpdateInterval)
     {
-        conf.dynamic_snitch_update_interval = IntSmallestDurationMilliseconds.inMilliseconds(dynamicUpdateInterval);
+        conf.dynamic_snitch_update_interval = new SmallestDuration.IntMilliseconds(dynamicUpdateInterval);
     }
 
     public static int getDynamicResetInterval()
@@ -2960,7 +2960,7 @@ public class DatabaseDescriptor
     }
     public static void setDynamicResetInterval(int dynamicResetInterval)
     {
-        conf.dynamic_snitch_reset_interval = IntSmallestDurationMilliseconds.inMilliseconds(dynamicResetInterval);
+        conf.dynamic_snitch_reset_interval = new SmallestDuration.IntMilliseconds(dynamicResetInterval);
     }
 
     public static double getDynamicBadnessThreshold()
@@ -3161,7 +3161,7 @@ public class DatabaseDescriptor
 
     public static void setKeyCacheSavePeriod(int keyCacheSavePeriod)
     {
-        conf.key_cache_save_period = IntSmallestDurationSeconds.inSeconds(keyCacheSavePeriod);
+        conf.key_cache_save_period = new SmallestDuration.IntSeconds(keyCacheSavePeriod);
     }
 
     public static int getKeyCacheKeysToSave()
@@ -3197,7 +3197,7 @@ public class DatabaseDescriptor
 
     public static void setRowCacheSavePeriod(int rowCacheSavePeriod)
     {
-        conf.row_cache_save_period = IntSmallestDurationSeconds.inSeconds(rowCacheSavePeriod);
+        conf.row_cache_save_period = new SmallestDuration.IntSeconds(rowCacheSavePeriod);
     }
 
     public static int getRowCacheKeysToSave()
@@ -3227,7 +3227,7 @@ public class DatabaseDescriptor
 
     public static void setCounterCacheSavePeriod(int counterCacheSavePeriod)
     {
-        conf.counter_cache_save_period = IntSmallestDurationSeconds.inSeconds(counterCacheSavePeriod);
+        conf.counter_cache_save_period = new SmallestDuration.IntSeconds(counterCacheSavePeriod);
     }
 
     public static int getCacheLoadTimeout()
@@ -3238,7 +3238,7 @@ public class DatabaseDescriptor
     @VisibleForTesting
     public static void setCacheLoadTimeout(int seconds)
     {
-        conf.cache_load_timeout = IntSmallestDurationSeconds.inSeconds(seconds);
+        conf.cache_load_timeout = new SmallestDuration.IntSeconds(seconds);
     }
 
     public static int getCounterCacheKeysToSave()
@@ -3425,7 +3425,7 @@ public class DatabaseDescriptor
 
     public static void setUserDefinedFunctionWarnTimeout(long userDefinedFunctionWarnTimeout)
     {
-        conf.user_defined_functions_warn_timeout = SmallestDurationMilliseconds.inMilliseconds(userDefinedFunctionWarnTimeout);
+        conf.user_defined_functions_warn_timeout = new SmallestDuration.Milliseconds(userDefinedFunctionWarnTimeout);
     }
 
     public static boolean allowInsecureUDFs()
@@ -3486,7 +3486,7 @@ public class DatabaseDescriptor
 
     public static void setUserDefinedFunctionFailTimeout(long userDefinedFunctionFailTimeout)
     {
-        conf.user_defined_functions_fail_timeout = SmallestDurationMilliseconds.inMilliseconds(userDefinedFunctionFailTimeout);
+        conf.user_defined_functions_fail_timeout = new SmallestDuration.Milliseconds(userDefinedFunctionFailTimeout);
     }
 
     public static Config.UserFunctionTimeoutPolicy getUserFunctionTimeoutPolicy()
@@ -3963,7 +3963,7 @@ public class DatabaseDescriptor
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_refresh must be a positive integer.");
 
-        conf.denylist_refresh = IntSmallestDurationSeconds.inSeconds(seconds);
+        conf.denylist_refresh = new SmallestDuration.IntSeconds(seconds);
     }
 
     public static int getDenylistInitialLoadRetrySeconds()
@@ -3976,7 +3976,7 @@ public class DatabaseDescriptor
         if (seconds <= 0)
             throw new IllegalArgumentException("denylist_initial_load_retry must be a positive integer.");
 
-        conf.denylist_initial_load_retry = IntSmallestDurationSeconds.inSeconds(seconds);
+        conf.denylist_initial_load_retry = new SmallestDuration.IntSeconds(seconds);
     }
 
     public static ConsistencyLevel getDenylistConsistencyLevel()

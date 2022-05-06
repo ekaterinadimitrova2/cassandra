@@ -74,9 +74,7 @@ public class DataStorageSpec
         quantity = Long.parseLong(matcher.group(1));
         unit = DataStorageUnit.fromSymbol(matcher.group(2));
 
-
-        long bytes = toBytes();
-        validateQuantity(bytes, BYTES);
+        validateQuantity(quantity, unit);
     }
 
     DataStorageSpec(long quantity, DataStorageUnit unit)

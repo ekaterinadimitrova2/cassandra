@@ -30,19 +30,19 @@ public class IntDataRateTest
     @Test
     public void testOverflowingConversion()
     {
-        assertThatThrownBy(() -> new IntDataRate("2147483648MiB/s")).isInstanceOf(NumberFormatException.class)
-                                                                    .hasMessageContaining("Invalid data rate: value must be " +
-                                                                                          "between 0 and 2147483647 mebibytes per second");
+        assertThatThrownBy(() -> new IntDataRate("2147483648MiB/s")).isInstanceOf(ConfigurationException.class)
+                                                                    .hasMessageContaining("Invalid data rate:2.147483648E9 mebibytes_per_second; " +
+                                                                                          "value must be between 0 and 2147483647 in mebibytes per second");
         assertThatThrownBy(() -> IntDataRate.inMebibytesPerSecond(2147483648L)).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid data rate:2147483648 mebibytes per second; " +
+                                                                               .hasMessageContaining("Invalid data rate:2.147483648E9 mebibytes_per_second; " +
                                                                                                       "value must be between 0 and 2147483647 in mebibytes per second");
 
-        assertThatThrownBy(() -> new IntDataRate((Integer.MAX_VALUE*1024L+1L) + "KiB/s")).isInstanceOf(NumberFormatException.class)
-                                                                                         .hasMessageContaining("Invalid data rate: value must be between 0 " +
-                                                                                                               "and 2147483647 mebibytes per second");
-        assertThatThrownBy(() -> new IntDataRate((Integer.MAX_VALUE*1024L*1024+1L) + "B/s")).isInstanceOf(NumberFormatException.class)
-                                                                                            .hasMessageContaining("Invalid data rate: value must be between " +
-                                                                                                                  "0 and 2147483647 mebibytes per second");
+        assertThatThrownBy(() -> new IntDataRate((Integer.MAX_VALUE*1024L+1L) + "KiB/s")).isInstanceOf(ConfigurationException.class)
+                                                                                         .hasMessageContaining("Invalid data rate:2.1474836470009766E9 kibibytes_per_second; " +
+                                                                                                               "value must be between 0 and 2147483647 in mebibytes per second");
+        assertThatThrownBy(() -> new IntDataRate((Integer.MAX_VALUE*1024L*1024+1L) + "B/s")).isInstanceOf(ConfigurationException.class)
+                                                                                            .hasMessageContaining("Invalid data rate:2.147483647000001E9 bytes_per_second; " +
+                                                                                                                  "value must be between 0 and 2147483647 in mebibytes per second");
         assertThatThrownBy(() -> IntDataRate.megabitsPerSecondInMebibytesPerSecond(2147483648L)).isInstanceOf(ConfigurationException.class)
                                                                                                 .hasMessageContaining("Invalid data rate: 2147483648 megabits per second; " +
                                                                                                                       "stream_throughput_outbound and " +

@@ -86,8 +86,9 @@ public class DataRateSpecTest
                                  .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
                                                      .hasMessageContaining("For input string: \"9223372036854775809\"");
         assertThatThrownBy(() -> new IntDataRate("2147483648MiB/s")
-                                 .toBytesPerSecond()).isInstanceOf(NumberFormatException.class)
-                                                     .hasMessageContaining("Invalid data rate: value must be between 0 and 2147483647 mebibytes per second");
+                                 .toBytesPerSecond()).isInstanceOf(ConfigurationException.class)
+                                                     .hasMessageContaining("Invalid data rate:2.147483648E9 mebibytes_per_second; " +
+                                                                           "value must be between 0 and 2147483647 in mebibytes per second");
     }
 
     @Test
@@ -113,9 +114,6 @@ public class DataRateSpecTest
         assertEquals(new DataRateSpec("10B/s"), new DataRateSpec("10B/s"));
         assertEquals(new DataRateSpec("10KiB/s"), new DataRateSpec("10240B/s"));
         assertEquals(new DataRateSpec("10240B/s"), new DataRateSpec("10KiB/s"));
-        assertEquals(DataRateSpec.inMebibytesPerSecond((Long.MAX_VALUE/1024L/1024)), DataRateSpec.inMebibytesPerSecond(Long.MAX_VALUE/1024L/1024));
-        long tmp = Long.MAX_VALUE-1L;
-        assertNotEquals(DataRateSpec.inKibibytesPerSecond(Long.MAX_VALUE/1024L), DataRateSpec.inBytesPerSecond(tmp));
         assertNotEquals(new DataRateSpec("0KiB/s"), new DataRateSpec("10MiB/s"));
     }
 

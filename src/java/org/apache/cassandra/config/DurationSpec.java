@@ -81,8 +81,7 @@ public class DurationSpec
                                              " ns where case matters and only non-negative values");
         }
 
-        long nanoseconds = toNanoseconds();
-        validateQuantity(nanoseconds, unit);
+        validateQuantity(quantity, unit);
     }
 
     DurationSpec(long quantity, TimeUnit unit)

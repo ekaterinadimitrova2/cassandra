@@ -115,7 +115,7 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertNull(config.roles_update_interval);
         assertEquals(DurationSpec.inMilliseconds(2000), config.credentials_validity);
         assertNull(config.credentials_update_interval);
-        assertEquals(IntSmallestDurationMinutes.inMinutes(60), config.index_summary_resize_interval);
+        assertEquals(SmallestDuration.IntMinutes.inMinutes(60), config.index_summary_resize_interval);
 
         //parameters which names have not changed with CASSANDRA-15234
         assertEquals(DurationSpec.inSecondsString("14400"), config.key_cache_save_period);

@@ -18,8 +18,8 @@
 
 package org.apache.cassandra.config;
 
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit;
 
 /**
  * Converters for backward compatibility with the old cassandra.yaml where duration, data rate and
@@ -38,27 +38,28 @@ public enum Converters
      * able to still use the old name too. No units involved.
      */
     IDENTITY(null, null, o -> o, o -> o),
-    MILLIS_DURATION_LONG(Long.class, SmallestDurationMilliseconds.class,
-                         SmallestDurationMilliseconds::inMilliseconds,
+    MILLIS_DURATION_LONG(Long.class, SmallestDuration.Milliseconds.class,
+                         SmallestDuration.Milliseconds::new,
                          o -> o.toMilliseconds()),
-    MILLIS_DURATION_INT(Integer.class, IntSmallestDurationMilliseconds.class,
-                        i -> IntSmallestDurationMilliseconds.inMilliseconds(i),
+    MILLIS_DURATION_INT(Integer.class, SmallestDuration.IntMilliseconds.class,
+                        SmallestDuration.IntMilliseconds::new,
                         DurationSpec::toMillisecondsAsInt),
-    MILLIS_DURATION_DOUBLE(Double.class, SmallestDurationMilliseconds.class,
-                           o -> Double.isNaN(o) ? SmallestDurationMilliseconds.inMilliseconds(0) : SmallestDurationMilliseconds.inDoubleMilliseconds(o),
+    MILLIS_DURATION_DOUBLE(Double.class, SmallestDuration.IntMilliseconds.class,
+                           o -> Double.isNaN(o) ? new SmallestDuration.IntMilliseconds(0) :
+                                new SmallestDuration.IntMilliseconds(o, TimeUnit.MILLISECONDS),
                            o -> (double) o.toMilliseconds()),
     /**
      * This converter is used to support backward compatibility for parameters where in the past -1 was used as a value
      * Example: credentials_update_interval_in_ms = -1 and credentials_update_interval = null are equal.
      */
-    MILLIS_CUSTOM_DURATION(Integer.class, IntSmallestDurationMilliseconds.class,
-                           o -> o == -1 ? null : IntSmallestDurationMilliseconds.inMilliseconds(o),
+    MILLIS_CUSTOM_DURATION(Integer.class, SmallestDuration.IntMilliseconds.class,
+                           o -> o == -1 ? null : new SmallestDuration.IntMilliseconds(o),
                            o -> o == null ? -1 : o.toMillisecondsAsInt()),
-    SECONDS_DURATION(Integer.class, IntSmallestDurationSeconds.class,
-                     i -> IntSmallestDurationSeconds.inSeconds(i),
+    SECONDS_DURATION(Integer.class, SmallestDuration.IntSeconds.class,
+                     SmallestDuration.IntSeconds::new,
                      DurationSpec::toSecondsAsInt),
-    NEGATIVE_SECONDS_DURATION(Integer.class, IntSmallestDurationSeconds.class,
-                              o -> o < 0 ? IntSmallestDurationSeconds.inSeconds(0) : IntSmallestDurationSeconds.inSeconds(o),
+    NEGATIVE_SECONDS_DURATION(Integer.class, SmallestDuration.IntSeconds.class,
+                              o -> o < 0 ? new SmallestDuration.IntSeconds(0) : new SmallestDuration.IntSeconds(o),
                               DurationSpec::toSecondsAsInt),
     /**
      * This converter is used to support backward compatibility for Duration parameters where we added the opportunity
@@ -66,23 +67,23 @@ public enum Converters
      * row_cache_save_period, counter_cache_save_period)
      * Example: row_cache_save_period = 0 and row_cache_save_period = 0s (quantity of 0s) are equal.
      */
-    SECONDS_CUSTOM_DURATION(String.class, IntSmallestDurationSeconds.class,
-                            IntSmallestDurationSeconds::inSecondsString,
+    SECONDS_CUSTOM_DURATION(String.class, SmallestDuration.IntSeconds.class,
+                            SmallestDuration.IntSeconds::inSecondsString,
                             o -> Long.toString(o.toSeconds())),
-    MINUTES_DURATION(Integer.class, IntSmallestDurationMinutes.class,
-                     i -> IntSmallestDurationMinutes.inMinutes(i),
+    MINUTES_DURATION(Integer.class, SmallestDuration.IntMinutes.class,
+                     SmallestDuration.IntMinutes::new,
                      DurationSpec::toMinutesAsInt),
     MEBIBYTES_DATA_STORAGE_LONG(Long.class, SmallestDataStorage.Mebibytes.class,
-                                x -> new SmallestDataStorage.Mebibytes(x, DataStorageUnit.MEBIBYTES),
+                                SmallestDataStorage.Mebibytes::new,
                                 DataStorageSpec::toMebibytes),
     MEBIBYTES_DATA_STORAGE_INT(Integer.class, SmallestDataStorage.IntMebibytes.class,
-                               x -> new SmallestDataStorage.IntMebibytes(x, DataStorageUnit.MEBIBYTES),
+                               SmallestDataStorage.IntMebibytes::new,
                                DataStorageSpec::toMebibytesAsInt),
     KIBIBYTES_DATASTORAGE(Integer.class, SmallestDataStorage.IntKibibytes.class,
-                          x -> new SmallestDataStorage.IntKibibytes(x, DataStorageUnit.KIBIBYTES),
+                          SmallestDataStorage.IntKibibytes::new,
                           DataStorageSpec::toKibibytesAsInt),
     BYTES_DATASTORAGE(Integer.class, SmallestDataStorage.IntBytes.class,
-                      x -> new SmallestDataStorage.IntBytes(x, DataStorageUnit.BYTES),
+                      SmallestDataStorage.IntBytes::new,
                       DataStorageSpec::toBytesAsInt),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value

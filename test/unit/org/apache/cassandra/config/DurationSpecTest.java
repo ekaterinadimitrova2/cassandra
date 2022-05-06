@@ -35,15 +35,15 @@ public class DurationSpecTest
     public void testConversions()
     {
         assertEquals(10L, new DurationSpec("10s").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationSeconds(Integer.MAX_VALUE+"s").toSecondsAsInt());
+        assertEquals(Integer.MAX_VALUE, new SmallestDuration.IntSeconds(Integer.MAX_VALUE+"s").toSecondsAsInt());
         assertEquals(10000, new DurationSpec("10s").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE, new SmallestDurationMilliseconds(Integer.MAX_VALUE+"ms").toMillisecondsAsInt());
+        assertEquals(Integer.MAX_VALUE, new SmallestDuration.Milliseconds(Integer.MAX_VALUE+"ms").toMillisecondsAsInt());
         assertEquals(0, new DurationSpec("10s").toMinutes());
         assertEquals(10, new DurationSpec("10m").toMinutes());
-        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationMinutes(Integer.MAX_VALUE+"m").toMinutesAsInt());
+        assertEquals(Integer.MAX_VALUE, new SmallestDuration.IntMinutes(Integer.MAX_VALUE+"m").toMinutesAsInt());
         assertEquals(600000, new DurationSpec("10m").toMilliseconds());
         assertEquals(600, new DurationSpec("10m").toSeconds());
-        assertEquals(Integer.MAX_VALUE, new IntSmallestDurationSeconds(Integer.MAX_VALUE+"s").toSecondsAsInt());
+        assertEquals(Integer.MAX_VALUE, new SmallestDuration.IntSeconds(Integer.MAX_VALUE+"s").toSecondsAsInt());
         assertEquals(DurationSpec.inDoubleMilliseconds(0.7), new DurationSpec("1ms"));
         assertEquals(DurationSpec.inDoubleMilliseconds(0.33), new DurationSpec("0ms"));
         assertEquals(DurationSpec.inDoubleMilliseconds(0.333), new DurationSpec("0ms"));
@@ -96,25 +96,25 @@ public class DurationSpecTest
         assertEquals(Integer.MAX_VALUE, new DurationSpec("9223372036854775806ns").toNanosecondsAsInt());
 
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE + "ns")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: 9223372036854775807ns, " +
+                                                                           .hasMessageContaining("Invalid duration: 9223372036854775807 nanoseconds, " +
                                                                                                  "it shouldn't be more than 9223372036854775806 in nanoseconds");
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE + "ms")).isInstanceOf(ConfigurationException.class)
-                                                                             .hasMessageContaining("Invalid duration: 9223372036854775807ms, " +
+                                                                             .hasMessageContaining("Invalid duration: 9223372036854775807 milliseconds, " +
                                                                                                    "it shouldn't be more than 9223372036854775806 in nanoseconds");
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "µs")).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid duration: 9223372036854775802µs, " +
+                                                                               .hasMessageContaining("Invalid duration: 9223372036854775802 microseconds, " +
                                                                                                      "it shouldn't be more than 9223372036854775806 in nanoseconds");
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "us")).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid duration: 9223372036854775802us, " +
+                                                                               .hasMessageContaining("Invalid duration: 9223372036854775802 microseconds, " +
                                                                                                      "it shouldn't be more than 9223372036854775806 in nanoseconds");
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "s")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: 9223372036854775802s, " +
+                                                                           .hasMessageContaining("Invalid duration: 9223372036854775802 seconds, " +
                                                                                                  "it shouldn't be more than 9223372036854775806 in nanoseconds");
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "h")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 9223372036854775802h, " +
+                                                                          .hasMessageContaining("Invalid duration: 9223372036854775802 hours, " +
                                                                                                 "it shouldn't be more than 9223372036854775806 in nanoseconds");
         assertThatThrownBy(() -> new DurationSpec(Long.MAX_VALUE-5 + "d")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 9223372036854775802d, " +
+                                                                          .hasMessageContaining("Invalid duration: 9223372036854775802 days, " +
                                                                                                 "it shouldn't be more than 9223372036854775806 in nanoseconds");
     }
 

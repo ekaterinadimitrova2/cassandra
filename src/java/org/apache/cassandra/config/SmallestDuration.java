@@ -19,6 +19,8 @@
 package org.apache.cassandra.config;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 
@@ -123,6 +125,16 @@ public abstract class SmallestDuration extends DurationSpec
         {
             super(quantity, unit, MILLISECONDS, false);
         }
+
+        /**
+         * Creates a {@code SmallestDuration.Milliseconds} of the specified amount in milliseconds.
+         *
+         * @param quantityInMs where quantityInMs shouldn't be bigger than Integer.MAX_VALUE
+         */
+        public Milliseconds(long quantityInMs)
+        {
+            this(quantityInMs, MILLISECONDS);
+        }
     }
 
     public static class Seconds extends SmallestDuration
@@ -147,6 +159,16 @@ public abstract class SmallestDuration extends DurationSpec
         public Seconds(long quantity, TimeUnit unit)
         {
             super(quantity, unit, SECONDS, false);
+        }
+
+        /**
+         * Creates a {@code SmallestDuration.Silliseconds} of the specified amount in seconds.
+         *
+         * @param quantityInS where quantityInS shouldn't be bigger than Long.MAX_VALUE - 1
+         */
+        public Seconds(long quantityInS)
+        {
+            this(quantityInS, SECONDS);
         }
     }
 
@@ -223,6 +245,8 @@ public abstract class SmallestDuration extends DurationSpec
 
     public static class IntSeconds extends SmallestDuration
     {
+        private static final Pattern VALUES_PATTERN = Pattern.compile(("\\d+"));
+
         /**
          * Creates a {@code SmallestDuration.IntSeconds} of the specified amount which shouldn't be bigger than {@code Integer.MAX_VALUE}
          * in seconds
@@ -230,7 +254,7 @@ public abstract class SmallestDuration extends DurationSpec
          */
         public IntSeconds(String value)
         {
-            super(value, MILLISECONDS, true);
+            super(value, SECONDS, true);
         }
 
         /**
@@ -252,6 +276,23 @@ public abstract class SmallestDuration extends DurationSpec
         public IntSeconds(long quantityInS)
         {
             this(quantityInS, SECONDS);
+        }
+
+        public static IntSeconds inSecondsString(String value)
+        {
+            //parse the string field value
+            Matcher matcher = VALUES_PATTERN.matcher(value);
+
+            long seconds;
+            //if the provided string value is just a number, then we create a Duration Spec value in seconds
+            if (matcher.matches())
+            {
+                seconds = Integer.parseInt(value);
+                return new IntSeconds(seconds, TimeUnit.SECONDS);
+            }
+
+            //otherwise we just use the standard constructors
+            return new IntSeconds(value);
         }
     }
 

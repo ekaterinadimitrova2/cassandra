@@ -66,7 +66,7 @@ public class IntDataRate extends DataRateSpec
     private static void validateQuantity(double quantity, DataRateUnit sourceUnit)
     {
         if (quantity > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate:" + quantity + sourceUnit.name().toLowerCase(Locale.ROOT) + "; value must be" +
+            throw new ConfigurationException("Invalid data rate:" + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) + "; value must be" +
                                              " between 0 and " + Integer.MAX_VALUE + " in mebibytes per second");
     }
 }

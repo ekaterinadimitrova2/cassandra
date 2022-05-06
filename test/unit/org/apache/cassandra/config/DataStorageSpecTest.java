@@ -76,17 +76,17 @@ public class DataStorageSpecTest
         assertEquals(Integer.MAX_VALUE, new DataStorageSpec("9223372036854775806B").toBytesAsInt());
 
         assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE + "B")).isInstanceOf(ConfigurationException.class)
-                                                           .hasMessageContaining("Invalid data storage: 9223372036854775807B, " +
-                                                                                 "it shouldn't be more than 9223372036854775806 in bytes");
+                                                           .hasMessageContaining("Invalid data storage: 9223372036854775807 bytes. " +
+                                                                                 "It shouldn't be more than 9223372036854775806 in bytes");
         assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE + "KiB")).isInstanceOf(ConfigurationException.class)
-                                                               .hasMessageContaining("Invalid data storage: 9223372036854775807KiB, " +
-                                                                                     "it shouldn't be more than 9223372036854775806 in bytes");
-        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE-5 + "MiB")).isInstanceOf(ConfigurationException.class)
-                                                             .hasMessageContaining("Invalid data storage: 9223372036854775802MiB, " +
-                                                                                   "it shouldn't be more than 9223372036854775806 in bytes");
-        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE-5 + "GiB")).isInstanceOf(ConfigurationException.class)
-                                                             .hasMessageContaining("Invalid data storage: 9223372036854775802GiB, " +
-                                                                                   "it shouldn't be more than 9223372036854775806 in bytes");
+                                                               .hasMessageContaining("Invalid data storage: 9223372036854775807 kibibytes. " +
+                                                                                     "It shouldn't be more than 9223372036854775806 in bytes");
+        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE-5L + "MiB")).isInstanceOf(ConfigurationException.class)
+                                                             .hasMessageContaining("Invalid data storage: 9223372036854775802 mebibytes. " +
+                                                                                   "It shouldn't be more than 9223372036854775806 in bytes");
+        assertThatThrownBy(() -> new DataStorageSpec(Long.MAX_VALUE-5L + "GiB")).isInstanceOf(ConfigurationException.class)
+                                                             .hasMessageContaining("Invalid data storage: 9223372036854775802 gibibytes. " +
+                                                                                   "It shouldn't be more than 9223372036854775806 in bytes");
     }
 
     @Test
