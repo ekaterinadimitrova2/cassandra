@@ -18,6 +18,7 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -77,13 +78,11 @@ public class DurationSpec
         else
         {
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units: d, h, m, s, ms, us, µs," +
-                                             " ns where case matters and " + "only non-negative values");
+                                             " ns where case matters and only non-negative values");
         }
 
         long nanoseconds = toNanoseconds();
-        if (nanoseconds == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
-
+        validateQuantity(nanoseconds, unit);
     }
 
     DurationSpec(long quantity, TimeUnit unit)
@@ -144,16 +143,14 @@ public class DurationSpec
      */
     public static DurationSpec inMilliseconds(long milliseconds)
     {
-        if (MILLISECONDS.toNanos(milliseconds) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+        validateQuantity(milliseconds, MILLISECONDS);
 
         return new DurationSpec(milliseconds, MILLISECONDS);
     }
 
     public static DurationSpec inDoubleMilliseconds(double milliseconds)
     {
-        if (MILLISECONDS.toNanos((long)milliseconds) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + milliseconds + "ms, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+        validateQuantity((long)milliseconds, MILLISECONDS);
 
         return new DurationSpec(milliseconds, MILLISECONDS);
     }
@@ -166,8 +163,7 @@ public class DurationSpec
      */
     public static DurationSpec inSeconds(long seconds)
     {
-        if (SECONDS.toNanos(seconds) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+        validateQuantity(seconds, SECONDS);
 
         return new DurationSpec(seconds, SECONDS);
     }
@@ -180,8 +176,7 @@ public class DurationSpec
      */
     public static DurationSpec inMinutes(long minutes)
     {
-        if (MINUTES.toNanos(minutes) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + minutes + "m, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+        validateQuantity(minutes,MINUTES);
 
         return new DurationSpec(minutes, MINUTES);
     }
@@ -194,8 +189,7 @@ public class DurationSpec
      */
     public static DurationSpec inHours(long hours)
     {
-        if (HOURS.toNanos(hours) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + hours + "h, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+        validateQuantity(hours, HOURS);
 
         return new DurationSpec(hours, HOURS);
     }
@@ -208,8 +202,7 @@ public class DurationSpec
      */
     public static DurationSpec inDays(long days)
     {
-        if (DAYS.toNanos(days) == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid duration: " + days + "d, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+        validateQuantity(days, DAYS);
 
         return new DurationSpec(days, DAYS);
     }
@@ -233,14 +226,20 @@ public class DurationSpec
         {
             seconds = Long.parseLong(value);
 
-            if (SECONDS.toNanos(seconds) == Long.MAX_VALUE)
-                throw new ConfigurationException("Invalid duration: " + seconds + "s, it shouldn't be more than " + (Long.MAX_VALUE-1) + " in nanoseconds");
+            validateQuantity(seconds, SECONDS);
 
             return new DurationSpec(seconds, SECONDS);
         }
 
         //otherwise we just use the standard constructors
         return new DurationSpec(value);
+    }
+
+    private static void validateQuantity(long quantity, TimeUnit sourceUnit)
+    {
+        if (sourceUnit.toNanos(quantity) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid duration: " + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) +
+                                             ", it shouldn't be more than " + (Long.MAX_VALUE - 1) + " in " + NANOSECONDS.name().toLowerCase(Locale.ROOT));
     }
 
     /**
