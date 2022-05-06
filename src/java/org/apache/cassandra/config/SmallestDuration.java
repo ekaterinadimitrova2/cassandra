@@ -42,7 +42,7 @@ public abstract class SmallestDuration extends DurationSpec
 
     protected SmallestDuration(long quantity, TimeUnit unit, TimeUnit smallestUnit, boolean isInt)
     {
-        super(quantity, smallestUnit);
+        super(quantity, unit);
 
         validateQuantity(quantity, unit, smallestUnit, isInt);
     }
