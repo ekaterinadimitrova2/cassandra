@@ -17,7 +17,11 @@
  */
 package org.apache.cassandra.config;
 
+import java.util.Locale;
+
 import org.apache.cassandra.exceptions.ConfigurationException;
+
+import static org.apache.cassandra.config.DataRateSpec.DataRateUnit.MEBIBYTES_PER_SECOND;
 
 /**
  * Represents a data rate int type used for cassandra configuration. It supports the opportunity for the users to be able to
@@ -31,8 +35,7 @@ public class IntDataRate extends DataRateSpec
 
         // as we store in double and we don't have issues with precision we can afford this for int parameters
         // we chose mebibytes per second, int as the new streaming parameters added 4.1 were supposed to be int mebibytes
-        if (toMebibytesPerSecond() > Integer.MAX_VALUE)
-            throw new NumberFormatException("Invalid data rate: value must be between 0 and " + Integer.MAX_VALUE + " mebibytes per second");
+        validateQuantity(toMebibytesPerSecond(), this.unit());
     }
 
     public IntDataRate(double quantity, DataRateUnit unit)
@@ -50,15 +53,20 @@ public class IntDataRate extends DataRateSpec
                                              "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
                                              " should be between 0 and " + Integer.MAX_VALUE + " in megabits per second");
 
-        return new IntDataRate(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
+        return new IntDataRate(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
     }
 
     public static IntDataRate inMebibytesPerSecond(long mebibytesPerSecond)
     {
-        if (mebibytesPerSecond > Integer.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate:" + mebibytesPerSecond + " mebibytes per second; value must be" +
-                                             " between 0 and " + Integer.MAX_VALUE + " in mebibytes per second");
+        validateQuantity(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
 
-        return new IntDataRate(mebibytesPerSecond, DataRateUnit.MEBIBYTES_PER_SECOND);
+        return new IntDataRate(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
+    }
+
+    private static void validateQuantity(double quantity, DataRateUnit sourceUnit)
+    {
+        if (quantity > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data rate:" + quantity + sourceUnit.name().toLowerCase(Locale.ROOT) + "; value must be" +
+                                             " between 0 and " + Integer.MAX_VALUE + " in mebibytes per second");
     }
 }
