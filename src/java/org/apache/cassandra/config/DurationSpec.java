@@ -111,6 +111,8 @@ public class DurationSpec
             quantity = Long.parseLong(matcher.group(1));
             unit = fromSymbol(matcher.group(2));
 
+            //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
+
             if (!MAP_UNITS_PER_MIN_UNIT.get(minUnit).contains(unit))
                 throw new ConfigurationException("Invalid duration: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit));
         }
@@ -119,7 +121,6 @@ public class DurationSpec
             throw new ConfigurationException("Invalid duration: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit) +
                                              " where case matters and only non-negative values.");
         }
-        //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -239,7 +240,7 @@ public class DurationSpec
     {
         if (sourceUnit.toNanos(quantity) == Long.MAX_VALUE)
             throw new ConfigurationException("Invalid duration: " + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) +
-                                             ", it shouldn't be more than " + (Long.MAX_VALUE - 1) + " in " + NANOSECONDS.name().toLowerCase(Locale.ROOT));
+                                             ", it shouldn't be more than " + (Long.MAX_VALUE - 1) + " in nanoseconds");
     }
 
     /**

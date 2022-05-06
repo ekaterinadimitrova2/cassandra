@@ -18,7 +18,9 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -29,6 +31,7 @@ import com.google.common.primitives.Ints;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.GIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.KIBIBYTES;
@@ -73,8 +76,7 @@ public class DataStorageSpec
 
 
         long bytes = toBytes();
-        if (bytes == Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: " + value + ", it shouldn't be more than " + (Long.MAX_VALUE-1) + " in bytes");
+        validateQuantity(bytes, BYTES);
     }
 
     DataStorageSpec(long quantity, DataStorageUnit unit)
@@ -98,6 +100,8 @@ public class DataStorageSpec
         {
             quantity = Long.parseLong(matcher.group(1));
             unit = DataStorageUnit.fromSymbol(matcher.group(2));
+
+            //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
 
             if (!MAP_UNITS_PER_MIN_UNIT.get(minUnit).contains(unit))
                 throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit));
@@ -127,9 +131,7 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inKibibytes(long kibibytes)
     {
-        if (KIBIBYTES.toBytes(kibibytes) >= Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: " + kibibytes + " kibibytes. It shouldn't be more than" +
-                                             + Long.MAX_VALUE + " in bytes");
+        validateQuantity(kibibytes, KIBIBYTES);
 
         return new DataStorageSpec(kibibytes, KIBIBYTES);
     }
@@ -142,10 +144,7 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inMebibytes(long mebibytes)
     {
-        if (MEBIBYTES.toBytes(mebibytes) >= Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: " + mebibytes + " mebibytes. It shouldn't be more than" +
-                                             + Long.MAX_VALUE + " in bytes");
-
+        validateQuantity(mebibytes, MEBIBYTES);
         return new DataStorageSpec(mebibytes, MEBIBYTES);
     }
 
@@ -157,9 +156,7 @@ public class DataStorageSpec
      */
     public static DataStorageSpec inGibibytes(long gibibytes)
     {
-        if (GIBIBYTES.toBytes(gibibytes) >= Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data storage: " + gibibytes + " gibibytes. It shouldn't be more than" +
-                                             + Long.MAX_VALUE + " in bytes");
+        validateQuantity(gibibytes, GIBIBYTES);
 
         return new DataStorageSpec(gibibytes, GIBIBYTES);
     }
@@ -173,6 +170,14 @@ public class DataStorageSpec
     public long quantity()
     {
         return quantity;
+    }
+
+
+    private static void validateQuantity(long quantity, DataStorageUnit sourceUnit)
+    {
+        if (sourceUnit.toBytes(quantity) == Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data storage: " + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) +
+                                             ". It shouldn't be more than " + (Long.MAX_VALUE - 1) + " in bytes");
     }
 
     /**
