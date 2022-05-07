@@ -352,7 +352,7 @@ public class GuardrailDiskUsageTest extends GuardrailTester
     public void testDiskUsageCalculationWithMaxDiskSizeAndSmallUnits() throws IOException
     {
         // 5GiB used out of 100GiB disk
-        long freeDiskSizeInBytes = new DataStorageSpec("100GiB").toBytes() - new DataStorageSpec("5GiB").toBytes();
+        long freeDiskSizeInBytes = new DataStorageSpec("100GiB").toBytes() - new DataStorageSpec("5MiB").toBytes();
 
         FileStore store = mock(FileStore.class);
         when(store.getUsableSpace()).thenReturn(new DataStorageSpec(freeDiskSizeInBytes + "B").toBytes()); // 100GiB disk
