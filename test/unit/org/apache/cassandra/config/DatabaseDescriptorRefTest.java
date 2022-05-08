@@ -103,7 +103,7 @@ public class DatabaseDescriptorRefTest
     "org.apache.cassandra.config.DataStorageSpec$DataStorageUnit$4",
     "org.apache.cassandra.config.DurationSpec",
     "org.apache.cassandra.config.StartupChecksOptions",
-    "org.apache.cassandra.config.IntDataRate",
+    "org.apache.cassandra.config.DataRateSpec$IntMebibytesPerSecondBound",
     "org.apache.cassandra.config.SmallestDataStorage",
     "org.apache.cassandra.config.SmallestDataStorage$IntBytes",
     "org.apache.cassandra.config.SmallestDataStorage$IntMebibytes",

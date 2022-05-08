@@ -39,7 +39,6 @@ import org.apache.cassandra.audit.AuditLogOptions;
 import org.apache.cassandra.db.ConsistencyLevel;
 import org.apache.cassandra.fql.FullQueryLoggerOptions;
 import org.apache.cassandra.service.StartupChecks.StartupCheckType;
-import org.hyperic.sigar.cmd.Du;
 
 /**
  * A class that contains configuration properties for the cassandra node it runs within.
@@ -316,7 +315,7 @@ public class Config
     public Integer unlogged_batch_across_partitions_warn_threshold = 10;
     public volatile Integer concurrent_compactors;
     @Replaces(oldName = "compaction_throughput_mb_per_sec", converter = Converters.MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile IntDataRate compaction_throughput = new IntDataRate("16MiB/s");
+    public volatile DataRateSpec.IntMebibytesPerSecondBound compaction_throughput = new DataRateSpec.IntMebibytesPerSecondBound("16MiB/s");
     @Replaces(oldName = "compaction_large_partition_warning_threshold_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
     public volatile SmallestDataStorage.IntMebibytes compaction_large_partition_warning_threshold = new SmallestDataStorage.IntMebibytes("100MiB");
     @Replaces(oldName = "min_free_space_per_drive_in_mb", converter = Converters.MEBIBYTES_DATA_STORAGE_INT, deprecated = true)
@@ -333,12 +332,12 @@ public class Config
     public int max_streaming_retries = 3;
 
     @Replaces(oldName = "stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile IntDataRate stream_throughput_outbound = new IntDataRate("24MiB/s");
+    public volatile DataRateSpec.IntMebibytesPerSecondBound stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecondBound("24MiB/s");
     @Replaces(oldName = "inter_dc_stream_throughput_outbound_megabits_per_sec", converter = Converters.MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE, deprecated = true)
-    public volatile IntDataRate inter_dc_stream_throughput_outbound = new IntDataRate("24MiB/s");
+    public volatile DataRateSpec.IntMebibytesPerSecondBound inter_dc_stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecondBound("24MiB/s");
 
-    public volatile IntDataRate entire_sstable_stream_throughput_outbound = new IntDataRate("24MiB/s");
-    public volatile IntDataRate entire_sstable_inter_dc_stream_throughput_outbound = new IntDataRate("24MiB/s");
+    public volatile DataRateSpec.IntMebibytesPerSecondBound entire_sstable_stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecondBound("24MiB/s");
+    public volatile DataRateSpec.IntMebibytesPerSecondBound entire_sstable_inter_dc_stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecondBound("24MiB/s");
 
     public String[] data_file_directories = new String[0];
 
