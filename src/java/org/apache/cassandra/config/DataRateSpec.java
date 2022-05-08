@@ -18,7 +18,6 @@
 package org.apache.cassandra.config;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,14 +28,13 @@ import com.google.common.primitives.Ints;
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 import static org.apache.cassandra.config.DataRateSpec.DataRateUnit.BYTES_PER_SECOND;
-import static org.apache.cassandra.config.DataRateSpec.DataRateUnit.KIBIBYTES_PER_SECOND;
 import static org.apache.cassandra.config.DataRateSpec.DataRateUnit.MEBIBYTES_PER_SECOND;
 
 /**
  * Represents a data rate type used for cassandra configuration. It supports the opportunity for the users to be able to
  * add units to the confiuration parameter value. (CASSANDRA-15234)
  */
-public class DataRateSpec
+public abstract class DataRateSpec
 {
     /**
      * The Regexp used to parse the rate provided as String in cassandra.yaml.
@@ -47,7 +45,7 @@ public class DataRateSpec
 
     private final DataRateUnit unit;
 
-    public DataRateSpec(String value)
+    private DataRateSpec(String value)
     {
         //parse the string field value
         Matcher matcher = UNITS_PATTERN.matcher(value);
@@ -56,85 +54,74 @@ public class DataRateSpec
             throw new ConfigurationException("Invalid data rate: " + value + " Accepted units: MiB/s, KiB/s, B/s where " +
                                              "case matters and " + "only non-negative values are valid");
 
-        quantity = (double)Long.parseLong(matcher.group(1));
+        quantity = (double) Long.parseLong(matcher.group(1));
         unit = DataRateUnit.fromSymbol(matcher.group(2));
-
-        if (toBytesPerSecond() >= Long.MAX_VALUE)
-            throw new NumberFormatException("Invalid data rate: value " + toBytesPerSecond() + " must be between 0 and " + (Long.MAX_VALUE - 1) + " bytes per second");
     }
 
-    DataRateSpec(double quantity, DataRateUnit unit)
+    private DataRateSpec(String value, DataRateUnit smallestUnit, boolean isInt)
+    {
+        this (value);
+
+        validateQuantity(value, this.quantity(), this.unit(), smallestUnit, isInt);
+
+    }
+
+    private DataRateSpec(double quantity, DataRateUnit unit, DataRateUnit smallestUnit, boolean isInt)
+    {
+        this.quantity = quantity;
+        this.unit = unit;
+
+        validateQuantity(quantity, unit, smallestUnit, isInt);
+    }
+
+    private static void validateQuantity(String value, double quantity, DataRateUnit unit, DataRateUnit smallestUnit, boolean isInt)
     {
         if (quantity < 0)
             throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
-        this.quantity = quantity;
-        this.unit = unit;
+        if (!isInt)
+            validateLong(value, quantity, unit, smallestUnit);
+        else
+            validateInt(value, quantity, unit, smallestUnit);
     }
 
-    /**
-     * Creates a {@code DataRateSpec} of the specified amount of bytes per second.
-     *
-     * @param bytesPerSecond the amount of bytes per second
-     * @return a {@code DataRateSpec}
-     */
-    public static DataRateSpec inBytesPerSecond(long bytesPerSecond)
+    private static void validateQuantity(double quantity, DataRateUnit unit, DataRateUnit smallestUnit, boolean isInt)
     {
-        validateQuantity(bytesPerSecond, BYTES_PER_SECOND);
+        if (quantity < 0)
+            throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
-        return new DataRateSpec(bytesPerSecond, BYTES_PER_SECOND);
+        if (!isInt)
+            validateLong(quantity, unit, smallestUnit);
+        else
+            validateInt(quantity, unit, smallestUnit);
     }
 
-    /**
-     * Creates a {@code DataRateSpec} of the specified amount of kibibytes per second.
-     *
-     * @param kibibytesPerSecond the amount of kibibytes per second
-     * @return a {@code DataRateSpec}
-     */
-    public static DataRateSpec inKibibytesPerSecond(long kibibytesPerSecond)
+    private static void validateLong(String value, double quantity, DataRateUnit unit, DataRateUnit smallestUnit)
     {
-        validateQuantity(kibibytesPerSecond, KIBIBYTES_PER_SECOND);
-
-        return new DataRateSpec(kibibytesPerSecond, KIBIBYTES_PER_SECOND);
+        if (smallestUnit.convert(quantity, unit) >= Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data rate: " + value + ". It shouldn't be more than " +
+                                             (Long.MAX_VALUE - 1) + " in " + smallestUnit.name().toLowerCase());
     }
 
-    /**
-     * Creates a {@code DataRateSpec} of the specified amount of mebibytes per second.
-     *
-     * @param mebibytesPerSecond the amount of mebibytes per second
-     * @return a {@code DataRateSpec}
-     */
-    public static DataRateSpec inMebibytesPerSecond(long mebibytesPerSecond)
+    private static void validateInt(String value, double quantity, DataRateUnit unit, DataRateUnit smallestUnit)
     {
-        validateQuantity(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
-
-        return new DataRateSpec(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
+        if (smallestUnit.convert(quantity, unit) > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data rate: " + value + ". It shouldn't be more than " +
+                                             Integer.MAX_VALUE + " in " + smallestUnit.name().toLowerCase());
     }
 
-    private static void validateQuantity(long quantity, DataRateUnit sourceUnit)
+    private static void validateLong(double quantity, DataRateUnit unit, DataRateUnit smallestUnit)
     {
-        if (sourceUnit.toBytesPerSecond(quantity) >= Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate: " + quantity + " " + sourceUnit.name().toLowerCase(Locale.ROOT) +
-                                             "; value must be between 0 and " + (Long.MAX_VALUE-1) + " in bytes per second");
+        if (smallestUnit.convert(quantity, unit) >= Long.MAX_VALUE)
+            throw new ConfigurationException("Invalid data rate: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
+                                             (Long.MAX_VALUE - 1) + " in " + smallestUnit.name().toLowerCase());
     }
 
-    /**
-     * Creates a {@code DataRateSpec} of the specified amount of mebibytes per second.
-     *
-     * @param megabitsPerSecond the amount of megabits per second
-     * @return a {@code DataRateSpec}
-     */
-    public static DataRateSpec megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
+    private static void validateInt(double quantity, DataRateUnit unit, DataRateUnit smallestUnit)
     {
-        final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;
-        double mebibytesPerSecond = (double)megabitsPerSecond * MEBIBYTES_PER_MEGABIT;
-
-        if (MEBIBYTES_PER_SECOND.toBytesPerSecond(mebibytesPerSecond) >= Long.MAX_VALUE)
-            throw new ConfigurationException("Invalid data rate: " + megabitsPerSecond +"megabits per second; " +
-                                             "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
-                                             " should be between 0 and " + (Long.MAX_VALUE-1) + " in megabits per second");
-
-        return new DataRateSpec(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
+        if (smallestUnit.convert(quantity, unit) > Integer.MAX_VALUE)
+            throw new ConfigurationException("Invalid data rate: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
+                                             Integer.MAX_VALUE + " in " + smallestUnit.name().toLowerCase());
     }
 
     /**
@@ -143,6 +130,14 @@ public class DataRateSpec
     public DataRateUnit unit()
     {
         return unit;
+    }
+
+    /**
+     * @return the data rate quantity.
+     */
+    private double quantity()
+    {
+        return quantity;
     }
 
     /**
@@ -251,6 +246,80 @@ public class DataRateSpec
         return Math.round(quantity) + unit.symbol;
     }
 
+    /**
+     * Represents a data rate used for cassandra configuration. It supports the opportunity for the users to be able to
+     * add units to the confiuration parameter value. The range is long bytes per second. (CASSANDRA-15234)
+     */
+    public final static class BytesPerSecond extends DataRateSpec
+    {
+        /**
+         * Creates a {@code DataRateSpec.BytesPerSecond} of the specified amount.
+         *
+         * @param value the data rate
+         */
+        public BytesPerSecond(String value)
+        {
+            super(value, BYTES_PER_SECOND, false);
+        }
+
+        /**
+         * Creates a {@code DataRateSpec.BytesPerSecond} of the specified amount in the specified unit.
+         *
+         * @param quantity where quantity shouldn't be bigger than Long.MAX_VALUE - 1 in bytes per second
+         * @param unit     in which the provided quantity is
+         */
+        public BytesPerSecond(double quantity, DataRateUnit unit)
+        {
+            super(quantity, unit, BYTES_PER_SECOND, false);
+        }
+
+        /**
+         * Creates a {@code DataRateSpec.BytesPerSecond} of the specified amount in bytes per second.
+         *
+         * @param quantityInBperS where quantityInBperS shouldn't be bigger than Long.MAX_VALUE
+         */
+        public BytesPerSecond(long quantityInBperS)
+        {
+            this(quantityInBperS, BYTES_PER_SECOND);
+        }
+    }
+
+    /**
+     * Represents a data rate int type used for cassandra configuration. It supports the opportunity for the users to be able to
+     * add units to the confiuration parameter value. The range is Int mebibytes per second. (CASSANDRA-15234)
+     */
+    public final static class IntMebibytesPerSecond extends DataRateSpec
+    {
+        public IntMebibytesPerSecond(String value)
+        {
+            super(value, MEBIBYTES_PER_SECOND, true);
+        }
+
+        public IntMebibytesPerSecond(double quantity, DataRateUnit unit)
+        {
+            super(quantity, unit, MEBIBYTES_PER_SECOND, true);
+        }
+
+        // this one should be used only for backward compatibility
+        public static IntMebibytesPerSecond megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
+        {
+            final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;
+            double mebibytesPerSecond = (double) megabitsPerSecond * MEBIBYTES_PER_MEGABIT;
+
+            if (megabitsPerSecond > Integer.MAX_VALUE)
+                throw new ConfigurationException("Invalid data rate: " + megabitsPerSecond + " megabits per second; " +
+                                                 "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
+                                                 " should be between 0 and " + Integer.MAX_VALUE + " in megabits per second");
+
+            return new IntMebibytesPerSecond(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
+        }
+
+        public IntMebibytesPerSecond(long mebibytesPerSecond)
+        {
+            this (mebibytesPerSecond, MEBIBYTES_PER_SECOND);
+        }
+    }
+
     public enum DataRateUnit
     {
         BYTES_PER_SECOND("B/s")
@@ -270,7 +339,10 @@ public class DataRateSpec
                 return d / (1024.0 * 1024.0);
             }
 
-            public double toMegabitsPerSecond(double d) { return (d / 125000.0); }
+            public double toMegabitsPerSecond(double d)
+            {
+                return (d / 125000.0);
+            }
 
             public double convert(double source, DataRateUnit sourceUnit)
             {
@@ -361,9 +433,9 @@ public class DataRateSpec
                     return value;
             }
             throw new ConfigurationException(String.format("Unsupported data rate unit: %s. Supported units are: %s",
-                                                             symbol, Arrays.stream(values())
-                                                                           .map(u -> u.symbol)
-                                                                           .collect(Collectors.joining(", "))));
+                                                           symbol, Arrays.stream(values())
+                                                                         .map(u -> u.symbol)
+                                                                         .collect(Collectors.joining(", "))));
         }
 
         /**
@@ -391,7 +463,10 @@ public class DataRateSpec
             throw new AbstractMethodError();
         }
 
-        public double toMegabitsPerSecond(double d) { throw new AbstractMethodError(); }
+        public double toMegabitsPerSecond(double d)
+        {
+            throw new AbstractMethodError();
+        }
 
         public double convert(double source, DataRateUnit sourceUnit)
         {

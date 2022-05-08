@@ -34,9 +34,9 @@ public class StreamManagerTest
 {
     private static double defaultStreamThroughputMebibytesPerSec;
     private static double defaultInterDCStreamThroughputMebibytesPerSec;
-    private static final double INTEGER_MAX_VALUE_MEGABITS_IN_MEBIBYTES = DataRateSpec
-                                                                       .megabitsPerSecondInMebibytesPerSecond(Integer.MAX_VALUE)
-                                                                       .toMebibytesPerSecond();
+    private static final double INTEGER_MAX_VALUE_MEGABITS_IN_MEBIBYTES = DataRateSpec.IntMebibytesPerSecond
+                                                                          .megabitsPerSecondInMebibytesPerSecond(Integer.MAX_VALUE)
+                                                                          .toMebibytesPerSecond();
 
     private static double defaultEntireSSTableStreamThroughputMebibytesPerSec;
     private static double defaultEntireSSTableInterDCStreamThroughputMebibytesPerSec;

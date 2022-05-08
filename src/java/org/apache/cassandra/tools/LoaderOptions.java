@@ -402,10 +402,10 @@ public class LoaderOptions
                 {
                     config = new Config();
                     // unthrottle stream by default
-                    config.stream_throughput_outbound = IntDataRate.inMebibytesPerSecond(0);
-                    config.inter_dc_stream_throughput_outbound = IntDataRate.inMebibytesPerSecond(0);
-                    config.entire_sstable_stream_throughput_outbound = IntDataRate.inMebibytesPerSecond(0);
-                    config.entire_sstable_inter_dc_stream_throughput_outbound = IntDataRate.inMebibytesPerSecond(0);
+                    config.stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecond(0);
+                    config.inter_dc_stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecond(0);
+                    config.entire_sstable_stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecond(0);
+                    config.entire_sstable_inter_dc_stream_throughput_outbound = new DataRateSpec.IntMebibytesPerSecond(0);
                 }
 
                 if (cmd.hasOption(STORAGE_PORT_OPTION))
