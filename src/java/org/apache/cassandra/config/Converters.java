@@ -95,16 +95,16 @@ public enum Converters
     BYTES_CUSTOM_DATASTORAGE(Long.class, DataStorageSpec.class,
                              o -> o == -1 ? null : new DataStorageSpec(o, BYTES),
                              DataStorageSpec::toBytes),
-    MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, IntDataRate.class,
-                                   i -> IntDataRate.inMebibytesPerSecond(i),
-                                   IntDataRate::toMebibytesPerSecondAsInt),
+    MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateSpec.IntMebibytesPerSecondBound.class,
+                                   DataRateSpec.IntMebibytesPerSecondBound::new,
+                                   DataRateSpec.IntMebibytesPerSecondBound::toMebibytesPerSecondAsInt),
     /**
      * This converter is a custom one to support backward compatibility for stream_throughput_outbound and
      * inter_dc_stream_throughput_outbound which were provided in megatibs per second prior CASSANDRA-15234.
      */
-    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, IntDataRate.class,
-                                               i -> IntDataRate.megabitsPerSecondInMebibytesPerSecond(i),
-                                               IntDataRate::toMegabitsPerSecondAsInt);
+    MEGABITS_TO_MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateSpec.IntMebibytesPerSecondBound.class,
+                                               i -> DataRateSpec.IntMebibytesPerSecondBound.megabitsPerSecondInMebibytesPerSecond(i),
+                                               DataRateSpec.IntMebibytesPerSecondBound::toMegabitsPerSecondAsInt);
     private final Class<?> oldType;
     private final Class<?> newType;
     private final Function<Object, Object> convert;

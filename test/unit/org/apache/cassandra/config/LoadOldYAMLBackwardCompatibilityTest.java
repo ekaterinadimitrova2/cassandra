@@ -72,11 +72,11 @@ public class LoadOldYAMLBackwardCompatibilityTest
         assertEquals(new SmallestDataStorage.IntKibibytes(4), config.column_index_size);
         assertEquals(new SmallestDataStorage.IntKibibytes(2), config.column_index_cache_size);
         assertEquals(new SmallestDataStorage.IntKibibytes(5), config.batch_size_warn_threshold);
-        assertEquals(IntDataRate.inMebibytesPerSecond(64), config.compaction_throughput);
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound(64), config.compaction_throughput);
         assertEquals(new SmallestDataStorage.IntMebibytes(50), config.min_free_space_per_drive);
-        assertEquals(IntDataRate.inMebibytesPerSecond(23841858).toString(), config.stream_throughput_outbound.toString());
-        assertEquals(IntDataRate.megabitsPerSecondInMebibytesPerSecond(200000000).toString(), config.stream_throughput_outbound.toString());
-        assertEquals(IntDataRate.inMebibytesPerSecond(24), config.inter_dc_stream_throughput_outbound);
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound(23841858).toString(), config.stream_throughput_outbound.toString());
+        assertEquals(DataRateSpec.IntMebibytesPerSecondBound.megabitsPerSecondInMebibytesPerSecond(200000000).toString(), config.stream_throughput_outbound.toString());
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound(24), config.inter_dc_stream_throughput_outbound);
         assertNull(config.commitlog_total_space);
         assertEquals(new SmallestDuration.IntMilliseconds(0.0, TimeUnit.MILLISECONDS), config.commitlog_sync_group_window);
         assertEquals(new SmallestDuration.IntMilliseconds(0), config.commitlog_sync_period);
