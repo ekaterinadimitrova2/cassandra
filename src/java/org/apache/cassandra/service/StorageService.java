@@ -6521,11 +6521,11 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         logger.info("set default keyspace rf to {}", value);
     }
 
-    private static DataStorageSpec parseDataStorageSpec(String threshold)
+    private static DataStorageSpec.LongBytesBound parseDataStorageSpec(String threshold)
     {
         return threshold == null
                ? null
-               : new DataStorageSpec(threshold);
+               : new DataStorageSpec.LongBytesBound(threshold);
     }
 
     public int getDefaultKeyspaceReplicationFactor()

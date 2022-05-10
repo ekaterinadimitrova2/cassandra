@@ -80,36 +80,36 @@ public class ParseAndConvertUnitsTest
         assertNull(config.memtable_heap_space);
         assertNull(config.memtable_offheap_space);
         assertNull(config.repair_session_space); //null everywhere so should be correct, let's check whether it will bomb
-        assertEquals(new SmallestDataStorage.IntBytes(4194304), config.internode_application_send_queue_capacity);
-        assertEquals(new SmallestDataStorage.IntBytes(134217728), config.internode_application_send_queue_reserve_endpoint_capacity);
-        assertEquals(new SmallestDataStorage.IntBytes(536870912), config.internode_application_send_queue_reserve_global_capacity);
-        assertEquals(new SmallestDataStorage.IntBytes(4194304), config.internode_application_receive_queue_capacity);
-        assertEquals(new SmallestDataStorage.IntBytes(134217728), config.internode_application_receive_queue_reserve_endpoint_capacity);
-        assertEquals(new SmallestDataStorage.IntBytes(536870912), config.internode_application_receive_queue_reserve_global_capacity);
-        assertEquals(new SmallestDataStorage.IntMebibytes(16), config.native_transport_max_frame_size);
-        assertEquals(new SmallestDataStorage.IntMebibytes(256), config.max_value_size);
-        assertEquals(new SmallestDataStorage.IntKibibytes(4), config.column_index_size);
-        assertEquals(new SmallestDataStorage.IntKibibytes(2), config.column_index_cache_size);
-        assertEquals(new SmallestDataStorage.IntKibibytes(5), config.batch_size_warn_threshold);
-        assertEquals(new SmallestDataStorage.IntKibibytes(50), config.batch_size_fail_threshold);
-        assertEquals(new SmallestDataStorage.IntMebibytes(100), config.compaction_large_partition_warning_threshold);
+        assertEquals(new DataStorageSpec.IntBytesBound(4194304), config.internode_application_send_queue_capacity);
+        assertEquals(new DataStorageSpec.IntBytesBound(134217728), config.internode_application_send_queue_reserve_endpoint_capacity);
+        assertEquals(new DataStorageSpec.IntBytesBound(536870912), config.internode_application_send_queue_reserve_global_capacity);
+        assertEquals(new DataStorageSpec.IntBytesBound(4194304), config.internode_application_receive_queue_capacity);
+        assertEquals(new DataStorageSpec.IntBytesBound(134217728), config.internode_application_receive_queue_reserve_endpoint_capacity);
+        assertEquals(new DataStorageSpec.IntBytesBound(536870912), config.internode_application_receive_queue_reserve_global_capacity);
+        assertEquals(new DataStorageSpec.IntMebibytesBound(16), config.native_transport_max_frame_size);
+        assertEquals(new DataStorageSpec.IntMebibytesBound(256), config.max_value_size);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(4), config.column_index_size);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(2), config.column_index_cache_size);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(5), config.batch_size_warn_threshold);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(50), config.batch_size_fail_threshold);
+        assertEquals(new DataStorageSpec.IntMebibytesBound(100), config.compaction_large_partition_warning_threshold);
         assertNull(config.commitlog_total_space);
-        assertEquals(new SmallestDataStorage.IntMebibytes(5), config.commitlog_segment_size);
+        assertEquals(new DataStorageSpec.IntMebibytesBound(5), config.commitlog_segment_size);
         assertNull(config.max_mutation_size); //not set explicitly in the default yaml, check the config; not set there too
-        assertEquals(new SmallestDataStorage.IntMebibytes(0), config.cdc_total_space);
-        assertEquals(new SmallestDataStorage.IntKibibytes(1024), config.hinted_handoff_throttle);
-        assertEquals(new SmallestDataStorage.IntKibibytes(1024), config.batchlog_replay_throttle);
-        assertEquals(new SmallestDataStorage.IntKibibytes(10240), config.trickle_fsync_interval);
-        assertEquals(new SmallestDataStorage.IntMebibytes(50), config.sstable_preemptive_open_interval);
+        assertEquals(new DataStorageSpec.IntMebibytesBound(0), config.cdc_total_space);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(1024), config.hinted_handoff_throttle);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(1024), config.batchlog_replay_throttle);
+        assertEquals(new DataStorageSpec.IntKibibytesBound(10240), config.trickle_fsync_interval);
+        assertEquals(new DataStorageSpec.IntMebibytesBound(50), config.sstable_preemptive_open_interval);
         assertNull(config.counter_cache_size);
         assertNull(config.file_cache_size);
         assertNull(config.index_summary_capacity);
-        assertEquals(new SmallestDataStorage.Mebibytes(1), config.prepared_statements_cache_size);
+        assertEquals(new DataStorageSpec.LongMebibytesBound(1), config.prepared_statements_cache_size);
         assertNull(config.key_cache_size);
-        assertEquals(new SmallestDataStorage.Mebibytes(16), config.row_cache_size);
+        assertEquals(new DataStorageSpec.LongMebibytesBound(16), config.row_cache_size);
         assertNull(config.native_transport_max_request_data_in_flight);
         assertNull(config.native_transport_max_request_data_in_flight_per_ip);
-        assertEquals(new SmallestDataStorage.IntBytes(1, MEBIBYTES), config.native_transport_receive_queue_capacity);
+        assertEquals(new DataStorageSpec.IntBytesBound(1, MEBIBYTES), config.native_transport_receive_queue_capacity);
 
         //Confirm rate parameters were successfully parsed with the default values in cassandra.yaml
         assertEquals(new DataRateSpec.IntMebibytesPerSecondBound(0), config.compaction_throughput);

@@ -910,8 +910,8 @@ public final class Guardrails implements GuardrailsMBean
         return size == null ? null : size.toString();
     }
 
-    private static DataStorageSpec sizeFromString(@Nullable String size)
+    private static DataStorageSpec.LongBytesBound sizeFromString(@Nullable String size)
     {
-        return StringUtils.isEmpty(size) ? null : new DataStorageSpec(size);
+        return StringUtils.isEmpty(size) ? null : new DataStorageSpec.LongBytesBound(size);
     }
 }
