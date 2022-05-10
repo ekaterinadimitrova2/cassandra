@@ -43,8 +43,8 @@ public class LocalReadSizeWarningTest extends AbstractClientSizeWarning
             DatabaseDescriptor.setCoordinatorReadSizeWarnThreshold(null);
             DatabaseDescriptor.setCoordinatorReadSizeFailThreshold(null);
 
-            DatabaseDescriptor.setLocalReadSizeWarnThreshold(new DataStorageSpec(1, KIBIBYTES));
-            DatabaseDescriptor.setLocalReadSizeFailThreshold(new DataStorageSpec(2, KIBIBYTES));
+            DatabaseDescriptor.setLocalReadSizeWarnThreshold(new DataStorageSpec.LongBytesBound(1, KIBIBYTES));
+            DatabaseDescriptor.setLocalReadSizeFailThreshold(new DataStorageSpec.LongBytesBound(2, KIBIBYTES));
         }));
     }
 

@@ -43,8 +43,8 @@ public class CoordinatorReadSizeWarningTest extends AbstractClientSizeWarning
         // setup threshold after init to avoid driver issues loading
         // the test uses a rather small limit, which causes driver to fail while loading metadata
         CLUSTER.stream().forEach(i -> i.runOnInstance(() -> {
-            DatabaseDescriptor.setCoordinatorReadSizeWarnThreshold(new DataStorageSpec(1, KIBIBYTES));
-            DatabaseDescriptor.setCoordinatorReadSizeFailThreshold(new DataStorageSpec(2, KIBIBYTES));
+            DatabaseDescriptor.setCoordinatorReadSizeWarnThreshold(new DataStorageSpec.LongBytesBound(1, KIBIBYTES));
+            DatabaseDescriptor.setCoordinatorReadSizeFailThreshold(new DataStorageSpec.LongBytesBound(2, KIBIBYTES));
         }));
     }
 

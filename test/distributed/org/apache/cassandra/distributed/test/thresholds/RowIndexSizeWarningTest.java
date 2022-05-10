@@ -38,8 +38,8 @@ public class RowIndexSizeWarningTest extends AbstractClientSizeWarning
         AbstractClientSizeWarning.setupClass();
 
         CLUSTER.stream().forEach(i -> i.runOnInstance(() -> {
-            DatabaseDescriptor.setRowIndexReadSizeWarnThreshold(new DataStorageSpec(1, KIBIBYTES));
-            DatabaseDescriptor.setRowIndexReadSizeFailThreshold(new DataStorageSpec(2, KIBIBYTES));
+            DatabaseDescriptor.setRowIndexReadSizeWarnThreshold(new DataStorageSpec.LongBytesBound(1, KIBIBYTES));
+            DatabaseDescriptor.setRowIndexReadSizeFailThreshold(new DataStorageSpec.LongBytesBound(2, KIBIBYTES));
 
             // hack to force multiple index entries
             DatabaseDescriptor.setColumnIndexCacheSize(1 << 20);

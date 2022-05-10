@@ -99,14 +99,14 @@ public class YamlConfigurationLoaderTest
 
         assertThat(c.read_thresholds_enabled).isTrue();
 
-        assertThat(c.coordinator_read_size_warn_threshold).isEqualTo(new DataStorageSpec(1 << 10, KIBIBYTES));
-        assertThat(c.coordinator_read_size_fail_threshold).isEqualTo(new DataStorageSpec(1 << 12, KIBIBYTES));
+        assertThat(c.coordinator_read_size_warn_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 10, KIBIBYTES));
+        assertThat(c.coordinator_read_size_fail_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 12, KIBIBYTES));
 
-        assertThat(c.local_read_size_warn_threshold).isEqualTo(new DataStorageSpec(1 << 12, KIBIBYTES));
-        assertThat(c.local_read_size_fail_threshold).isEqualTo(new DataStorageSpec(1 << 13, KIBIBYTES));
+        assertThat(c.local_read_size_warn_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 12, KIBIBYTES));
+        assertThat(c.local_read_size_fail_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 13, KIBIBYTES));
 
-        assertThat(c.row_index_read_size_warn_threshold).isEqualTo(new DataStorageSpec(1 << 12, KIBIBYTES));
-        assertThat(c.row_index_read_size_fail_threshold).isEqualTo(new DataStorageSpec(1 << 13, KIBIBYTES));
+        assertThat(c.row_index_read_size_warn_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 12, KIBIBYTES));
+        assertThat(c.row_index_read_size_fail_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1 << 13, KIBIBYTES));
     }
 
     @Test
@@ -124,14 +124,14 @@ public class YamlConfigurationLoaderTest
         Config c = YamlConfigurationLoader.fromMap(map, Config.class);
         assertThat(c.read_thresholds_enabled).isTrue();
 
-        assertThat(c.coordinator_read_size_warn_threshold).isEqualTo(new DataStorageSpec(1024, KIBIBYTES));
+        assertThat(c.coordinator_read_size_warn_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1024, KIBIBYTES));
         assertThat(c.coordinator_read_size_fail_threshold).isNull();
 
         assertThat(c.local_read_size_warn_threshold).isNull();
-        assertThat(c.local_read_size_fail_threshold).isEqualTo(new DataStorageSpec(1024, KIBIBYTES));
+        assertThat(c.local_read_size_fail_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1024, KIBIBYTES));
 
-        assertThat(c.row_index_read_size_warn_threshold).isEqualTo(new DataStorageSpec(1024, KIBIBYTES));
-        assertThat(c.row_index_read_size_fail_threshold).isEqualTo(new DataStorageSpec(1024, KIBIBYTES));
+        assertThat(c.row_index_read_size_warn_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1024, KIBIBYTES));
+        assertThat(c.row_index_read_size_fail_threshold).isEqualTo(new DataStorageSpec.LongBytesBound(1024, KIBIBYTES));
     }
 
     @Test
@@ -159,8 +159,8 @@ public class YamlConfigurationLoaderTest
         assertEquals(seedProvider, config.seed_provider); // Check a parameterized class
         assertEquals(false, config.client_encryption_options.optional); // Check a nested object
         assertEquals(true, config.client_encryption_options.enabled); // Check a nested object
-        assertEquals(new SmallestDataStorage.IntBytes("5B"), config.internode_socket_send_buffer_size); // Check names backward compatibility (CASSANDRA-17141 and CASSANDRA-15234)
-        assertEquals(new SmallestDataStorage.IntBytes("5B"), config.internode_socket_receive_buffer_size); // Check names backward compatibility (CASSANDRA-17141 and CASSANDRA-15234)
+        assertEquals(new DataStorageSpec.IntBytesBound("5B"), config.internode_socket_send_buffer_size); // Check names backward compatibility (CASSANDRA-17141 and CASSANDRA-15234)
+        assertEquals(new DataStorageSpec.IntBytesBound("5B"), config.internode_socket_receive_buffer_size); // Check names backward compatibility (CASSANDRA-17141 and CASSANDRA-15234)
     }
 
     @Test
@@ -239,25 +239,25 @@ public class YamlConfigurationLoaderTest
         assertThat(from("memtable_heap_space_in_mb", "42").memtable_heap_space.toMebibytes()).isEqualTo(42);
         assertThatThrownBy(() -> from("memtable_heap_space_in_mb", -2).memtable_heap_space.toMebibytes())
         .hasRootCauseInstanceOf(ConfigurationException.class)
-        .hasRootCauseMessage("Invalid data storage: value must be positive and less than 9223372036854775807, but was -2");
+        .hasRootCauseMessage("Invalid data storage: value must be non-negative");
 
         // KIBIBYTES_DATASTORAGE
         assertThat(from("column_index_size_in_kb", "42").column_index_size.toKibibytes()).isEqualTo(42);
         assertThatThrownBy(() -> from("column_index_size_in_kb", -2).column_index_size.toMebibytes())
         .hasRootCauseInstanceOf(ConfigurationException.class)
-        .hasRootCauseMessage("Invalid data storage: value must be positive and less than 9223372036854775807, but was -2");
+        .hasRootCauseMessage("Invalid data storage: value must be non-negative");
 
         // BYTES_DATASTORAGE
         assertThat(from("internode_max_message_size_in_bytes", "42").internode_max_message_size.toBytes()).isEqualTo(42);
         assertThatThrownBy(() -> from("internode_max_message_size_in_bytes", -2).internode_max_message_size.toBytes())
         .hasRootCauseInstanceOf(ConfigurationException.class)
-        .hasRootCauseMessage("Invalid data storage: value must be positive and less than 9223372036854775807, but was -2");
+        .hasRootCauseMessage("Invalid data storage: value must be non-negative");
 
         // BYTES_DATASTORAGE
         assertThat(from("internode_max_message_size_in_bytes", "42").internode_max_message_size.toBytes()).isEqualTo(42);
         assertThatThrownBy(() -> from("internode_max_message_size_in_bytes", -2).internode_max_message_size.toBytes())
         .hasRootCauseInstanceOf(ConfigurationException.class)
-        .hasRootCauseMessage("Invalid data storage: value must be positive and less than 9223372036854775807, but was -2");
+        .hasRootCauseMessage("Invalid data storage: value must be non-negative");
 
         // MEBIBYTES_PER_SECOND_DATA_RATE
         assertThat(from("compaction_throughput_mb_per_sec", "42").compaction_throughput.toMebibytesPerSecondAsInt()).isEqualTo(42);

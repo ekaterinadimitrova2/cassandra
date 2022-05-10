@@ -93,11 +93,11 @@ public abstract class ThresholdTester extends GuardrailTester
                               Function<Guardrails, String> failGetter)
     {
         super(threshold);
-        this.warnThreshold = new DataStorageSpec(warnThreshold).toBytes();
-        this.failThreshold = new DataStorageSpec(failThreshold).toBytes();
-        this.setter = (g, w, a) -> setter.accept(g, w == null ? null : new DataStorageSpec(w, BYTES).toString(), a == null ? null : new DataStorageSpec(a, BYTES).toString());
-        this.warnGetter = g -> new DataStorageSpec(warnGetter.apply(g)).toBytes();
-        this.failGetter = g -> new DataStorageSpec(failGetter.apply(g)).toBytes();
+        this.warnThreshold = new DataStorageSpec.LongBytesBound(warnThreshold).toBytes();
+        this.failThreshold = new DataStorageSpec.LongBytesBound(failThreshold).toBytes();
+        this.setter = (g, w, a) -> setter.accept(g, w == null ? null : new DataStorageSpec.LongBytesBound(w, BYTES).toString(), a == null ? null : new DataStorageSpec.LongBytesBound(a, BYTES).toString());
+        this.warnGetter = g -> new DataStorageSpec.LongBytesBound(warnGetter.apply(g)).toBytes();
+        this.failGetter = g -> new DataStorageSpec.LongBytesBound(failGetter.apply(g)).toBytes();
         maxValue = Long.MAX_VALUE-1;
         disabledValue = null;
     }
