@@ -929,7 +929,7 @@ public class DatabaseDescriptor
         validateReadThresholds("row_index_read_size", config.row_index_read_size_warn_threshold, config.row_index_read_size_fail_threshold);
     }
 
-    private static void validateReadThresholds(String name, DataStorageSpec warn, DataStorageSpec fail)
+    private static void validateReadThresholds(String name, DataStorageSpec.LongBytesBound warn, DataStorageSpec.LongBytesBound fail)
     {
         if (fail != null && warn != null && fail.toBytes() < warn.toBytes())
             throw new ConfigurationException(String.format("%s (%s) must be greater than or equal to %s (%s)",
