@@ -57,22 +57,7 @@ public abstract class DataStorageSpec
 
     private final DataStorageUnit unit;
 
-    public DataStorageSpec(String value)
-    {
-        //parse the string field value
-        Matcher matcher = UNITS_PATTERN.matcher(value);
-
-        if (!matcher.find())
-        {
-            throw new ConfigurationException("Invalid data storage: " + value + " Accepted units: B, KiB, MiB, GiB" +
-                                             " where case matters and only non-negative values are accepted");
-        }
-
-        quantity = Long.parseLong(matcher.group(1));
-        unit = DataStorageUnit.fromSymbol(matcher.group(2));
-    }
-
-    public DataStorageSpec(long quantity, DataStorageUnit unit, DataStorageUnit smallestUnit, long max)
+    private DataStorageSpec(long quantity, DataStorageUnit unit, DataStorageUnit smallestUnit, long max)
     {
         this.quantity = quantity;
         this.unit = unit;
@@ -80,7 +65,7 @@ public abstract class DataStorageSpec
         validateQuantity(quantity, unit, smallestUnit, max);
     }
 
-    public DataStorageSpec (String value, DataStorageUnit minUnit)
+    private DataStorageSpec (String value, DataStorageUnit minUnit)
     {
         if (!MAP_UNITS_PER_MIN_UNIT.containsKey(minUnit))
             throw new ConfigurationException("Invalid smallest unit set for " + value);
@@ -107,22 +92,10 @@ public abstract class DataStorageSpec
 
     private DataStorageSpec(String value, DataStorageUnit smallestUnit, long max)
     {
-        this (value, smallestUnit);
+        this(value, smallestUnit);
 
         validateQuantity(value, this.quantity(), this.unit(), smallestUnit, max);
     }
-
-    // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
-    // imporant to be explicit about get/set as this changes how parsing is done; this class is a data-type, so is
-    // not nested, having get/set can confuse parsing thinking this is a nested type
-    /**
-     * @return the data storage quantity.
-     */
-    public long quantity()
-    {
-        return quantity;
-    }
-
 
     private static void validateQuantity(String value, long quantity, DataStorageUnit sourceUnit, DataStorageUnit smallestUnit, long max)
     {
@@ -142,6 +115,17 @@ public abstract class DataStorageSpec
         if (smallestUnit.convert(quantity, unit) >= max)
             throw new ConfigurationException("Invalid data storage: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
                                              (max - 1) + " in " + smallestUnit.name().toLowerCase());
+    }
+
+    // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
+    // imporant to be explicit about get/set as this changes how parsing is done; this class is a data-type, so is
+    // not nested, having get/set can confuse parsing thinking this is a nested type
+    /**
+     * @return the data storage quantity.
+     */
+    public long quantity()
+    {
+        return quantity;
     }
 
     /**
@@ -234,6 +218,210 @@ public abstract class DataStorageSpec
     public String toString()
     {
         return quantity + unit.symbol;
+    }
+
+    /**
+     * Represents a data storage used for Cassandra configuration. The bound is [0; Long.MAX_VALUE) in bytes.
+     * If the user sets a different unit - we still validate that converted to bytes the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
+     */
+    public static class LongBytesBound extends DataStorageSpec
+    {
+        /**
+         * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount.
+         *
+         * @param value the data storage
+         *
+         */
+        public LongBytesBound(String value)
+        {
+            super(value, BYTES, Long.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount in the specified unit.
+         *
+         * @param quantity where quantity shouldn't be bigger than Long.MAX_VALUE - 1 in bytes
+         * @param unit in which the provided quantity is
+         */
+        public LongBytesBound(long quantity, DataStorageUnit unit)
+        {
+            super(quantity, unit, BYTES, Long.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount in bytes.
+         *
+         * @param bytes where bytes shouldn't be bigger than Long.MAX_VALUE
+         */
+        public LongBytesBound(long bytes)
+        {
+            this(bytes, BYTES);
+        }
+    }
+
+    /**
+     * Represents a data storage used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in bytes.
+     * If the user sets a different unit - we still validate that converted to bytes the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
+     */
+    public static class IntBytesBound extends DataStorageSpec
+    {
+        /**
+         * Creates a {@code DataStorageSpec.IntBytesBound} of the specified amount.
+         *
+         * @param value the data storage
+         *
+         */
+        public IntBytesBound(String value)
+        {
+            super(value, BYTES, Integer.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.IntBytesBound} of the specified amount in the specified unit.
+         *
+         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE - 1 in bytes
+         * @param unit in which the provided quantity is
+         */
+        public IntBytesBound(long quantity, DataStorageUnit unit)
+        {
+            super(quantity, unit, BYTES, Integer.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code SmallestDataStorage.IntBytesBound} of the specified amount in bytes.
+         *
+         * @param bytes where bytes shouldn't be bigger than Integer.MAX_VALUE
+         */
+        public IntBytesBound(long bytes)
+        {
+            this(bytes, BYTES);
+        }
+    }
+
+    /**
+     * Represents a data storage used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in kibibytes.
+     * If the user sets a different unit - we still validate that converted to kibibytes the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
+     */
+    public final static class IntKibibytesBound extends DataStorageSpec
+    {
+        /**
+         * Creates a {@code DataStorageSpec.IntKibibytesBound} of the specified amount.
+         *
+         * @param value the data storage
+         *
+         */
+        public IntKibibytesBound(String value)
+        {
+            super(value, KIBIBYTES, Integer.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.IntKibibytesBound} of the specified amount in the specified unit.
+         *
+         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE - 1 in kibibytes
+         * @param unit in which the provided quantity is
+         */
+        public IntKibibytesBound(long quantity, DataStorageUnit unit)
+        {
+            super(quantity, unit, KIBIBYTES, Integer.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.IntKibibytesBound} of the specified amount in kibibytes.
+         *
+         * @param kibibytes where kibibytes shouldn't be bigger than Integer.MAX_VALUE
+         */
+        public IntKibibytesBound(long kibibytes)
+        {
+            this(kibibytes, KIBIBYTES);
+        }
+    }
+
+    /**
+     * Represents a data storage used for Cassandra configuration. The bound is [0; Long.MAX_VALUE) in mebibytes.
+     * If the user sets a different unit - we still validate that converted to mebibytes the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
+     */
+    public final static class LongMebibytesBound extends DataStorageSpec
+    {
+        /**
+         * Creates a {@code DataStorageSpec.LongMebibytesBound} of the specified amount.
+         *
+         * @param value the data storage
+         */
+        public LongMebibytesBound(String value)
+        {
+            super(value, MEBIBYTES, Long.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.LongMebibytesBound} of the specified amount in the specified unit.
+         *
+         * BE CAREFUL IF YOU DECIDE TO USE UNIT BYTES OR MEBIBYTES TO SET A NUMBER THAT WILL NOT LEAD TO LOSS OF PRECISION DURING CONVERSION
+         * TO MEBIBYTES. WE GUARD FOR THIS IN THE PREVIOUS CONSTRUCTOR BUT NOT THIS ONE
+         *
+         * @param quantity where quantity shouldn't be bigger than Long.MAX_VALUE - 1 in mebibytes
+         * @param unit in which the provided quantity is
+         */
+        public LongMebibytesBound(long quantity, DataStorageUnit unit)
+        {
+            super(quantity, unit, MEBIBYTES, Long.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.LongMebibytesBound} of the specified amount in mebibytes.
+         *
+         * @param mebibytes where mebibytes shouldn't be bigger than Long.MAX_VALUE
+         */
+        public LongMebibytesBound(long mebibytes)
+        {
+            this(mebibytes, MEBIBYTES);
+        }
+    }
+
+    /**
+     * Represents a data storage used for Cassandra configuration. The bound is [0; Intteger.MAX_VALUE) in mebibytes.
+     * If the user sets a different unit - we still validate that converted to mebibytes the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
+     */
+    public final static class IntMebibytesBound extends DataStorageSpec
+    {
+        /**
+         * Creates a {@code DataStorageSpec.IntMebibytesBound} of the specified amount.
+         *
+         * @param value the data storage
+         */
+        public IntMebibytesBound(String value)
+        {
+            super(value, MEBIBYTES, Integer.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.IntMebibytesBound} of the specified amount in the specified unit.
+         *
+         * BE CAREFUL IF YOU DECIDE TO USE UNIT BYTES OR MEBIBYTES TO SET A NUMBER THAT WILL NOT LEAD TO LOSS OF PRECISION DURING CONVERSION
+         * TO MEBIBYTES. WE GUARD FOR THIS IN THE PREVIOUS CONSTRUCTOR BUT NOT THIS ONE
+         *
+         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE - 1 in mebibytes
+         * @param unit in which the provided quantity is
+         */
+        public IntMebibytesBound(long quantity, DataStorageUnit unit)
+        {
+            super(quantity, unit, MEBIBYTES, Integer.MAX_VALUE);
+        }
+
+        /**
+         * Creates a {@code DataStorageSpec.IntMebibytesBound} of the specified amount in mebibytes.
+         *
+         * @param mebibytes where mebibytes shouldn't be bigger than Integer.MAX_VALUE
+         */
+        public IntMebibytesBound(long mebibytes)
+        {
+            this(mebibytes, MEBIBYTES);
+        }
     }
 
     public enum DataStorageUnit
@@ -411,177 +599,6 @@ public abstract class DataStorageSpec
         public long convert(long source, DataStorageUnit sourceUnit)
         {
             throw new AbstractMethodError();
-        }
-    }
-
-    public static class LongBytesBound extends DataStorageSpec
-    {
-        /**
-         * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount.
-         *
-         * @param value the data storage
-         *
-         */
-        public LongBytesBound(String value)
-        {
-            super(value, BYTES, Long.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount in the specified unit.
-         *
-         * @param quantity where quantity shouldn't be bigger than Long.MAX_VALUE - 1 in bytes
-         * @param unit in which the provided quantity is
-         */
-        public LongBytesBound(long quantity, DataStorageUnit unit)
-        {
-            super(quantity, unit, BYTES, Long.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code DataStorageSPec.LongBytesBound} of the specified amount in bytes.
-         *
-         * @param quantityInB where quantityInB shouldn't be bigger than Long.MAX_VALUE
-         */
-        public LongBytesBound(long quantityInB)
-        {
-            this(quantityInB, BYTES);
-        }
-    }
-
-    public static class LongMebibytesBound extends DataStorageSpec
-    {
-        /**
-         * Creates a {@code SmallestDataStorage.LongMebibytesBound} of the specified amount.
-         *
-         * @param value the data storage
-         */
-        public LongMebibytesBound(String value)
-        {
-            super(value, MEBIBYTES, Long.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.LongMebibytesBound} of the specified amount in the specified unit.
-         *
-         * @param quantity where quantity shouldn't be bigger than Long.MAX_VALUE - 1 in mebibytes
-         * @param unit in which the provided quantity is
-         */
-        public LongMebibytesBound(long quantity, DataStorageUnit unit)
-        {
-            super(quantity, unit, MEBIBYTES, Long.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.LongMebibytesBound} of the specified amount in mebibytes.
-         *
-         * @param quantityInMiB where quantityInMiB shouldn't be bigger than Integer.MAX_VALUE
-         */
-        public LongMebibytesBound(long quantityInMiB)
-        {
-            this(quantityInMiB, MEBIBYTES);
-        }
-    }
-
-    public static class IntMebibytesBound extends DataStorageSpec
-    {
-        /**
-         * Creates a {@code SmallestDataStorage.IntMebibytesBound} of the specified amount which shouldn't be bigger than {@code Integer.MAX_VALUE}
-         * in mebibytes
-         * @param value the data storage
-         */
-        public IntMebibytesBound(String value)
-        {
-            super(value, MEBIBYTES, Integer.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.IntMebibytesBound} of the specified amount in the specified unit.
-         *
-         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE in mebibytes
-         * @param unit in which the provided quantity is
-         */
-        public IntMebibytesBound(long quantity, DataStorageUnit unit)
-        {
-            super(quantity, unit, MEBIBYTES, Integer.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.IntMebibytesBound} of the specified amount in mebibytes.
-         *
-         * @param quantityInMiB where quantityInMiB shouldn't be bigger than Integer.MAX_VALUE
-         */
-        public IntMebibytesBound(long quantityInMiB)
-        {
-            this(quantityInMiB, MEBIBYTES);
-        }
-    }
-
-    public static class IntKibibytesBound extends DataStorageSpec
-    {
-        /**
-         * Creates a {@code SmallestDataStorage.IntKibibytesBound} of the specified amount which shouldn't be bigger than {@code Integer.MAX_VALUE}
-         * in kibibytes
-         * @param value the data storage
-         */
-        public IntKibibytesBound(String value)
-        {
-            super(value, KIBIBYTES, Integer.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.IntKibibytesBound} of the specified amount in the specified unit.
-         *
-         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE in kibibytes
-         * @param unit in which the provided quantity is
-         */
-        public IntKibibytesBound(long quantity, DataStorageUnit unit)
-        {
-            super(quantity, unit, KIBIBYTES, Integer.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.IntKibibytesBound} of the specified amount in kibibytes.
-         *
-         * @param quantityInKiB where quantityInKiB shouldn't be bigger than Integer.MAX_VALUE
-         */
-        public IntKibibytesBound(long quantityInKiB)
-        {
-            this(quantityInKiB, KIBIBYTES);
-        }
-    }
-
-    public static class IntBytesBound extends DataStorageSpec
-    {
-        /**
-         * Creates a {@code SmallestDataStorage.IntBytesBound} of the specified amount which shouldn't be bigger than {@code Integer.MAX_VALUE}
-         * in bytes
-         * @param value the data storage
-         */
-        public IntBytesBound(String value)
-        {
-            super(value, BYTES, Integer.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.IntBytesBound} of the specified amount in the specified unit.
-         *
-         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE in bytes
-         * @param unit in which the provided quantity is
-         */
-        public IntBytesBound(long quantity, DataStorageUnit unit)
-        {
-            super(quantity, unit, BYTES, Integer.MAX_VALUE);
-        }
-
-        /**
-         * Creates a {@code SmallestDataStorage.IntBytesBound} of the specified amount in bytes.
-         *
-         * @param quantityInB where quantityInB shouldn't be bigger than Integer.MAX_VALUE
-         */
-        public IntBytesBound(long quantityInB)
-        {
-            this(quantityInB, BYTES);
         }
     }
 }

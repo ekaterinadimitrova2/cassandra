@@ -21,8 +21,6 @@ package org.apache.cassandra.config;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
-
 /**
  * Converters for backward compatibility with the old cassandra.yaml where duration, data rate and
  * data storage configuration parameters were provided only by value and the expected unit was part of the configuration
@@ -93,7 +91,7 @@ public enum Converters
      * are equal. All negative numbers are printed as 0 in virtual tables.
      */
     BYTES_CUSTOM_DATASTORAGE(Long.class, DataStorageSpec.LongBytesBound.class,
-                             o -> o == -1 ? null : new DataStorageSpec.LongBytesBound(o, BYTES),
+                             o -> o == -1 ? null : new DataStorageSpec.LongBytesBound(o),
                              DataStorageSpec::toBytes),
     MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateSpec.IntMebibytesPerSecondBound.class,
                                    DataRateSpec.IntMebibytesPerSecondBound::new,

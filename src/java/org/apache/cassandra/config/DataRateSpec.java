@@ -248,11 +248,11 @@ public abstract class DataRateSpec
         /**
          * Creates a {@code DataRateSpec.LongBytesPerSecondBound} of the specified amount in bytes per second.
          *
-         * @param quantityInBperS where quantityInBperS shouldn't be bigger than Long.MAX_VALUE
+         * @param bytesPerSecond where quantityInBperS shouldn't be bigger than Long.MAX_VALUE
          */
-        public LongBytesPerSecondBound(long quantityInBperS)
+        public LongBytesPerSecondBound(long bytesPerSecond)
         {
-            this(quantityInBperS, BYTES_PER_SECOND);
+            this(bytesPerSecond, BYTES_PER_SECOND);
         }
     }
 
@@ -263,18 +263,29 @@ public abstract class DataRateSpec
      */
     public final static class IntMebibytesPerSecondBound extends DataRateSpec
     {
+        /**
+         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount with bound [0; Integer.MAX_VALUE) mebibytes.
+         *
+         * @param value the data rate
+         */
         public IntMebibytesPerSecondBound(String value)
         {
             super(value, MEBIBYTES_PER_SECOND, Integer.MAX_VALUE);
         }
 
+        /**
+         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount in the specified unit.
+         *
+         * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE - 1 in mebibytes per second
+         * @param unit     in which the provided quantity is
+         */
         public IntMebibytesPerSecondBound(double quantity, DataRateUnit unit)
         {
             super(quantity, unit, MEBIBYTES_PER_SECOND, Integer.MAX_VALUE);
         }
 
         // this one should be used only for backward compatibility for stream_throughput_outbound and inter_dc_stream_throughput_outbound
-        // which were in megabits per second in 4.0
+        // which were in megabits per second in 4.0. Do not start using it for any new properties
         public static IntMebibytesPerSecondBound megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
         {
             final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;
@@ -288,6 +299,11 @@ public abstract class DataRateSpec
             return new IntMebibytesPerSecondBound(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
         }
 
+        /**
+         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount in mebibytes per second.
+         *
+         * @param mebibytesPerSecond where mebibytesPerSecond shouldn't be bigger than Long.MAX_VALUE
+         */
         public IntMebibytesPerSecondBound(long mebibytesPerSecond)
         {
             this (mebibytesPerSecond, MEBIBYTES_PER_SECOND);
