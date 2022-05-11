@@ -39,6 +39,14 @@ public class DataRateSpecTest
         assertEquals(10485760, new DataRateSpec.LongBytesPerSecondBound("10MiB/s").toBytesPerSecond(), 0);
         assertEquals(10485760, new DataRateSpec.LongBytesPerSecondBound("10MiB/s").toBytesPerSecond(), 0);
         assertEquals(new DataRateSpec.LongBytesPerSecondBound("24MiB/s").toString(), DataRateSpec.IntMebibytesPerSecondBound.megabitsPerSecondInMebibytesPerSecond(200L).toString());
+
+        assertEquals(10, new DataRateSpec.IntMebibytesPerSecondBound("10B/s").toBytesPerSecond(), 0);
+        assertEquals(10240, new DataRateSpec.IntMebibytesPerSecondBound("10KiB/s").toBytesPerSecond(), 0);
+        assertEquals(0, new DataRateSpec.IntMebibytesPerSecondBound("10KiB/s").toMebibytesPerSecond(), 0.1);
+        assertEquals(10240, new DataRateSpec.IntMebibytesPerSecondBound("10MiB/s").toKibibytesPerSecond(), 0);
+        assertEquals(10485760, new DataRateSpec.IntMebibytesPerSecondBound("10MiB/s").toBytesPerSecond(), 0);
+        assertEquals(10485760, new DataRateSpec.IntMebibytesPerSecondBound("10MiB/s").toBytesPerSecond(), 0);
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("24MiB/s").toString(), DataRateSpec.IntMebibytesPerSecondBound.megabitsPerSecondInMebibytesPerSecond(200L).toString());
     }
 
     @Test
@@ -73,6 +81,8 @@ public class DataRateSpecTest
                                                                                                                                              "stream_throughput_outbound and " +
                                                                                                                                              "inter_dc_stream_throughput_outbound should " +
                                                                                                                                              "be between 0 and 2147483647 in megabits per second");
+
+
     }
 
     @Test
@@ -113,7 +123,7 @@ public class DataRateSpecTest
     @Test
     public void testInvalidForConversion()
     {
-        //just test the cast to Int
+        //just test the cast to Int as currently we don't even have any long bound rates and there is a very low probability of ever having them
         assertEquals(Integer.MAX_VALUE, new DataRateSpec.LongBytesPerSecondBound("92233720368547758B/s").toBytesPerSecondAsInt());
 
         assertThatThrownBy(() -> new DataRateSpec.LongBytesPerSecondBound(Long.MAX_VALUE + "B/s")).isInstanceOf(ConfigurationException.class)
@@ -141,17 +151,43 @@ public class DataRateSpecTest
         assertEquals(new DataRateSpec.LongBytesPerSecondBound("10KiB/s"), new DataRateSpec.LongBytesPerSecondBound("10240B/s"));
         assertEquals(new DataRateSpec.LongBytesPerSecondBound("10240B/s"), new DataRateSpec.LongBytesPerSecondBound("10KiB/s"));
         assertNotEquals(new DataRateSpec.LongBytesPerSecondBound("0KiB/s"), new DataRateSpec.LongBytesPerSecondBound("10MiB/s"));
+
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("10B/s"), new DataRateSpec.IntMebibytesPerSecondBound("10B/s"));
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("10KiB/s"), new DataRateSpec.IntMebibytesPerSecondBound("10240B/s"));
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("10240B/s"), new DataRateSpec.IntMebibytesPerSecondBound("10KiB/s"));
+        assertNotEquals(new DataRateSpec.IntMebibytesPerSecondBound("0KiB/s"), new DataRateSpec.IntMebibytesPerSecondBound("10MiB/s"));
+
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("10B/s"), new DataRateSpec.LongBytesPerSecondBound("10B/s"));
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("10KiB/s"), new DataRateSpec.LongBytesPerSecondBound("10240B/s"));
+        assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("10240B/s"), new DataRateSpec.LongBytesPerSecondBound("10KiB/s"));
+        assertNotEquals(new DataRateSpec.IntMebibytesPerSecondBound("0KiB/s"), new DataRateSpec.LongBytesPerSecondBound("10MiB/s"));
     }
 
     @Test
-    public void thereAndBack()
+    public void thereAndBackLongBytesPerSecondBound()
     {
         Gen<DataRateSpec.DataRateUnit> unitGen = SourceDSL.arbitrary().enumValues(DataRateSpec.DataRateUnit.class);
-        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/1024L/1024/1024); // the biggest value in GiB/s that won't lead to B/s overflow
+        // DataRateSpec is a special case where we have double so we can accomodate the backward compatibility for parameters which were in
+        // megabits per second before without losing precision
+        // Extremely big numbers might be not completely accurate, that is why here Long.MAX_VALUE is not failing for bytes being >= Long.MAX_VALUE
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/1024L/1024L); // the biggest value in MiB/s that won't lead to B/s overflow
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
             DataRateSpec there = new DataRateSpec.LongBytesPerSecondBound(value, unit);
             DataRateSpec back = new DataRateSpec.LongBytesPerSecondBound(there.toString());
             DataRateSpec BACK = new DataRateSpec.LongBytesPerSecondBound(there.toString());
+            return there.equals(back) && there.equals(BACK);
+        });
+    }
+
+    @Test
+    public void thereAndBackIntMebibytesPerSecondBound()
+    {
+        Gen<DataRateSpec.DataRateUnit> unitGen = SourceDSL.arbitrary().enumValues(DataRateSpec.DataRateUnit.class);
+        Gen<Long> valueGen = SourceDSL.longs().between(0, Integer.MAX_VALUE-1); // max MiB/s
+        qt().forAll(valueGen, unitGen).check((value, unit) -> {
+            DataRateSpec there = new DataRateSpec.IntMebibytesPerSecondBound(value, unit);
+            DataRateSpec back = new DataRateSpec.IntMebibytesPerSecondBound(there.toString());
+            DataRateSpec BACK = new DataRateSpec.IntMebibytesPerSecondBound(there.toString());
             return there.equals(back) && there.equals(BACK);
         });
     }

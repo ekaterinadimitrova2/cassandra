@@ -76,6 +76,7 @@ public abstract class DataRateSpec
 
     private static void validateQuantity(String value, double quantity, DataRateUnit unit, DataRateUnit smallestUnit, long max)
     {
+        // negatives are not allowed by the regex pattern
         if (smallestUnit.convert(quantity, unit) >= max)
             throw new ConfigurationException("Invalid data rate: " + value + ". It shouldn't be more than " +
                                              (max - 1) + " in " + smallestUnit.name().toLowerCase());
@@ -91,6 +92,9 @@ public abstract class DataRateSpec
                                              (max - 1) + " in " + smallestUnit.name().toLowerCase());
     }
 
+    // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
+    // imporant to be explicit about get/set as this changes how parsing is done; this class is a data-type, so is
+    // not nested, having get/set can confuse parsing thinking this is a nested type
     /**
      * @return the data rate unit assigned.
      */
@@ -214,8 +218,9 @@ public abstract class DataRateSpec
     }
 
     /**
-     * Represents a data rate used for cassandra configuration. It supports the opportunity for the users to be able to
-     * add units to the confiuration parameter value. The range is long bytes per second. (CASSANDRA-15234)
+     * Represents a data rate used for Cassandra configuration. The bound is [0; Long.MAX_VALUE) in bytes per second.
+     * If the user sets a different unit - we still validate that converted to bytes per second the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
      */
     public final static class LongBytesPerSecondBound extends DataRateSpec
     {
@@ -252,8 +257,9 @@ public abstract class DataRateSpec
     }
 
     /**
-     * Represents a data rate int type used for cassandra configuration. It supports the opportunity for the users to be able to
-     * add units to the confiuration parameter value. The range is Int mebibytes per second. (CASSANDRA-15234)
+     * Represents a data rate used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in mebibytes per second.
+     * If the user sets a different unit - we still validate that converted to bytes per second the quantity will not exceed
+     * that upper bound. (CASSANDRA-17571)
      */
     public final static class IntMebibytesPerSecondBound extends DataRateSpec
     {
@@ -267,7 +273,8 @@ public abstract class DataRateSpec
             super(quantity, unit, MEBIBYTES_PER_SECOND, Integer.MAX_VALUE);
         }
 
-        // this one should be used only for backward compatibility
+        // this one should be used only for backward compatibility for stream_throughput_outbound and inter_dc_stream_throughput_outbound
+        // which were in megabits per second in 4.0
         public static IntMebibytesPerSecondBound megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
         {
             final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;

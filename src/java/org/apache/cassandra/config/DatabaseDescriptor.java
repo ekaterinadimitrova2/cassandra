@@ -324,6 +324,7 @@ public class DatabaseDescriptor
         ConfigurationLoader loader = loaderClass == null
                                      ? new YamlConfigurationLoader()
                                      : FBUtilities.construct(loaderClass, "configuration loading");
+
         Config config = loader.loadConfig();
 
         if (!hasLoggedConfig)
@@ -399,6 +400,17 @@ public class DatabaseDescriptor
         //Doing this first before all other things in case other pieces of config want to construct
         //InetAddressAndPort and get the right defaults
         InetAddressAndPort.initializeDefaultPort(getStoragePort());
+
+        // below 2 are needed in order to match the pre-CASSANDRA-15234 upper bound for those parameters which were still in megabits per second
+        if (conf.stream_throughput_outbound.toMegabitsPerSecond() >= Integer.MAX_VALUE)
+        {
+            throw new ConfigurationException("Invalid value of stream_throughput_outbound: " + conf.stream_throughput_outbound.toString(), false);
+        }
+
+        if (conf.inter_dc_stream_throughput_outbound.toMegabitsPerSecond() >= Integer.MAX_VALUE)
+        {
+            throw new ConfigurationException("Invalid value of inter_dc_stream_throughput_outbound: " + conf.inter_dc_stream_throughput_outbound.toString(), false);
+        }
 
         if (conf.auto_snapshot_ttl != null)
         {
