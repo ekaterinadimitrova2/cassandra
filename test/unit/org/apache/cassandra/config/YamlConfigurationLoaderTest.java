@@ -29,13 +29,16 @@ import org.junit.Test;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.distributed.shared.WithProperties;
+import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.io.util.File;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import static org.apache.cassandra.config.CassandraRelevantProperties.CONFIG_ALLOW_SYSTEM_PROPERTIES;
 import static org.apache.cassandra.config.YamlConfigurationLoader.SYSTEM_PROPERTY_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class YamlConfigurationLoaderTest
@@ -131,6 +134,29 @@ public class YamlConfigurationLoaderTest
 
         assertThat(c.row_index_read_size_warn_threshold).isEqualTo(DataStorageSpec.inKibibytes(1024));
         assertThat(c.row_index_read_size_fail_threshold).isEqualTo(DataStorageSpec.inKibibytes(1024));
+    }
+
+    @Test
+    public void notNullableLegacyProperties()
+    {
+        // In  the past commitlog_sync_period and commitlog_sync_group_window were int in Config. So that meant they can't
+        // be assigned null value from the yaml file. To ensure this behavior was not changed when we moved to DurationSpec
+        // in CASSANDRA-15234, we assigned those 0 value.
+
+        Map<String, Object> map = ImmutableMap.of(
+        "commitlog_sync_period", ""
+        );
+
+        try
+        {
+            Config config = YamlConfigurationLoader.fromMap(map, Config.class);
+        }
+        catch (YAMLException e)
+        {
+            assertTrue(e.getMessage().contains("Cannot create property=commitlog_sync_period for JavaBean=org.apache.cassandra.config.Config@e1de817"));
+        }
+
+        // loadConfig will catch this exception on startup and throw a ConfigurationException
     }
 
     @Test
