@@ -245,6 +245,7 @@ public abstract class ThresholdTester extends GuardrailTester
             if (value > maxValue)
                 expectedMessage = format("Invalid value %d for %s: maximum allowed value is %d",
                                          value, name, maxValue);
+
             if (value == 0 && value != disabledValue)
                 expectedMessage = format("Invalid value for %s: 0 is not allowed; if attempting to disable use %s",
                                          name, disabledValue);
