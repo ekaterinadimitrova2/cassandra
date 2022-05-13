@@ -751,8 +751,8 @@ public class DatabaseDescriptorTest
         Assert.assertTrue(config.server_encryption_options.ssl_context_factory.parameters.isEmpty());
     }
 
-    @Test (expected = ConfigurationException.class)
-    public void testInvalidSub1DefaultRFs() throws ConfigurationException
+    @Test (expected = IllegalArgumentException.class)
+    public void testInvalidSub1DefaultRFs() throws IllegalArgumentException
     {
         DatabaseDescriptor.setDefaultKeyspaceRF(0);
     }

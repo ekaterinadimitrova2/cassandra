@@ -27,7 +27,6 @@ import java.util.Map;
 import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
-import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.distributed.shared.WithProperties;
 import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.io.util.File;
