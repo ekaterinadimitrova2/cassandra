@@ -25,25 +25,30 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 import org.quicktheories.core.Gen;
 import org.quicktheories.generators.SourceDSL;
 
+import static java.util.concurrent.TimeUnit.MICROSECONDS;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 import static org.quicktheories.QuickTheory.qt;
 
 public class DurationSpecTest
 {
+    private static final long MAX_INT_CONFIG_VALUE = Integer.MAX_VALUE - 1;
     @Test
     public void testConversions()
     {
         assertEquals(10L, new DurationSpec.LongNanosecondsBound ("10s").toSeconds());
-        assertEquals(Integer.MAX_VALUE-1, new DurationSpec.IntSecondsBound(Integer.MAX_VALUE-1 + "s").toSecondsAsInt());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSecondsAsInt());
         assertEquals(10000, new DurationSpec.LongNanosecondsBound ("10s").toMilliseconds());
-        assertEquals(Integer.MAX_VALUE-1, new DurationSpec.LongMillisecondsBound(Integer.MAX_VALUE-1 + "ms").toMillisecondsAsInt());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.LongMillisecondsBound(MAX_INT_CONFIG_VALUE + "ms").toMillisecondsAsInt());
         assertEquals(0, new DurationSpec.LongNanosecondsBound ("10s").toMinutes());
         assertEquals(10, new DurationSpec.LongNanosecondsBound ("10m").toMinutes());
-        assertEquals(Integer.MAX_VALUE-1, new DurationSpec.IntMinutesBound(Integer.MAX_VALUE-1 + "m").toMinutesAsInt());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntMinutesBound(MAX_INT_CONFIG_VALUE + "m").toMinutesAsInt());
         assertEquals(600000, new DurationSpec.LongNanosecondsBound("10m").toMilliseconds());
         assertEquals(600, new DurationSpec.LongNanosecondsBound("10m").toSeconds());
-        assertEquals(Integer.MAX_VALUE-1, new DurationSpec.IntSecondsBound(Integer.MAX_VALUE-1 + "s").toSecondsAsInt());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSecondsAsInt());
         assertEquals(new DurationSpec.IntMillisecondsBound(0.7, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("1ms"));
         assertEquals(new DurationSpec.IntMillisecondsBound(0.33, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("0ms"));
         assertEquals(new DurationSpec.IntMillisecondsBound(0.333, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("0ms"));
@@ -59,7 +64,7 @@ public class DurationSpecTest
         assertEquals(DurationSpec.fromSymbol("s"), TimeUnit.SECONDS);
         assertEquals(DurationSpec.fromSymbol("us"), TimeUnit.MICROSECONDS);
         assertEquals(DurationSpec.fromSymbol("µs"), TimeUnit.MICROSECONDS);
-        assertEquals(DurationSpec.fromSymbol("ns"), TimeUnit.NANOSECONDS);
+        assertEquals(DurationSpec.fromSymbol("ns"), NANOSECONDS);
         assertThatThrownBy(() -> DurationSpec.fromSymbol("n")).isInstanceOf(ConfigurationException.class)
                                                               .hasMessageContaining("Unsupported time unit: n");
     }
@@ -67,13 +72,13 @@ public class DurationSpecTest
     @Test
     public void testGetSymbol()
     {
-        assertEquals(DurationSpec.getSymbol(TimeUnit.MILLISECONDS), "ms");
-        assertEquals(DurationSpec.getSymbol(TimeUnit.DAYS), "d");
-        assertEquals(DurationSpec.getSymbol(TimeUnit.HOURS), "h");
-        assertEquals(DurationSpec.getSymbol(TimeUnit.MINUTES), "m");
-        assertEquals(DurationSpec.getSymbol(TimeUnit.SECONDS), "s");
-        assertEquals(DurationSpec.getSymbol(TimeUnit.MICROSECONDS), "us");
-        assertEquals(DurationSpec.getSymbol(TimeUnit.NANOSECONDS), "ns");
+        assertEquals(DurationSpec.symbol(TimeUnit.MILLISECONDS), "ms");
+        assertEquals(DurationSpec.symbol(TimeUnit.DAYS), "d");
+        assertEquals(DurationSpec.symbol(TimeUnit.HOURS), "h");
+        assertEquals(DurationSpec.symbol(TimeUnit.MINUTES), "m");
+        assertEquals(DurationSpec.symbol(TimeUnit.SECONDS), "s");
+        assertEquals(DurationSpec.symbol(TimeUnit.MICROSECONDS), "us");
+        assertEquals(DurationSpec.symbol(NANOSECONDS), "ns");
     }
 
     @Test
@@ -221,55 +226,98 @@ public class DurationSpecTest
     public void testInvalidUnits()
     {
         assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound("10ns")).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid duration: 10ns");
+                                                                               .hasMessageContaining("Invalid duration: 10ns " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
+        assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound(10, NANOSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                               .hasMessageContaining("Invalid duration: 10 NANOSECONDS " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
         assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound("10us")).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid duration: 10us");
+                                                                               .hasMessageContaining("Invalid duration: 10us " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
+        assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                               .hasMessageContaining("Invalid duration: 10 MICROSECONDS " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
         assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound("10µs")).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid duration: 10µs");
+                                                                               .hasMessageContaining("Invalid duration: 10µs " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
+        assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                               .hasMessageContaining("Invalid duration: 10 MICROSECONDS " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
         assertThatThrownBy(() -> new DurationSpec.IntMillisecondsBound("-10s")).isInstanceOf(ConfigurationException.class)
-                                                                               .hasMessageContaining("Invalid duration: -10s");
+                                                                               .hasMessageContaining("Invalid duration: -10s " +
+                                                                                                     "Accepted units:[MILLISECONDS, SECONDS, MINUTES, HOURS, DAYS]");
 
         assertThatThrownBy(() -> new DurationSpec.IntSecondsBound("10ms")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10ms");
+                                                                          .hasMessageContaining("Invalid duration: 10ms Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntSecondsBound(10, MILLISECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 MILLISECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntSecondsBound("10ns")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10ns");
+                                                                          .hasMessageContaining("Invalid duration: 10ns Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntSecondsBound(10, NANOSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 NANOSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntSecondsBound("10us")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10us");
+                                                                          .hasMessageContaining("Invalid duration: 10us Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntSecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntSecondsBound("10µs")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10µs");
+                                                                          .hasMessageContaining("Invalid duration: 10µs Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntSecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntSecondsBound("-10s")).isInstanceOf(ConfigurationException.class)
                                                                           .hasMessageContaining("Invalid duration: -10s");
 
         assertThatThrownBy(() -> new DurationSpec.IntMinutesBound("10s")).isInstanceOf(ConfigurationException.class)
-                                                                         .hasMessageContaining("Invalid duration: 10s");
+                                                                         .hasMessageContaining("Invalid duration: 10s Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntMinutesBound(10, SECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                         .hasMessageContaining("Invalid duration: 10 SECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntMinutesBound("10ms")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10ms");
+                                                                          .hasMessageContaining("Invalid duration: 10ms Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntMinutesBound(10, MILLISECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 MILLISECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntMinutesBound("10ns")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10ns");
+                                                                          .hasMessageContaining("Invalid duration: 10ns Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntMinutesBound(10, NANOSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 NANOSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntMinutesBound("10us")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10us");
+                                                                          .hasMessageContaining("Invalid duration: 10us Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntMinutesBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntMinutesBound("10µs")).isInstanceOf(ConfigurationException.class)
-                                                                          .hasMessageContaining("Invalid duration: 10µs");
+                                                                          .hasMessageContaining("Invalid duration: 10µs Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.IntMinutesBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                          .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.IntMinutesBound("-10s")).isInstanceOf(ConfigurationException.class)
                                                                           .hasMessageContaining("Invalid duration: -10s");
 
         assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound("10ns")).isInstanceOf(ConfigurationException.class)
-                                                                                .hasMessageContaining("Invalid duration: 10ns");
+                                                                                .hasMessageContaining("Invalid duration: 10ns Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound(10, NANOSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                                .hasMessageContaining("Invalid duration: 10 NANOSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound("10us")).isInstanceOf(ConfigurationException.class)
-                                                                                .hasMessageContaining("Invalid duration: 10us");
+                                                                                .hasMessageContaining("Invalid duration: 10us Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                                .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound("10µs")).isInstanceOf(ConfigurationException.class)
-                                                                                .hasMessageContaining("Invalid duration: 10µs");
+                                                                                .hasMessageContaining("Invalid duration: 10µs Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                                .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.LongMillisecondsBound("-10s")).isInstanceOf(ConfigurationException.class)
                                                                                 .hasMessageContaining("Invalid duration: -10s");
 
         assertThatThrownBy(() -> new DurationSpec.LongSecondsBound("10ms")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: 10ms");
+                                                                           .hasMessageContaining("Invalid duration: 10ms Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongSecondsBound(10, MILLISECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                           .hasMessageContaining("Invalid duration: 10 MILLISECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.LongSecondsBound("10ns")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: 10ns");
-        assertThatThrownBy(() -> new DurationSpec.LongSecondsBound("10us")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: 10us");
+                                                                           .hasMessageContaining("Invalid duration: 10ns Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongSecondsBound(10, NANOSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                           .hasMessageContaining("Invalid duration: 10 NANOSECONDS Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongSecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                           .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.LongSecondsBound("10µs")).isInstanceOf(ConfigurationException.class)
-                                                                           .hasMessageContaining("Invalid duration: 10µs");
+                                                                           .hasMessageContaining("Invalid duration: 10µs Accepted units");
+        assertThatThrownBy(() -> new DurationSpec.LongSecondsBound(10, MICROSECONDS)).isInstanceOf(ConfigurationException.class)
+                                                                           .hasMessageContaining("Invalid duration: 10 MICROSECONDS Accepted units");
         assertThatThrownBy(() -> new DurationSpec.LongSecondsBound("-10s")).isInstanceOf(ConfigurationException.class)
                                                                            .hasMessageContaining("Invalid duration: -10s");
     }

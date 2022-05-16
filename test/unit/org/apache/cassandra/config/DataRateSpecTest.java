@@ -174,8 +174,7 @@ public class DataRateSpecTest
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
             DataRateSpec there = new DataRateSpec.LongBytesPerSecondBound(value, unit);
             DataRateSpec back = new DataRateSpec.LongBytesPerSecondBound(there.toString());
-            DataRateSpec BACK = new DataRateSpec.LongBytesPerSecondBound(there.toString());
-            return there.equals(back) && there.equals(BACK);
+            return there.equals(back) && back.equals(there);
         });
     }
 
@@ -187,8 +186,7 @@ public class DataRateSpecTest
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
             DataRateSpec there = new DataRateSpec.IntMebibytesPerSecondBound(value, unit);
             DataRateSpec back = new DataRateSpec.IntMebibytesPerSecondBound(there.toString());
-            DataRateSpec BACK = new DataRateSpec.IntMebibytesPerSecondBound(there.toString());
-            return there.equals(back) && there.equals(BACK);
+            return there.equals(back) && back.equals(there);
         });
     }
 

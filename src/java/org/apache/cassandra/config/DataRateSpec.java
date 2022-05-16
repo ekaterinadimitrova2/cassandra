@@ -58,38 +58,38 @@ public abstract class DataRateSpec
         unit = DataRateUnit.fromSymbol(matcher.group(2));
     }
 
-    private DataRateSpec(String value, DataRateUnit smallestUnit, long max)
+    private DataRateSpec(String value, DataRateUnit minUnit, long max)
     {
         this (value);
 
-        validateQuantity(value, this.quantity(), this.unit(), smallestUnit, max);
+        validateQuantity(value, this.quantity(), this.unit(), minUnit, max);
 
     }
 
-    private DataRateSpec(double quantity, DataRateUnit unit, DataRateUnit smallestUnit, long max)
+    private DataRateSpec(double quantity, DataRateUnit unit, DataRateUnit minUnit, long max)
     {
         this.quantity = quantity;
         this.unit = unit;
 
-        validateQuantity(quantity, unit, smallestUnit, max);
+        validateQuantity(quantity, unit, minUnit, max);
     }
 
-    private static void validateQuantity(String value, double quantity, DataRateUnit unit, DataRateUnit smallestUnit, long max)
+    private static void validateQuantity(String value, double quantity, DataRateUnit unit, DataRateUnit minUnit, long max)
     {
         // negatives are not allowed by the regex pattern
-        if (smallestUnit.convert(quantity, unit) >= max)
+        if (minUnit.convert(quantity, unit) >= max)
             throw new ConfigurationException("Invalid data rate: " + value + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + smallestUnit.name().toLowerCase());
+                                             (max - 1) + " in " + minUnit.name().toLowerCase());
     }
 
-    private static void validateQuantity(double quantity, DataRateUnit unit, DataRateUnit smallestUnit, long max)
+    private static void validateQuantity(double quantity, DataRateUnit unit, DataRateUnit minUnit, long max)
     {
         if (quantity < 0)
             throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
-        if (smallestUnit.convert(quantity, unit) >= max)
+        if (minUnit.convert(quantity, unit) >= max)
             throw new ConfigurationException("Invalid data rate: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + smallestUnit.name().toLowerCase());
+                                             (max - 1) + " in " + minUnit.name().toLowerCase());
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -218,8 +218,8 @@ public abstract class DataRateSpec
     }
 
     /**
-     * Represents a data rate used for Cassandra configuration. The bound is [0; Long.MAX_VALUE) in bytes per second.
-     * If the user sets a different unit - we still validate that converted to bytes per second the quantity will not exceed
+     * Represents a data rate used for Cassandra configuration. The bound is [0, Long.MAX_VALUE) in bytes per second.
+     * If the user sets a different unit, we still validate that converted to bytes per second the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
     public final static class LongBytesPerSecondBound extends DataRateSpec
@@ -257,14 +257,14 @@ public abstract class DataRateSpec
     }
 
     /**
-     * Represents a data rate used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in mebibytes per second.
-     * If the user sets a different unit - we still validate that converted to bytes per second the quantity will not exceed
+     * Represents a data rate used for Cassandra configuration. The bound is [0, Integer.MAX_VALUE) in mebibytes per second.
+     * If the user sets a different unit - we still validate that converted to mebibytes per second the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
     public final static class IntMebibytesPerSecondBound extends DataRateSpec
     {
         /**
-         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount with bound [0; Integer.MAX_VALUE) mebibytes per second.
+         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount with bound [0, Integer.MAX_VALUE) mebibytes per second.
          *
          * @param value the data rate
          */
@@ -291,7 +291,7 @@ public abstract class DataRateSpec
             final double MEBIBYTES_PER_MEGABIT = 0.119209289550781;
             double mebibytesPerSecond = (double) megabitsPerSecond * MEBIBYTES_PER_MEGABIT;
 
-            if (megabitsPerSecond > Integer.MAX_VALUE)
+            if (megabitsPerSecond >= Integer.MAX_VALUE)
                 throw new ConfigurationException("Invalid data rate: " + megabitsPerSecond + " megabits per second; " +
                                                  "stream_throughput_outbound and inter_dc_stream_throughput_outbound" +
                                                  " should be between 0 and " + Integer.MAX_VALUE + " in megabits per second");

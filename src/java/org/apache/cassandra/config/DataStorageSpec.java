@@ -23,14 +23,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.primitives.Ints;
 
 import org.apache.cassandra.exceptions.ConfigurationException;
 
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
-import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.GIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.KIBIBYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.MEBIBYTES;
 
@@ -42,13 +39,6 @@ import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.MEBIBY
 public abstract class DataStorageSpec
 {
     /**
-     * Immutable map that matches supported time units according to a provided smallest supported time unit
-     */
-    private static final ImmutableMap<DataStorageUnit, ImmutableSet<DataStorageUnit>> MAP_UNITS_PER_MIN_UNIT =
-    ImmutableMap.of(BYTES, ImmutableSet.of(BYTES, KIBIBYTES, MEBIBYTES, GIBIBYTES),
-                    KIBIBYTES, ImmutableSet.of(KIBIBYTES, MEBIBYTES, GIBIBYTES),
-                    MEBIBYTES, ImmutableSet.of(MEBIBYTES, GIBIBYTES));
-    /**
      * The Regexp used to parse the storage provided as String.
      */
     private static final Pattern UNITS_PATTERN = Pattern.compile("^(\\d+)(GiB|MiB|KiB|B)$");
@@ -57,19 +47,27 @@ public abstract class DataStorageSpec
 
     private final DataStorageUnit unit;
 
-    private DataStorageSpec(long quantity, DataStorageUnit unit, DataStorageUnit smallestUnit, long max)
+    private DataStorageSpec(long quantity, DataStorageUnit unit, DataStorageUnit minUnit, long max, String value)
     {
         this.quantity = quantity;
         this.unit = unit;
 
-        validateQuantity(quantity, unit, smallestUnit, max);
+        validateMinUnit(unit, minUnit, value);
+        validateQuantity(quantity, unit, minUnit, max);
     }
 
-    private DataStorageSpec (String value, DataStorageUnit minUnit)
+    // This is used only for max_value_size for legacy reasons; we should be very careful about introducing similar constructors
+    // which do not validate for min unit
+    private DataStorageSpec(long quantity, DataStorageUnit unit, DataStorageUnit minUnit, long max)
     {
-        if (!MAP_UNITS_PER_MIN_UNIT.containsKey(minUnit))
-            throw new ConfigurationException("Invalid smallest unit set for " + value);
+        this.quantity = quantity;
+        this.unit = unit;
 
+        validateQuantity(quantity, unit, minUnit, max);
+    }
+
+    private DataStorageSpec(String value, DataStorageUnit minUnit)
+    {
         //parse the string field value
         Matcher matcher = UNITS_PATTERN.matcher(value);
 
@@ -80,40 +78,52 @@ public abstract class DataStorageSpec
 
             //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
 
-            if (!MAP_UNITS_PER_MIN_UNIT.get(minUnit).contains(unit))
-                throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit));
+            validateMinUnit(unit, minUnit, value);
         }
         else
         {
-            throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + MAP_UNITS_PER_MIN_UNIT.get(minUnit) +
+            throw new ConfigurationException("Invalid data storage: " + value + " Accepted units:" + acceptedUnits(minUnit) +
                                              " where case matters and only non-negative values are accepted");
         }
     }
 
-    private DataStorageSpec(String value, DataStorageUnit smallestUnit, long max)
+    private DataStorageSpec(String value, DataStorageUnit minUnit, long max)
     {
-        this(value, smallestUnit);
+        this(value, minUnit);
 
-        validateQuantity(value, this.quantity(), this.unit(), smallestUnit, max);
+        validateMinUnit(unit, minUnit, value);
+        validateQuantity(value, quantity(), unit(), minUnit, max);
     }
 
-    private static void validateQuantity(String value, long quantity, DataStorageUnit sourceUnit, DataStorageUnit smallestUnit, long max)
+    private void validateMinUnit(DataStorageUnit unit, DataStorageUnit minUnit, String value)
+    {
+        if (unit.compareTo(minUnit) < 0)
+            throw new ConfigurationException(String.format("Invalid data storage: %s Accepted units:%s", value, acceptedUnits(minUnit)));
+    }
+
+    private String acceptedUnits(DataStorageUnit minUnit)
+    {
+        DataStorageUnit[] units = DataStorageUnit.values();
+        return Arrays.toString(Arrays.copyOfRange(units, minUnit.ordinal(), units.length));
+    }
+
+    private static void validateQuantity(String value, long quantity, DataStorageUnit sourceUnit, DataStorageUnit minUnit, long max)
     {
         // no need to validate for negatives as they are not allowed at first place from the regex
 
-        if (smallestUnit.convert(quantity, sourceUnit) >= max)
+        if (minUnit.convert(quantity, sourceUnit) >= max)
             throw new ConfigurationException("Invalid data storage: " + value + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + smallestUnit.name().toLowerCase());
+                                             (max - 1) + " in " + minUnit.name().toLowerCase());
     }
 
-    private static void validateQuantity(long quantity, DataStorageUnit unit, DataStorageUnit smallestUnit, long max)
+    private static void validateQuantity(long quantity, DataStorageUnit unit, DataStorageUnit minUnit, long max)
     {
         if (quantity < 0)
             throw new ConfigurationException("Invalid data storage: value must be non-negative");
 
-        if (smallestUnit.convert(quantity, unit) >= max)
+        if (minUnit.convert(quantity, unit) >= max)
             throw new ConfigurationException("Invalid data storage: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + smallestUnit.name().toLowerCase());
+                                             (max - 1) + " in " + minUnit.name().toLowerCase());
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -220,7 +230,7 @@ public abstract class DataStorageSpec
     }
 
     /**
-     * Represents a data storage used for Cassandra configuration. The bound is [0; Long.MAX_VALUE) in bytes.
+     * Represents a data storage quantity used for Cassandra configuration. The bound is [0, Long.MAX_VALUE) in bytes.
      * If the user sets a different unit - we still validate that converted to bytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
@@ -245,7 +255,7 @@ public abstract class DataStorageSpec
          */
         public LongBytesBound(long quantity, DataStorageUnit unit)
         {
-            super(quantity, unit, BYTES, Long.MAX_VALUE);
+            super(quantity, unit, BYTES, Long.MAX_VALUE, quantity + unit.symbol);
         }
 
         /**
@@ -260,7 +270,7 @@ public abstract class DataStorageSpec
     }
 
     /**
-     * Represents a data storage used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in bytes.
+     * Represents a data storage quantity used for Cassandra configuration. The bound is [0, Integer.MAX_VALUE) in bytes.
      * If the user sets a different unit - we still validate that converted to bytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
@@ -285,11 +295,11 @@ public abstract class DataStorageSpec
          */
         public IntBytesBound(long quantity, DataStorageUnit unit)
         {
-            super(quantity, unit, BYTES, Integer.MAX_VALUE);
+            super(quantity, unit, BYTES, Integer.MAX_VALUE, quantity + unit.symbol);
         }
 
         /**
-         * Creates a {@code SmallestDataStorage.IntBytesBound} of the specified amount in bytes.
+         * Creates a {@code DataStorageSpec.IntBytesBound} of the specified amount in bytes.
          *
          * @param bytes where bytes shouldn't be bigger than Integer.MAX_VALUE-1
          */
@@ -300,7 +310,7 @@ public abstract class DataStorageSpec
     }
 
     /**
-     * Represents a data storage used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in kibibytes.
+     * Represents a data storage quantity used for Cassandra configuration. The bound is [0, Integer.MAX_VALUE) in kibibytes.
      * If the user sets a different unit - we still validate that converted to kibibytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
@@ -325,7 +335,7 @@ public abstract class DataStorageSpec
          */
         public IntKibibytesBound(long quantity, DataStorageUnit unit)
         {
-            super(quantity, unit, KIBIBYTES, Integer.MAX_VALUE);
+            super(quantity, unit, KIBIBYTES, Integer.MAX_VALUE, quantity + unit.symbol);
         }
 
         /**
@@ -340,7 +350,7 @@ public abstract class DataStorageSpec
     }
 
     /**
-     * Represents a data storage used for Cassandra configuration. The bound is [0; Long.MAX_VALUE) in mebibytes.
+     * Represents a data storage quantity used for Cassandra configuration. The bound is [0, Long.MAX_VALUE) in mebibytes.
      * If the user sets a different unit - we still validate that converted to mebibytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
@@ -359,15 +369,12 @@ public abstract class DataStorageSpec
         /**
          * Creates a {@code DataStorageSpec.LongMebibytesBound} of the specified amount in the specified unit.
          *
-         * BE CAREFUL, IF YOU DECIDE TO USE UNIT BYTES OR KIBIBYTES, SET A NUMBER THAT WILL NOT LEAD TO LOSS OF PRECISION DURING CONVERSION
-         * TO MEBIBYTES. WE GUARD FOR THIS IN THE PREVIOUS CONSTRUCTOR BUT NOT THIS ONE
-         *
          * @param quantity where quantity shouldn't be bigger than Long.MAX_VALUE - 1 in mebibytes
          * @param unit in which the provided quantity is
          */
         public LongMebibytesBound(long quantity, DataStorageUnit unit)
         {
-            super(quantity, unit, MEBIBYTES, Long.MAX_VALUE);
+            super(quantity, unit, MEBIBYTES, Long.MAX_VALUE, quantity + unit.symbol);
         }
 
         /**
@@ -382,7 +389,7 @@ public abstract class DataStorageSpec
     }
 
     /**
-     * Represents a data storage used for Cassandra configuration. The bound is [0; Integer.MAX_VALUE) in mebibytes.
+     * Represents a data storage quantity used for Cassandra configuration. The bound is [0, Integer.MAX_VALUE) in mebibytes.
      * If the user sets a different unit - we still validate that converted to mebibytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */

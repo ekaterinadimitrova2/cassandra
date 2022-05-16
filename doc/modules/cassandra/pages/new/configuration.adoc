@@ -152,10 +152,12 @@ If the parameter is of type duration, data rate or data storage, its value shoul
 
 - Please follow the new format `noun_verb` when adding new configuration parameters.
 
-- Please consider adding any new parameters with the lowest supported by Cassandra unit.
+- Please consider adding any new parameters with the lowest supported by Cassandra unit when possible. Our new types also
+support long and integer upper bound, depending on your needs. All options for configuration parameters' types are nested
+classes in our three main abstract classes - `DurationSpec`, `DataStorageSpec`, `DataRateSpec`.
 
-- If for some reason you consider the smallest unit shouldn’t be the one that is supported as such in Cassandra, please,
-use the extended classes `SmallestDuration*`, `SmallestDataStorage*`.
+- If for some reason you consider the smallest unit for a new parameter shouldn’t be the one that is supported as such in
+Cassandra, you can use the rest of the nested classes in `DuratioSpec`, `DataStorageSpec`.
 
 - New parameters should be added as non-negative numbers. For parameters where you would have set -1 to disable in the past, you might
 want to consider a separate flag parameter or null value. In case you use the null value, please, ensure that any default value
@@ -198,3 +200,6 @@ hinted_handoff_enabled: false
 ....
 
 https://issues.apache.org/jira/browse/CASSANDRA-17379[CASSANDRA-17379] was opened to improve the user experience and deprecate the overloading.
+By default, we refuse starting Cassandra with a config containing both old and new config keys for the same parameter. Start
+Cassandra with `-Dcassandra.allow_new_old_config_keys=true` to override. For historical reasons duplicate config keys
+in `cassandra.yaml` are allowed by default, start Cassandra with `-Dcassandra.allow_duplicate_config_keys=false` to disallow this.
