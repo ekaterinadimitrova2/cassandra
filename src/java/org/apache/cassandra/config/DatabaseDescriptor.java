@@ -551,8 +551,7 @@ public class DatabaseDescriptor
         long valueInBytes = conf.native_transport_max_frame_size.toBytes();
         if (valueInBytes < 0 || valueInBytes > Integer.MAX_VALUE)
         {
-            throw new ConfigurationException(String.format("%s must be positive value <= %dB, but was %dB",
-                                                           "native_transport_max_frame_size",
+            throw new ConfigurationException(String.format("native_transport_max_frame_size must be positive value <= %dB, but was %dB",
                                                            Integer.MAX_VALUE,
                                                            valueInBytes),
                                              false);
@@ -2623,9 +2622,9 @@ public class DatabaseDescriptor
         return conf.paxos_purge_grace_period.to(units);
     }
 
-    public static void setPaxosPurgeGrace(long value)
+    public static void setPaxosPurgeGrace(long seconds)
     {
-        conf.paxos_purge_grace_period = new DurationSpec.LongSecondsBound(value);
+        conf.paxos_purge_grace_period = new DurationSpec.LongSecondsBound(seconds);
     }
 
     public static PaxosOnLinearizabilityViolation paxosOnLinearizabilityViolations()
