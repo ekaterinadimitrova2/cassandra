@@ -62,7 +62,7 @@ public abstract class DataRateSpec
     {
         this (value);
 
-        validateQuantity(value, this.quantity(), this.unit(), minUnit, max);
+        validateQuantity(value, quantity(), unit(), minUnit, max);
 
     }
 
