@@ -40,15 +40,15 @@ public class DurationSpecTest
     @Test
     public void testConversions()
     {
-        assertEquals(10L, new DurationSpec.LongNanosecondsBound ("10s").toSeconds());
+        assertEquals(10L, new DurationSpec.LongNanosecondsBound ("10s").toNanoseconds());
         assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSecondsAsInt());
-        assertEquals(10000, new DurationSpec.LongNanosecondsBound ("10s").toMilliseconds());
+        assertEquals(10000, new DurationSpec.LongNanosecondsBound ("10s").toNanoseconds());
         assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.LongMillisecondsBound(MAX_INT_CONFIG_VALUE + "ms").toMillisecondsAsInt());
-        assertEquals(0, new DurationSpec.LongNanosecondsBound ("10s").toMinutes());
-        assertEquals(10, new DurationSpec.LongNanosecondsBound ("10m").toMinutes());
+        assertEquals(0, new DurationSpec.LongNanosecondsBound ("10s").toNanoseconds());
+        assertEquals(10, new DurationSpec.LongNanosecondsBound ("10m").toNanoseconds());
         assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntMinutesBound(MAX_INT_CONFIG_VALUE + "m").toMinutesAsInt());
-        assertEquals(600000, new DurationSpec.LongNanosecondsBound("10m").toMilliseconds());
-        assertEquals(600, new DurationSpec.LongNanosecondsBound("10m").toSeconds());
+        assertEquals(600000, new DurationSpec.LongNanosecondsBound("10m").toNanoseconds());
+        assertEquals(600, new DurationSpec.LongNanosecondsBound("10m").toNanoseconds());
         assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSecondsAsInt());
         assertEquals(new DurationSpec.IntMillisecondsBound(0.7, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("1ms"));
         assertEquals(new DurationSpec.IntMillisecondsBound(0.33, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("0ms"));
@@ -98,9 +98,6 @@ public class DurationSpecTest
     @Test
     public void testInvalidForConversion()
     {
-        //just test the cast to Int
-        assertEquals(Integer.MAX_VALUE, new DurationSpec.LongNanosecondsBound("9223372036854775806ns").toNanosecondsAsInt());
-
         assertThatThrownBy(() -> new DurationSpec.LongNanosecondsBound(Long.MAX_VALUE + "ns")).isInstanceOf(ConfigurationException.class)
                                                                            .hasMessageContaining("Invalid duration: 9223372036854775807ns. " +
                                                                                                  "It shouldn't be more than 9223372036854775806 in nanoseconds");
@@ -196,7 +193,6 @@ public class DurationSpecTest
         assertEquals(DurationSpec.LongNanosecondsBound .IntSecondsBound.inSecondsString("14400s"), new DurationSpec.LongNanosecondsBound ("14400s"));
         assertNotEquals(new DurationSpec.LongNanosecondsBound ("0m"), new DurationSpec.LongNanosecondsBound ("10ms"));
         assertEquals(Long.MAX_VALUE-1, new DurationSpec.LongNanosecondsBound ("9223372036854775806ns").toNanoseconds());
-        assertEquals(Integer.MAX_VALUE, new DurationSpec.LongNanosecondsBound ("9223372036854775806ns").toNanosecondsAsInt());
     }
 
     @Test

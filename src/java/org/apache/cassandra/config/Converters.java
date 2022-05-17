@@ -43,7 +43,7 @@ public enum Converters
                          o -> o.toMilliseconds()),
     MILLIS_DURATION_INT(Integer.class, DurationSpec.IntMillisecondsBound.class,
                         DurationSpec.IntMillisecondsBound::new,
-                        DurationSpec::toMillisecondsAsInt),
+                        DurationSpec.IntMillisecondsBound::toMillisecondsAsInt),
     MILLIS_DURATION_DOUBLE(Double.class, DurationSpec.IntMillisecondsBound.class,
                            o -> Double.isNaN(o) ? new DurationSpec.IntMillisecondsBound(0) :
                                 new DurationSpec.IntMillisecondsBound(o, TimeUnit.MILLISECONDS),
@@ -57,10 +57,10 @@ public enum Converters
                            o -> o == null ? -1 : o.toMillisecondsAsInt()),
     SECONDS_DURATION(Integer.class, DurationSpec.IntSecondsBound.class,
                      DurationSpec.IntSecondsBound::new,
-                     DurationSpec::toSecondsAsInt),
+                     DurationSpec.IntSecondsBound::toSecondsAsInt),
     NEGATIVE_SECONDS_DURATION(Integer.class, DurationSpec.IntSecondsBound.class,
                               o -> o < 0 ? new DurationSpec.IntSecondsBound(0) : new DurationSpec.IntSecondsBound(o),
-                              DurationSpec::toSecondsAsInt),
+                              DurationSpec.IntSecondsBound::toSecondsAsInt),
     /**
      * This converter is used to support backward compatibility for Duration parameters where we added the opportunity
      * for the users to add a unit in the parameters' values but we didn't change the names. (key_cache_save_period,
@@ -72,7 +72,7 @@ public enum Converters
                             o -> Long.toString(o.toSeconds())),
     MINUTES_DURATION(Integer.class, DurationSpec.IntMinutesBound.class,
                      DurationSpec.IntMinutesBound::new,
-                     DurationSpec::toMinutesAsInt),
+                     DurationSpec.IntMinutesBound::toMinutesAsInt),
     MEBIBYTES_DATA_STORAGE_LONG(Long.class, DataStorageSpec.LongMebibytesBound.class,
                                 DataStorageSpec.LongMebibytesBound::new,
                                 DataStorageSpec::toMebibytes),

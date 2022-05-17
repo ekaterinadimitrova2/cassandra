@@ -3886,12 +3886,12 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
     @Override
     public void takeSnapshot(String tag, Map<String, String> options, String... entities) throws IOException
     {
-        DurationSpec.LongNanosecondsBound ttl = options.containsKey("ttl") ? new DurationSpec.LongNanosecondsBound(options.get("ttl")) : null;
+        DurationSpec.IntSecondsBound ttl = options.containsKey("ttl") ? new DurationSpec.IntSecondsBound(options.get("ttl")) : null;
         if (ttl != null)
         {
-            int minAllowedTtlSecs = CassandraRelevantProperties.SNAPSHOT_MIN_ALLOWED_TTL_SECONDS.getInt();
-            if (ttl.toSeconds() < minAllowedTtlSecs)
-                throw new IllegalArgumentException(String.format("ttl for snapshot must be at least %d seconds", minAllowedTtlSecs));
+            int minAllowedTtlMillisecs = CassandraRelevantProperties.SNAPSHOT_MIN_ALLOWED_TTL_SECONDS.getInt();
+            if (ttl.toSeconds() < minAllowedTtlMillisecs)
+                throw new IllegalArgumentException(String.format("ttl for snapshot must be at least %d seconds", minAllowedTtlMillisecs));
         }
 
         boolean skipFlush = Boolean.parseBoolean(options.getOrDefault("skipFlush", "false"));
@@ -3989,7 +3989,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
      * @param skipFlush Skip blocking flush of memtable
      * @param keyspaceNames the names of the keyspaces to snapshot; empty means "all."
      */
-    private void takeSnapshot(String tag, boolean skipFlush, DurationSpec.LongNanosecondsBound ttl, String... keyspaceNames) throws IOException
+    private void takeSnapshot(String tag, boolean skipFlush, DurationSpec.IntSecondsBound ttl, String... keyspaceNames) throws IOException
     {
         if (operationMode == Mode.JOINING)
             throw new IOException("Cannot snapshot until bootstrap completes");
@@ -4035,7 +4035,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
      * @param tableList
      *            list of tables from different keyspace in the form of ks1.cf1 ks2.cf2
      */
-    private void takeMultipleTableSnapshot(String tag, boolean skipFlush, DurationSpec.LongNanosecondsBound ttl, String... tableList)
+    private void takeMultipleTableSnapshot(String tag, boolean skipFlush, DurationSpec.IntSecondsBound ttl, String... tableList)
             throws IOException
     {
         Map<Keyspace, List<String>> keyspaceColumnfamily = new HashMap<Keyspace, List<String>>();

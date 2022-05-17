@@ -170,96 +170,6 @@ public abstract class DurationSpec
         return targetUnit.convert(quantity, unit);
     }
 
-    /**
-     * @return this duration in number of hours
-     */
-    public long toHours()
-    {
-        return unit.toHours(quantity);
-    }
-
-    /**
-     * Returns this duration in number of minutes as an {@code int}
-     *
-     * @return this duration in number of minutes or {@code Integer.MAX_VALUE} if the number of minutes is too large.
-     */
-    public int toHoursAsInt()
-    {
-        return Ints.saturatedCast(toHours());
-    }
-
-    /**
-     * @return this duration in number of minutes
-     */
-    public long toMinutes()
-    {
-        return unit.toMinutes(quantity);
-    }
-
-    /**
-     * Returns this duration in number of minutes as an {@code int}
-     *
-     * @return this duration in number of minutes or {@code Integer.MAX_VALUE} if the number of minutes is too large.
-     */
-    public int toMinutesAsInt()
-    {
-        return Ints.saturatedCast(toMinutes());
-    }
-
-    /**
-     * @return this duration in number of seconds
-     */
-    public long toSeconds()
-    {
-        return unit.toSeconds(quantity);
-    }
-
-    /**
-     * Returns this duration in number of seconds as an {@code int}
-     *
-     * @return this duration in number of seconds or {@code Integer.MAX_VALUE} if the number of seconds is too large.
-     */
-    public int toSecondsAsInt()
-    {
-        return Ints.saturatedCast(toSeconds());
-    }
-
-    /**
-     * @return this duration in number of nanoseconds
-     */
-    public long toNanoseconds()
-    {
-        return unit.toNanos(quantity);
-    }
-
-    /**
-     * Returns this duration in number of nanoseconds as an {@code int}
-     *
-     * @return this duration in number of nanoseconds or {@code Integer.MAX_VALUE} if the number of nanoseconds is too large.
-     */
-    public int toNanosecondsAsInt()
-    {
-        return Ints.saturatedCast(toNanoseconds());
-    }
-
-    /**
-     * @return this duration in number of milliseconds
-     */
-    public long toMilliseconds()
-    {
-        return unit.toMillis(quantity);
-    }
-
-    /**
-     * Returns this duration in number of milliseconds as an {@code int}
-     *
-     * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
-     */
-    public int toMillisecondsAsInt()
-    {
-        return Ints.saturatedCast(toMilliseconds());
-    }
-
     @Override
     public int hashCode()
     {
@@ -355,6 +265,14 @@ public abstract class DurationSpec
         {
             this(nanoseconds, NANOSECONDS);
         }
+
+        /**
+         * @return this duration in number of nanoseconds
+         */
+        public long toNanoseconds()
+        {
+            return unit().toNanos(quantity());
+        }
     }
 
     /**
@@ -396,6 +314,21 @@ public abstract class DurationSpec
         public LongMillisecondsBound(long milliseconds)
         {
             this(milliseconds, MILLISECONDS);
+        }
+
+        public long toMilliseconds()
+        {
+            return unit().toMillis(quantity());
+        }
+
+        /**
+         * Returns this duration in number of milliseconds as an {@code int}
+         *
+         * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
+         */
+        public int toMillisecondsAsInt()
+        {
+            return Ints.saturatedCast(toMilliseconds());
         }
     }
 
@@ -439,6 +372,14 @@ public abstract class DurationSpec
         {
             this(seconds, SECONDS);
         }
+
+        /**
+         * @return this duration in number of seconds
+         */
+        public long toSeconds()
+        {
+            return unit().toSeconds(quantity());
+        }
     }
 
     /**
@@ -480,6 +421,24 @@ public abstract class DurationSpec
         public IntMinutesBound(long minutes)
         {
             this(minutes, MINUTES);
+        }
+
+        /**
+         * @return this duration in number of minutes
+         */
+        public long toMinutes()
+        {
+            return unit().toMinutes(quantity());
+        }
+
+        /**
+         * Returns this duration in number of minutes as an {@code int}
+         *
+         * @return this duration in number of minutes or {@code Integer.MAX_VALUE} if the number of minutes is too large.
+         */
+        public int toMinutesAsInt()
+        {
+            return Ints.saturatedCast(toMinutes());
         }
     }
 
@@ -549,6 +508,24 @@ public abstract class DurationSpec
             //otherwise we just use the standard constructors
             return new IntSecondsBound(value);
         }
+
+        /**
+         * @return this duration in number of seconds
+         */
+        public long toSeconds()
+        {
+            return unit().toSeconds(quantity());
+        }
+
+        /**
+         * Returns this duration in number of seconds as an {@code int}
+         *
+         * @return this duration in number of seconds or {@code Integer.MAX_VALUE} if the number of seconds is too large.
+         */
+        public int toSecondsAsInt()
+        {
+            return Ints.saturatedCast(toSeconds());
+        }
     }
 
     /**
@@ -602,6 +579,24 @@ public abstract class DurationSpec
         public IntMillisecondsBound(double quantity, TimeUnit unit)
         {
             super(quantity, unit, MILLISECONDS, Integer.MAX_VALUE);
+        }
+
+        /**
+         * @return this duration in number of milliseconds
+         */
+        public long toMilliseconds()
+        {
+            return unit().toMillis(quantity());
+        }
+
+        /**
+         * Returns this duration in number of milliseconds as an {@code int}
+         *
+         * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
+         */
+        public int toMillisecondsAsInt()
+        {
+            return Ints.saturatedCast(toMilliseconds());
         }
     }
 }
