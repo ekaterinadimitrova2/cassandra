@@ -36,6 +36,7 @@ import static org.quicktheories.QuickTheory.qt;
 public class DurationSpecTest
 {
     private static final long MAX_INT_CONFIG_VALUE = Integer.MAX_VALUE - 1;
+
     @Test
     public void testConversions()
     {
