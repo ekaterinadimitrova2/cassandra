@@ -93,7 +93,6 @@ import org.apache.cassandra.utils.FBUtilities;
 import static org.apache.cassandra.config.CassandraRelevantProperties.OS_ARCH;
 import static org.apache.cassandra.config.CassandraRelevantProperties.SUN_ARCH_DATA_MODEL;
 import static org.apache.cassandra.config.CassandraRelevantProperties.TEST_JVM_DTEST_DISABLE_SSL;
-import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.BYTES;
 import static org.apache.cassandra.config.DataStorageSpec.DataStorageUnit.MEBIBYTES;
 import static org.apache.cassandra.io.util.FileUtils.ONE_GIB;
 import static org.apache.cassandra.io.util.FileUtils.ONE_MIB;
@@ -164,7 +163,7 @@ public class DatabaseDescriptor
     private static boolean daemonInitialized;
 
     private static final int searchConcurrencyFactor = Integer.parseInt(System.getProperty(Config.PROPERTY_PREFIX + "search_concurrency_factor", "1"));
-    private static DurationSpec autoSnapshoTtl;
+    private static DurationSpec.LongNanosecondsBound autoSnapshoTtl;
 
     private static volatile boolean disableSTCSInL0 = Boolean.getBoolean(Config.PROPERTY_PREFIX + "disable_stcs_in_l0");
     private static final boolean unsafeSystem = Boolean.getBoolean(Config.PROPERTY_PREFIX + "unsafesystem");
@@ -1532,14 +1531,13 @@ public class DatabaseDescriptor
 
     public static int getMaxValueSize()
     {
-        return conf.max_value_size.toBytesAsInt();
+        return Ints.saturatedCast(conf.max_value_size.toMebibytesAsInt() * 1024L * 1024);
     }
 
     public static void setMaxValueSize(int maxValueSizeInBytes)
     {
-        // BYTES is acceptable in the below constructor as we use this method with quantity 1024 * 1024 and only in tests
-        // and there is no precision issue during conversion to mebibytes
-        conf.max_value_size = new DataStorageSpec.IntMebibytesBound(maxValueSizeInBytes, BYTES);
+        // the below division is safe as this setter is used only in tests with values that won't lead to precision loss
+        conf.max_value_size = new DataStorageSpec.IntMebibytesBound((maxValueSizeInBytes / (1024L * 1024)), MEBIBYTES);
     }
 
     /**
@@ -2817,13 +2815,13 @@ public class DatabaseDescriptor
         return conf.auto_snapshot;
     }
 
-    public static DurationSpec getAutoSnapshotTtl()
+    public static DurationSpec.LongNanosecondsBound getAutoSnapshotTtl()
     {
         return autoSnapshoTtl;
     }
 
     @VisibleForTesting
-    public static void setAutoSnapshotTtl(DurationSpec newTtl)
+    public static void setAutoSnapshotTtl(DurationSpec.LongNanosecondsBound newTtl)
     {
         autoSnapshoTtl = newTtl;
     }
@@ -4037,7 +4035,7 @@ public class DatabaseDescriptor
     }
 
     @Nullable
-    public static DataStorageSpec getCoordinatorReadSizeWarnThreshold()
+    public static DataStorageSpec.LongBytesBound getCoordinatorReadSizeWarnThreshold()
     {
         return conf.coordinator_read_size_warn_threshold;
     }
@@ -4049,7 +4047,7 @@ public class DatabaseDescriptor
     }
 
     @Nullable
-    public static DataStorageSpec getCoordinatorReadSizeFailThreshold()
+    public static DataStorageSpec.LongBytesBound getCoordinatorReadSizeFailThreshold()
     {
         return conf.coordinator_read_size_fail_threshold;
     }
@@ -4061,7 +4059,7 @@ public class DatabaseDescriptor
     }
 
     @Nullable
-    public static DataStorageSpec getLocalReadSizeWarnThreshold()
+    public static DataStorageSpec.LongBytesBound getLocalReadSizeWarnThreshold()
     {
         return conf.local_read_size_warn_threshold;
     }
@@ -4073,7 +4071,7 @@ public class DatabaseDescriptor
     }
 
     @Nullable
-    public static DataStorageSpec getLocalReadSizeFailThreshold()
+    public static DataStorageSpec.LongBytesBound getLocalReadSizeFailThreshold()
     {
         return conf.local_read_size_fail_threshold;
     }
@@ -4085,7 +4083,7 @@ public class DatabaseDescriptor
     }
 
     @Nullable
-    public static DataStorageSpec getRowIndexReadSizeWarnThreshold()
+    public static DataStorageSpec.LongBytesBound getRowIndexReadSizeWarnThreshold()
     {
         return conf.row_index_read_size_warn_threshold;
     }
@@ -4097,7 +4095,7 @@ public class DatabaseDescriptor
     }
 
     @Nullable
-    public static DataStorageSpec getRowIndexReadSizeFailThreshold()
+    public static DataStorageSpec.LongBytesBound getRowIndexReadSizeFailThreshold()
     {
         return conf.row_index_read_size_fail_threshold;
     }
@@ -4154,7 +4152,7 @@ public class DatabaseDescriptor
         }
     }
 
-    public static DurationSpec getStreamingStateExpires()
+    public static DurationSpec.LongNanosecondsBound getStreamingStateExpires()
     {
         return conf.streaming_state_expires;
     }
@@ -4187,7 +4185,7 @@ public class DatabaseDescriptor
         return conf.enable_uuid_sstable_identifiers;
     }
 
-    public static DurationSpec getRepairStateExpires()
+    public static DurationSpec.LongNanosecondsBound getRepairStateExpires()
     {
         return conf.repair_state_expires;
     }

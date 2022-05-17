@@ -56,16 +56,6 @@ public abstract class DataStorageSpec
         validateQuantity(quantity, unit, minUnit, max);
     }
 
-    // This is used only for max_value_size for legacy reasons; we should be very careful about introducing similar constructors
-    // which do not validate for min unit
-    private DataStorageSpec(long quantity, DataStorageUnit unit, DataStorageUnit minUnit, long max)
-    {
-        this.quantity = quantity;
-        this.unit = unit;
-
-        validateQuantity(quantity, unit, minUnit, max);
-    }
-
     private DataStorageSpec(String value, DataStorageUnit minUnit)
     {
         //parse the string field value
@@ -76,9 +66,7 @@ public abstract class DataStorageSpec
             quantity = Long.parseLong(matcher.group(1));
             unit = DataStorageUnit.fromSymbol(matcher.group(2));
 
-            //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
-
-            validateMinUnit(unit, minUnit, value);
+            // this constructor is used only by extended classes for min unit; upper bound and min unit are guarded there accordingly
         }
         else
         {
@@ -95,13 +83,13 @@ public abstract class DataStorageSpec
         validateQuantity(value, quantity(), unit(), minUnit, max);
     }
 
-    private void validateMinUnit(DataStorageUnit unit, DataStorageUnit minUnit, String value)
+    private static void validateMinUnit(DataStorageUnit sourceUnit, DataStorageUnit minUnit, String value)
     {
-        if (unit.compareTo(minUnit) < 0)
+        if (sourceUnit.compareTo(minUnit) < 0)
             throw new ConfigurationException(String.format("Invalid data storage: %s Accepted units:%s", value, acceptedUnits(minUnit)));
     }
 
-    private String acceptedUnits(DataStorageUnit minUnit)
+    private static String acceptedUnits(DataStorageUnit minUnit)
     {
         DataStorageUnit[] units = DataStorageUnit.values();
         return Arrays.toString(Arrays.copyOfRange(units, minUnit.ordinal(), units.length));
@@ -116,14 +104,15 @@ public abstract class DataStorageSpec
                                              (max - 1) + " in " + minUnit.name().toLowerCase());
     }
 
-    private static void validateQuantity(long quantity, DataStorageUnit unit, DataStorageUnit minUnit, long max)
+    private static void validateQuantity(long quantity, DataStorageUnit sourceUnit, DataStorageUnit minUnit, long max)
     {
         if (quantity < 0)
             throw new ConfigurationException("Invalid data storage: value must be non-negative");
 
-        if (minUnit.convert(quantity, unit) >= max)
-            throw new ConfigurationException("Invalid data storage: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + minUnit.name().toLowerCase());
+        if (minUnit.convert(quantity, sourceUnit) >= max)
+            throw new ConfigurationException(String.format("Invalid data storage: %d %s. It shouldn't be more than %d in %s",
+                                                           quantity, sourceUnit.name().toLowerCase(),
+                                                           max - 1, minUnit.name().toLowerCase()));
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -240,7 +229,6 @@ public abstract class DataStorageSpec
          * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount.
          *
          * @param value the data storage
-         *
          */
         public LongBytesBound(String value)
         {
@@ -280,7 +268,6 @@ public abstract class DataStorageSpec
          * Creates a {@code DataStorageSpec.IntBytesBound} of the specified amount.
          *
          * @param value the data storage
-         *
          */
         public IntBytesBound(String value)
         {
@@ -320,7 +307,6 @@ public abstract class DataStorageSpec
          * Creates a {@code DataStorageSpec.IntKibibytesBound} of the specified amount.
          *
          * @param value the data storage
-         *
          */
         public IntKibibytesBound(String value)
         {
@@ -416,7 +402,7 @@ public abstract class DataStorageSpec
          */
         public IntMebibytesBound(long quantity, DataStorageUnit unit)
         {
-            super(quantity, unit, MEBIBYTES, Integer.MAX_VALUE);
+            super(quantity, unit, MEBIBYTES, Integer.MAX_VALUE, quantity + unit.symbol);
         }
 
         /**

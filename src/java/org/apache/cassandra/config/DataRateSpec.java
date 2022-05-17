@@ -60,7 +60,7 @@ public abstract class DataRateSpec
 
     private DataRateSpec(String value, DataRateUnit minUnit, long max)
     {
-        this (value);
+        this(value);
 
         validateQuantity(value, quantity(), unit(), minUnit, max);
 

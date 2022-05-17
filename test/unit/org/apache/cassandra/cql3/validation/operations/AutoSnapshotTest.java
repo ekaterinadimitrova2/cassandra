@@ -48,7 +48,7 @@ public class AutoSnapshotTest extends CQLTester
     static int TTL_SECS = 1;
 
     public static Boolean enabledBefore;
-    public static DurationSpec ttlBefore;
+    public static DurationSpec.LongNanosecondsBound ttlBefore;
 
     @BeforeClass
     public static void beforeClass()
@@ -69,7 +69,7 @@ public class AutoSnapshotTest extends CQLTester
     public Boolean autoSnapshotEnabled;
 
     @Parameterized.Parameter(1)
-    public DurationSpec autoSnapshotTTl;
+    public DurationSpec.LongNanosecondsBound autoSnapshotTTl;
 
     @Before
     public void beforeTest() throws Throwable

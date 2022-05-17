@@ -172,8 +172,8 @@ public class DataRateSpecTest
         // Extremely big numbers might be not completely accurate, that is why here Long.MAX_VALUE is not failing for bytes being >= Long.MAX_VALUE
         Gen<Long> valueGen = SourceDSL.longs().between(0, Long.MAX_VALUE/1024L/1024L); // the biggest value in MiB/s that won't lead to B/s overflow
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
-            DataRateSpec there = new DataRateSpec.LongBytesPerSecondBound(value, unit);
-            DataRateSpec back = new DataRateSpec.LongBytesPerSecondBound(there.toString());
+            DataRateSpec.LongBytesPerSecondBound there = new DataRateSpec.LongBytesPerSecondBound(value, unit);
+            DataRateSpec.LongBytesPerSecondBound back = new DataRateSpec.LongBytesPerSecondBound(there.toString());
             return there.equals(back) && back.equals(there);
         });
     }
@@ -184,8 +184,8 @@ public class DataRateSpecTest
         Gen<DataRateSpec.DataRateUnit> unitGen = SourceDSL.arbitrary().enumValues(DataRateSpec.DataRateUnit.class);
         Gen<Long> valueGen = SourceDSL.longs().between(0, Integer.MAX_VALUE-1); // max MiB/s
         qt().forAll(valueGen, unitGen).check((value, unit) -> {
-            DataRateSpec there = new DataRateSpec.IntMebibytesPerSecondBound(value, unit);
-            DataRateSpec back = new DataRateSpec.IntMebibytesPerSecondBound(there.toString());
+            DataRateSpec.IntMebibytesPerSecondBound there = new DataRateSpec.IntMebibytesPerSecondBound(value, unit);
+            DataRateSpec.IntMebibytesPerSecondBound back = new DataRateSpec.IntMebibytesPerSecondBound(there.toString());
             return there.equals(back) && back.equals(there);
         });
     }
