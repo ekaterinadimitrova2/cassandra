@@ -163,7 +163,7 @@ public class DatabaseDescriptor
     private static boolean daemonInitialized;
 
     private static final int searchConcurrencyFactor = Integer.parseInt(System.getProperty(Config.PROPERTY_PREFIX + "search_concurrency_factor", "1"));
-    private static DurationSpec.LongNanosecondsBound autoSnapshoTtl;
+    private static DurationSpec.IntSecondsBound autoSnapshoTtl;
 
     private static volatile boolean disableSTCSInL0 = Boolean.getBoolean(Config.PROPERTY_PREFIX + "disable_stcs_in_l0");
     private static final boolean unsafeSystem = Boolean.getBoolean(Config.PROPERTY_PREFIX + "unsafesystem");
@@ -413,7 +413,7 @@ public class DatabaseDescriptor
         {
             try
             {
-                autoSnapshoTtl = new DurationSpec.LongNanosecondsBound(conf.auto_snapshot_ttl);
+                autoSnapshoTtl = new DurationSpec.IntSecondsBound(conf.auto_snapshot_ttl);
             }
             catch (IllegalArgumentException e)
             {
@@ -2815,13 +2815,13 @@ public class DatabaseDescriptor
         return conf.auto_snapshot;
     }
 
-    public static DurationSpec.LongNanosecondsBound getAutoSnapshotTtl()
+    public static DurationSpec.IntSecondsBound getAutoSnapshotTtl()
     {
         return autoSnapshoTtl;
     }
 
     @VisibleForTesting
-    public static void setAutoSnapshotTtl(DurationSpec.LongNanosecondsBound newTtl)
+    public static void setAutoSnapshotTtl(DurationSpec.IntSecondsBound newTtl)
     {
         autoSnapshoTtl = newTtl;
     }

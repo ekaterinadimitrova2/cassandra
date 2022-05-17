@@ -48,7 +48,7 @@ public class AutoSnapshotTest extends CQLTester
     static int TTL_SECS = 1;
 
     public static Boolean enabledBefore;
-    public static DurationSpec.LongNanosecondsBound ttlBefore;
+    public static DurationSpec.IntSecondsBound ttlBefore;
 
     @BeforeClass
     public static void beforeClass()
@@ -69,7 +69,7 @@ public class AutoSnapshotTest extends CQLTester
     public Boolean autoSnapshotEnabled;
 
     @Parameterized.Parameter(1)
-    public DurationSpec.LongNanosecondsBound autoSnapshotTTl;
+    public DurationSpec.IntSecondsBound autoSnapshotTTl;
 
     @Before
     public void beforeTest() throws Throwable
@@ -84,8 +84,8 @@ public class AutoSnapshotTest extends CQLTester
     @Parameterized.Parameters( name = "enabled={0},ttl={1}" )
     public static Collection options() {
         return Arrays.asList(new Object[][] {
-        { true, new DurationSpec.LongNanosecondsBound(TTL_SECS, SECONDS) },
-        { false, new DurationSpec.LongNanosecondsBound(TTL_SECS, SECONDS) },
+        { true, new DurationSpec.IntSecondsBound(TTL_SECS, SECONDS) },
+        { false, new DurationSpec.IntSecondsBound(TTL_SECS, SECONDS) },
         { true, null },
         { false, null },
         });
