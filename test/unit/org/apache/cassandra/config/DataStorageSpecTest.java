@@ -64,8 +64,6 @@ public class DataStorageSpecTest
         assertEquals(1024, new DataStorageSpec.IntBytesBound(1, GIBIBYTES).toMebibytes());
         assertEquals(10240, new DataStorageSpec.IntKibibytesBound(10, MEBIBYTES).toKibibytes());
         assertEquals(1024, new DataStorageSpec.IntMebibytesBound(1, GIBIBYTES).toMebibytes());
-
-        assertEquals(1, new DataStorageSpec.IntMebibytesBound(1024L * 1024, BYTES).toMebibytes());
     }
 
     @Test
@@ -118,9 +116,6 @@ public class DataStorageSpecTest
         assertThatThrownBy(() -> new DataStorageSpec.IntMebibytesBound(2147483648L)).isInstanceOf(ConfigurationException.class)
                                                                                     .hasMessageContaining("Invalid data storage: 2147483648 mebibytes." +
                                                                                                           " It shouldn't be more than 2147483646 in mebibytes");
-        assertThatThrownBy(() -> new DataStorageSpec.IntMebibytesBound(2147483648L * 1024L * 1024, DataStorageSpec.DataStorageUnit.BYTES)).isInstanceOf(ConfigurationException.class)
-                                                                                                                                          .hasMessageContaining("Invalid data storage: 2251799813685248 bytes." +
-                                                                                                                                                                " It shouldn't be more than 2147483646 in mebibytes");
 
         assertThatThrownBy(() -> new DataStorageSpec.LongBytesBound(Long.MAX_VALUE + "B")).isInstanceOf(ConfigurationException.class)
                                                                                           .hasMessageContaining("Invalid data storage: 9223372036854775807B. " +

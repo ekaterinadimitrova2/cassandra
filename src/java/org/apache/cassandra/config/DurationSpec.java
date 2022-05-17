@@ -75,9 +75,7 @@ public abstract class DurationSpec
             quantity = Long.parseLong(matcher.group(1));
             unit = fromSymbol(matcher.group(2));
 
-            //this constructor is used only by extended classes for smallest unit; upper bound is guarded there accordingly
-
-            validateMinUnit(unit, minUnit, value);
+            // this constructor is used only by extended classes for min unit; upper bound and min unit are guarded there accordingly
         }
         else
         {
@@ -88,19 +86,19 @@ public abstract class DurationSpec
 
     private DurationSpec(String value, TimeUnit minUnit, long max)
     {
-        this (value, minUnit);
+        this(value, minUnit);
 
         validateMinUnit(unit, minUnit, value);
         validateQuantity(value, quantity(), unit(), minUnit, max);
     }
 
-    private void validateMinUnit(TimeUnit unit, TimeUnit minUnit, String value)
+    private static void validateMinUnit(TimeUnit unit, TimeUnit minUnit, String value)
     {
         if (unit.compareTo(minUnit) < 0)
             throw new ConfigurationException(String.format("Invalid duration: %s Accepted units:%s", value, acceptedUnits(minUnit)));
     }
 
-    private String acceptedUnits(TimeUnit minUnit)
+    private static String acceptedUnits(TimeUnit minUnit)
     {
         TimeUnit[] units = TimeUnit.values();
         return Arrays.toString(Arrays.copyOfRange(units, minUnit.ordinal(), units.length));
@@ -122,8 +120,9 @@ public abstract class DurationSpec
             throw new ConfigurationException("Invalid duration: value must be non-negative");
 
         if (minUnit.convert(quantity, sourceUnit) >= max)
-            throw new ConfigurationException("Invalid duration: " + quantity + " " + sourceUnit.name().toLowerCase() + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + minUnit.name().toLowerCase());
+            throw new ConfigurationException(String.format("Invalid duration: %d %s. It shouldn't be more than %d in %s",
+                                                           quantity, sourceUnit.name().toLowerCase(),
+                                                           max - 1, minUnit.name().toLowerCase()));
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -252,14 +251,6 @@ public abstract class DurationSpec
     }
 
     /**
-     * @return the duration value in milliseconds
-     */
-    public static long toMilliseconds(DurationSpec quantity)
-    {
-        return quantity.toMilliseconds();
-    }
-
-    /**
      * Returns this duration in number of milliseconds as an {@code int}
      *
      * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
@@ -336,7 +327,6 @@ public abstract class DurationSpec
          * The bound is [0, Long.MAX_VALUE) in nanoseconds.
          *
          * @param value the duration
-         *
          */
         public LongNanosecondsBound(String value)
         {
@@ -379,7 +369,6 @@ public abstract class DurationSpec
          * The bound is [0, Long.MAX_VALUE) in milliseconds.
          *
          * @param value the duration
-         *
          */
         public LongMillisecondsBound(String value)
         {
@@ -422,7 +411,6 @@ public abstract class DurationSpec
          * The bound is [0, Long.MAX_VALUE) in seconds.
          *
          * @param value the duration
-         *
          */
         public LongSecondsBound(String value)
         {
@@ -465,7 +453,6 @@ public abstract class DurationSpec
          * The bound is [0, Integer.MAX_VALUE) in minutes.
          *
          * @param value the duration
-         *
          */
         public IntMinutesBound(String value)
         {
@@ -510,7 +497,6 @@ public abstract class DurationSpec
          * The bound is [0, Integer.MAX_VALUE) in seconds.
          *
          * @param value the duration
-         *
          */
         public IntSecondsBound(String value)
         {
@@ -577,7 +563,6 @@ public abstract class DurationSpec
          * The bound is [0, Integer.MAX_VALUE) in milliseconds.
          *
          * @param value the duration
-         *
          */
         public IntMillisecondsBound(String value)
         {

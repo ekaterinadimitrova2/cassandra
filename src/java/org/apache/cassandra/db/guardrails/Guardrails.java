@@ -900,7 +900,7 @@ public final class Guardrails implements GuardrailsMBean
         return set.stream().map(ConsistencyLevel::valueOf).collect(Collectors.toSet());
     }
 
-    private static Long sizeToBytes(@Nullable DataStorageSpec size)
+    private static Long sizeToBytes(@Nullable DataStorageSpec.LongBytesBound size)
     {
         return size == null ? -1 : size.toBytes();
     }

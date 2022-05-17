@@ -54,7 +54,7 @@ public class SnapshotManifest
         this.expiresAt = null;
     }
 
-    public SnapshotManifest(List<String> files, DurationSpec ttl, Instant creationTime)
+    public SnapshotManifest(List<String> files, DurationSpec.LongNanosecondsBound ttl, Instant creationTime)
     {
         this.files = files;
         this.createdAt = creationTime;
