@@ -43,7 +43,7 @@ public enum Converters
                          o -> o.toMilliseconds()),
     MILLIS_DURATION_INT(Integer.class, DurationSpec.IntMillisecondsBound.class,
                         DurationSpec.IntMillisecondsBound::new,
-                        DurationSpec.IntMillisecondsBound::toMillisecondsAsInt),
+                        DurationSpec.IntMillisecondsBound::toMilliseconds),
     MILLIS_DURATION_DOUBLE(Double.class, DurationSpec.IntMillisecondsBound.class,
                            o -> Double.isNaN(o) ? new DurationSpec.IntMillisecondsBound(0) :
                                 new DurationSpec.IntMillisecondsBound(o, TimeUnit.MILLISECONDS),
@@ -54,13 +54,13 @@ public enum Converters
      */
     MILLIS_CUSTOM_DURATION(Integer.class, DurationSpec.IntMillisecondsBound.class,
                            o -> o == -1 ? null : new DurationSpec.IntMillisecondsBound(o),
-                           o -> o == null ? -1 : o.toMillisecondsAsInt()),
+                           o -> o == null ? -1 : o.toMilliseconds()),
     SECONDS_DURATION(Integer.class, DurationSpec.IntSecondsBound.class,
                      DurationSpec.IntSecondsBound::new,
-                     DurationSpec.IntSecondsBound::toSecondsAsInt),
+                     DurationSpec.IntSecondsBound::toSeconds),
     NEGATIVE_SECONDS_DURATION(Integer.class, DurationSpec.IntSecondsBound.class,
                               o -> o < 0 ? new DurationSpec.IntSecondsBound(0) : new DurationSpec.IntSecondsBound(o),
-                              DurationSpec.IntSecondsBound::toSecondsAsInt),
+                              DurationSpec.IntSecondsBound::toSeconds),
     /**
      * This converter is used to support backward compatibility for Duration parameters where we added the opportunity
      * for the users to add a unit in the parameters' values but we didn't change the names. (key_cache_save_period,
@@ -72,19 +72,19 @@ public enum Converters
                             o -> Long.toString(o.toSeconds())),
     MINUTES_DURATION(Integer.class, DurationSpec.IntMinutesBound.class,
                      DurationSpec.IntMinutesBound::new,
-                     DurationSpec.IntMinutesBound::toMinutesAsInt),
+                     DurationSpec.IntMinutesBound::toMinutes),
     MEBIBYTES_DATA_STORAGE_LONG(Long.class, DataStorageSpec.LongMebibytesBound.class,
                                 DataStorageSpec.LongMebibytesBound::new,
-                                DataStorageSpec::toMebibytes),
+                                DataStorageSpec.LongMebibytesBound::toMebibytes),
     MEBIBYTES_DATA_STORAGE_INT(Integer.class, DataStorageSpec.IntMebibytesBound.class,
                                DataStorageSpec.IntMebibytesBound::new,
-                               DataStorageSpec::toMebibytesAsInt),
+                               DataStorageSpec.IntMebibytesBound::toMebibytes),
     KIBIBYTES_DATASTORAGE(Integer.class, DataStorageSpec.IntKibibytesBound.class,
                           DataStorageSpec.IntKibibytesBound::new,
-                          DataStorageSpec::toKibibytesAsInt),
+                          DataStorageSpec.IntKibibytesBound::toKibibytes),
     BYTES_DATASTORAGE(Integer.class, DataStorageSpec.IntBytesBound.class,
                       DataStorageSpec.IntBytesBound::new,
-                      DataStorageSpec::toBytesAsInt),
+                      DataStorageSpec.IntBytesBound::toBytes),
     /**
      * This converter is used to support backward compatibility for parameters where in the past negative number was used as a value
      * Example: native_transport_max_concurrent_requests_in_bytes_per_ip = -1 and native_transport_max_request_data_in_flight_per_ip = null
@@ -92,7 +92,7 @@ public enum Converters
      */
     BYTES_CUSTOM_DATASTORAGE(Long.class, DataStorageSpec.LongBytesBound.class,
                              o -> o == -1 ? null : new DataStorageSpec.LongBytesBound(o),
-                             DataStorageSpec::toBytes),
+                             DataStorageSpec.LongBytesBound::toBytes),
     MEBIBYTES_PER_SECOND_DATA_RATE(Integer.class, DataRateSpec.IntMebibytesPerSecondBound.class,
                                    DataRateSpec.IntMebibytesPerSecondBound::new,
                                    DataRateSpec.IntMebibytesPerSecondBound::toMebibytesPerSecondAsInt),

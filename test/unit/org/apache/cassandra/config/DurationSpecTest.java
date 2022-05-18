@@ -41,11 +41,11 @@ public class DurationSpecTest
     public void testConversions()
     {
         assertEquals(10000000000L, new DurationSpec.LongNanosecondsBound ("10s").toNanoseconds());
-        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSecondsAsInt());
-        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.LongMillisecondsBound(MAX_INT_CONFIG_VALUE + "ms").toMillisecondsAsInt());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSeconds());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.LongMillisecondsBound(MAX_INT_CONFIG_VALUE + "ms").toMilliseconds());
         assertEquals(600000000000L, new DurationSpec.LongNanosecondsBound ("10m").toNanoseconds());
-        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntMinutesBound(MAX_INT_CONFIG_VALUE + "m").toMinutesAsInt());
-        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSecondsAsInt());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntMinutesBound(MAX_INT_CONFIG_VALUE + "m").toMinutes());
+        assertEquals(MAX_INT_CONFIG_VALUE, new DurationSpec.IntSecondsBound(MAX_INT_CONFIG_VALUE + "s").toSeconds());
         assertEquals(new DurationSpec.IntMillisecondsBound(0.7, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("1ms"));
         assertEquals(new DurationSpec.IntMillisecondsBound(0.33, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("0ms"));
         assertEquals(new DurationSpec.IntMillisecondsBound(0.333, TimeUnit.MILLISECONDS), new DurationSpec.LongNanosecondsBound("0ms"));

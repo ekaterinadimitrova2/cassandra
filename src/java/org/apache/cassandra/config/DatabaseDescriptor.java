@@ -516,10 +516,10 @@ public class DatabaseDescriptor
         // for the moment, we default to twice as much on-heap space as off-heap, as heap overhead is very large
         if (conf.memtable_heap_space == null)
             conf.memtable_heap_space = new DataStorageSpec.IntMebibytesBound((int) (Runtime.getRuntime().maxMemory() / (4 * 1048576)));
-        if (conf.memtable_heap_space.toMebibytesAsInt() == 0)
+        if (conf.memtable_heap_space.toMebibytes() == 0)
             throw new ConfigurationException("memtable_heap_space must be positive, but was " + conf.memtable_heap_space, false);
         logger.info("Global memtable on-heap threshold is enabled at {}", conf.memtable_heap_space);
-        if (conf.memtable_offheap_space.toMebibytesAsInt() == 0)
+        if (conf.memtable_offheap_space.toMebibytes() == 0)
             logger.info("Global memtable off-heap threshold is disabled, HeapAllocator will be used instead");
         else
             logger.info("Global memtable off-heap threshold is enabled at {}", conf.memtable_offheap_space);
@@ -1145,42 +1145,42 @@ public class DatabaseDescriptor
     @VisibleForTesting
     static void checkForLowestAcceptedTimeouts(Config conf)
     {
-        if(conf.read_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.read_request_timeout.toMilliseconds() < LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("read_request_timeout", conf.read_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.read_request_timeout = new DurationSpec.LongMillisecondsBound("10ms");
         }
 
-        if(conf.range_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.range_request_timeout.toMilliseconds() < LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("range_request_timeout", conf.range_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.range_request_timeout = new DurationSpec.LongMillisecondsBound("10ms");
         }
 
-        if(conf.request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.request_timeout.toMilliseconds() < LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("request_timeout", conf.request_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.request_timeout = new DurationSpec.LongMillisecondsBound("10ms");
         }
 
-        if(conf.write_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.write_request_timeout.toMilliseconds() < LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("write_request_timeout", conf.write_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.write_request_timeout = new DurationSpec.LongMillisecondsBound("10ms");
         }
 
-        if(conf.cas_contention_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.cas_contention_timeout.toMilliseconds() < LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("cas_contention_timeout", conf.cas_contention_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.cas_contention_timeout = new DurationSpec.LongMillisecondsBound("10ms");
         }
 
-        if(conf.counter_write_request_timeout.toMillisecondsAsInt()< LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.counter_write_request_timeout.toMilliseconds()< LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("counter_write_request_timeout", conf.counter_write_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.counter_write_request_timeout = new DurationSpec.LongMillisecondsBound("10ms");
         }
-        if(conf.truncate_request_timeout.toMillisecondsAsInt() < LOWEST_ACCEPTED_TIMEOUT.toMillisecondsAsInt())
+        if(conf.truncate_request_timeout.toMilliseconds() < LOWEST_ACCEPTED_TIMEOUT.toMilliseconds())
         {
             logInfo("truncate_request_timeout", conf.truncate_request_timeout, LOWEST_ACCEPTED_TIMEOUT);
             conf.truncate_request_timeout = LOWEST_ACCEPTED_TIMEOUT;
@@ -1369,7 +1369,7 @@ public class DatabaseDescriptor
 
     public static int getPermissionsValidity()
     {
-        return conf.permissions_validity.toMillisecondsAsInt();
+        return conf.permissions_validity.toMilliseconds();
     }
 
     public static void setPermissionsValidity(int timeout)
@@ -1380,8 +1380,8 @@ public class DatabaseDescriptor
     public static int getPermissionsUpdateInterval()
     {
         return conf.permissions_update_interval == null
-             ? conf.permissions_validity.toMillisecondsAsInt()
-             : conf.permissions_update_interval.toMillisecondsAsInt();
+             ? conf.permissions_validity.toMilliseconds()
+             : conf.permissions_update_interval.toMilliseconds();
     }
 
     public static void setPermissionsUpdateInterval(int updateInterval)
@@ -1423,7 +1423,7 @@ public class DatabaseDescriptor
 
     public static int getRolesValidity()
     {
-        return conf.roles_validity.toMillisecondsAsInt();
+        return conf.roles_validity.toMilliseconds();
     }
 
     public static void setRolesValidity(int validity)
@@ -1434,8 +1434,8 @@ public class DatabaseDescriptor
     public static int getRolesUpdateInterval()
     {
         return conf.roles_update_interval == null
-             ? conf.roles_validity.toMillisecondsAsInt()
-             : conf.roles_update_interval.toMillisecondsAsInt();
+             ? conf.roles_validity.toMilliseconds()
+             : conf.roles_update_interval.toMilliseconds();
     }
 
     public static void setRolesCacheActiveUpdate(boolean update)
@@ -1477,7 +1477,7 @@ public class DatabaseDescriptor
 
     public static int getCredentialsValidity()
     {
-        return conf.credentials_validity.toMillisecondsAsInt();
+        return conf.credentials_validity.toMilliseconds();
     }
 
     public static void setCredentialsValidity(int timeout)
@@ -1488,8 +1488,8 @@ public class DatabaseDescriptor
     public static int getCredentialsUpdateInterval()
     {
         return conf.credentials_update_interval == null
-               ? conf.credentials_validity.toMillisecondsAsInt()
-               : conf.credentials_update_interval.toMillisecondsAsInt();
+               ? conf.credentials_validity.toMilliseconds()
+               : conf.credentials_update_interval.toMilliseconds();
     }
 
     public static void setCredentialsUpdateInterval(int updateInterval)
@@ -1531,7 +1531,7 @@ public class DatabaseDescriptor
 
     public static int getMaxValueSize()
     {
-        return Ints.saturatedCast(conf.max_value_size.toMebibytesAsInt() * 1024L * 1024);
+        return Ints.saturatedCast(conf.max_value_size.toMebibytes() * 1024L * 1024);
     }
 
     public static void setMaxValueSize(int maxValueSizeInBytes)
@@ -1624,12 +1624,12 @@ public class DatabaseDescriptor
 
     public static int getColumnIndexSize()
     {
-        return conf.column_index_size.toBytesAsInt();
+        return conf.column_index_size.toBytes();
     }
 
     public static int getColumnIndexSizeInKiB()
     {
-        return conf.column_index_size.toKibibytesAsInt();
+        return conf.column_index_size.toKibibytes();
     }
 
     public static void setColumnIndexSize(int val)
@@ -1641,12 +1641,12 @@ public class DatabaseDescriptor
 
     public static int getColumnIndexCacheSize()
     {
-        return conf.column_index_cache_size.toBytesAsInt();
+        return conf.column_index_cache_size.toBytes();
     }
 
     public static int getColumnIndexCacheSizeInKiB()
     {
-        return conf.column_index_cache_size.toKibibytesAsInt();
+        return conf.column_index_cache_size.toKibibytes();
     }
 
     public static void setColumnIndexCacheSize(int val)
@@ -1658,22 +1658,22 @@ public class DatabaseDescriptor
 
     public static int getBatchSizeWarnThreshold()
     {
-        return conf.batch_size_warn_threshold.toBytesAsInt();
+        return conf.batch_size_warn_threshold.toBytes();
     }
 
     public static int getBatchSizeWarnThresholdInKiB()
     {
-        return conf.batch_size_warn_threshold.toKibibytesAsInt();
+        return conf.batch_size_warn_threshold.toKibibytes();
     }
 
     public static long getBatchSizeFailThreshold()
     {
-        return conf.batch_size_fail_threshold.toBytesAsInt();
+        return conf.batch_size_fail_threshold.toBytes();
     }
 
     public static int getBatchSizeFailThresholdInKiB()
     {
-        return conf.batch_size_fail_threshold.toKibibytesAsInt();
+        return conf.batch_size_fail_threshold.toKibibytes();
     }
 
     public static int getUnloggedBatchAcrossPartitionsWarnThreshold()
@@ -2200,7 +2200,7 @@ public class DatabaseDescriptor
 
     public static int getMaxMutationSize()
     {
-        return conf.max_mutation_size.toBytesAsInt();
+        return conf.max_mutation_size.toBytes();
     }
 
     public static int getTombstoneWarnThreshold()
@@ -2248,7 +2248,7 @@ public class DatabaseDescriptor
      */
     public static int getCommitLogSegmentSize()
     {
-        return conf.commitlog_segment_size.toBytesAsInt();
+        return conf.commitlog_segment_size.toBytes();
     }
 
     /**
@@ -2365,47 +2365,47 @@ public class DatabaseDescriptor
 
     public static int getInternodeSocketSendBufferSizeInBytes()
     {
-        return conf.internode_socket_send_buffer_size.toBytesAsInt();
+        return conf.internode_socket_send_buffer_size.toBytes();
     }
 
     public static int getInternodeSocketReceiveBufferSizeInBytes()
     {
-        return conf.internode_socket_receive_buffer_size.toBytesAsInt();
+        return conf.internode_socket_receive_buffer_size.toBytes();
     }
 
     public static int getInternodeApplicationSendQueueCapacityInBytes()
     {
-        return conf.internode_application_send_queue_capacity.toBytesAsInt();
+        return conf.internode_application_send_queue_capacity.toBytes();
     }
 
     public static int getInternodeApplicationSendQueueReserveEndpointCapacityInBytes()
     {
-        return conf.internode_application_send_queue_reserve_endpoint_capacity.toBytesAsInt();
+        return conf.internode_application_send_queue_reserve_endpoint_capacity.toBytes();
     }
 
     public static int getInternodeApplicationSendQueueReserveGlobalCapacityInBytes()
     {
-        return conf.internode_application_send_queue_reserve_global_capacity.toBytesAsInt();
+        return conf.internode_application_send_queue_reserve_global_capacity.toBytes();
     }
 
     public static int getInternodeApplicationReceiveQueueCapacityInBytes()
     {
-        return conf.internode_application_receive_queue_capacity.toBytesAsInt();
+        return conf.internode_application_receive_queue_capacity.toBytes();
     }
 
     public static int getInternodeApplicationReceiveQueueReserveEndpointCapacityInBytes()
     {
-        return conf.internode_application_receive_queue_reserve_endpoint_capacity.toBytesAsInt();
+        return conf.internode_application_receive_queue_reserve_endpoint_capacity.toBytes();
     }
 
     public static int getInternodeApplicationReceiveQueueReserveGlobalCapacityInBytes()
     {
-        return conf.internode_application_receive_queue_reserve_global_capacity.toBytesAsInt();
+        return conf.internode_application_receive_queue_reserve_global_capacity.toBytes();
     }
 
     public static int getInternodeTcpConnectTimeoutInMS()
     {
-        return conf.internode_tcp_connect_timeout.toMillisecondsAsInt();
+        return conf.internode_tcp_connect_timeout.toMilliseconds();
     }
 
     public static void setInternodeTcpConnectTimeoutInMS(int value)
@@ -2415,7 +2415,7 @@ public class DatabaseDescriptor
 
     public static int getInternodeTcpUserTimeoutInMS()
     {
-        return conf.internode_tcp_user_timeout.toMillisecondsAsInt();
+        return conf.internode_tcp_user_timeout.toMilliseconds();
     }
 
     public static void setInternodeTcpUserTimeoutInMS(int value)
@@ -2425,7 +2425,7 @@ public class DatabaseDescriptor
 
     public static int getInternodeStreamingTcpUserTimeoutInMS()
     {
-        return conf.internode_streaming_tcp_user_timeout.toMillisecondsAsInt();
+        return conf.internode_streaming_tcp_user_timeout.toMilliseconds();
     }
 
     public static void setInternodeStreamingTcpUserTimeoutInMS(int value)
@@ -2435,7 +2435,7 @@ public class DatabaseDescriptor
 
     public static int getInternodeMaxMessageSizeInBytes()
     {
-        return conf.internode_max_message_size.toBytesAsInt();
+        return conf.internode_max_message_size.toBytes();
     }
 
     @VisibleForTesting
@@ -2487,7 +2487,7 @@ public class DatabaseDescriptor
 
     public static int getNativeTransportMaxFrameSize()
     {
-        return conf.native_transport_max_frame_size.toBytesAsInt();
+        return conf.native_transport_max_frame_size.toBytes();
     }
 
     public static void setNativeTransportMaxFrameSize(int bytes)
@@ -2542,7 +2542,7 @@ public class DatabaseDescriptor
 
     public static int getNativeTransportReceiveQueueCapacityInBytes()
     {
-        return conf.native_transport_receive_queue_capacity.toBytesAsInt();
+        return conf.native_transport_receive_queue_capacity.toBytes();
     }
 
     public static void setNativeTransportReceiveQueueCapacityInBytes(int queueSize)
@@ -2735,7 +2735,7 @@ public class DatabaseDescriptor
 
     public static int getCommitLogSyncPeriod()
     {
-        return conf.commitlog_sync_period.toMillisecondsAsInt();
+        return conf.commitlog_sync_period.toMilliseconds();
     }
 
     public static long getPeriodicCommitLogSyncBlock()
@@ -2902,7 +2902,7 @@ public class DatabaseDescriptor
 
     public static int getMaxHintWindow()
     {
-        return conf.max_hint_window.toMillisecondsAsInt();
+        return conf.max_hint_window.toMilliseconds();
     }
 
     public static void setMaxHintsSizePerHostInMiB(int value)
@@ -2912,7 +2912,8 @@ public class DatabaseDescriptor
 
     public static int getMaxHintsSizePerHostInMiB()
     {
-        return conf.max_hints_size_per_host.toMebibytesAsInt();
+        // Warnings: this conversion rounds down while converting bytes to mebibytes
+        return Ints.saturatedCast(conf.max_hints_size_per_host.unit().toMebibytes(conf.max_hints_size_per_host.quantity()));
     }
 
     public static long getMaxHintsSizePerHost()
@@ -2939,7 +2940,7 @@ public class DatabaseDescriptor
 
     public static int getDynamicUpdateInterval()
     {
-        return conf.dynamic_snitch_update_interval.toMillisecondsAsInt();
+        return conf.dynamic_snitch_update_interval.toMilliseconds();
     }
     public static void setDynamicUpdateInterval(int dynamicUpdateInterval)
     {
@@ -2948,7 +2949,7 @@ public class DatabaseDescriptor
 
     public static int getDynamicResetInterval()
     {
-        return conf.dynamic_snitch_reset_interval.toMillisecondsAsInt();
+        return conf.dynamic_snitch_reset_interval.toMilliseconds();
     }
     public static void setDynamicResetInterval(int dynamicResetInterval)
     {
@@ -2988,7 +2989,7 @@ public class DatabaseDescriptor
 
     public static int getHintedHandoffThrottleInKiB()
     {
-        return conf.hinted_handoff_throttle.toKibibytesAsInt();
+        return conf.hinted_handoff_throttle.toKibibytes();
     }
 
     public static void setHintedHandoffThrottleInKiB(int throttleInKiB)
@@ -2998,7 +2999,7 @@ public class DatabaseDescriptor
 
     public static int getBatchlogReplayThrottleInKiB()
     {
-        return conf.batchlog_replay_throttle.toKibibytesAsInt();
+        return conf.batchlog_replay_throttle.toKibibytes();
     }
 
     public static void setBatchlogReplayThrottleInKiB(int throttleInKiB)
@@ -3013,7 +3014,7 @@ public class DatabaseDescriptor
 
     public static int getHintsFlushPeriodInMS()
     {
-        return conf.hints_flush_period.toMillisecondsAsInt();
+        return conf.hints_flush_period.toMilliseconds();
     }
 
     public static long getMaxHintsFileSize()
@@ -3065,7 +3066,7 @@ public class DatabaseDescriptor
             return 0;
         }
 
-        return conf.file_cache_size.toMebibytesAsInt();
+        return conf.file_cache_size.toMebibytes();
     }
 
     public static int getNetworkingCacheSizeInMiB()
@@ -3076,7 +3077,7 @@ public class DatabaseDescriptor
             assert DatabaseDescriptor.isClientInitialized();
             return 0;
         }
-        return conf.networking_cache_size.toMebibytesAsInt();
+        return conf.networking_cache_size.toMebibytes();
     }
 
     public static boolean getFileCacheRoundUp()
@@ -3118,7 +3119,7 @@ public class DatabaseDescriptor
 
     public static int getSSTablePreemptiveOpenIntervalInMiB()
     {
-        return conf.sstable_preemptive_open_interval.toMebibytesAsInt();
+        return conf.sstable_preemptive_open_interval.toMebibytes();
     }
 
     public static void setSSTablePreemptiveOpenIntervalInMiB(int mib)
@@ -3133,7 +3134,7 @@ public class DatabaseDescriptor
 
     public static int getTrickleFsyncIntervalInKiB()
     {
-        return conf.trickle_fsync_interval.toKibibytesAsInt();
+        return conf.trickle_fsync_interval.toKibibytes();
     }
 
     public static long getKeyCacheSizeInMiB()
@@ -3148,7 +3149,7 @@ public class DatabaseDescriptor
 
     public static int getKeyCacheSavePeriod()
     {
-        return conf.key_cache_save_period.toSecondsAsInt();
+        return conf.key_cache_save_period.toSeconds();
     }
 
     public static void setKeyCacheSavePeriod(int keyCacheSavePeriod)
@@ -3184,7 +3185,7 @@ public class DatabaseDescriptor
 
     public static int getRowCacheSavePeriod()
     {
-        return conf.row_cache_save_period.toSecondsAsInt();
+        return conf.row_cache_save_period.toSeconds();
     }
 
     public static void setRowCacheSavePeriod(int rowCacheSavePeriod)
@@ -3214,7 +3215,7 @@ public class DatabaseDescriptor
 
     public static int getCounterCacheSavePeriod()
     {
-        return conf.counter_cache_save_period.toSecondsAsInt();
+        return conf.counter_cache_save_period.toSeconds();
     }
 
     public static void setCounterCacheSavePeriod(int counterCacheSavePeriod)
@@ -3224,7 +3225,7 @@ public class DatabaseDescriptor
 
     public static int getCacheLoadTimeout()
     {
-        return conf.cache_load_timeout.toSecondsAsInt();
+        return conf.cache_load_timeout.toSeconds();
     }
 
     @VisibleForTesting
@@ -3245,7 +3246,7 @@ public class DatabaseDescriptor
 
     public static int getStreamingKeepAlivePeriod()
     {
-        return conf.streaming_keep_alive_period.toSecondsAsInt();
+        return conf.streaming_keep_alive_period.toSeconds();
     }
 
     public static int getStreamingConnectionsPerHost()
@@ -3316,7 +3317,7 @@ public class DatabaseDescriptor
 
     public static int getRepairSessionSpaceInMiB()
     {
-        return conf.repair_session_space.toMebibytesAsInt();
+        return conf.repair_session_space.toMebibytes();
     }
 
     public static void setRepairSessionSpaceInMiB(int sizeInMiB)
@@ -3356,7 +3357,7 @@ public class DatabaseDescriptor
 
     public static int getIndexSummaryResizeIntervalInMinutes()
     {
-        return conf.index_summary_resize_interval.toMinutesAsInt();
+        return conf.index_summary_resize_interval.toMinutes();
     }
 
     public static boolean hasLargeAddressSpace()
@@ -3377,12 +3378,12 @@ public class DatabaseDescriptor
 
     public static int getTracetypeRepairTTL()
     {
-        return conf.trace_type_repair_ttl.toSecondsAsInt();
+        return conf.trace_type_repair_ttl.toSeconds();
     }
 
     public static int getTracetypeQueryTTL()
     {
-        return conf.trace_type_query_ttl.toSecondsAsInt();
+        return conf.trace_type_query_ttl.toSeconds();
     }
 
     public static long getPreparedStatementsCacheSizeMiB()
@@ -3534,7 +3535,7 @@ public class DatabaseDescriptor
 
     public static int getCDCSpaceInMiB()
     {
-        return conf.cdc_total_space.toMebibytesAsInt();
+        return conf.cdc_total_space.toMebibytes();
     }
 
     @VisibleForTesting
@@ -3545,7 +3546,7 @@ public class DatabaseDescriptor
 
     public static int getCDCDiskCheckInterval()
     {
-        return conf.cdc_free_space_check_interval.toMillisecondsAsInt();
+        return conf.cdc_free_space_check_interval.toMilliseconds();
     }
 
     @VisibleForTesting
@@ -3756,7 +3757,7 @@ public class DatabaseDescriptor
 
     public static int getValidationPreviewPurgeHeadStartInSec()
     {
-        return conf.validation_preview_purge_head_start.toSecondsAsInt();
+        return conf.validation_preview_purge_head_start.toSeconds();
     }
 
     public static boolean checkForDuplicateRowsDuringReads()
@@ -3947,7 +3948,7 @@ public class DatabaseDescriptor
 
     public static int getDenylistRefreshSeconds()
     {
-        return conf.denylist_refresh.toSecondsAsInt();
+        return conf.denylist_refresh.toSeconds();
     }
 
     public static void setDenylistRefreshSeconds(int seconds)
@@ -3960,7 +3961,7 @@ public class DatabaseDescriptor
 
     public static int getDenylistInitialLoadRetrySeconds()
     {
-        return conf.denylist_initial_load_retry.toSecondsAsInt();
+        return conf.denylist_initial_load_retry.toSeconds();
     }
 
     public static void setDenylistInitialLoadRetrySeconds(int seconds)

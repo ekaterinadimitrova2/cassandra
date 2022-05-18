@@ -134,60 +134,6 @@ public abstract class DataStorageSpec
         return unit;
     }
 
-    /**
-     * @return the amount of data storage in bytes
-     */
-    public long toBytes()
-    {
-        return unit.toBytes(quantity);
-    }
-
-    /**
-     * Returns the amount of data storage in bytes as an {@code int}
-     *
-     * @return the amount of data storage in bytes or {@code Integer.MAX_VALUE} if the number of bytes is too large.
-     */
-    public int toBytesAsInt()
-    {
-        return Ints.saturatedCast(toBytes());
-    }
-
-    /**
-     * @return the amount of data storage in kibibytes
-     */
-    public long toKibibytes()
-    {
-        return unit.toKibibytes(quantity);
-    }
-
-    /**
-     * Returns the amount of data storage in kibibytes as an {@code int}
-     *
-     * @return the amount of data storage in kibibytes or {@code Integer.MAX_VALUE} if the number of kibibytes is too large.
-     */
-    public int toKibibytesAsInt()
-    {
-        return Ints.saturatedCast(toKibibytes());
-    }
-
-    /**
-     * @return the amount of data storage in mebibytes
-     */
-    public long toMebibytes()
-    {
-        return unit.toMebibytes(quantity);
-    }
-
-    /**
-     * Returns the amount of data storage in mebibytes as an {@code int}
-     *
-     * @return the amount of data storage in mebibytes or {@code Integer.MAX_VALUE} if the number of mebibytes is too large.
-     */
-    public int toMebibytesAsInt()
-    {
-        return Ints.saturatedCast(toMebibytes());
-    }
-
     @Override
     public int hashCode()
     {
@@ -304,21 +250,13 @@ public abstract class DataStorageSpec
         }
 
         /**
-         * @return the amount of data storage in bytes
-         */
-        public long toBytes()
-        {
-            return unit().toBytes(quantity());
-        }
-
-        /**
          * Returns the amount of data storage in bytes as an {@code int}
          *
          * @return the amount of data storage in bytes or {@code Integer.MAX_VALUE} if the number of bytes is too large.
          */
-        public int toBytesAsInt()
+        public int toBytes()
         {
-            return Ints.saturatedCast(toBytes());
+            return Ints.saturatedCast(unit().toBytes(quantity()));
         }
     }
 
@@ -361,11 +299,13 @@ public abstract class DataStorageSpec
         }
 
         /**
-         * @return the amount of data storage in kibibytes
+         * Returns the amount of data storage in bytes as an {@code int}
+         *
+         * @return the amount of data storage in bytes or {@code Integer.MAX_VALUE} if the number of bytes is too large.
          */
-        public long toKibibytes()
+        public int toBytes()
         {
-            return unit().toKibibytes(quantity());
+            return Ints.saturatedCast(unit().toBytes(quantity()));
         }
 
         /**
@@ -373,9 +313,9 @@ public abstract class DataStorageSpec
          *
          * @return the amount of data storage in kibibytes or {@code Integer.MAX_VALUE} if the number of kibibytes is too large.
          */
-        public int toKibibytesAsInt()
+        public int toKibibytes()
         {
-            return Ints.saturatedCast(toKibibytes());
+            return Ints.saturatedCast(unit().toKibibytes(quantity()));
         }
     }
 
@@ -415,6 +355,22 @@ public abstract class DataStorageSpec
         public LongMebibytesBound(long mebibytes)
         {
             this(mebibytes, MEBIBYTES);
+        }
+
+        /**
+         * @return the amount of data storage in bytes
+         */
+        public long toBytes()
+        {
+            return unit().toBytes(quantity());
+        }
+
+        /**
+         * @return the amount of data storage in kibibytes
+         */
+        public long toKibibytes()
+        {
+            return unit().toKibibytes(quantity());
         }
 
         /**
@@ -468,11 +424,23 @@ public abstract class DataStorageSpec
         }
 
         /**
-         * @return the amount of data storage in mebibytes
+         * Returns the amount of data storage in bytes as an {@code int}
+         *
+         * @return the amount of data storage in bytes or {@code Integer.MAX_VALUE} if the number of bytes is too large.
          */
-        public long toMebibytes()
+        public int toBytes()
         {
-            return unit().toMebibytes(quantity());
+            return Ints.saturatedCast(unit().toBytes(quantity()));
+        }
+
+        /**
+         * Returns the amount of data storage in kibibytes as an {@code int}
+         *
+         * @return the amount of data storage in kibibytes or {@code Integer.MAX_VALUE} if the number of kibibytes is too large.
+         */
+        public int toKibibytes()
+        {
+            return Ints.saturatedCast(unit().toKibibytes(quantity()));
         }
 
         /**
@@ -480,9 +448,9 @@ public abstract class DataStorageSpec
          *
          * @return the amount of data storage in mebibytes or {@code Integer.MAX_VALUE} if the number of mebibytes is too large.
          */
-        public int toMebibytesAsInt()
+        public int toMebibytes()
         {
-            return Ints.saturatedCast(toMebibytes());
+            return Ints.saturatedCast(unit().toMebibytes(quantity()));
         }
     }
 

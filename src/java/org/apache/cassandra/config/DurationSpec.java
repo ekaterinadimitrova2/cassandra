@@ -316,19 +316,12 @@ public abstract class DurationSpec
             this(milliseconds, MILLISECONDS);
         }
 
+        /**
+         * @return this duration in number of milliseconds
+         */
         public long toMilliseconds()
         {
             return unit().toMillis(quantity());
-        }
-
-        /**
-         * Returns this duration in number of milliseconds as an {@code int}
-         *
-         * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
-         */
-        public int toMillisecondsAsInt()
-        {
-            return Ints.saturatedCast(toMilliseconds());
         }
     }
 
@@ -371,6 +364,14 @@ public abstract class DurationSpec
         public LongSecondsBound(long seconds)
         {
             this(seconds, SECONDS);
+        }
+
+        /**
+         * @return this duration in number of milliseconds
+         */
+        public long toMilliseconds()
+        {
+            return unit().toMillis(quantity());
         }
 
         /**
@@ -424,11 +425,23 @@ public abstract class DurationSpec
         }
 
         /**
-         * @return this duration in number of minutes
+         * Returns this duration in number of milliseconds as an {@code int}
+         *
+         * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
          */
-        public long toMinutes()
+        public int toMilliseconds()
         {
-            return unit().toMinutes(quantity());
+            return Ints.saturatedCast(unit().toMillis(quantity()));
+        }
+
+        /**
+         * Returns this duration in number of seconds as an {@code int}
+         *
+         * @return this duration in number of seconds or {@code Integer.MAX_VALUE} if the number of seconds is too large.
+         */
+        public int toSeconds()
+        {
+            return Ints.saturatedCast(unit().toSeconds(quantity()));
         }
 
         /**
@@ -436,9 +449,9 @@ public abstract class DurationSpec
          *
          * @return this duration in number of minutes or {@code Integer.MAX_VALUE} if the number of minutes is too large.
          */
-        public int toMinutesAsInt()
+        public int toMinutes()
         {
-            return Ints.saturatedCast(toMinutes());
+            return Ints.saturatedCast(unit().toMinutes(quantity()));
         }
     }
 
@@ -510,11 +523,13 @@ public abstract class DurationSpec
         }
 
         /**
-         * @return this duration in number of seconds
+         * Returns this duration in number of milliseconds as an {@code int}
+         *
+         * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
          */
-        public long toSeconds()
+        public int toMilliseconds()
         {
-            return unit().toSeconds(quantity());
+            return Ints.saturatedCast(unit().toMillis(quantity()));
         }
 
         /**
@@ -522,9 +537,9 @@ public abstract class DurationSpec
          *
          * @return this duration in number of seconds or {@code Integer.MAX_VALUE} if the number of seconds is too large.
          */
-        public int toSecondsAsInt()
+        public int toSeconds()
         {
-            return Ints.saturatedCast(toSeconds());
+            return Ints.saturatedCast(unit().toSeconds(quantity()));
         }
     }
 
@@ -582,21 +597,13 @@ public abstract class DurationSpec
         }
 
         /**
-         * @return this duration in number of milliseconds
-         */
-        public long toMilliseconds()
-        {
-            return unit().toMillis(quantity());
-        }
-
-        /**
          * Returns this duration in number of milliseconds as an {@code int}
          *
          * @return this duration in number of milliseconds or {@code Integer.MAX_VALUE} if the number of milliseconds is too large.
          */
-        public int toMillisecondsAsInt()
+        public int toMilliseconds()
         {
-            return Ints.saturatedCast(toMilliseconds());
+            return Ints.saturatedCast(unit().toMillis(quantity()));
         }
     }
 }
