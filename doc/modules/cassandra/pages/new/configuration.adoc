@@ -157,11 +157,13 @@ support long and integer upper bound, depending on your needs. All options for c
 classes in our three main abstract classes - `DurationSpec`, `DataStorageSpec`, `DataRateSpec`.
 
 - If for some reason you consider the smallest unit for a new parameter shouldn’t be the one that is supported as such in
-Cassandra, you can use the rest of the nested classes in `DuratioSpec`, `DataStorageSpec`.
+Cassandra, you can use the rest of the nested classes in `DurationSpec`, `DataStorageSpec`. The smallest allowed unit is
+the one we use internally for the property, so we don't have to do conversions to bigger units which will lead to precision
+problems. This is a problem only with `DurationSpec` and `DataStorageSpec`. `DataRateSpec` is handled internally in double.
 
 - New parameters should be added as non-negative numbers. For parameters where you would have set -1 to disable in the past, you might
 want to consider a separate flag parameter or null value. In case you use the null value, please, ensure that any default value
-introduced in the DatabaDescriptor to handle it is also duplicated in any related setters.
+introduced in the DatabaseDescriptor to handle it is also duplicated in any related setters.
 
 - Parameters of type data storage, duration and data rate cannot be set to Long.MAX_VALUE (former parameters of long type)
 and Integer.MAX_VALUE (former parameters of int type). That numbers are used during conversion between units to prevent

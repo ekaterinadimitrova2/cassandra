@@ -316,6 +316,8 @@ public abstract class DurationSpec
             this(milliseconds, MILLISECONDS);
         }
 
+
+
         /**
          * @return this duration in number of milliseconds
          */

@@ -41,27 +41,24 @@ public class DataStorageSpecTest
     {
         assertEquals(10, new DataStorageSpec.LongBytesBound("10B").toBytes());
         assertEquals(10240, new DataStorageSpec.LongBytesBound("10KiB").toBytes());
-//        assertEquals(0, new DataStorageSpec.LongBytesBound("10KiB").toMebibytes());
-//        assertEquals(10240, new DataStorageSpec.LongBytesBound("10MiB").toKibibytes());
         assertEquals(10485760, new DataStorageSpec.LongBytesBound("10MiB").toBytes());
         assertEquals(1073741824, new DataStorageSpec.LongBytesBound("1GiB").toBytes());
 
         assertEquals(1024, new DataStorageSpec.LongMebibytesBound("1GiB").toMebibytes());
         assertEquals(10485760, new DataStorageSpec.LongMebibytesBound("10MiB").toBytes());
-//        assertEquals(1024, new DataStorageSpec.IntBytesBound("1GiB").toMebibytes());
+        assertEquals(10240, new DataStorageSpec.LongMebibytesBound("10MiB").toKibibytes());
+        assertEquals(1024 * 1024 * 1024, new DataStorageSpec.IntBytesBound("1GiB").toBytes());
         assertEquals(10240, new DataStorageSpec.IntKibibytesBound("10MiB").toKibibytes());
         assertEquals(1024, new DataStorageSpec.IntMebibytesBound("1GiB").toMebibytes());
 
         assertEquals(10, new DataStorageSpec.LongBytesBound(10, BYTES).toBytes());
         assertEquals(10240, new DataStorageSpec.LongBytesBound(10, KIBIBYTES).toBytes());
-//        assertEquals(0, new DataStorageSpec.LongBytesBound(10, KIBIBYTES).toMebibytes());
-//        assertEquals(10240, new DataStorageSpec.LongBytesBound(10, MEBIBYTES).toKibibytes());
         assertEquals(10485760, new DataStorageSpec.LongBytesBound(10, MEBIBYTES).toBytes());
         assertEquals(1073741824, new DataStorageSpec.LongBytesBound(1, GIBIBYTES).toBytes());
 
         assertEquals(1024, new DataStorageSpec.LongMebibytesBound(1, GIBIBYTES).toMebibytes());
+        assertEquals(1024 * 1024, new DataStorageSpec.LongMebibytesBound(1, GIBIBYTES).toKibibytes());
         assertEquals(10485760, new DataStorageSpec.LongMebibytesBound(10, MEBIBYTES).toBytes());
-//        assertEquals(1024, new DataStorageSpec.IntBytesBound(1, GIBIBYTES).toMebibytes());
         assertEquals(10240, new DataStorageSpec.IntKibibytesBound(10, MEBIBYTES).toKibibytes());
         assertEquals(1024, new DataStorageSpec.IntMebibytesBound(1, GIBIBYTES).toMebibytes());
     }

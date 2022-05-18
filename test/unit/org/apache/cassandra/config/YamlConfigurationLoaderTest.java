@@ -260,9 +260,9 @@ public class YamlConfigurationLoaderTest
 
         // KIBIBYTES_DATASTORAGE
         assertThat(from("column_index_size_in_kb", "42").column_index_size.toKibibytes()).isEqualTo(42);
-//        assertThatThrownBy(() -> from("column_index_size_in_kb", -2).column_index_size.toMebibytes())
-//        .hasRootCauseInstanceOf(ConfigurationException.class)
-//        .hasRootCauseMessage("Invalid data storage: value must be non-negative");
+        assertThatThrownBy(() -> from("column_index_size_in_kb", -2).column_index_size.toKibibytes())
+        .hasRootCauseInstanceOf(ConfigurationException.class)
+        .hasRootCauseMessage("Invalid data storage: value must be non-negative");
 
         // BYTES_DATASTORAGE
         assertThat(from("internode_max_message_size_in_bytes", "42").internode_max_message_size.toBytes()).isEqualTo(42);

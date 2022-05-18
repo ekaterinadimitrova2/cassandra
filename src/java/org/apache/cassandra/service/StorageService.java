@@ -3889,9 +3889,9 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         DurationSpec.IntSecondsBound ttl = options.containsKey("ttl") ? new DurationSpec.IntSecondsBound(options.get("ttl")) : null;
         if (ttl != null)
         {
-            int minAllowedTtlMillisecs = CassandraRelevantProperties.SNAPSHOT_MIN_ALLOWED_TTL_SECONDS.getInt();
-            if (ttl.toSeconds() < minAllowedTtlMillisecs)
-                throw new IllegalArgumentException(String.format("ttl for snapshot must be at least %d seconds", minAllowedTtlMillisecs));
+            int minAllowedTtlSecs = CassandraRelevantProperties.SNAPSHOT_MIN_ALLOWED_TTL_SECONDS.getInt();
+            if (ttl.toSeconds() < minAllowedTtlSecs)
+                throw new IllegalArgumentException(String.format("ttl for snapshot must be at least %d seconds", minAllowedTtlSecs));
         }
 
         boolean skipFlush = Boolean.parseBoolean(options.getOrDefault("skipFlush", "false"));
