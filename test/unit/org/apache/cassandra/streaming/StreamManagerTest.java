@@ -34,7 +34,7 @@ public class StreamManagerTest
 {
     private static double defaultStreamThroughputMebibytesPerSec;
     private static double defaultInterDCStreamThroughputMebibytesPerSec;
-    private static final int MAX_INT_CONFIG_VALUE = Integer.MAX_VALUE-1;
+    private static final int MAX_INT_CONFIG_VALUE = Integer.MAX_VALUE - 1;
     private static final double INTEGER_MAX_VALUE_MEGABITS_IN_MEBIBYTES = DataRateSpec.IntMebibytesPerSecondBound
                                                                           .megabitsPerSecondInMebibytesPerSecond(MAX_INT_CONFIG_VALUE)
                                                                           .toMebibytesPerSecond();

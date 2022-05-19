@@ -37,6 +37,7 @@ public class DurationSpecTest
 {
     private static final long MAX_INT_CONFIG_VALUE = Integer.MAX_VALUE - 1;
 
+    @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
     public void testConversions()
     {
@@ -177,6 +178,7 @@ public class DurationSpecTest
                                                                                                      "It shouldn't be more than 2147483646 in minutes");
     }
 
+    @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
     public void testEquals()
     {

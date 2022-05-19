@@ -169,7 +169,7 @@ public abstract class DataStorageSpec
      * If the user sets a different unit - we still validate that converted to bytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
-    public static class LongBytesBound extends DataStorageSpec
+    public final static class LongBytesBound extends DataStorageSpec
     {
         /**
          * Creates a {@code DataStorageSpec.LongBytesBound} of the specified amount.
@@ -216,7 +216,7 @@ public abstract class DataStorageSpec
      * If the user sets a different unit - we still validate that converted to bytes the quantity will not exceed
      * that upper bound. (CASSANDRA-17571)
      */
-    public static class IntBytesBound extends DataStorageSpec
+    public final static class IntBytesBound extends DataStorageSpec
     {
         /**
          * Creates a {@code DataStorageSpec.IntBytesBound} of the specified amount.
@@ -401,9 +401,6 @@ public abstract class DataStorageSpec
 
         /**
          * Creates a {@code DataStorageSpec.IntMebibytesBound} of the specified amount in the specified unit.
-         *
-         * BE CAREFUL, IF YOU DECIDE TO USE UNIT BYTES OR KIBIBYTES, SET A NUMBER THAT WILL NOT LEAD TO LOSS OF PRECISION DURING CONVERSION
-         * TO MEBIBYTES. WE GUARD FOR THIS IN THE PREVIOUS CONSTRUCTOR BUT NOT THIS ONE
          *
          * @param quantity where quantity shouldn't be bigger than Integer.MAX_VALUE - 1 in mebibytes
          * @param unit in which the provided quantity is

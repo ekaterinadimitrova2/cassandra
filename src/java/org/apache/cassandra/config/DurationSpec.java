@@ -316,8 +316,6 @@ public abstract class DurationSpec
             this(milliseconds, MILLISECONDS);
         }
 
-
-
         /**
          * @return this duration in number of milliseconds
          */
@@ -501,7 +499,8 @@ public abstract class DurationSpec
         }
 
         /**
-         * Creates a {@code DurationSpec.IntSecondsBound} of the specified amount in seconds.
+         * Creates a {@code DurationSpec.IntSecondsBound} of the specified amount in seconds, expressed either as the
+         * number of seconds without unit, or as a regular quantity with unit.
          * Used in the Converters for a few parameters which changed only type, but not names
          * The bound is [0, Integer.MAX_VALUE) in seconds.
          *

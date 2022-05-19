@@ -63,7 +63,6 @@ public abstract class DataRateSpec
         this(value);
 
         validateQuantity(value, quantity(), unit(), minUnit, max);
-
     }
 
     private DataRateSpec(double quantity, DataRateUnit unit, DataRateUnit minUnit, long max)
@@ -88,8 +87,9 @@ public abstract class DataRateSpec
             throw new ConfigurationException("Invalid data rate: value must be non-negative");
 
         if (minUnit.convert(quantity, unit) >= max)
-            throw new ConfigurationException("Invalid data rate: " + quantity + " " + unit.name().toLowerCase() + ". It shouldn't be more than " +
-                                             (max - 1) + " in " + minUnit.name().toLowerCase());
+            throw new ConfigurationException(String.format("Invalid data rate: %s %s. It shouldn't be more than %d in %s",
+                                                       quantity, unit.name().toLowerCase(),
+                                                       max - 1, minUnit.name().toLowerCase()));
     }
 
     // get vs no-get prefix is not consistent in the code base, but for classes involved with config parsing, it is
@@ -284,6 +284,16 @@ public abstract class DataRateSpec
             super(quantity, unit, MEBIBYTES_PER_SECOND, Integer.MAX_VALUE);
         }
 
+        /**
+         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount in mebibytes per second.
+         *
+         * @param mebibytesPerSecond where mebibytesPerSecond shouldn't be bigger than Long.MAX_VALUE-1
+         */
+        public IntMebibytesPerSecondBound(long mebibytesPerSecond)
+        {
+            this (mebibytesPerSecond, MEBIBYTES_PER_SECOND);
+        }
+
         // this one should be used only for backward compatibility for stream_throughput_outbound and inter_dc_stream_throughput_outbound
         // which were in megabits per second in 4.0. Do not start using it for any new properties
         public static IntMebibytesPerSecondBound megabitsPerSecondInMebibytesPerSecond(long megabitsPerSecond)
@@ -297,16 +307,6 @@ public abstract class DataRateSpec
                                                  " should be between 0 and " + Integer.MAX_VALUE + " in megabits per second");
 
             return new IntMebibytesPerSecondBound(mebibytesPerSecond, MEBIBYTES_PER_SECOND);
-        }
-
-        /**
-         * Creates a {@code DataRateSpec.IntMebibytesPerSecondBound} of the specified amount in mebibytes per second.
-         *
-         * @param mebibytesPerSecond where mebibytesPerSecond shouldn't be bigger than Long.MAX_VALUE-1
-         */
-        public IntMebibytesPerSecondBound(long mebibytesPerSecond)
-        {
-            this (mebibytesPerSecond, MEBIBYTES_PER_SECOND);
         }
     }
 

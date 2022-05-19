@@ -144,6 +144,7 @@ public class DataRateSpecTest
         assertEquals(new DataRateSpec.IntMebibytesPerSecondBound("24MiB/s").toString(), DataRateSpec.IntMebibytesPerSecondBound.megabitsPerSecondInMebibytesPerSecond(200).toString());
     }
 
+    @SuppressWarnings("AssertBetweenInconvertibleTypes")
     @Test
     public void testEquals()
     {

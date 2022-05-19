@@ -98,7 +98,7 @@ public abstract class ThresholdTester extends GuardrailTester
         this.setter = (g, w, a) -> setter.accept(g, w == null ? null : new DataStorageSpec.LongBytesBound(w, BYTES).toString(), a == null ? null : new DataStorageSpec.LongBytesBound(a, BYTES).toString());
         this.warnGetter = g -> new DataStorageSpec.LongBytesBound(warnGetter.apply(g)).toBytes();
         this.failGetter = g -> new DataStorageSpec.LongBytesBound(failGetter.apply(g)).toBytes();
-        maxValue = Long.MAX_VALUE-1;
+        maxValue = Long.MAX_VALUE - 1;
         disabledValue = null;
     }
 
