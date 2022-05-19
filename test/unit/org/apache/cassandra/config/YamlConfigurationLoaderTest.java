@@ -28,7 +28,6 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import org.apache.cassandra.distributed.shared.WithProperties;
-import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.io.util.File;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -145,14 +144,13 @@ public class YamlConfigurationLoaderTest
         Map<String, Object> map = ImmutableMap.of(
         "commitlog_sync_period", ""
         );
-
         try
         {
             Config config = YamlConfigurationLoader.fromMap(map, Config.class);
         }
         catch (YAMLException e)
         {
-            assertTrue(e.getMessage().contains("Cannot create property=commitlog_sync_period for JavaBean=org.apache.cassandra.config.Config@e1de817"));
+            assertTrue(e.getMessage().contains("Cannot create property=commitlog_sync_period for JavaBean=org.apache.cassandra.config.Config"));
         }
 
         // loadConfig will catch this exception on startup and throw a ConfigurationException
