@@ -111,7 +111,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -293,7 +293,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -403,7 +403,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -513,7 +513,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -637,7 +637,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -733,7 +733,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -829,7 +829,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -926,7 +926,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1023,7 +1023,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1134,7 +1134,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1231,7 +1231,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1376,7 +1376,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1500,7 +1500,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1599,7 +1599,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1677,7 +1677,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1754,7 +1754,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1818,7 +1818,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -1928,7 +1928,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2038,7 +2038,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2138,7 +2138,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2194,7 +2194,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2377,7 +2377,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2455,7 +2455,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2551,7 +2551,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2662,7 +2662,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2761,7 +2761,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2857,7 +2857,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -2953,7 +2953,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3017,7 +3017,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3127,7 +3127,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3182,7 +3182,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3246,7 +3246,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3345,7 +3345,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3456,7 +3456,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3638,7 +3638,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
@@ -3734,7 +3734,7 @@ jobs:
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_UTEST_TARGET: testsome
     - REPEATED_UTEST_CLASS: org.apache.cassandra.cql3.validation.operations.InsertUpdateIfConditionTest
-    - REPEATED_UTEST_METHODS: testConditionalUpdate
+    - REPEATED_UTEST_METHODS: null
     - REPEATED_UTEST_VNODES: false
     - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
