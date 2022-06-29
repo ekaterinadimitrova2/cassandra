@@ -93,7 +93,7 @@ public class TopPartitionsTest extends TestBaseImpl
         setCount(10, 10);
     }
 
-    @Test
+    /*@Test
     public void basicPartitionSizeTest()
     {
         String name = "tbl" + COUNTER.getAndIncrement();
@@ -243,7 +243,7 @@ public class TopPartitionsTest extends TestBaseImpl
             Map<String, Long> tombstones = Keyspace.open(KEYSPACE).getColumnFamilyStore(name).getTopTombstonePartitions();
             assertTrue(tombstones.values().stream().allMatch(l -> l == 0));
         });
-    }
+    }*/
 
     private static void setCount(int size, int tombstone)
     {
