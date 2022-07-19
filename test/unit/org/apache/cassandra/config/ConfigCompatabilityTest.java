@@ -88,6 +88,21 @@ public class ConfigCompatabilityTest
                                                      .add("streaming_socket_timeout_in_ms") // CASSANDRA-12229
                                                      .build();
 
+    private static final Set<String> DATASTORAGE_TYPES = ImmutableSet.of("org.apache.cassandra.config.DataStorageSpec$IntMebibytesBound",
+                                                                         "org.apache.cassandra.config.DataStorageSpec$LongBytesBound",
+                                                                         "org.apache.cassandra.config.DataStorageSpec$IntBytesBound",
+                                                                         "org.apache.cassandra.config.DataStorageSpec$IntKibibytesBound",
+                                                                         "org.apache.cassandra.config.DataStorageSpec$LongMebibytesBound");
+
+    private static final Set<String> DATARATE_TYPES = ImmutableSet.of("org.apache.cassandra.config.DataRateSpec$LongBytesPerSecondBound",
+                                                                         "org.apache.cassandra.config.DataRateSpec$IntMebibytesPerSecondBound");
+
+    private static final Set<String> DURATION_TYPES = ImmutableSet.of("org.apache.cassandra.config.DurationSpec$LongNanosecondsBound",
+                                                                      "org.apache.cassandra.config.DurationSpec$LongMillisecondsBound",
+                                                                      "org.apache.cassandra.config.DurationSpec$LongSecondsBound",
+                                                                      "org.apache.cassandra.config.DurationSpec$IntMinutesBound",
+                                                                      "org.apache.cassandra.config.DurationSpec$IntSecondsBound",
+                                                                      "org.apache.cassandra.config.DurationSpec$IntMillisecondsBound");
     /**
      * Not all converts make sense as backwards compatible as they use things like String to handle the conversion more
      * generically.
@@ -112,6 +127,50 @@ public class ConfigCompatabilityTest
         diff(TEST_DIR + "/version=4.0-alpha1.yml", ImmutableSet.<String>builder()
                                                         .addAll(WINDOWS)
                                                         .build());
+    }
+
+    @Test
+    public void print_new() throws IOException
+    {
+        print(TEST_DIR + "/version=4.0-alpha1.yml");
+    }
+
+    private void print(String original) throws IOException
+    {
+        Class<Config> type = Config.class;
+        ClassTree previous = load(original);
+        Loader loader = Properties.defaultLoader();
+        Map<String, Property> properties = loader.getProperties(type);
+        Sets.SetView<String> missingInPrevious = Sets.difference(properties.keySet(), previous.properties.keySet());
+
+        Map<String, Property> dataRateProperties = new HashMap<>();
+        Map<String, Property> dataStorageProperties = new HashMap<>();
+        Map<String, Property> durationProperties = new HashMap<>();
+        Map<String, Property> otherProperties = new HashMap<>();
+
+        for (String name : missingInPrevious)
+        {
+            if (DATARATE_TYPES.contains(properties.get(name).getType().getTypeName()))
+                dataRateProperties.put(name, properties.get(name));
+            else if (DATASTORAGE_TYPES.contains(properties.get(name).getType().getTypeName()))
+                dataStorageProperties.put(name, properties.get(name));
+            else if (DURATION_TYPES.contains(properties.get(name).getType().getTypeName()))
+                durationProperties.put(name, properties.get(name));
+            else
+                otherProperties.put(name, properties.get(name));
+        }
+
+        logger.info("DataRate properties:" + dataRateProperties.size() + '\n');
+        logger.info(String.valueOf(dataRateProperties.keySet()));
+
+        logger.info("DataStorage properties:" + dataStorageProperties.size() + '\n');
+        logger.info(String.valueOf (dataStorageProperties.keySet()));
+
+        logger.info("Duration properties:" + durationProperties.size() + '\n');
+        logger.info(String.valueOf(durationProperties.keySet()));
+
+        logger.info("Other properties:" + otherProperties.size() + '\n');
+        logger.info(String.valueOf(otherProperties.keySet()));
     }
 
     private void diff(String original, Set<String> ignore) throws IOException
@@ -142,6 +201,7 @@ public class ConfigCompatabilityTest
         Map<String, Replacement> replaces = replacements.getOrDefault(type, Collections.emptyMap());
         Map<String, Property> properties = loader.getProperties(type);
         Sets.SetView<String> missingInCurrent = Sets.difference(previous.properties.keySet(), properties.keySet());
+
         Sets.SetView<String> inBoth = Sets.intersection(previous.properties.keySet(), properties.keySet());
         for (String name : missingInCurrent)
         {
