@@ -267,13 +267,14 @@ public abstract class UDFunction extends AbstractFunction implements ScalarFunct
     {
         assertUdfsEnabled(language);
 
-        switch (language)
+        return new JavaBasedUDFunction(name, argNames, argTypes, returnType, calledOnNullInput, body);
+        /*switch (language)
         {
             case "java":
                 return new JavaBasedUDFunction(name, argNames, argTypes, returnType, calledOnNullInput, body);
             default:
                 return new ScriptBasedUDFunction(name, argNames, argTypes, returnType, calledOnNullInput, language, body);
-        }
+        }*/
     }
 
     /**
