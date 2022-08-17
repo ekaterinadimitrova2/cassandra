@@ -110,7 +110,7 @@ public class SchemaTest extends TestBaseImpl
 
             // when the other node is started, schema should be back in sync
             cluster.get(2).startup();
-            Awaitility.waitAtMost(Duration.ofSeconds(10))
+            Awaitility.waitAtMost(Duration.ofMinutes(2))
                       .pollDelay(Duration.ofSeconds(1))
                       .until(() -> cluster.get(1).callOnInstance(() -> Schema.instance.getTableMetadata(KEYSPACE, "tbl") != null));
 
