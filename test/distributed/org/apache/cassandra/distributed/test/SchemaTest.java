@@ -18,10 +18,16 @@
 
 package org.apache.cassandra.distributed.test;
 
+import java.time.Duration;
+
 import org.junit.Test;
 
 import org.apache.cassandra.distributed.Cluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
+import org.apache.cassandra.distributed.api.Feature;
+import org.apache.cassandra.schema.MigrationManager;
+import org.apache.cassandra.schema.Schema;
+import org.awaitility.Awaitility;
 
 import static org.junit.Assert.assertTrue;
 
@@ -84,6 +90,34 @@ public class SchemaTest extends TestBaseImpl
                 cause = cause.getCause();
             }
             assertTrue(causeIsUnknownColumn);
+        }
+    }
+
+    @Test
+    public void schemaReset() throws Throwable
+    {
+        try (Cluster cluster = init(Cluster.build(2).withConfig(cfg -> cfg.with(Feature.GOSSIP, Feature.NETWORK)).start()))
+        {
+            cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk INT PRIMARY KEY, v TEXT)");
+
+            assertTrue(cluster.get(1).callOnInstance(() -> Schema.instance.getTableMetadata(KEYSPACE, "tbl") != null));
+            assertTrue(cluster.get(2).callOnInstance(() -> Schema.instance.getTableMetadata(KEYSPACE, "tbl") != null));
+
+            cluster.get(2).shutdown().get();
+
+            // when schema is removed and there is no other node to fetch it from, node 1 should be left with clean schema
+            cluster.get(1).runOnInstance(() -> MigrationManager.resetLocalSchema());
+            assertTrue(cluster.get(1).callOnInstance(() -> Schema.instance.getTableMetadata(KEYSPACE, "tbl") == null));
+
+            // when the other node is started, schema should be back in sync
+            cluster.get(2).startup();
+            Awaitility.waitAtMost(Duration.ofMinutes(1))
+                      .pollDelay(Duration.ofSeconds(1))
+                      .until(() -> cluster.get(1).callOnInstance(() -> Schema.instance.getTableMetadata(KEYSPACE, "tbl") != null));
+
+            // when schema is removed and there is a node to fetch it from, node 1 should immediatelly restore the schema
+            cluster.get(1).runOnInstance(() -> MigrationManager.resetLocalSchema());
+            assertTrue(cluster.get(1).callOnInstance(() -> Schema.instance.getTableMetadata(KEYSPACE, "tbl") != null));
         }
     }
 }
