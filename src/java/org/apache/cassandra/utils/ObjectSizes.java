@@ -42,6 +42,23 @@ public class ObjectSizes
      * which leads to pretty much all internals of the JDK - i.e. a lot of data. This is not desirable. By
      * avoiding java.lang.Class, we avoid this issue.
      */
+    private static final Class clsJLMModuleDescriptor;
+    static
+    {
+        clsJLMModuleDescriptor = maybeGetClass("java.lang.module.ModuleDescriptor");
+    }
+
+    private static Class<?> maybeGetClass(String name) {
+        try
+        {
+            return Class.forName(name);
+        }
+        catch (ClassNotFoundException var2)
+        {
+            return null;
+        }
+    }
+
     private static final Callable<Set<Object>> CLASS_AVOIDING_IDENTITY_HASH_SET = () ->
     {
         Set<Object> set = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -50,10 +67,11 @@ public class ObjectSizes
             @Override
             public boolean contains(Object object)
             {
-                if (object instanceof Class)
+                if (object instanceof Class || (clsJLMModuleDescriptor !=null && clsJLMModuleDescriptor.isInstance(object)))
                 {
                     return true;
                 }
+
                 return super.contains(object);
             }
 
