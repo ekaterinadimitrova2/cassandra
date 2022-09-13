@@ -20,6 +20,12 @@
 package org.apache.cassandra.utils;
 
 import java.nio.ByteBuffer;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Set;
+import java.util.concurrent.Callable;
+
+import com.google.common.collect.ForwardingSet;
 
 import org.github.jamm.MemoryLayoutSpecification;
 import org.github.jamm.MemoryMeter;
@@ -29,9 +35,41 @@ import org.github.jamm.MemoryMeter;
  */
 public class ObjectSizes
 {
-    private static final MemoryMeter meter = new MemoryMeter().omitSharedBufferOverhead()
-                                                              .withGuessing(MemoryMeter.Guess.FALLBACK_UNSAFE)
-                                                              .ignoreKnownSingletons();
+    /**
+     * This is a workaround, it would be better to get a fixed version of 'jamm'.
+                                                                              * <p>
+     * On Java 11, following references from java.lang.Class ends up discovering the entire module system
+     * which leads to pretty much all internals of the JDK - i.e. a lot of data. This is not desirable. By
+     * avoiding java.lang.Class, we avoid this issue.
+     */
+    private static final Callable<Set<Object>> CLASS_AVOIDING_IDENTITY_HASH_SET = () ->
+    {
+        Set<Object> set = Collections.newSetFromMap(new IdentityHashMap<>());
+        return new ForwardingSet<Object>()
+        {
+            @Override
+            public boolean contains(Object object)
+            {
+                if (object instanceof Class)
+                {
+                    return true;
+                }
+                return super.contains(object);
+            }
+
+            @Override
+            protected Set<Object> delegate()
+            {
+                return set;
+            }
+        };
+    };
+
+    private static final MemoryMeter meter = new MemoryMeter()
+                                             .withTrackerProvider(CLASS_AVOIDING_IDENTITY_HASH_SET)
+                                             .omitSharedBufferOverhead()
+                                             .withGuessing(MemoryMeter.Guess.FALLBACK_UNSAFE)
+                                             .ignoreKnownSingletons();
 
     private static final long EMPTY_HEAP_BUFFER_SIZE = measure(ByteBufferUtil.EMPTY_BYTE_BUFFER);
     private static final long EMPTY_BYTE_ARRAY_SIZE = measure(new byte[0]);
