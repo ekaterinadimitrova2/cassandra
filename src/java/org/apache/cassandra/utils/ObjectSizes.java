@@ -27,6 +27,8 @@ import java.util.concurrent.Callable;
 
 import com.google.common.collect.ForwardingSet;
 
+import org.slf4j.LoggerFactory;
+
 import org.github.jamm.MemoryLayoutSpecification;
 import org.github.jamm.MemoryMeter;
 
@@ -42,16 +44,18 @@ public class ObjectSizes
      * which leads to pretty much all internals of the JDK - i.e. a lot of data. This is not desirable. By
      * avoiding java.lang.Class, we avoid this issue.
      */
-    private static final Class clsJLMModuleDescriptor;
+    private static final Class<?> clsJLMModuleDescriptor;
     static
     {
-        clsJLMModuleDescriptor = maybeGetClass("java.lang.module.ModuleDescriptor");
+        clsJLMModuleDescriptor = maybeGetClass();
     }
 
-    private static Class<?> maybeGetClass(String name) {
+    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ObjectSizes.class);
+
+    private static Class<?> maybeGetClass() {
         try
         {
-            return Class.forName(name);
+            return Class.forName("java.lang.module.ModuleDescriptor");
         }
         catch (ClassNotFoundException var2)
         {
@@ -62,12 +66,12 @@ public class ObjectSizes
     private static final Callable<Set<Object>> CLASS_AVOIDING_IDENTITY_HASH_SET = () ->
     {
         Set<Object> set = Collections.newSetFromMap(new IdentityHashMap<>());
-        return new ForwardingSet<Object>()
+        return new ForwardingSet<>()
         {
             @Override
             public boolean contains(Object object)
             {
-                if (object instanceof Class || (clsJLMModuleDescriptor !=null && clsJLMModuleDescriptor.isInstance(object)))
+                if (object instanceof Class || (clsJLMModuleDescriptor != null && clsJLMModuleDescriptor.isInstance(object)))
                 {
                     return true;
                 }
@@ -269,6 +273,8 @@ public class ObjectSizes
      */
     public static long measureDeep(Object pojo)
     {
+        logger.debug("KATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        logger.debug(String.valueOf(meter.countChildren(pojo)));
         return meter.measureDeep(pojo);
     }
 
