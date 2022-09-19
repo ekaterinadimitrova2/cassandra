@@ -66,7 +66,7 @@ public class ObjectSizes
     private static final Callable<Set<Object>> CLASS_AVOIDING_IDENTITY_HASH_SET = () ->
     {
         Set<Object> set = Collections.newSetFromMap(new IdentityHashMap<>());
-        return new ForwardingSet<>()
+        return new ForwardingSet<Object>()
         {
             @Override
             public boolean contains(Object object)
