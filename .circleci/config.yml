@@ -112,7 +112,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -287,7 +287,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -382,7 +382,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -491,7 +491,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -614,7 +614,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -709,7 +709,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -804,7 +804,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -900,7 +900,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -996,7 +996,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1092,7 +1092,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1187,7 +1187,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1331,7 +1331,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1454,7 +1454,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1549,7 +1549,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1648,7 +1648,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1725,7 +1725,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1801,7 +1801,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1864,7 +1864,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -1973,7 +1973,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2082,7 +2082,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2185,7 +2185,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2281,7 +2281,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2336,7 +2336,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2512,7 +2512,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2589,7 +2589,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2684,7 +2684,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2794,7 +2794,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2896,7 +2896,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -2991,7 +2991,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3086,7 +3086,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3149,7 +3149,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3258,7 +3258,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3312,7 +3312,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3375,7 +3375,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3473,7 +3473,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3583,7 +3583,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3758,7 +3758,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
@@ -3853,7 +3853,7 @@ jobs:
     - REPEATED_UTEST_TARGET: test-jvm-dtest-some
     - REPEATED_UTEST_CLASS: org.apache.cassandra.repair.RepairJobTest
     - REPEATED_UTEST_METHODS: testNoTreesRetainedAfterDifference
-    - REPEATED_UTEST_COUNT: 1
+    - REPEATED_UTEST_COUNT: 500
     - REPEATED_UTEST_STOP_ON_FAILURE: false
     - REPEATED_DTEST_NAME: null
     - REPEATED_DTEST_VNODES: false
