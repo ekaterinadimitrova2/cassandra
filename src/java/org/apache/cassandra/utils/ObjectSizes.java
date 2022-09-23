@@ -273,7 +273,6 @@ public class ObjectSizes
      */
     public static long measureDeep(Object pojo)
     {
-        logger.debug("KATE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         logger.debug(String.valueOf(meter.countChildren(pojo)));
         return meter.measureDeep(pojo);
     }
