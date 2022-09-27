@@ -340,5 +340,9 @@
       <groupId>com.github.seancfoley</groupId>
       <artifactId>ipaddress</artifactId>
     </dependency>
+    <dependency>
+      <groupId>ch.obermuhlner</groupId>
+      <artifactId>big-math</artifactId>
+    </dependency>
   </dependencies>
 </project>
