@@ -1,5 +1,5 @@
---- config-2_1.yml	2022-11-03 12:41:29.000000000 -0400
-+++ config-2_1.yml.HIGHRES	2022-11-03 12:48:44.000000000 -0400
+--- config-2_1.yml	2022-11-11 17:28:59.000000000 -0500
++++ config-2_1.yml.HIGHRES	2022-11-11 18:20:44.000000000 -0500
 @@ -40,8 +40,8 @@
      CASSANDRA_SKIP_SYNC: true
      DTEST_REPO: https://github.com/apache/cassandra-dtest.git
@@ -11,7 +11,7 @@
  
      # Whether the repeated test iterations should stop on the first failure by default.
      REPEATED_TESTS_STOP_ON_FAILURE: false
-@@ -118,46 +118,50 @@
+@@ -135,46 +135,50 @@
  j8_par_executor: &j8_par_executor
    executor:
      name: java8-executor
@@ -73,3 +73,21 @@
  
  separate_jobs: &separate_jobs
    jobs:
+@@ -588,7 +592,7 @@
+           pytest_extra_args: '--skip-resource-intensive-tests'
+ 
+   j8_dtests_large_vnode:
+-    <<: *j8_par_executor
++    <<: *j8_seq_executor
+     steps:
+       - attach_workspace:
+           at: /home/cassandra
+@@ -602,7 +606,7 @@
+           pytest_extra_args: '--use-vnodes --num-tokens=16 --only-resource-intensive-tests --force-resource-intensive-tests'
+ 
+   j8_dtests_large:
+-    <<: *j8_par_executor
++    <<: *j8_seq_executor
+     steps:
+       - attach_workspace:
+           at: /home/cassandra
