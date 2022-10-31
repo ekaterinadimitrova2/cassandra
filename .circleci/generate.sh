@@ -44,12 +44,16 @@ print_help()
   echo "                   -e REPEATED_UTESTS_COUNT=500"
   echo "                   -e REPEATED_UTESTS_LONG=org.apache.cassandra.db.commitlog.CommitLogStressTest"
   echo "                   -e REPEATED_UTESTS_LONG_COUNT=100"
+  echo "                   -e REPEATED_BURN_TESTS: org.apache.cassandra.concurrent.LongOpOrderTest"
+  echo "                   -e REPEATED_BURN_TESTS_COUNT=100"
   echo "                   -e REPEATED_JVM_DTESTS=org.apache.cassandra.distributed.test.PagingTest"
   echo "                   -e REPEATED_JVM_DTESTS_COUNT=500"
   echo "                   -e REPEATED_JVM_UPGRADE_DTESTS=org.apache.cassandra.distributed.upgrade.GroupByTest"
   echo "                   -e REPEATED_JVM_UPGRADE_DTESTS_COUNT=500"
   echo "                   -e REPEATED_DTESTS=cdc_test.py cqlsh_tests/test_cqlsh.py::TestCqlshSmoke"
   echo "                   -e REPEATED_DTESTS_COUNT=500"
+  echo "                   -e REPEATED_LARGE_DTESTS=consistency_test.py::TestAvailability::test_network_topology_strategy"
+  echo "                   -e REPEATED_LARGE_DTESTS=100"
   echo "                   -e REPEATED_UPGRADE_DTESTS=upgrade_tests/cql_tests.py upgrade_tests/paging_test.py"
   echo "                   -e REPEATED_UPGRADE_DTESTS_COUNT=25"
   echo "                   -e REPEATED_ANT_TEST_TARGET=testsome"
@@ -109,12 +113,16 @@ if $has_env_vars && $check_env_vars; then
        [ "$key" != "REPEATED_UTESTS_COUNT" ] &&
        [ "$key" != "REPEATED_UTESTS_LONG" ] &&
        [ "$key" != "REPEATED_UTESTS_LONG_COUNT" ] &&
+       [ "$key" != "REPEATED_BURN_TESTS" ] &&
+       [ "$key" != "REPEATED_BURN_TESTS_COUNT" ] &&
        [ "$key" != "REPEATED_JVM_DTESTS" ] &&
        [ "$key" != "REPEATED_JVM_DTESTS_COUNT" ] &&
        [ "$key" != "REPEATED_JVM_UPGRADE_DTESTS" ]  &&
        [ "$key" != "REPEATED_JVM_UPGRADE_DTESTS_COUNT" ]  &&
        [ "$key" != "REPEATED_DTESTS" ] &&
        [ "$key" != "REPEATED_DTESTS_COUNT" ] &&
+       [ "$key" != "REPEATED_LARGE_DTESTS" ] &&
+       [ "$key" != "REPEATED_LARGE_DTESTS_COUNT" ] &&
        [ "$key" != "REPEATED_UPGRADE_DTESTS" ] &&
        [ "$key" != "REPEATED_UPGRADE_DTESTS_COUNT" ] &&
        [ "$key" != "REPEATED_ANT_TEST_TARGET" ] &&
@@ -207,6 +215,7 @@ if (!($all)); then
   echo "Detecting new or modified tests with git diff --diff-filter=AMR ${BASE_BRANCH}...HEAD:"
   add_diff_tests "REPEATED_UTESTS" "test/unit/" "org.apache.cassandra"
   add_diff_tests "REPEATED_UTESTS_LONG" "test/long/" "org.apache.cassandra"
+  add_diff_tests "REPEATED_BURN_TESTS" "test/burn/" "org.apache.cassandra"
   add_diff_tests "REPEATED_JVM_DTESTS" "test/distributed/" "org.apache.cassandra.distributed.test"
   add_diff_tests "REPEATED_JVM_UPGRADE_DTESTS" "test/distributed/" "org.apache.cassandra.distributed.upgrade"
 fi
@@ -250,6 +259,9 @@ delete_repeated_jobs()
     delete_job "$1" "utests_compression_repeat"
     delete_job "$1" "utests_system_keyspace_directory_repeat"
   fi
+  if (! (echo "$env_vars" | grep -q "REPEATED_BURN_TESTS=" )); then
+    delete_job "$1" "j8_burn_tests_repeat"
+  fi
   if (! (echo "$env_vars" | grep -q "REPEATED_UTESTS_LONG=")); then
     delete_job "$1" "utests_long_repeat"
   fi
@@ -268,6 +280,10 @@ delete_repeated_jobs()
     delete_job "$1" "j8_dtests_vnode_repeat"
     delete_job "$1" "j11_dtests_repeat"
     delete_job "$1" "j11_dtests_vnode_repeat"
+  fi
+  if (! (echo "$env_vars" | grep -q "REPEATED_LARGE_DTESTS=")); then
+    delete_job "$1" "j8_dtests_large_repeat"
+    delete_job "$1" "j8_dtests_large_vnode_repeat"
   fi
   if (! (echo "$env_vars" | grep -q "REPEATED_UPGRADE_DTESTS=")); then
     delete_job "$1" "j8_upgrade_dtests_repeat"
