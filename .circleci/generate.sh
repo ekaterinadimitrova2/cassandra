@@ -249,6 +249,7 @@ delete_repeated_jobs()
     delete_job "$1" "j11_unit_tests_repeat"
     delete_job "$1" "utests_compression_repeat"
     delete_job "$1" "utests_system_keyspace_directory_repeat"
+    delete_job "$1" "j8_burn_tests_repeat"
   fi
   if (! (echo "$env_vars" | grep -q "REPEATED_UTESTS_LONG=")); then
     delete_job "$1" "utests_long_repeat"
@@ -256,6 +257,8 @@ delete_repeated_jobs()
   if (! (echo "$env_vars" | grep -q "REPEATED_JVM_DTESTS=")); then
     delete_job "$1" "j8_jvm_dtests_repeat"
     delete_job "$1" "j8_jvm_dtests_vnode_repeat"
+    delete_job "$1" "j8_dtests_large_repeat"
+    delete_job "$1" "j8_dtests_large_vnode_repeat"
     delete_job "$1" "j11_jvm_dtests_repeat"
     delete_job "$1" "j11_jvm_dtests_vnode_repeat"
   fi
@@ -266,8 +269,14 @@ delete_repeated_jobs()
   if (! (echo "$env_vars" | grep -q "REPEATED_DTESTS=")); then
     delete_job "$1" "j8_dtests_repeat"
     delete_job "$1" "j8_dtests_vnode_repeat"
+    delete_job "$1" "j8_dtests_large_repeat"
+    delete_job "$1" "j8_dtests_large_vnode_repeat"
     delete_job "$1" "j11_dtests_repeat"
     delete_job "$1" "j11_dtests_vnode_repeat"
+  fi
+  if (! (echo "$env_vars" | grep -q "REPEATED_LARGE_DTESTS=")); then
+    delete_job "$1" "j8_dtests_large_repeat"
+    delete_job "$1" "j8_dtests_large_vnode_repeat"
   fi
   if (! (echo "$env_vars" | grep -q "REPEATED_UPGRADE_DTESTS=")); then
     delete_job "$1" "j8_upgrade_dtests_repeat"
