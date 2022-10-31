@@ -234,7 +234,7 @@ separate_jobs: &separate_jobs
         requires:
           - start_jvm_upgrade_dtests_repeat
           - j8_dtest_jars_build
-    # Java 8 dtests
+    # Python DTests
     - start_j8_dtests:
         type: approval
     - j8_dtests:
@@ -259,7 +259,32 @@ separate_jobs: &separate_jobs
         requires:
           - start_j8_dtests_vnode_repeat
           - build
-    # Java 8 upgrade tests
+    # Python large DTests
+    - start_j8_dtests_large:
+        type: approval
+    - j8_dtests_large:
+        requires:
+          - start_j8_dtests_large
+          - build
+    - start_j8_dtests_large_repeat:
+        type: approval
+    - j8_dtests_large_repeat:
+        requires:
+          - start_j8_dtests_large_repeat
+          - build
+    - start_j8_dtests_large_vnode:
+        type: approval
+    - j8_dtests_large_vnode:
+        requires:
+          - start_j8_dtests_large_vnode
+          - build
+    - start_j8_dtests_large_vnode_repeat:
+        type: approval
+    - j8_dtests_large_vnode_repeat:
+        requires:
+          - start_j8_dtests_large_vnode_repeat
+          - build
+    # Python upgrade tests
     - start_j8_upgrade_dtests:
         type: approval
     - j8_upgrade_dtests:
@@ -334,7 +359,7 @@ pre-commit_jobs: &pre-commit_jobs
     - j8_jvm_upgrade_dtests_repeat:
         requires:
           - j8_dtest_jars_build
-    # Java 8 dtests
+    # Python DTests
     - j8_dtests:
         requires:
           - build
@@ -346,6 +371,31 @@ pre-commit_jobs: &pre-commit_jobs
           - build
     - j8_dtests_vnode_repeat:
         requires:
+          - build
+    # Large Python DTests
+    - start_j8_dtests_large:
+        type: approval
+    - j8_dtests_large:
+        requires:
+          - start_j8_dtests_large
+          - build
+    - start_j8_dtests_large_repeat:
+        type: approval
+    - j8_dtests_large_repeat:
+        requires:
+          - start_j8_dtests_large_repeat
+          - build
+    - start_j8_dtests_large_vnode:
+        type: approval
+    - j8_dtests_large_vnode:
+        requires:
+          - start_j8_dtests_large_vnode
+          - build
+    - start_j8_dtests_large_vnode_repeat:
+        type: approval
+    - j8_dtests_large_vnode_repeat:
+        requires:
+          - start_j8_dtests_large_vnode_repeat
           - build
     # Java 8 upgrade tests (on request)
     - start_upgrade_dtests:
@@ -486,6 +536,34 @@ jobs:
           file_tag: j8_without_vnodes
           pytest_extra_args: '--skip-resource-intensive-tests'
 
+  j8_dtests_large_vnode:
+    <<: *j8_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv
+      - create_dtest_containers:
+          file_tag: j8_large_with_vnodes
+          run_dtests_extra_args: '--use-vnodes --only-resource-intensive-tests --force-resource-intensive-tests'
+      - run_dtests:
+          file_tag: j8_large_with_vnodes
+          pytest_extra_args: '--use-vnodes --num-tokens=32 --num-tokens=${NUM_TOKENS} --only-resource-intensive-tests --force-resource-intensive-tests'
+
+  j8_dtests_large:
+    <<: *j8_par_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv
+      - create_dtest_containers:
+          file_tag: j8_large_without_vnodes
+          run_dtests_extra_args: '--only-resource-intensive-tests --force-resource-intensive-tests'
+      - run_dtests:
+          file_tag: j8_large_without_vnodes
+          pytest_extra_args: '--num-tokens=32 --only-resource-intensive-tests --force-resource-intensive-tests'
+
   j8_upgrade_dtests:
     <<: *j8_par_executor
     steps:
@@ -591,6 +669,36 @@ jobs:
           upgrade: "false"
           count: ${REPEATED_DTESTS_COUNT}
           stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
+
+  j8_dtests_large_repeat:
+    <<: *j8_repeated_dtest_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - clone_dtest
+      - create_venv
+      - run_repeated_dtest:
+          tests: ${REPEATED_DTESTS}
+          vnodes: "false"
+          upgrade: "false"
+          count: ${REPEATED_DTESTS_COUNT}
+          stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
+          extra_dtest_args: "--only-resource-intensive-tests --force-resource-intensive-tests"
+
+  j8_dtests_large_vnode_repeat:
+    <<: *j8_repeated_dtest_executor
+    steps:
+    - attach_workspace:
+        at: /home/cassandra
+    - clone_dtest
+    - create_venv
+    - run_repeated_dtest:
+        tests: ${REPEATED_DTESTS}
+        vnodes: "true"
+        upgrade: "false"
+        count: ${REPEATED_DTESTS_COUNT}
+        stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
+        extra_dtest_args: "--only-resource-intensive-tests --force-resource-intensive-tests"
 
   j8_upgrade_dtests_repeat:
     <<: *j8_repeated_upgrade_dtest_executor
@@ -1226,9 +1334,12 @@ commands:
         type: string
       stop_on_failure:
         type: string
+      extra_dtest_args:
+        type: string
+        default: ""
     steps:
       - run:
-          name: Run repeated Python dtest
+          name: Run repeated Python DTests
           no_output_timeout: 15m
           command: |
             if [ "<<parameters.tests>>" == "<nil>" ]; then
@@ -1280,7 +1391,7 @@ commands:
                 fi
 
                 # we need the "set -o pipefail" here so that the exit code that circleci will actually use is from pytest and not the exit code from tee
-                set -o pipefail && cd ~/cassandra-dtest && pytest $vnodes_args --count=$count $stop_on_failure_arg $upgrade_arg --log-cli-level=DEBUG --junit-xml=/tmp/results/dtests/pytest_result.xml -s --cassandra-dir=/home/cassandra/cassandra --keep-test-dir $tests_arg | tee /tmp/dtest/stdout.txt
+                set -o pipefail && cd ~/cassandra-dtest && pytest $vnodes_args --count=$count $stop_on_failure_arg $upgrade_arg --log-cli-level=DEBUG --junit-xml=/tmp/results/dtests/pytest_result.xml -s --cassandra-dir=/home/cassandra/cassandra --keep-test-dir <<parameters.extra_dtest_args>> $tests_arg | tee /tmp/dtest/stdout.txt
               fi
             fi
       - store_test_results:
