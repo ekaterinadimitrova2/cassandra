@@ -121,6 +121,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -296,6 +298,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -373,6 +377,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -460,6 +466,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -497,25 +505,25 @@ jobs:
         name: Run repeated Python DTests
         no_output_timeout: 15m
         command: |
-          if [ "${REPEATED_DTESTS}" == "<nil>" ]; then
+          if [ "${REPEATED_LARGE_DTESTS}" == "<nil>" ]; then
             echo "Repeated dtest name hasn't been defined, exiting without running any test"
-          elif [ "${REPEATED_DTESTS_COUNT}" == "<nil>" ]; then
+          elif [ "${REPEATED_LARGE_DTESTS_COUNT}" == "<nil>" ]; then
             echo "Repeated dtest count hasn't been defined, exiting without running any test"
-          elif [ "${REPEATED_DTESTS_COUNT}" -le 0 ]; then
+          elif [ "${REPEATED_LARGE_DTESTS_COUNT}" -le 0 ]; then
             echo "Repeated dtest count is lesser or equals than zero, exiting without running any test"
           else
 
             # Calculate the number of test iterations to be run by the current parallel runner.
             # Since we are running the same test multiple times there is no need to use `circleci tests split`.
-            count=$((${REPEATED_DTESTS_COUNT} / CIRCLE_NODE_TOTAL))
-            if (($CIRCLE_NODE_INDEX < (${REPEATED_DTESTS_COUNT} % CIRCLE_NODE_TOTAL))); then
+            count=$((${REPEATED_LARGE_DTESTS_COUNT} / CIRCLE_NODE_TOTAL))
+            if (($CIRCLE_NODE_INDEX < (${REPEATED_LARGE_DTESTS_COUNT} % CIRCLE_NODE_TOTAL))); then
               count=$((count+1))
             fi
 
             if (($count <= 0)); then
               echo "No tests to run in this runner"
             else
-              echo "Running ${REPEATED_DTESTS} $count times"
+              echo "Running ${REPEATED_LARGE_DTESTS} $count times"
 
               source ~/env3.6/bin/activate
               export PATH=$JAVA_HOME/bin:$PATH
@@ -528,7 +536,7 @@ jobs:
               echo "** done env"
               mkdir -p /tmp/results/dtests
 
-              tests_arg=$(echo ${REPEATED_DTESTS} | sed -e "s/,/ /g")
+              tests_arg=$(echo ${REPEATED_LARGE_DTESTS} | sed -e "s/,/ /g")
 
               stop_on_failure_arg=""
               if ${REPEATED_TESTS_STOP_ON_FAILURE}; then
@@ -585,6 +593,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -760,6 +770,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -935,6 +947,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1012,6 +1026,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1137,6 +1153,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1237,6 +1255,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1362,6 +1382,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1480,6 +1502,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1655,6 +1679,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1766,6 +1792,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1843,6 +1871,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2018,6 +2048,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2095,6 +2127,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2270,6 +2304,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2449,6 +2485,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2574,6 +2612,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2685,6 +2725,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2772,6 +2814,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2809,25 +2853,25 @@ jobs:
         name: Run repeated Python DTests
         no_output_timeout: 15m
         command: |
-          if [ "${REPEATED_DTESTS}" == "<nil>" ]; then
+          if [ "${REPEATED_LARGE_DTESTS}" == "<nil>" ]; then
             echo "Repeated dtest name hasn't been defined, exiting without running any test"
-          elif [ "${REPEATED_DTESTS_COUNT}" == "<nil>" ]; then
+          elif [ "${REPEATED_LARGE_DTESTS_COUNT}" == "<nil>" ]; then
             echo "Repeated dtest count hasn't been defined, exiting without running any test"
-          elif [ "${REPEATED_DTESTS_COUNT}" -le 0 ]; then
+          elif [ "${REPEATED_LARGE_DTESTS_COUNT}" -le 0 ]; then
             echo "Repeated dtest count is lesser or equals than zero, exiting without running any test"
           else
 
             # Calculate the number of test iterations to be run by the current parallel runner.
             # Since we are running the same test multiple times there is no need to use `circleci tests split`.
-            count=$((${REPEATED_DTESTS_COUNT} / CIRCLE_NODE_TOTAL))
-            if (($CIRCLE_NODE_INDEX < (${REPEATED_DTESTS_COUNT} % CIRCLE_NODE_TOTAL))); then
+            count=$((${REPEATED_LARGE_DTESTS_COUNT} / CIRCLE_NODE_TOTAL))
+            if (($CIRCLE_NODE_INDEX < (${REPEATED_LARGE_DTESTS_COUNT} % CIRCLE_NODE_TOTAL))); then
               count=$((count+1))
             fi
 
             if (($count <= 0)); then
               echo "No tests to run in this runner"
             else
-              echo "Running ${REPEATED_DTESTS} $count times"
+              echo "Running ${REPEATED_LARGE_DTESTS} $count times"
 
               source ~/env3.6/bin/activate
               export PATH=$JAVA_HOME/bin:$PATH
@@ -2840,7 +2884,7 @@ jobs:
               echo "** done env"
               mkdir -p /tmp/results/dtests
 
-              tests_arg=$(echo ${REPEATED_DTESTS} | sed -e "s/,/ /g")
+              tests_arg=$(echo ${REPEATED_LARGE_DTESTS} | sed -e "s/,/ /g")
 
               stop_on_failure_arg=""
               if ${REPEATED_TESTS_STOP_ON_FAILURE}; then
@@ -2897,6 +2941,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3008,6 +3054,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3105,6 +3153,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
+    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome

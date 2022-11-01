@@ -96,6 +96,15 @@ default_env_vars: &default_env_vars
     # The number of times that the manually specified Python dtests should be run.
     REPEATED_DTESTS_COUNT: 500
 
+    # Comma-separated list of Python large dtests that should be repeatedly run, for example:
+    # REPEATED_LARGE_DTESTS: consistency_test.py
+    # REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    # REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    # REPEATED_LARGE_DTESTS: consistency_test.py,materialized_views_test.py
+    REPEATED_LARGE_DTESTS:
+    # The number of times that the manually specified Python large dtests should be run.
+    REPEATED_LARGE_DTESTS_COUNT: 100
+
     # Comma-separated list of Python dtests that should be repeatedly run, for example:
     # REPEATED_UPGRADE_DTESTS: upgrade_tests/cql_tests.py
     # REPEATED_UPGRADE_DTESTS: upgrade_tests/cql_tests.py::TestCQLNodes2RF1_Upgrade_current_4_0_x_To_indev_4_0_x
@@ -728,10 +737,10 @@ jobs:
       - clone_dtest
       - create_venv
       - run_repeated_dtest:
-          tests: ${REPEATED_DTESTS}
+          tests: ${REPEATED_LARGE_DTESTS}
           vnodes: "false"
           upgrade: "false"
-          count: ${REPEATED_DTESTS_COUNT}
+          count: ${REPEATED_LARGE_DTESTS_COUNT}
           stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
           extra_dtest_args: "--only-resource-intensive-tests --force-resource-intensive-tests"
 
@@ -743,10 +752,10 @@ jobs:
     - clone_dtest
     - create_venv
     - run_repeated_dtest:
-        tests: ${REPEATED_DTESTS}
+        tests: ${REPEATED_LARGE_DTESTS}
         vnodes: "true"
         upgrade: "false"
-        count: ${REPEATED_DTESTS_COUNT}
+        count: ${REPEATED_LARGE_DTESTS_COUNT}
         stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
         extra_dtest_args: "--only-resource-intensive-tests --force-resource-intensive-tests"
 
