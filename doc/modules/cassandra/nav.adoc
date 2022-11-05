@@ -4,8 +4,8 @@
 *** xref:getting_started/configuring.adoc[Configuring Cassandra]
 *** xref:getting_started/querying.adoc[Inserting and querying]
 *** xref:getting_started/drivers.adoc[Client drivers]
+*** xref:getting_started/java11.adoc[Support for Java 11]
 *** xref:getting_started/production.adoc[Production recommendations]
-*** xref:getting_started/java11.adoc[Java 11]
 
 ** xref:new/index.adoc[What's new]
 
@@ -14,8 +14,8 @@
 *** xref:architecture/dynamo.adoc[Dynamo]		
 *** xref:architecture/storage_engine.adoc[Storage engine]
 *** xref:architecture/guarantees.adoc[Guarantees]
-*** xref:architecture/messaging.adoc[Messaging]
-*** xref:architecture/streaming.adoc[Streaming]
+*** xref:architecture/messaging.adoc[Improved internode messaging]
+*** xref:architecture/streaming.adoc[Improved streaming]
 
 ** xref:data_modeling/index.adoc[Data modeling]
 *** xref:data_modeling/intro.adoc[Introduction]
@@ -69,11 +69,12 @@
 *** xref:operating/metrics.adoc[Metrics]
 *** xref:operating/security.adoc[Security]
 *** xref:operating/hardware.adoc[Hardware]
-*** xref:operating/audit_logging.adoc[Audit logging]
 *** xref:operating/compaction/index.adoc[Compaction]
-*** xref:operating/auditlogging.adoc[Audit Logging2]
-*** xref:operating/fqllogging.adoc[FQL Logging]
-*** xref:operating/transientreplication.adoc[Transient Replication]
+*** xref:operating/virtualtables.adoc[Virtual tables]
+*** xref:operating/auditlogging.adoc[Audit logging]
+*** xref:operating/audit_logging.adoc[Audit logging 2]
+*** xref:operating/fqllogging.adoc[Full query logging]
+*** xref:operating/transientreplication.adoc[Transient replication]
 
 ** xref:tools/index.adoc[Tools]
 *** xref:tools/cqlsh.adoc[cqlsh: the CQL shell]
