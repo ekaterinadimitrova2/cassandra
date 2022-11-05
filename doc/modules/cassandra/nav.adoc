@@ -5,6 +5,7 @@
 *** xref:getting_started/querying.adoc[Inserting and querying]
 *** xref:getting_started/drivers.adoc[Client drivers]
 *** xref:getting_started/production.adoc[Production recommendations]
+*** xref:getting_started/java11.adoc[Java 11]
 
 ** xref:new/index.adoc[What's new]
 
@@ -13,6 +14,8 @@
 *** xref:architecture/dynamo.adoc[Dynamo]		
 *** xref:architecture/storage_engine.adoc[Storage engine]
 *** xref:architecture/guarantees.adoc[Guarantees]
+*** xref:architecture/messaging.adoc[Messaging]
+*** xref:architecture/streaming.adoc[Streaming]
 
 ** xref:data_modeling/index.adoc[Data modeling]
 *** xref:data_modeling/intro.adoc[Introduction]
@@ -50,6 +53,7 @@
 *** xref:configuration/cass_cl_archive_file.adoc[commitlog-archiving.properties]
 *** xref:configuration/cass_logback_xml_file.adoc[logback.xml]
 *** xref:configuration/cass_jvm_options_file.adoc[jvm-* files]
+*** xref:configuration/configuration.adoc[Liberating cassandra.yaml Parameters' Names from Their Units]
 
 ** xref:operating/index.adoc[Operating]
 *** xref:operating/snitch.adoc[Snitches]
@@ -66,7 +70,10 @@
 *** xref:operating/security.adoc[Security]
 *** xref:operating/hardware.adoc[Hardware]
 *** xref:operating/audit_logging.adoc[Audit logging]
-*** xref:operating/compaction/index.adoc[Compaction]		
+*** xref:operating/compaction/index.adoc[Compaction]
+*** xref:operating/auditlogging.adoc[Audit Logging2]
+*** xref:operating/fqllogging.adoc[FQL Logging]
+*** xref:operating/transientreplication.adoc[Transient Replication]
 
 ** xref:tools/index.adoc[Tools]
 *** xref:tools/cqlsh.adoc[cqlsh: the CQL shell]
