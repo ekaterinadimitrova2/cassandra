@@ -573,11 +573,11 @@ j8_separate_jobs: &j8_separate_jobs
     # Java 8 cqlsh offheap dtests offheap
     - start_j8_cqlsh_tests_offheap:
         type: approval
-    - j8_cqlsh_dtests_offheap_py3:
+    - j8_cqlsh_dtests_py3_offheap:
         requires:
           - start_j8_cqlsh_tests_offheap
           - j8_build
-    - j8_cqlsh_dtests_offheap_py38:
+    - j8_cqlsh_dtests_py38_offheap:
         requires:
           - start_j8_cqlsh_tests_offheap
           - j8_build
@@ -603,11 +603,11 @@ j8_separate_jobs: &j8_separate_jobs
     # Java 11 cqlsh dtests off-heap
     - start_j11_cqlsh_tests_offheap:
         type: approval
-    - j11_cqlsh_dtests_offheap_py3:
+    - j11_cqlsh_dtests_py3_offheap:
         requires:
           - start_j11_cqlsh_tests_offheap
           - j8_build
-    - j11_cqlsh_dtests_offheap_py38:
+    - j11_cqlsh_dtests_py38_offheap:
         requires:
           - start_j11_cqlsh_tests_offheap
           - j8_build
@@ -911,11 +911,11 @@ j8_pre-commit_jobs: &j8_pre-commit_jobs
     # Java 8 cqlsh dtests offheap
     - start_j8_cqlsh_dtests_offheap:
         type: approval
-    - j8_cqlsh_dtests_offheap_py3:
+    - j8_cqlsh_dtests_py3_offheap:
         requires:
           - start_j8_cqlsh_dtests_offheap
           - j8_build
-    - j8_cqlsh_dtests_offheap_py38:
+    - j8_cqlsh_dtests_py38_offheap:
         requires:
           - start_j8_cqlsh_dtests_offheap
           - j8_build
@@ -935,11 +935,11 @@ j8_pre-commit_jobs: &j8_pre-commit_jobs
     # Java 11 cqlsh dtests off-heap
     - start_j11_cqlsh-dtests-offheap:
         type: approval
-    - j11_cqlsh_dtests_offheap_py3:
+    - j11_cqlsh_dtests_py3_offheap:
         requires:
           - start_j11_cqlsh-dtests-offheap
           - j8_build
-    - j11_cqlsh_dtests_offheap_py38:
+    - j11_cqlsh_dtests_py38_offheap:
         requires:
           - start_j11_cqlsh-dtests-offheap
           - j8_build
@@ -1039,11 +1039,11 @@ j11_separate_jobs: &j11_separate_jobs
           - j11_build
     - start_j11_cqlsh-dtests-offheap:
         type: approval
-    - j11_cqlsh_dtests_offheap_py3:
+    - j11_cqlsh_dtests_py3_offheap:
         requires:
           - start_j11_cqlsh-dtests-offheap
           - j11_build
-    - j11_cqlsh_dtests_offheap_py38:
+    - j11_cqlsh_dtests_py38_offheap:
         requires:
           - start_j11_cqlsh-dtests-offheap
           - j11_build
@@ -1222,11 +1222,11 @@ j11_pre-commit_jobs: &j11_pre-commit_jobs
           - j11_build
     - start_j11_cqlsh-dtests-offheap:
         type: approval
-    - j11_cqlsh_dtests_offheap_py3:
+    - j11_cqlsh_dtests_py3_offheap:
         requires:
           - start_j11_cqlsh-dtests-offheap
           - j11_build
-    - j11_cqlsh_dtests_offheap_py38:
+    - j11_cqlsh_dtests_py38_offheap:
         requires:
           - start_j11_cqlsh-dtests-offheap
           - j11_build
@@ -1727,7 +1727,7 @@ jobs:
           pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
           extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.6'
 
-  j8_cqlsh_dtests_offheap_py3:
+  j8_cqlsh_dtests_py3_offheap:
     <<: *j8_par_executor
     steps:
       - attach_workspace:
@@ -1760,7 +1760,7 @@ jobs:
           extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
           python_version: '3.8'
 
-  j8_cqlsh_dtests_offheap_py38:
+  j8_cqlsh_dtests_py38_offheap:
     <<: *j8_par_executor
     steps:
       - attach_workspace:
@@ -1826,7 +1826,7 @@ jobs:
           pytest_extra_args: '--use-vnodes --num-tokens=16 --skip-resource-intensive-tests'
           extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.6'
 
-  j11_cqlsh_dtests_offheap_py3:
+  j11_cqlsh_dtests_py3_offheap:
     <<: *j11_par_executor
     steps:
       - attach_workspace:
@@ -1859,7 +1859,7 @@ jobs:
           extra_env_args: 'CQLSH_PYTHON=/usr/bin/python3.8'
           python_version: '3.8'
 
-  j11_cqlsh_dtests_offheap_py38:
+  j11_cqlsh_dtests_py38_offheap:
     <<: *j11_par_executor
     steps:
       - attach_workspace:
