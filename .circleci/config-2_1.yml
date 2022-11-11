@@ -596,10 +596,10 @@ jobs:
       - create_venv
       - create_dtest_containers:
           file_tag: j8_large_with_vnodes
-          run_dtests_extra_args: '--use-vnodes --only-resource-intensive-tests'
+          run_dtests_extra_args: '--use-vnodes --only-resource-intensive-tests --force-resource-intensive-tests'
       - run_dtests:
           file_tag: j8_large_with_vnodes
-          pytest_extra_args: '--use-vnodes --num-tokens=16 --only-resource-intensive-tests'
+          pytest_extra_args: '--use-vnodes --num-tokens=16 --only-resource-intensive-tests --force-resource-intensive-tests'
 
   j8_dtests_large:
     <<: *j8_par_executor
@@ -610,10 +610,10 @@ jobs:
       - create_venv
       - create_dtest_containers:
           file_tag: j8_large_without_vnodes
-          run_dtests_extra_args: '--only-resource-intensive-tests'
+          run_dtests_extra_args: '--only-resource-intensive-tests --force-resource-intensive-tests'
       - run_dtests:
           file_tag: j8_large_without_vnodes
-          pytest_extra_args: '--num-tokens=16 --only-resource-intensive-tests'
+          pytest_extra_args: '--num-tokens=16 --only-resource-intensive-tests --force-resource-intensive-tests'
 
   j8_upgrade_dtests:
     <<: *j8_par_executor
@@ -739,7 +739,7 @@ jobs:
           upgrade: "false"
           count: ${REPEATED_LARGE_DTESTS_COUNT}
           stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
-          extra_dtest_args: "--only-resource-intensive-tests"
+          extra_dtest_args: "--only-resource-intensive-tests --force-resource-intensive-tests"
 
   j8_dtests_large_vnode_repeat:
     <<: *j8_repeated_dtest_executor
@@ -754,7 +754,7 @@ jobs:
         upgrade: "false"
         count: ${REPEATED_LARGE_DTESTS_COUNT}
         stop_on_failure: ${REPEATED_TESTS_STOP_ON_FAILURE}
-        extra_dtest_args: "--only-resource-intensive-tests"
+        extra_dtest_args: "--only-resource-intensive-tests --force-resource-intensive-tests"
 
   j8_upgrade_dtests_repeat:
     <<: *j8_repeated_upgrade_dtest_executor
