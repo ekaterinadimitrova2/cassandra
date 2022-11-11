@@ -1,5 +1,5 @@
---- config-2_1.yml	2022-11-11 11:24:06.000000000 -0500
-+++ config-2_1.yml.MIDRES	2022-11-11 11:29:47.000000000 -0500
+--- config-2_1.yml	2022-11-11 14:37:27.000000000 -0500
++++ config-2_1.yml.MIDRES	2022-11-11 14:48:03.000000000 -0500
 @@ -136,45 +136,65 @@
    executor:
      name: java8-executor
@@ -101,7 +101,7 @@
        - attach_workspace:
            at: /home/cassandra
 @@ -602,7 +622,7 @@
-           pytest_extra_args: '--use-vnodes --num-tokens=16 --only-resource-intensive-tests --force-resource-intensive-tests'
+           pytest_extra_args: '--use-vnodes --num-tokens=16 --only-resource-intensive-tests'
  
    j8_dtests_large:
 -    <<: *j8_par_executor
@@ -110,7 +110,7 @@
        - attach_workspace:
            at: /home/cassandra
 @@ -616,7 +636,7 @@
-           pytest_extra_args: '--num-tokens=16 --only-resource-intensive-tests --force-resource-intensive-tests'
+           pytest_extra_args: '--num-tokens=16 --only-resource-intensive-tests'
  
    j8_upgrade_dtests:
 -    <<: *j8_par_executor
