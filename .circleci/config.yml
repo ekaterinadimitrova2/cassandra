@@ -125,8 +125,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -216,8 +216,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -282,8 +282,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -439,8 +439,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -526,8 +526,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -645,8 +645,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -719,8 +719,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -810,8 +810,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -930,8 +930,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1021,8 +1021,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1140,8 +1140,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1251,8 +1251,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1361,8 +1361,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1453,8 +1453,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1649,8 +1649,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1736,8 +1736,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1871,8 +1871,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1982,8 +1982,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2069,8 +2069,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2161,8 +2161,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2272,8 +2272,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2382,8 +2382,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2448,8 +2448,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2567,8 +2567,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2641,8 +2641,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2761,8 +2761,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2895,8 +2895,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3029,8 +3029,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3164,8 +3164,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3283,8 +3283,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3399,8 +3399,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3518,8 +3518,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3591,8 +3591,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3683,8 +3683,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3769,8 +3769,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3842,8 +3842,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3953,8 +3953,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4087,8 +4087,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4178,8 +4178,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4335,8 +4335,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4427,8 +4427,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4518,8 +4518,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4637,8 +4637,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4748,8 +4748,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4858,8 +4858,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4950,8 +4950,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5041,8 +5041,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5175,8 +5175,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5286,8 +5286,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5377,8 +5377,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5511,8 +5511,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5621,8 +5621,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5708,8 +5708,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5816,8 +5816,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5908,8 +5908,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6018,8 +6018,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6110,8 +6110,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6202,8 +6202,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6288,8 +6288,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6407,8 +6407,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6526,8 +6526,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6618,8 +6618,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6727,8 +6727,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6814,8 +6814,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6900,8 +6900,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6964,8 +6964,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7056,8 +7056,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7164,8 +7164,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7360,8 +7360,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7433,8 +7433,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7552,8 +7552,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7686,8 +7686,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7805,8 +7805,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7913,8 +7913,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8023,8 +8023,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8114,8 +8114,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8188,8 +8188,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8252,8 +8252,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8360,8 +8360,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8452,8 +8452,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8586,8 +8586,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8677,8 +8677,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8783,8 +8783,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
+    - REPEATED_DTESTS_COUNT: 5
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8984,11 +8984,23 @@ workflows:
         requires:
         - start_j8_dtests_large
         - j8_build
+    - start_j8_dtests_large_repeat:
+        type: approval
+    - j8_dtests_large_repeat:
+        requires:
+        - start_j8_dtests_large_repeat
+        - j8_build
     - start_j8_dtests_large_vnode:
         type: approval
     - j8_dtests_large_vnode:
         requires:
         - start_j8_dtests_large_vnode
+        - j8_build
+    - start_j8_dtests_large_vnode_repeat:
+        type: approval
+    - j8_dtests_large_vnode_repeat:
+        requires:
+        - start_j8_dtests_large_vnode_repeat
         - j8_build
     - start_j11_dtests_large:
         type: approval
@@ -8996,11 +9008,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j8_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j8_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j8_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j8_build
     - start_upgrade_dtests:
         type: approval
@@ -9196,11 +9220,23 @@ workflows:
         requires:
         - start_j8_dtests_large
         - j8_build
+    - start_j8_dtests_large_repeat:
+        type: approval
+    - j8_dtests_large_repeat:
+        requires:
+        - start_j8_dtests_large_repeat
+        - j8_build
     - start_j8_dtests_large_vnode:
         type: approval
     - j8_dtests_large_vnode:
         requires:
         - start_j8_dtests_large_vnode
+        - j8_build
+    - start_j8_dtests_large_vnode_repeat:
+        type: approval
+    - j8_dtests_large_vnode_repeat:
+        requires:
+        - start_j8_dtests_large_vnode_repeat
         - j8_build
     - start_j11_dtests_large:
         type: approval
@@ -9208,11 +9244,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j8_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j8_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j8_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j8_build
     - start_upgrade_dtests:
         type: approval
@@ -9325,11 +9373,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j11_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j11_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j11_build
     - start_j11_cqlsh_tests:
         type: approval
@@ -9435,11 +9495,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j11_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j11_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j11_build
     - j11_cqlsh_dtests_py3:
         requires:
