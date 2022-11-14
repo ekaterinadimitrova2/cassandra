@@ -1603,28 +1603,28 @@ jobs:
     steps:
       - attach_workspace:
           at: /home/cassandra
-      - run_cqlshlib_cython_tests
+      - run_cqlshlib_tests
 
   j8_cqlshlib_cython_tests:
     <<: *j8_small_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
-      - run_cqlshlib_tests
+      - run_cqlshlib_cython_tests
 
   j11_cqlshlib_tests:
     <<: *j11_small_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
-      - run_cqlshlib_cython_tests
+      - run_cqlshlib_tests
 
   j11_cqlshlib_cython_tests:
     <<: *j11_small_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
-      - run_cqlshlib_tests
+      - run_cqlshlib_cython_tests
 
   j8_utests_long:
     <<: *j8_seq_executor
@@ -2656,8 +2656,8 @@ commands:
         command: |
           export PATH=$JAVA_HOME/bin:$PATH
           time mv ~/cassandra /tmp
-          cd /tmp/cassandra/pylib
-          ./cassandra-cqlsh-tests.sh ..
+          cd /tmp/cassandra/
+          ./pylib/cassandra-cqlsh-tests.sh $(pwd)
         no_output_timeout: <<parameters.no_output_timeout>>
     - store_test_results:
         path: /tmp/cassandra/pylib
@@ -2674,8 +2674,8 @@ commands:
             export PATH=$JAVA_HOME/bin:$PATH
             export cython="yes"
             time mv ~/cassandra /tmp
-            cd /tmp/cassandra/pylib
-            ./cassandra-cqlsh-tests.sh ..
+            cd /tmp/cassandra/
+            ./pylib/cassandra-cqlsh-tests.sh $(pwd)
           no_output_timeout: <<parameters.no_output_timeout>>
       - store_test_results:
           path: /tmp/cassandra/pylib
