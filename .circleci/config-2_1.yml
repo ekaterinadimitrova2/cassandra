@@ -306,6 +306,24 @@ j8_separate_jobs: &j8_separate_jobs
         requires:
           - start_j8_cqlshlib_tests
           - j8_build
+    - start_j8_cqlshlib_cython_tests:
+        type: approval
+    - j8_cqlshlib_cython_tests:
+        requires:
+          - start_j8_cqlshlib_cython_tests
+          - j8_build
+    - start_j11_cqlshlib_tests:
+        type: approval
+    - j11_cqlshlib_tests:
+        requires:
+          - start_j11_cqlshlib_tests
+          - j8_build
+    - start_j11_cqlshlib_cython_tests:
+        type: approval
+    - j11_cqlshlib_cython_tests:
+        requires:
+          - start_j11_cqlshlib_cython_tests
+          - j8_build
     # Java 11 unit tests
     - start_j11_unit_tests:
         type: approval
@@ -733,6 +751,15 @@ j8_pre-commit_jobs: &j8_pre-commit_jobs
     - j8_cqlshlib_tests:
         requires:
           - j8_build
+    - j8_cqlshlib_cython_tests:
+        requires:
+          - j8_build
+    - j11_cqlshlib_tests:
+        requires:
+          - j8_build
+    - j11_cqlshlib_cython_tests:
+        requires:
+          - j8_build
     # Java 11 unit tests
     - j11_unit_tests:
         requires:
@@ -1064,6 +1091,12 @@ j11_separate_jobs: &j11_separate_jobs
         requires:
           - start_j11_cqlshlib_tests
           - j11_build
+    - start_j11_cqlshlib_cython_tests:
+        type: approval
+    - j11_cqlshlib_cython_tests:
+        requires:
+          - start_j11_cqlshlib_cython_tests
+          - j11_build
     # Java 11 dtests
     - start_j11_dtests:
         type: approval
@@ -1263,7 +1296,7 @@ j11_pre-commit_jobs: &j11_pre-commit_jobs
     - j11_cqlshlib_tests:
         requires:
           - j11_build
-    - j11_cqlshlib_tests:
+    - j11_cqlshlib_cython_tests:
         requires:
           - j11_build
     - j11_dtests:
@@ -1570,9 +1603,23 @@ jobs:
     steps:
       - attach_workspace:
           at: /home/cassandra
+      - run_cqlshlib_cython_tests
+
+  j8_cqlshlib_cython_tests:
+    <<: *j8_small_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
       - run_cqlshlib_tests
 
   j11_cqlshlib_tests:
+    <<: *j11_small_executor
+    steps:
+      - attach_workspace:
+          at: /home/cassandra
+      - run_cqlshlib_cython_tests
+
+  j11_cqlshlib_cython_tests:
     <<: *j11_small_executor
     steps:
       - attach_workspace:
@@ -2614,6 +2661,24 @@ commands:
         no_output_timeout: <<parameters.no_output_timeout>>
     - store_test_results:
         path: /tmp/cassandra/pylib
+
+  run_cqlshlib_cython_tests:
+    parameters:
+      no_output_timeout:
+        type: string
+        default: 15m
+    steps:
+      - run:
+          name: Run cqlshlib Unit Tests
+          command: |
+            export PATH=$JAVA_HOME/bin:$PATH
+            export cython="yes"
+            time mv ~/cassandra /tmp
+            cd /tmp/cassandra/pylib
+            ./cassandra-cqlsh-tests.sh ..
+          no_output_timeout: <<parameters.no_output_timeout>>
+      - store_test_results:
+          path: /tmp/cassandra/pylib
 
   run_parallel_junit_tests:
     parameters:
