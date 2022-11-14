@@ -21,10 +21,10 @@ jobs:
   j8_jvm_upgrade_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 2
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -126,8 +126,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -140,10 +140,10 @@ jobs:
   j11_utests_fqltool_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -217,8 +217,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -283,8 +283,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -298,10 +298,10 @@ jobs:
   j11_dtests_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -440,8 +440,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -455,10 +455,10 @@ jobs:
   j8_dtests_large_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 1
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -527,8 +527,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -541,10 +541,10 @@ jobs:
   j11_utests_system_keyspace_directory:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -646,8 +646,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -661,7 +661,7 @@ jobs:
   j8_utests_stress:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -720,8 +720,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -734,10 +734,10 @@ jobs:
   j11_utests_stress_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -811,8 +811,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -826,10 +826,10 @@ jobs:
   j8_jvm_dtests_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 5
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -931,8 +931,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -945,10 +945,10 @@ jobs:
   j8_utests_compression_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1022,8 +1022,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1036,10 +1036,10 @@ jobs:
   j11_unit_tests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1141,8 +1141,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1156,10 +1156,10 @@ jobs:
   j8_cqlsh_dtests_py3:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1252,8 +1252,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1266,10 +1266,10 @@ jobs:
   j11_cqlsh_dtests_py38:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1362,8 +1362,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1377,10 +1377,10 @@ jobs:
   j11_utests_compression_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1454,8 +1454,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1469,10 +1469,10 @@ jobs:
   j11_repeated_ant_test:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1650,8 +1650,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1665,10 +1665,10 @@ jobs:
   j11_dtests_large_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 1
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1737,8 +1737,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1752,10 +1752,10 @@ jobs:
   j11_dtests_large_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1872,8 +1872,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1887,10 +1887,10 @@ jobs:
   j11_cqlsh_dtests_py38_offheap:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -1983,8 +1983,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -1998,10 +1998,10 @@ jobs:
   j11_dtests_large:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 1
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2070,8 +2070,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2085,10 +2085,10 @@ jobs:
   j11_utests_system_keyspace_directory_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2162,8 +2162,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2177,10 +2177,10 @@ jobs:
   j8_cqlsh_dtests_py3_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2273,8 +2273,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2287,10 +2287,10 @@ jobs:
   j11_cqlsh_dtests_py3:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2383,8 +2383,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2449,8 +2449,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2463,10 +2463,10 @@ jobs:
   j11_utests_cdc:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2568,8 +2568,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2583,7 +2583,7 @@ jobs:
   j11_utests_fqltool:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -2642,8 +2642,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2657,10 +2657,10 @@ jobs:
   j8_utests_system_keyspace_directory:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2762,8 +2762,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2776,10 +2776,10 @@ jobs:
   j8_dtests_offheap_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -2896,8 +2896,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -2910,10 +2910,10 @@ jobs:
   j11_dtests_offheap_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3030,8 +3030,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3045,10 +3045,10 @@ jobs:
   j8_dtests_large_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3165,8 +3165,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3179,10 +3179,10 @@ jobs:
   j11_jvm_dtests_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 5
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3284,8 +3284,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3400,8 +3400,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3414,10 +3414,10 @@ jobs:
   j8_utests_compression:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3519,8 +3519,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3533,7 +3533,7 @@ jobs:
   j11_utests_long:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -3592,8 +3592,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3607,10 +3607,10 @@ jobs:
   j8_unit_tests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3684,8 +3684,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3698,10 +3698,10 @@ jobs:
   j8_dtests_large:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 1
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3770,8 +3770,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3784,7 +3784,7 @@ jobs:
   j11_utests_stress:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -3843,8 +3843,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3858,10 +3858,10 @@ jobs:
   j8_cqlsh_dtests_py38_offheap:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -3954,8 +3954,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -3968,10 +3968,10 @@ jobs:
   j8_upgrade_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4088,8 +4088,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4102,10 +4102,10 @@ jobs:
   j11_utests_cdc_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4179,8 +4179,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4194,10 +4194,10 @@ jobs:
   j11_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4336,8 +4336,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4351,10 +4351,10 @@ jobs:
   j8_utests_fqltool_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4428,8 +4428,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4442,10 +4442,10 @@ jobs:
   j8_jvm_dtests_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4519,8 +4519,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4533,10 +4533,10 @@ jobs:
   j11_utests_compression:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4638,8 +4638,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4653,10 +4653,10 @@ jobs:
   j8_cqlsh_dtests_py38:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4749,8 +4749,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4763,10 +4763,10 @@ jobs:
   j11_cqlsh_dtests_py3_offheap:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4859,8 +4859,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4874,10 +4874,10 @@ jobs:
   j8_simulator_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -4951,8 +4951,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -4965,10 +4965,10 @@ jobs:
   j8_utests_system_keyspace_directory_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5042,8 +5042,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5056,10 +5056,10 @@ jobs:
   j11_dtests_large_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5176,8 +5176,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5191,10 +5191,10 @@ jobs:
   j8_cqlsh_dtests_py3_offheap:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5287,8 +5287,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5301,10 +5301,10 @@ jobs:
   j8_utests_stress_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5378,8 +5378,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5392,10 +5392,10 @@ jobs:
   j8_dtests_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5512,8 +5512,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5526,10 +5526,10 @@ jobs:
   j11_cqlsh_dtests_py3_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5622,8 +5622,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5637,10 +5637,10 @@ jobs:
   j8_upgrade_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5709,8 +5709,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5723,10 +5723,10 @@ jobs:
   j11_dtests_offheap:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5817,8 +5817,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5832,10 +5832,10 @@ jobs:
   j8_jvm_upgrade_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -5909,8 +5909,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -5923,10 +5923,10 @@ jobs:
   j11_cqlsh_dtests_py38_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6019,8 +6019,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6034,10 +6034,10 @@ jobs:
   j11_jvm_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6111,8 +6111,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6126,10 +6126,10 @@ jobs:
   j8_utests_long_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6203,8 +6203,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6217,10 +6217,10 @@ jobs:
   j8_dtests_offheap:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6289,8 +6289,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6303,10 +6303,10 @@ jobs:
   j8_unit_tests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6408,8 +6408,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6422,10 +6422,10 @@ jobs:
   j11_jvm_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 5
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6527,8 +6527,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6542,10 +6542,10 @@ jobs:
   j11_jvm_dtests_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6619,8 +6619,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6728,8 +6728,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6743,10 +6743,10 @@ jobs:
   j8_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6815,8 +6815,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6829,10 +6829,10 @@ jobs:
   j8_dtests_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -6901,8 +6901,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6965,8 +6965,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -6980,10 +6980,10 @@ jobs:
   j8_jvm_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -7057,8 +7057,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7071,10 +7071,10 @@ jobs:
   j11_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -7165,8 +7165,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7180,10 +7180,10 @@ jobs:
   j8_repeated_ant_test:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -7361,8 +7361,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7375,7 +7375,7 @@ jobs:
   j8_utests_long:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -7434,8 +7434,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7448,10 +7448,10 @@ jobs:
   j8_utests_cdc:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -7553,8 +7553,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7567,10 +7567,10 @@ jobs:
   j8_dtests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -7687,8 +7687,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7701,10 +7701,10 @@ jobs:
   j8_jvm_dtests:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 1
+    parallelism: 5
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -7806,8 +7806,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7914,8 +7914,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -7928,10 +7928,10 @@ jobs:
   j8_cqlsh_dtests_py38_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -8024,8 +8024,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8038,10 +8038,10 @@ jobs:
   j11_unit_tests_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -8115,8 +8115,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8130,7 +8130,7 @@ jobs:
   j8_utests_fqltool:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 1
@@ -8189,8 +8189,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8253,8 +8253,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8267,10 +8267,10 @@ jobs:
   j11_dtests_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -8361,8 +8361,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8376,10 +8376,10 @@ jobs:
   j8_utests_cdc_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -8453,8 +8453,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8467,10 +8467,10 @@ jobs:
   j8_dtests_large_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -8587,8 +8587,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8601,10 +8601,10 @@ jobs:
   j11_utests_long_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: medium
+    resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
-    parallelism: 4
+    parallelism: 100
     steps:
     - attach_workspace:
         at: /home/cassandra
@@ -8678,8 +8678,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8784,8 +8784,8 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: null
-    - REPEATED_LARGE_DTESTS_COUNT: 100
+    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability
+    - REPEATED_LARGE_DTESTS_COUNT: 5
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
     - REPEATED_ANT_TEST_TARGET: testsome
@@ -8984,11 +8984,23 @@ workflows:
         requires:
         - start_j8_dtests_large
         - j8_build
+    - start_j8_dtests_large_repeat:
+        type: approval
+    - j8_dtests_large_repeat:
+        requires:
+        - start_j8_dtests_large_repeat
+        - j8_build
     - start_j8_dtests_large_vnode:
         type: approval
     - j8_dtests_large_vnode:
         requires:
         - start_j8_dtests_large_vnode
+        - j8_build
+    - start_j8_dtests_large_vnode_repeat:
+        type: approval
+    - j8_dtests_large_vnode_repeat:
+        requires:
+        - start_j8_dtests_large_vnode_repeat
         - j8_build
     - start_j11_dtests_large:
         type: approval
@@ -8996,11 +9008,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j8_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j8_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j8_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j8_build
     - start_upgrade_dtests:
         type: approval
@@ -9196,11 +9220,23 @@ workflows:
         requires:
         - start_j8_dtests_large
         - j8_build
+    - start_j8_dtests_large_repeat:
+        type: approval
+    - j8_dtests_large_repeat:
+        requires:
+        - start_j8_dtests_large_repeat
+        - j8_build
     - start_j8_dtests_large_vnode:
         type: approval
     - j8_dtests_large_vnode:
         requires:
         - start_j8_dtests_large_vnode
+        - j8_build
+    - start_j8_dtests_large_vnode_repeat:
+        type: approval
+    - j8_dtests_large_vnode_repeat:
+        requires:
+        - start_j8_dtests_large_vnode_repeat
         - j8_build
     - start_j11_dtests_large:
         type: approval
@@ -9208,11 +9244,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j8_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j8_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j8_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j8_build
     - start_upgrade_dtests:
         type: approval
@@ -9325,11 +9373,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j11_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j11_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j11_build
     - start_j11_cqlsh_tests:
         type: approval
@@ -9435,11 +9495,23 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
+    - start_j11_dtests_large_repeat:
+        type: approval
+    - j11_dtests_large_repeat:
+        requires:
+        - start_j11_dtests_large_repeat
+        - j11_build
     - start_j11_dtests_large_vnode:
         type: approval
     - j11_dtests_large_vnode:
         requires:
         - start_j11_dtests_large_vnode
+        - j11_build
+    - start_j11_dtests_large_vnode_repeat:
+        type: approval
+    - j11_dtests_large_vnode_repeat:
+        requires:
+        - start_j11_dtests_large_vnode_repeat
         - j11_build
     - j11_cqlsh_dtests_py3:
         requires:
