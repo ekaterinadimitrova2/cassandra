@@ -289,6 +289,30 @@ j8_separate_jobs: &j8_separate_jobs
         requires:
           - start_j8_jvm_dtests_vnode_repeat
           - j8_build
+    - start_j11_jvm_dtests:
+        type: approval
+    - j11_jvm_dtests:
+        requires:
+          - start_j11_jvm_dtests
+          - j8_build
+    - start_j11_jvm_dtests_vnode:
+        type: approval
+    - j11_jvm_dtests_vnode:
+        requires:
+          - start_j11_jvm_dtests_vnode
+          - j8_build
+    - start_j11_jvm_dtests_repeat:
+        type: approval
+    - j11_jvm_dtests_repeat:
+        requires:
+          - start_j11_jvm_dtests_repeat
+          - j8_build
+    - start_j11_jvm_dtests_vnode_repeat:
+        type: approval
+    - j11_jvm_dtests_vnode_repeat:
+        requires:
+          - start_j11_jvm_dtests_vnode_repeat
+          - j8_build
     - start_j8_simulator_dtests:
         type: approval
     - j8_simulator_dtests:
@@ -771,6 +795,18 @@ j8_pre-commit_jobs: &j8_pre-commit_jobs
         requires:
           - j8_build
     - j8_jvm_dtests_vnode_repeat:
+        requires:
+          - j8_build
+    - j11_jvm_dtests:
+        requires:
+          - j8_build
+    - j11_jvm_dtests_repeat:
+        requires:
+          - j8_build
+    - j11_jvm_dtests_vnode:
+        requires:
+          - j8_build
+    - j11_jvm_dtests_vnode_repeat:
         requires:
           - j8_build
     - j8_cqlshlib_tests:
