@@ -20,7 +20,7 @@ version: 2
 jobs:
   j8_jvm_upgrade_dtests:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -129,7 +129,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   utests_compression_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -308,7 +308,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   utests_long_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -487,7 +487,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_unit_tests_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -666,7 +666,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_upgrade_dtests_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -789,7 +789,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   build:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -887,7 +887,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_dtests_vnode_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1010,7 +1010,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_upgrade_dtests:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1085,7 +1085,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_jvm_upgrade_dtests_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1264,7 +1264,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_unit_tests:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1373,7 +1373,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_dtests:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1448,7 +1448,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_dtests_vnode:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1523,7 +1523,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_jvm_dtests_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1702,7 +1702,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_repeated_ant_test:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -1878,7 +1878,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_dtests_repeat:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2001,7 +2001,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_jvm_dtests:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2110,7 +2110,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   utests_long:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2173,7 +2173,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   utests_compression:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2282,7 +2282,7 @@ jobs:
     - JDK_HOME: /usr/lib/jvm/java-8-openjdk-amd64
   j8_dtest_jars_build:
     docker:
-    - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
+    - image: edimitrova86/cassandra-testing-base-17-final-w-d:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
