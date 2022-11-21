@@ -4622,8 +4622,7 @@ jobs:
       - REPEATED_ANT_TEST_COUNT: 500
       - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
       - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
-  j
-  _utests_compression:
+  j17_utests_compression:
     docker:
       - image: apache/cassandra-testing-ubuntu2004-java11:latest
     resource_class: medium
@@ -4743,7 +4742,7 @@ jobs:
       - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
       - JDK_HOME: /usr/lib/jvm/java-17-openjdk-amd64
       - CASSANDRA_USE_JDK17: true
-  j11_cqlsh_dtests_py311:
+  j11_cqlsh_dtests_py38:
     docker:
       - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: large
@@ -9443,8 +9442,7 @@ workflows:
           type: approval
       - j17_dtests_large:
           requires:
-            - start_j
-          _dtests_large
+          - start_j17_dtests_large
           - j11_build
       - start_j17_dtests_large_vnode:
           type: approval
