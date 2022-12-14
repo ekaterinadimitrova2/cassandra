@@ -183,7 +183,6 @@
 
         <string>--add-opens java.base/java.lang.module=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.net=ALL-UNNAMED</string>
-        <string>--add-opens java.base/jdk.internal.loader=ALL-UNNAMED</string>
         <string>--add-opens java.base/jdk.internal.ref=ALL-UNNAMED</string>
         <string>--add-opens java.base/jdk.internal.reflect=ALL-UNNAMED</string>
         <string>--add-opens java.base/jdk.internal.math=ALL-UNNAMED</string>

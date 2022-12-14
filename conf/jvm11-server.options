@@ -66,7 +66,6 @@
 --add-exports java.sql/java.sql=ALL-UNNAMED
 
 --add-opens java.base/java.lang.module=ALL-UNNAMED
---add-opens java.base/jdk.internal.loader=ALL-UNNAMED
 --add-opens java.base/jdk.internal.ref=ALL-UNNAMED
 --add-opens java.base/jdk.internal.reflect=ALL-UNNAMED
 --add-opens java.base/jdk.internal.math=ALL-UNNAMED
