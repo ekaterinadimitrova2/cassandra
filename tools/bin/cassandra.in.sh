@@ -80,6 +80,7 @@ fi
 java_ver_output=`"${JAVA:-java}" -version 2>&1`
 jvmver=`echo "$java_ver_output" | grep '[openjdk|java] version' | awk -F'"' 'NR==1 {print $2}' | cut -d\- -f1`
 JVM_VERSION=${jvmver%_*}
+short=$(echo "${jvmver}" | cut -c1-2)
 
 JAVA_VERSION=17
 if [ "$JVM_VERSION" \< "11" ] ; then
