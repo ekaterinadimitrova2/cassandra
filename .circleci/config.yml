@@ -441,7 +441,7 @@ jobs:
       - CASSANDRA_USE_JDK17: true
   j11_dtests_large_vnode:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2427,7 +2427,7 @@ jobs:
       - CASSANDRA_USE_JDK17: true
   j11_cqlshlib_cython_tests:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2683,7 +2683,7 @@ jobs:
       - CASSANDRA_USE_JDK17: true
   j11_utests_system_keyspace_directory:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -2799,7 +2799,7 @@ jobs:
       - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_dtests_offheap_repeat:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3048,7 +3048,7 @@ jobs:
       - CASSANDRA_USE_JDK17: true
   j11_dtests_large_repeat:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3289,7 +3289,7 @@ jobs:
       - CASSANDRA_USE_JDK17: true
   j11_simulator_dtests:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3401,7 +3401,7 @@ jobs:
       - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_utests_compression:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: medium
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3682,7 +3682,7 @@ jobs:
       - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_dtests_large:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3842,7 +3842,7 @@ jobs:
       - CASSANDRA_USE_JDK17: true
   j11_cqlsh_dtests_py38_offheap:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
@@ -3949,7 +3949,7 @@ jobs:
       - JDK_HOME: /usr/lib/jvm/java-11-openjdk-amd64
   j11_upgrade_dtests_repeat:
     docker:
-      - image: apache/cassandra-testing-ubuntu2004-java17-w-dependencies:latest
+      - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
     resource_class: xlarge
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
