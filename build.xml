@@ -300,6 +300,13 @@
             <equals arg1="${ant.java.version}" arg2="11"/>
     </condition>
 
+    <condition property="jdk17-javac-exports" value="--add-exports java.rmi/sun.rmi.registry=ALL-UNNAMED" else="">
+            <equals arg1="${ant.java.version}" arg2="17"/>
+    </condition>
+    <condition property="jdk17-javadoc-exports" value="${jdk17-javac-exports} --frames" else="">
+            <equals arg1="${ant.java.version}" arg2="17"/>
+    </condition>
+
     <!--
          Add all the dependencies.
     -->
