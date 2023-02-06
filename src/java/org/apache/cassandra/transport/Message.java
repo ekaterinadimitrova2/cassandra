@@ -18,7 +18,6 @@
 package org.apache.cassandra.transport;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.util.EnumSet;
@@ -139,31 +138,6 @@ public abstract class Message
             modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
             field.set(this, codec);
             return original;
-        }
-
-        private static Field getModifiersField() throws NoSuchFieldException
-        {
-            try
-            {
-                return Field.class.getDeclaredField("modifiers");
-            }
-            catch (NoSuchFieldException e)
-            {
-                try
-                {
-                    Method getDeclaredFields0 = Class.class.getDeclaredMethod("getDeclaredFields0", boolean.class);
-                    getDeclaredFields0.setAccessible(true);
-                    Field[] fields = (Field[]) getDeclaredFields0.invoke(Field.class, false);
-                    for (Field field : fields)
-                        if ("modifiers".equals(field.getName()))
-                            return field;
-                }
-                catch (ReflectiveOperationException ex)
-                {
-                    e.addSuppressed(ex);
-                }
-                throw e;
-            }
         }
     }
 

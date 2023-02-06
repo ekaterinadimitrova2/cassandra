@@ -230,7 +230,6 @@
         <string>--add-exports jdk.unsupported/sun.misc=ALL-UNNAMED</string>
         <string>--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</string>
 
-
         <string>--add-opens java.base/java.lang.module=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.net=ALL-UNNAMED</string>
         <string>--add-opens java.base/jdk.internal.loader=ALL-UNNAMED</string>
@@ -256,7 +255,6 @@
         <string>--add-opens java.base/java.math=ALL-UNNAMED</string>
         <!--in-jvm tests? plus # https://chronicle.software/chronicle-support-java-17/-->
         <string> --add-opens java.base/java.lang.reflect=ALL-UNNAMED</string>
-
     </resources>
     <pathconvert property="_jvm17_args_concat" refid="_jvm17_arg_items" pathsep=" "/>
     <condition property="java17-jvmargs" value="${_jvm17_args_concat}" else="">
