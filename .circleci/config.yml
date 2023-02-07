@@ -126,7 +126,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -217,7 +217,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -283,7 +283,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -394,7 +394,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -550,7 +550,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -637,7 +637,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -756,7 +756,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -830,7 +830,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -921,7 +921,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1032,7 +1032,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1124,7 +1124,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1243,7 +1243,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1334,7 +1334,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1453,7 +1453,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1564,7 +1564,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1674,7 +1674,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1766,7 +1766,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -1963,7 +1963,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2050,7 +2050,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2185,7 +2185,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2296,7 +2296,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2406,7 +2406,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2493,7 +2493,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2585,7 +2585,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2696,7 +2696,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2806,7 +2806,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2872,7 +2872,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -2991,7 +2991,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3065,7 +3065,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3185,7 +3185,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3319,7 +3319,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3453,7 +3453,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3588,7 +3588,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3707,7 +3707,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3823,7 +3823,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -3942,7 +3942,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4015,7 +4015,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4107,7 +4107,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4193,7 +4193,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4308,7 +4308,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4382,7 +4382,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4493,7 +4493,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4627,7 +4627,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4718,7 +4718,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4875,7 +4875,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -4967,7 +4967,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5058,7 +5058,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5177,7 +5177,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5288,7 +5288,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5398,7 +5398,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5490,7 +5490,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5600,7 +5600,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5692,7 +5692,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5811,7 +5811,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -5946,7 +5946,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6066,7 +6066,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6176,7 +6176,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6267,7 +6267,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6401,7 +6401,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6511,7 +6511,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6598,7 +6598,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6706,7 +6706,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6798,7 +6798,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -6908,7 +6908,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7000,7 +7000,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7092,7 +7092,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7184,7 +7184,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7295,7 +7295,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7387,7 +7387,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7473,7 +7473,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7592,7 +7592,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7711,7 +7711,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7803,7 +7803,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7912,7 +7912,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -7999,7 +7999,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8085,7 +8085,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8149,7 +8149,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8241,7 +8241,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8349,7 +8349,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8546,7 +8546,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8619,7 +8619,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8738,7 +8738,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8848,7 +8848,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -8982,7 +8982,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9101,7 +9101,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9209,7 +9209,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9319,7 +9319,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9410,7 +9410,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9484,7 +9484,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9548,7 +9548,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9656,7 +9656,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9748,7 +9748,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9882,7 +9882,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -9973,7 +9973,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
@@ -10079,7 +10079,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
-    - REPEATED_LARGE_DTESTS: consistency_test.py::TestAvailability::test_network_topology_strategy
+    - REPEATED_LARGE_DTESTS: replace_address_test.py::TestReplaceAddress::test_replace_stopped_node
     - REPEATED_LARGE_DTESTS_COUNT: 1
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
