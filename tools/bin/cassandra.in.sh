@@ -80,6 +80,7 @@ fi
 java_ver_output=`"${JAVA:-java}" -version 2>&1`
 jvmver=`echo "$java_ver_output" | grep '[openjdk|java] version' | awk -F'"' 'NR==1 {print $2}' | cut -d\- -f1`
 JVM_VERSION=${jvmver%_*}
+short=$(echo "${jvmver}" | cut -c1-2)
 
 JAVA_VERSION=17
 if [ "$JVM_VERSION" \< "11" ] ; then
@@ -89,6 +90,7 @@ elif [ "$short" = "11" ] ; then
     JAVA_VERSION=11
 elif [ "$JVM_VERSION" \< "17" ] ; then
     echo "Cassandra 5.0 requires Java 11 or Java 17(or newer)."
+    exit 1;
 fi
 
 jvm=`echo "$java_ver_output" | grep -A 1 '[openjdk|java] version' | awk 'NR==2 {print $1}'`
