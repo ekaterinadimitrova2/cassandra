@@ -125,7 +125,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -216,7 +216,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -282,7 +282,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -393,7 +393,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -549,7 +549,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -565,7 +565,7 @@ jobs:
   j8_dtests_large_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: xlarge
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 4
@@ -636,7 +636,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -755,7 +755,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -829,7 +829,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -920,7 +920,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1031,7 +1031,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1123,7 +1123,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1242,7 +1242,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1333,7 +1333,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1452,7 +1452,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1563,7 +1563,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1673,7 +1673,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1765,7 +1765,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1962,7 +1962,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -1978,7 +1978,7 @@ jobs:
   j11_dtests_large_vnode:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: xlarge
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 4
@@ -2049,7 +2049,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2065,7 +2065,7 @@ jobs:
   j11_dtests_large_vnode_repeat:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: xlarge
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 25
@@ -2184,7 +2184,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2295,7 +2295,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2405,7 +2405,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2421,7 +2421,7 @@ jobs:
   j11_dtests_large:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11:latest
-    resource_class: xlarge
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 4
@@ -2492,7 +2492,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2584,7 +2584,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2695,7 +2695,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2805,7 +2805,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2871,7 +2871,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -2990,7 +2990,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3064,7 +3064,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3184,7 +3184,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3318,7 +3318,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3452,7 +3452,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3587,7 +3587,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3706,7 +3706,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3822,7 +3822,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -3941,7 +3941,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4014,7 +4014,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4106,7 +4106,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4121,7 +4121,7 @@ jobs:
   j8_dtests_large:
     docker:
     - image: apache/cassandra-testing-ubuntu2004-java11-w-dependencies:latest
-    resource_class: xlarge
+    resource_class: large
     working_directory: ~/
     shell: /bin/bash -eo pipefail -l
     parallelism: 4
@@ -4192,7 +4192,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4307,7 +4307,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4381,7 +4381,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4492,7 +4492,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4626,7 +4626,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4717,7 +4717,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4874,7 +4874,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -4966,7 +4966,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5057,7 +5057,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5176,7 +5176,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5287,7 +5287,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5397,7 +5397,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5489,7 +5489,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5599,7 +5599,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5691,7 +5691,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5810,7 +5810,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -5945,7 +5945,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6065,7 +6065,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6175,7 +6175,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6266,7 +6266,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6400,7 +6400,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6510,7 +6510,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6597,7 +6597,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6705,7 +6705,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6797,7 +6797,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6907,7 +6907,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -6999,7 +6999,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7091,7 +7091,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7183,7 +7183,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7294,7 +7294,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7386,7 +7386,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7472,7 +7472,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7591,7 +7591,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7710,7 +7710,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7802,7 +7802,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7911,7 +7911,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -7998,7 +7998,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8084,7 +8084,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8148,7 +8148,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8240,7 +8240,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8348,7 +8348,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8545,7 +8545,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8618,7 +8618,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8737,7 +8737,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8847,7 +8847,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -8981,7 +8981,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9100,7 +9100,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9208,7 +9208,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9318,7 +9318,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9409,7 +9409,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9483,7 +9483,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9547,7 +9547,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9655,7 +9655,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9747,7 +9747,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9881,7 +9881,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -9972,7 +9972,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -10078,7 +10078,7 @@ jobs:
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
     - REPEATED_DTESTS: null
-    - REPEATED_DTESTS_COUNT: 1
+    - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: upgrade_tests/upgrade_through_versions_test.py::TestUpgrade_indev_3_11_x_To_indev_trunk::test_parallel_upgrade
@@ -10467,6 +10467,12 @@ workflows:
         requires:
         - start_j11_cqlsh_tests_offheap
         - j8_build
+    - start_j8_upgrade_dtests_repeat:
+        type: approval
+    - j8_upgrade_dtests_repeat:
+        requires:
+        - start_j8_upgrade_dtests_repeat
+        - j8_build
   java8_pre-commit_tests:
     jobs:
     - start_pre-commit_tests:
@@ -10673,6 +10679,10 @@ workflows:
     - start_upgrade_dtests:
         type: approval
     - j8_upgrade_dtests:
+        requires:
+        - j8_build
+        - start_upgrade_dtests
+    - j8_upgrade_dtests_repeat:
         requires:
         - j8_build
         - start_upgrade_dtests
