@@ -216,14 +216,7 @@
     </resources>
     <pathconvert property="_jvm_args_concat" refid="_jvm11_arg_items" pathsep=" "/>
     <condition property="java11-jvmargs" value="${_jvm_args_concat}" else="">
-        <and>
-            <not>
-                <equals arg1="${ant.java.version}" arg2="1.8"/>
-            </not>
-            <not>
-                <equals arg1="${ant.java.version}" arg2="17"/>
-            </not>
-        </and>
+        <equals arg1="${ant.java.version}" arg2="11"/>
     </condition>
 
     <resources id="_jvm17_arg_items">
@@ -241,7 +234,7 @@
         <string>--add-exports java.rmi/sun.rmi.server=ALL-UNNAMED</string>
         <string>--add-exports java.sql/java.sql=ALL-UNNAMED</string>
         <string>--add-exports java.base/java.lang.ref=ALL-UNNAMED</string>
-        <string> --add-exports jdk.unsupported/sun.misc=ALL-UNNAMED</string>
+        <string>--add-exports jdk.unsupported/sun.misc=ALL-UNNAMED</string>
         <string>--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</string>
 
         <string>--add-opens java.base/java.lang.module=ALL-UNNAMED</string>
@@ -265,16 +258,9 @@
         <string>--add-opens java.base/java.math=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.lang.reflect=ALL-UNNAMED</string>
     </resources>
-    <pathconvert property="_jvm_args_concat" refid="_jvm17_arg_items" pathsep=" "/>
-    <condition property="java17-jvmargs" value="${_jvm_args_concat}" else="">
-        <and>
-            <not>
-                <equals arg1="${ant.java.version}" arg2="1.8"/>
-            </not>
-            <not>
-                <equals arg1="${ant.java.version}" arg2="11"/>
-            </not>
-        </and>
+    <pathconvert property="_jvm_args_concat2" refid="_jvm17_arg_items" pathsep=" "/>
+    <condition property="java17-jvmargs" value="${_jvm_args_concat2}" else="">
+        <equals arg1="${ant.java.version}" arg2="17"/>
     </condition>
 
     <!--
@@ -289,6 +275,7 @@
       In java 11 we also need to set a system property to enable netty to use Unsafe direct byte
       buffer construction (see CASSANDRA-16493)
     -->
+    <!-- Leaving  _jvm8_test_arg_items for now as we are not dropping Java 8 yet but it will be useless after CASSANDRA-18258-->
     <resources id="_jvm8_test_arg_items">
       <!-- TODO see CASSANDRA-16212 - we seem to OOM non stop now after CASSANDRA-16212, so to have clean CI while this gets looked into, disabling limiting metaspace
         <string>-XX:MaxMetaspaceExpansion=64M</string>
@@ -302,10 +289,15 @@
         <string>-Dio.netty.tryReflectionSetAccessible=true</string>
     </resources>
     <pathconvert property="_jvm11_test_arg_items_concat" refid="_jvm11_test_arg_items" pathsep=" "/>
-    <condition property="_std-test-jvmargs" value="${_jvm11_test_arg_items_concat}" else="${_jvm8_test_arg_items_concat}">
-        <not>
-            <equals arg1="${ant.java.version}" arg2="1.8"/>
-        </not>
+    <resources id="_jvm17_test_arg_items">
+        <string>-Dio.netty.tryReflectionSetAccessible=true</string>
+    </resources>
+    <pathconvert property="_jvm17_test_arg_items_concat" refid="_jvm17_test_arg_items" pathsep=" "/>
+    <condition property="_std-test-jvmargs11" value="${_jvm11_test_arg_items_concat}" else=" ">
+            <equals arg1="${ant.java.version}" arg2="11"/>
+    </condition>
+    <condition property="_std-test-jvmargs17" value="${_jvm17_test_arg_items_concat}" else=" ">
+        <equals arg1="${ant.java.version}" arg2="17"/>
     </condition>
 
     <!-- needed to compile org.apache.cassandra.utils.JMXServerUtils -->
@@ -1145,10 +1137,11 @@
         <jvmarg value="-Dcassandra.test.messagingService.nonGracefulShutdown=${cassandra.test.messagingService.nonGracefulShutdown}"/>
         <jvmarg value="-Dcassandra.use_nix_recursive_delete=${cassandra.use_nix_recursive_delete}"/>
         <jvmarg line="${java11-jvmargs}"/>
-        <jvmarg line ="${java17-jvmargs}"/>
+        <jvmarg line="${java17-jvmargs}"/>
         <!-- disable shrinks in quicktheories CASSANDRA-15554 -->
         <jvmarg value="-DQT_SHRINKS=0"/>
-        <jvmarg line="${_std-test-jvmargs}" />
+        <jvmarg line="${_std-test-jvmargs11}" />
+        <jvmarg line="${_std-test-jvmargs17}" />
         <jvmarg line="${test.jvm.args}" />
         <optjvmargs/>
         <!-- Uncomment to debug unittest, attach debugger to port 1416 -->
@@ -1818,8 +1811,8 @@
       <replace file=".idea/misc.xml" token="JDK_1_8" value="JDK_17"/>
       <replace file=".idea/misc.xml" token="1.8" value="17"/>
       <replaceregexp file=".idea/workspace.xml"
-                     match="name=&quot;VM_PARAMETERS&quot; value=&quot;(.*)&quot;"
-                     replace="name=&quot;VM_PARAMETERS&quot; value=&quot;\1 ${java17-jvmargs}&quot;"
+                     match="name=&quot;VM_PARAMETERS&quot; value=&quot;(.*)"
+                     replace="name=&quot;VM_PARAMETERS&quot; value=&quot;\1 ${java17-jvmargs}"
                      byline="true"/>
 
       <echo file=".idea/compiler.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>

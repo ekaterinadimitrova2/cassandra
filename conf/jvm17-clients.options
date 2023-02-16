@@ -34,6 +34,8 @@
 --add-exports java.rmi/sun.rmi.registry=ALL-UNNAMED
 --add-exports java.rmi/sun.rmi.server=ALL-UNNAMED
 --add-exports java.sql/java.sql=ALL-UNNAMED
+--add-exports jdk.unsupported/sun.misc=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
 
 
 --add-opens java.base/java.lang.module=ALL-UNNAMED
@@ -57,5 +59,8 @@
 --add-opens java.base/java.lang=ALL-UNNAMED
 # jamm
 --add-opens java.base/java.math=ALL-UNNAMED
+--add-opens jdk.compiler/com.sun.tools.javac=ALL-UNNAMED
+--add-opens java.base/java.lang=ALL-UNNAMED
+--add-opens java.base/java.lang.reflect=ALL-UNNAMED
 
 # The newline in the end of file is intentional
