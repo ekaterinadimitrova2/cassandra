@@ -43,8 +43,8 @@
         When building, javac's source and target flags are set to the jdk used, so lower JDKs are not supported at runtime.
         The use of both CASSANDRA_USE_JDK11 and use-jdk11 is deprecated.
     -->
-    <property name="java.default" value="1.8" />
-    <property name="java.supported" value="1.8,11,17" />
+    <property name="java.default" value="11" />
+    <property name="java.supported" value="11,17" />
 
     <!-- directory details -->
     <property name="basedir" value="."/>
@@ -1916,7 +1916,7 @@
   </target>
 
   <!-- ECJ 4.6.1 in standalone mode does not work with JPMS, so we skip this target for Java 11 -->
-  <target name="eclipse-warnings" depends="build, _assert_rat_output" description="Run eclipse compiler code analysis" if="java.version.8">
+  <target name="eclipse-warnings" depends="build, _assert_rat_output" description="Run eclipse compiler code analysis" if="java.version.11">
         <property name="ecj.log.dir" value="${build.dir}/ecj" />
         <property name="ecj.warnings.file" value="${ecj.log.dir}/eclipse_compiler_checks.txt"/>
         <mkdir  dir="${ecj.log.dir}" />
@@ -1934,6 +1934,8 @@
 	    <arg value="${java.default}" />
 	    <arg value="-target"/>
 	    <arg value="${ant.java.version}" />
+	    <arg value="--add-exports" />
+	    <arg value="java.rmi/sun.rmi.registry=ALL-UNNAMED" />
 	    <arg value="-d" />
             <arg value="none" />
 	    <arg value="-proc:none" />
