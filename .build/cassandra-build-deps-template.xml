@@ -71,6 +71,10 @@
       <artifactId>reflections</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.google.code.java-allocation-instrumenter</groupId>
       <artifactId>java-allocation-instrumenter</artifactId>
     </dependency>
