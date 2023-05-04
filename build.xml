@@ -1796,7 +1796,7 @@
     <replace file=".idea/misc.xml" token="1.8" value="${ant.java.version}"/>
     <replaceregexp file=".idea/workspace.xml"
                    match="name=&quot;VM_PARAMETERS&quot; value=&quot;(.*)"
-                   replace="name=&quot;VM_PARAMETERS&quot; value=&quot;\1 ${java-jvmargs}"
+                   replace="name=&quot;VM_PARAMETERS&quot; value=&quot;\1 ${java-jvmargs} ${_std-test-jvmargs}"
                    byline="true"/>
 
       <echo file=".idea/compiler.xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
