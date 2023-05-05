@@ -1916,7 +1916,7 @@
   </target>
 
   <!-- ECJ 4.6.1 in standalone mode does not work with JPMS, so we skip this target for Java 11 -->
-  <target name="eclipse-warnings" depends="build, _assert_rat_output" description="Run eclipse compiler code analysis">
+  <target name="eclipse-warnings" depends="build, _assert_rat_output" description="Run eclipse compiler code analysis" if="java.version.1.8">
         <property name="ecj.log.dir" value="${build.dir}/ecj" />
         <property name="ecj.warnings.file" value="${ecj.log.dir}/eclipse_compiler_checks.txt"/>
         <mkdir  dir="${ecj.log.dir}" />
