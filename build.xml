@@ -1817,6 +1817,14 @@
   </component>
 </project>]]></echo>
       <echo>"IDE configuration updated for use with JDK${ant.java.version}"</echo>
+      <echo>Please note that `ant realclean` does *NOT* remove IntelliJ-specific files</echo>
+      <echo/>
+      <echo>Warning! If you observer strange behavior in IntelliJ please</echo>
+      <echo>verify that the SDK that is being used is indeed version ${ant.java.version}.</echo>
+      <echo>The used JDK version can be verified in Project Structure/Project Setting/Project</echo>
+      <echo>and Project Structure/Platform Setting/SDKs</echo>
+      <echo>In particular it is worth checking if the used JDK, typically named "${ant.java.version}",</echo>
+      <echo>indeed points to a java ${ant.java.version} installation.</echo>
   </target>
 
   <!-- Generate IDEA project description files -->
