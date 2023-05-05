@@ -188,6 +188,14 @@
       <isset property="arch_x86" />
     </condition>
 
+    <resources id="_jvm8_arg_items">
+        <!-- add necessary args in <string> tags; see _jvm11_arg_items as an example -->
+    </resources>
+    <pathconvert property="_jvm8_args_concat" refid="_jvm8_arg_items" pathsep=" "/>
+    <condition property="java-jvmargs" value="${_jvm8_args_concat}">
+        <equals arg1="${ant.java.version}" arg2="1.8"/>
+    </condition>
+
     <resources id="_jvm11_arg_items">
         <string>-Djdk.attach.allowAttachSelf=true</string>
         <string>-XX:+UseConcMarkSweepGC</string>
@@ -219,8 +227,8 @@
         <string>--add-opens java.base/jdk.internal.util.jar=ALL-UNNAMED</string>
         <string>--add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED</string>
     </resources>
-    <pathconvert property="_jvm_args_concat" refid="_jvm11_arg_items" pathsep=" "/>
-    <condition property="java-jvmargs" value="${_jvm_args_concat}">
+    <pathconvert property="_jvm11_args_concat" refid="_jvm11_arg_items" pathsep=" "/>
+    <condition property="java-jvmargs" value="${_jvm11_args_concat}">
         <equals arg1="${ant.java.version}" arg2="11"/>
     </condition>
 
@@ -264,8 +272,8 @@
         <string>--add-opens java.base/java.lang.reflect=ALL-UNNAMED</string>
         <string>--add-opens java.base/java.net=ALL-UNNAMED</string>
     </resources>
-    <pathconvert property="_jvm_args_concat2" refid="_jvm17_arg_items" pathsep=" "/>
-    <condition property="java-jvmargs" value="${_jvm_args_concat2}">
+    <pathconvert property="_jvm17_args_concat" refid="_jvm17_arg_items" pathsep=" "/>
+    <condition property="java-jvmargs" value="${_jvm17_args_concat}">
         <equals arg1="${ant.java.version}" arg2="17"/>
     </condition>
 
@@ -299,6 +307,9 @@
         <string>-Dio.netty.tryReflectionSetAccessible=true</string>
     </resources>
     <pathconvert property="_jvm17_test_arg_items_concat" refid="_jvm17_test_arg_items" pathsep=" "/>
+    <condition property="_std-test-jvmargs" value="${_jvm8_test_arg_items_concat}">
+        <equals arg1="${ant.java.version}" arg2="1.8"/>
+    </condition>
     <condition property="_std-test-jvmargs" value="${_jvm11_test_arg_items_concat}">
             <equals arg1="${ant.java.version}" arg2="11"/>
     </condition>
