@@ -143,9 +143,9 @@ public final class JavaBasedUDFunction extends UDFunction
         settings.put(CompilerOptions.OPTION_ReportDeprecation,
                      CompilerOptions.IGNORE);
         settings.put(CompilerOptions.OPTION_Source,
-                     CompilerOptions.VERSION_1_8);
+                     CompilerOptions.VERSION_11);
         settings.put(CompilerOptions.OPTION_TargetPlatform,
-                     CompilerOptions.VERSION_1_8);
+                     CompilerOptions.VERSION_11);
 
         compilerOptions = new CompilerOptions(settings);
         compilerOptions.parseLiteralExpressionsAsConstants = true;
