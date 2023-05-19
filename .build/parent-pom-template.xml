@@ -303,6 +303,17 @@
         <version>1.1</version>
       </dependency>
       <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_core</artifactId>
+        <version>2.19.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>dataflow-errorprone</artifactId>
+        <version>3.15.0</version>
+      </dependency>
+      <dependency>
         <groupId>org.hdrhistogram</groupId>
         <artifactId>HdrHistogram</artifactId>
         <version>2.1.9</version>

@@ -497,7 +497,7 @@
 
     <target name="_build_java">
         <path id="processorpath.ref">
-            <pathelement location="${user.home}/.m2/repository/com/google/errorprone/error_prone_core/2.18.0/error_prone_core-2.18.0-with-dependencies.jar"/>
+            <pathelement location="${user.home}/.m2/repository/com/google/errorprone/error_prone_core/2.19.1/error_prone_core-2.19.1.jar"/>
             <pathelement location="${user.home}/.m2/repository/org/checkerframework/dataflow-errorprone/3.15.0/dataflow-errorprone-3.15.0.jar"/>
         </path>
         <!-- Note: we cannot use javac's 'release' option, as that does not allow accessing sun.misc.Unsafe nor
@@ -513,6 +513,16 @@
             <compilerarg value="-processorpath"/>
             <compilerarg pathref="processorpath.ref"/>
             <compilerarg value="-Xplugin:ErrorProne -Xep:DeadException:ERROR" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED" />
+            <compilerarg value="-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED" />
+            <compilerarg value="-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED" />
+            <compilerarg value="-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED" />
             <compilerarg line="${jdk11plus-javac-exports}"/>
             <classpath>
                 <path refid="cassandra.classpath"/>
