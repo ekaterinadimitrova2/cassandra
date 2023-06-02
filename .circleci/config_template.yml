@@ -228,7 +228,7 @@ j8_repeated_upgrade_dtest_executor: &j8_repeated_upgrade_dtest_executor
     name: java8-executor
   parallelism: 4
 
-j8_repeated_jvm_upgrade_dtest_executor: &j8_repeated_jvm_upgrade_dtest_executor
+j11_repeated_jvm_upgrade_dtest_executor: &j11_repeated_jvm_upgrade_dtest_executor
   executor:
     name: java8-executor
   parallelism: 4
@@ -537,16 +537,16 @@ j8_separate_jobs: &j8_separate_jobs
           - start_j8_dtest_jars_build
     - start_jvm_upgrade_dtests:
         type: approval
-    - j8_jvm_upgrade_dtests:
+    - j11_jvm_upgrade_dtests:
         requires:
           - start_jvm_upgrade_dtests
-          - j8_dtest_jars_build
+          - j11_dtest_jars_build
     - start_jvm_upgrade_dtests_repeat:
         type: approval
-    - j8_jvm_upgrade_dtests_repeat:
+    - j11_jvm_upgrade_dtests_repeat:
         requires:
           - start_jvm_upgrade_dtests_repeat
-          - j8_dtest_jars_build
+          - j11_dtest_jars_build
     # Python DTests
     - start_j8_dtests:
         type: approval
@@ -977,16 +977,16 @@ j8_pre-commit_jobs: &j8_pre-commit_jobs
           - j8_build
     - start_jvm_upgrade_dtests:
         type: approval
-    - j8_dtest_jars_build:
+    - j11_dtest_jars_build:
         requires:
           - j8_build
           - start_jvm_upgrade_dtests
-    - j8_jvm_upgrade_dtests:
+    - j11_jvm_upgrade_dtests:
         requires:
-          - j8_dtest_jars_build
-    - j8_jvm_upgrade_dtests_repeat:
+          - j11_dtest_jars_build
+    - j11_jvm_upgrade_dtests_repeat:
         requires:
-          - j8_dtest_jars_build
+          - j11_dtest_jars_build
     # Python DTests
     - j8_dtests:
         requires:
@@ -1657,7 +1657,7 @@ jobs:
     executor: java11-executor
     <<: *build_common
 
-  j8_dtest_jars_build:
+  j11_dtest_jars_build:
     executor: java8-executor
     parallelism: 1
     steps:
@@ -1750,8 +1750,8 @@ jobs:
           target: "testclasslist"
           arguments: "-Dtest.jvm.args='-Dcassandra.dtest.num_tokens=16'"
 
-  j8_jvm_upgrade_dtests:
-    <<: *j8_medium_par_executor
+  j11_jvm_upgrade_dtests:
+    <<: *j11_seq_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
@@ -2551,8 +2551,8 @@ jobs:
       - log_environment
       - run_simulator_dtests_repeat
 
-  j8_jvm_upgrade_dtests_repeat:
-    <<: *j8_repeated_jvm_upgrade_dtest_executor
+  j11_jvm_upgrade_dtests_repeat:
+    <<: *j11_repeated_jvm_upgrade_dtest_executor
     steps:
       - attach_workspace:
           at: /home/cassandra
