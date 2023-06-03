@@ -1,5 +1,5 @@
---- config_template.yml	2023-03-10 09:47:05.552165036 -0600
-+++ config_template.yml.PAID	2023-03-10 09:51:21.174071576 -0600
+--- config_template.yml	2023-06-02 21:12:13.000000000 -0400
++++ config_template.yml.PAID	2023-06-02 21:30:03.000000000 -0400
 @@ -156,14 +156,14 @@
  j8_par_executor: &j8_par_executor
    executor:
@@ -19,7 +19,7 @@
  
  j8_small_executor: &j8_small_executor
    executor:
-@@ -171,29 +171,41 @@
+@@ -171,77 +171,101 @@
      exec_resource_class: medium
    parallelism: 1
  
@@ -68,13 +68,17 @@
  
  j11_small_executor: &j11_small_executor
    executor:
-@@ -204,44 +216,56 @@
+     name: java11-executor
+-    #exec_resource_class: medium
++    #exec_resource_class: xlarge
+   parallelism: 1
+ 
  j11_medium_par_executor: &j11_medium_par_executor
    executor:
      name: java11-executor
 -    #exec_resource_class: xlarge
 -  parallelism: 1
-+    exec_resource_class: xlarge
++    exec_resource_class: large
 +  parallelism: 4
 +
 +j11_large_par_executor: &j11_large_par_executor
@@ -111,9 +115,9 @@
 +    exec_resource_class: xlarge
 +  parallelism: 25
  
- j8_repeated_jvm_upgrade_dtest_executor: &j8_repeated_jvm_upgrade_dtest_executor
+ j11_repeated_jvm_upgrade_dtest_executor: &j11_repeated_jvm_upgrade_dtest_executor
    executor:
-     name: java8-executor
+     name: java11-executor
 -  parallelism: 4
 +    exec_resource_class: large
 +  parallelism: 25
