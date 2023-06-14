@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.cassandra.index.sai.iterators.KeyRangeAntiJoinIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +61,32 @@ public class IndexSearchResultIterator extends KeyRangeIterator
                                                   boolean includeMemtables,
                                                   Runnable onClose)
     {
+        KeyRangeIterator keyIterator = buildKeyIterator(expression, sstableIndexes, keyRange, queryContext, includeMemtables, onClose);
+
+        // For NOT CONTAINS or NOT CONTAINS KEY it is not enought to just return the primary keys
+        // for values not matching the value being queried.
+        //
+        // keys k such that row(k) not contains v =
+        // (keys k such that row(k) contains x != v || row(k) empty) \ (keys k such that row(k) contains v)
+        //
+        if (expression.getIndexOperator() == Expression.IndexOperator.NOT_CONTAINS_KEY
+                || expression.getIndexOperator() == Expression.IndexOperator.NOT_CONTAINS_VALUE)
+        {
+            Expression negExpression = expression.negated();
+            KeyRangeIterator negIterator = buildKeyIterator(negExpression, sstableIndexes, keyRange, queryContext, includeMemtables, onClose);
+            keyIterator = KeyRangeAntiJoinIterator.create(keyIterator, negIterator);
+        }
+
+        return new IndexSearchResultIterator(keyIterator, onClose);
+    }
+
+    private static KeyRangeIterator buildKeyIterator(Expression expression,
+                                                     Collection<SSTableIndex> sstableIndexes,
+                                                     AbstractBounds<PartitionPosition> keyRange,
+                                                     QueryContext queryContext,
+                                                     boolean includeMemtables,
+                                                     Runnable onClose)
+    {
         List<KeyRangeIterator> subIterators = new ArrayList<>(sstableIndexes.size() + (includeMemtables ? 1 : 0));
 
         if (includeMemtables)
@@ -93,8 +120,7 @@ public class IndexSearchResultIterator extends KeyRangeIterator
             }
         }
 
-        KeyRangeIterator union = KeyRangeUnionIterator.build(subIterators, () -> {});
-        return new IndexSearchResultIterator(union, onClose);
+        return KeyRangeUnionIterator.build(subIterators, onClose);
     }
 
     public static IndexSearchResultIterator build(List<KeyRangeIterator> sstableIntersections,

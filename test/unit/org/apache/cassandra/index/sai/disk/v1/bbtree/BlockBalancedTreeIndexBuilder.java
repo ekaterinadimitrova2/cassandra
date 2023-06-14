@@ -81,6 +81,7 @@ public class BlockBalancedTreeIndexBuilder
         }
 
         @Override
+<<<<<<< HEAD
         public long ceiling(Token token)
         {
             return token.getLongValue();
@@ -90,6 +91,11 @@ public class BlockBalancedTreeIndexBuilder
         public long floor(Token token)
         {
             return token.getLongValue();
+=======
+        public long count()
+        {
+            return Long.MAX_VALUE;
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
         }
     };
     public static final PrimaryKeyMap.Factory TEST_PRIMARY_KEY_MAP_FACTORY = () -> TEST_PRIMARY_KEY_MAP;

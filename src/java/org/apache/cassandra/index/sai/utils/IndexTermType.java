@@ -248,6 +248,8 @@ public class IndexTermType
                 break;
             case CONTAINS:
             case CONTAINS_KEY:
+            case NOT_CONTAINS:
+            case NOT_CONTAINS_KEY:
                 multiExpression = true;
                 break;
         }
@@ -576,9 +578,14 @@ public class IndexTermType
 
         if (isNonFrozenCollection())
         {
-            if (indexTargetType == IndexTarget.Type.KEYS) return indexOperator == Expression.IndexOperator.CONTAINS_KEY;
-            if (indexTargetType == IndexTarget.Type.VALUES) return indexOperator == Expression.IndexOperator.CONTAINS_VALUE;
-            return indexTargetType == IndexTarget.Type.KEYS_AND_VALUES && indexOperator == Expression.IndexOperator.EQ;
+            if (indexTargetType == IndexTarget.Type.KEYS)
+                return indexOperator == Expression.IndexOperator.CONTAINS_KEY
+                        || indexOperator == Expression.IndexOperator.NOT_CONTAINS_KEY;
+            if (indexTargetType == IndexTarget.Type.VALUES)
+                return indexOperator == Expression.IndexOperator.CONTAINS_VALUE
+                        || indexOperator == Expression.IndexOperator.NOT_CONTAINS_VALUE;
+            return indexTargetType == IndexTarget.Type.KEYS_AND_VALUES &&
+                    (indexOperator == Expression.IndexOperator.EQ || indexOperator == Expression.IndexOperator.NEQ);
         }
 
         if (indexTargetType == IndexTarget.Type.FULL)

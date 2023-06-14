@@ -71,6 +71,15 @@ public class TrieMemoryIndex extends MemoryIndex
         super(index);
         this.data = new InMemoryTrie<>(TrieMemtable.BUFFER_TYPE);
         this.primaryKeysReducer = new PrimaryKeysReducer();
+<<<<<<< HEAD
+=======
+        // The use of the analyzer is within a synchronized block so can be considered thread-safe
+        this.analyzerFactory = indexContext.getAnalyzerFactory();
+        this.validator = indexContext.getValidator();
+        this.isLiteral = TypeUtil.isLiteral(validator);
+
+
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
     }
 
     /**

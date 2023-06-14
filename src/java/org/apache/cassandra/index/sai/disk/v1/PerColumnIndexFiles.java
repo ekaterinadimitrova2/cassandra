@@ -22,6 +22,11 @@ import java.io.Closeable;
 import java.util.EnumMap;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import jnr.ffi.annotations.In;
+import org.apache.cassandra.index.sai.IndexContext;
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 import org.apache.cassandra.index.sai.disk.format.IndexComponent;
 import org.apache.cassandra.index.sai.disk.format.IndexDescriptor;
 import org.apache.cassandra.index.sai.utils.IndexIdentifier;

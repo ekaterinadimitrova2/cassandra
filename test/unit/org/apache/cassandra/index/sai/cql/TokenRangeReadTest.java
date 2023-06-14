@@ -53,6 +53,7 @@ public class TokenRangeReadTest extends SAITester
         execute("INSERT INTO %S(k1, v1) values(2, {'a', 'd'})");
 
         beforeAndAfterFlush(() -> {
+<<<<<<< HEAD
             assertInvalidMessage(StatementRestrictions.REQUIRES_ALLOW_FILTERING_MESSAGE, "SELECT k1 FROM %s WHERE v1 NOT CONTAINS 'd'");
             assertInvalidMessage(StatementRestrictions.REQUIRES_ALLOW_FILTERING_MESSAGE, "SELECT k1 FROM %s WHERE token(k1) >= token(1) AND token(k1) <= token(1) AND v1 NOT CONTAINS 'z'");
             assertInvalidMessage(StatementRestrictions.REQUIRES_ALLOW_FILTERING_MESSAGE, "SELECT k1 FROM %s WHERE token(k1) >= token(2) AND token(k1) <= token(2) AND v1 NOT CONTAINS 'z'");
@@ -60,4 +61,14 @@ public class TokenRangeReadTest extends SAITester
             assertInvalidMessage(StatementRestrictions.REQUIRES_ALLOW_FILTERING_MESSAGE, "SELECT k1 FROM %s WHERE token(k1) >= token(2) AND token(k1) < token(2) AND v1 NOT CONTAINS 'z'");
         });
     }
+=======
+            assertRows(execute("SELECT k1 FROM %s WHERE v1 NOT CONTAINS 'd'"), row(1));
+            assertRows(execute("SELECT k1 FROM %s WHERE token(k1) >= token(1) AND token(k1) <= token(1) AND v1 NOT CONTAINS 'z'"), row(1));
+            assertRows(execute("SELECT k1 FROM %s WHERE token(k1) >= token(2) AND token(k1) <= token(2) AND v1 NOT CONTAINS 'z'"), row(2));
+            assertEmpty(execute("SELECT k1 FROM %s WHERE token(k1) > token(2) AND token(k1) <= token(2) AND v1 NOT CONTAINS 'z'"));
+            assertEmpty(execute("SELECT k1 FROM %s WHERE token(k1) >= token(2) AND token(k1) < token(2) AND v1 NOT CONTAINS 'z'"));
+        });
+    }
+
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 }

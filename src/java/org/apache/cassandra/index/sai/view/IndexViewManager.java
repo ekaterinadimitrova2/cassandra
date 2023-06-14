@@ -169,8 +169,8 @@ public class IndexViewManager
 
             if (sstableContext.indexDescriptor.isIndexEmpty(index.termType(), index.identifier()))
             {
-                logger.debug(index.identifier().logMessage("No on-disk index was built for SSTable {} because the SSTable " +
-                                                           "had no indexable rows for the index."), sstableContext.descriptor());
+                SSTableIndex empty = new EmptyIndex(sstableContext, this);
+                valid.add(empty);
                 continue;
             }
 

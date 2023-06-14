@@ -39,20 +39,37 @@ import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.plan.Expression;
 import org.apache.cassandra.index.sai.utils.PrimaryKey;
 import org.apache.cassandra.index.sai.utils.PrimaryKeys;
+<<<<<<< HEAD
+=======
+import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
+import org.apache.cassandra.index.sai.utils.TypeUtil;
+import org.apache.cassandra.utils.ByteBufferUtil;
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 import org.apache.cassandra.utils.Pair;
 import org.apache.cassandra.utils.bytecomparable.ByteComparable;
 
 public class MemtableIndex implements MemtableOrdering
 {
+<<<<<<< HEAD
     private final MemoryIndex memoryIndex;
+=======
+    private final TrieMemoryIndex index;
+
+    private final IndexContext indexContext;
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
     private final LongAdder writeCount = new LongAdder();
     private final LongAdder estimatedMemoryUsed = new LongAdder();
     private final AbstractType<?> type;
 
     public MemtableIndex(StorageAttachedIndex index)
     {
+<<<<<<< HEAD
         this.memoryIndex = index.termType().isVector() ? new VectorMemoryIndex(index) : new TrieMemoryIndex(index);
         this.type = index.termType().indexType();
+=======
+        this.index = new TrieMemoryIndex(indexContext);
+        this.indexContext = indexContext;
+>>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
     }
 
     public long writeCount()
