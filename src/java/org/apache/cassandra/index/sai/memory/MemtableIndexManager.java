@@ -38,6 +38,7 @@ import org.apache.cassandra.db.rows.Row;
 import org.apache.cassandra.dht.AbstractBounds;
 import org.apache.cassandra.index.sai.QueryContext;
 import org.apache.cassandra.index.sai.StorageAttachedIndex;
+import org.apache.cassandra.index.sai.iterators.KeyRangeAntiJoinIterator;
 import org.apache.cassandra.index.sai.plan.Expression;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.iterators.KeyRangeUnionIterator;
@@ -73,7 +74,11 @@ public class MemtableIndexManager
         if (index.termType().isNonFrozenCollection())
         {
             Iterator<ByteBuffer> bufferIterator = index.termType().valuesOf(row, FBUtilities.nowInSeconds());
-            if (bufferIterator != null)
+            if (bufferIterator == null || !bufferIterator.hasNext())
+            {
+                bytes += target.index(key, row.clustering(), null);
+            }
+            else
             {
                 while (bufferIterator.hasNext())
                 {
@@ -136,6 +141,14 @@ public class MemtableIndexManager
 
     public KeyRangeIterator searchMemtableIndexes(QueryContext queryContext, Expression e, AbstractBounds<PartitionPosition> keyRange)
     {
+        if (e.getIndexOperator().isNonEquality())
+        {
+            Expression negExpression = e.negated();
+            KeyRangeIterator allKeys = scanMemtables(keyRange);
+            KeyRangeIterator matchedKeys = searchMemtableIndexes(queryContext, negExpression, keyRange);
+            return KeyRangeAntiJoinIterator.create(allKeys, matchedKeys, () -> {});
+        }
+
         Collection<MemtableIndex> memtableIndexes = liveMemtableIndexMap.values();
 
         if (memtableIndexes.isEmpty())
@@ -169,6 +182,24 @@ public class MemtableIndexManager
             builder.add(index.limitToTopResults(source, e, context.vectorContext().limit()));
         }
 
+        return builder.build();
+    }
+
+    private KeyRangeIterator scanMemtables(AbstractBounds<PartitionPosition> keyRange)
+    {
+        Collection<Memtable> memtables = liveMemtableIndexMap.keySet();
+        if (memtables.isEmpty())
+        {
+            return KeyRangeIterator.empty();
+        }
+
+        KeyRangeIterator.Builder builder = KeyRangeUnionIterator.builder(memtables.size());
+
+        for (Memtable memtable : memtables)
+        {
+            KeyRangeIterator memtableIterator = MemtableKeyRangeIterator.create(memtable, keyRange);
+            builder.add(memtableIterator);
+        }
         return builder.build();
     }
 

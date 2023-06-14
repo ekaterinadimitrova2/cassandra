@@ -103,6 +103,12 @@ public class SSTableIndexesSystemView extends AbstractVirtualTable
 
                         for (SSTableIndex sstableIndex : index.view())
                         {
+                            // Empty indexes were introduced to make negative searches
+                            // (NOT_EQ, NOT_CONTAINS, NOT_CONTAINS_KEY) work, but they don't have any representation
+                            // on disk, so for backwards compatibility we're not reporting them.
+                            if (sstableIndex.isEmpty())
+                                continue;
+
                             SSTableReader sstable = sstableIndex.getSSTable();
                             Descriptor descriptor = sstable.descriptor;
                             AbstractBounds<Token> bounds = sstable.getBounds();

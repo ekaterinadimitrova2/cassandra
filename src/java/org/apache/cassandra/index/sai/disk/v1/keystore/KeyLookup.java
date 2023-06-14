@@ -130,7 +130,7 @@ public class KeyLookup
             this.clustering = this.keysInput.readByte() == 1;
             this.keysFilePointer = this.keysInput.getFilePointer();
             this.blockOffsets = new LongArray.DeferredLongArray(blockOffsetsFactory::open);
-            this.currentKey = new BytesRef(keyLookupMeta.maxKeyLength);
+            this.currentKey = new BytesRef(Math.max(keyLookupMeta.maxKeyLength, 0)); // maxKeyLength can be negative if keyLookupMeta.keyCount == 0
             this.nextBlockKey = new BytesRef(keyLookupMeta.maxKeyLength);
             keysInput.seek(keysFilePointer);
             readKey(currentPointId, currentKey);

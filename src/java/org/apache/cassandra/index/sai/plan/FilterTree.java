@@ -118,12 +118,12 @@ public class FilterTree
                 if (filter.getIndexTermType().isNonFrozenCollection())
                 {
                     Iterator<ByteBuffer> valueIterator = filter.getIndexTermType().valuesOf(localRow, now);
-                    result = localOperator.apply(result, collectionMatch(valueIterator, filter));
+                    result = localOperator.apply(result, filter.isSatisfiedBy(valueIterator));
                 }
                 else
                 {
                     ByteBuffer value = filter.getIndexTermType().valueOf(key, localRow, now);
-                    result = localOperator.apply(result, singletonMatch(value, filter));
+                    result = localOperator.apply(result, filter.isSatisfiedBy(value));
                 }
 
                 // If the operation is an AND then exit early if we get a single false
@@ -136,27 +136,5 @@ public class FilterTree
             }
         }
         return result;
-    }
-
-    private boolean singletonMatch(ByteBuffer value, Expression filter)
-    {
-        return value != null && filter.isSatisfiedBy(value);
-    }
-
-    private boolean collectionMatch(Iterator<ByteBuffer> valueIterator, Expression filter)
-    {
-        if (valueIterator == null)
-            return false;
-
-        while (valueIterator.hasNext())
-        {
-            ByteBuffer value = valueIterator.next();
-            if (value == null)
-                continue;
-
-            if (filter.isSatisfiedBy(value))
-                return true;
-        }
-        return false;
     }
 }

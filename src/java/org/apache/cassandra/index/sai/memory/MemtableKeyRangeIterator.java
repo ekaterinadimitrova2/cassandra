@@ -1,0 +1,168 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.cassandra.index.sai.memory;
+
+import org.apache.cassandra.db.*;
+import org.apache.cassandra.db.filter.ClusteringIndexSliceFilter;
+import org.apache.cassandra.db.filter.ColumnFilter;
+import org.apache.cassandra.db.memtable.Memtable;
+import org.apache.cassandra.db.partitions.UnfilteredPartitionIterator;
+import org.apache.cassandra.db.rows.Row;
+import org.apache.cassandra.db.rows.Unfiltered;
+import org.apache.cassandra.db.rows.UnfilteredRowIterator;
+import org.apache.cassandra.dht.AbstractBounds;
+import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
+import org.apache.cassandra.index.sai.utils.PrimaryKey;
+import org.apache.cassandra.io.util.FileUtils;
+import org.apache.cassandra.schema.TableMetadata;
+
+/**
+ * Iterates over primary keys in a memtable
+ */
+public class MemtableKeyRangeIterator extends KeyRangeIterator
+{
+    private final Memtable memtable;
+    private final PrimaryKey.Factory pkFactory;
+    private final AbstractBounds<PartitionPosition> keyRange;
+    private final ColumnFilter columns;
+    private UnfilteredPartitionIterator partitionIterator;
+    private UnfilteredRowIterator rowIterator;
+
+    private MemtableKeyRangeIterator(Memtable memtable,
+                                     PrimaryKey.Factory pkFactory,
+                                     AbstractBounds<PartitionPosition> keyRange)
+    {
+        super(minKey(memtable, pkFactory),
+              maxKey(memtable, pkFactory),
+              memtable.operationCount());
+
+        TableMetadata metadata = memtable.metadata();
+        this.memtable = memtable;
+        this.pkFactory = pkFactory;
+        this.keyRange = keyRange;
+        this.columns = ColumnFilter.selectionBuilder()
+                                           .addAll(metadata.partitionKeyColumns())
+                                           .addAll(metadata.clusteringColumns())
+                                           .build();
+
+        DataRange dataRange = new DataRange(keyRange, new ClusteringIndexSliceFilter(Slices.ALL, false));
+        this.partitionIterator = memtable.partitionIterator(columns, dataRange, null);
+        this.rowIterator = null;
+    }
+
+    private static PrimaryKey minKey(Memtable memtable, PrimaryKey.Factory factory)
+    {
+        DecoratedKey pk = memtable.minPartitionKey();
+
+        if (pk == null)
+            return null;
+
+        if (memtable.metadata().comparator.size() == 0)
+            return factory.create(pk);
+
+        return factory.create(pk, Clustering.EMPTY);
+    }
+
+    private static PrimaryKey maxKey(Memtable memtable, PrimaryKey.Factory factory)
+    {
+        DecoratedKey pk = memtable.maxPartitionKey();
+
+        if (pk==null)
+            return null;
+
+        if (memtable.metadata().comparator.size() == 0)
+            return factory.create(pk);
+
+        return factory.create(pk, Clustering.EMPTY);
+    }
+
+    public static MemtableKeyRangeIterator create(Memtable memtable, AbstractBounds<PartitionPosition> keyRange)
+    {
+        PrimaryKey.Factory pkFactory = new PrimaryKey.Factory(memtable.metadata().partitioner, memtable.metadata().comparator);
+        return new MemtableKeyRangeIterator(memtable, pkFactory, keyRange);
+    }
+
+    @Override
+    protected void performSkipTo(PrimaryKey nextKey)
+    {
+        PartitionPosition start = nextKey.partitionKey() != null
+                                  ? nextKey.partitionKey()
+                                  : nextKey.token().minKeyBound();
+        if (!keyRange.right.isMinimum() && start.compareTo(keyRange.right) > 0)
+        {
+            partitionIterator = EmptyIterators.unfilteredPartition(memtable.metadata());
+            rowIterator = null;
+            return;
+        }
+
+        AbstractBounds<PartitionPosition> partitionBounds = AbstractBounds.bounds(start, true, keyRange.right, true);
+        DataRange dataRange = new DataRange(partitionBounds, new ClusteringIndexSliceFilter(Slices.ALL, false));
+        FileUtils.closeQuietly(partitionIterator);
+        partitionIterator = memtable.partitionIterator(columns, dataRange, null);
+        if (partitionIterator.hasNext())
+        {
+            this.rowIterator = partitionIterator.next();
+            if (!nextKey.hasEmptyClustering() && rowIterator.partitionKey().equals(nextKey.partitionKey()))
+            {
+                Slice slice = Slice.make(nextKey.clustering(), Clustering.EMPTY);
+                Slices slices = Slices.with(memtable.metadata().comparator, slice);
+                FileUtils.closeQuietly(rowIterator);
+                rowIterator = memtable.rowIterator(nextKey.partitionKey(), slices, columns, false, null);
+            }
+        }
+    }
+
+    @Override
+    public void close()
+    {
+        partitionIterator.close();
+        if (rowIterator != null)
+            rowIterator.close();
+    }
+
+    @Override
+    protected PrimaryKey computeNext()
+    {
+        while (hasNextRow(rowIterator) || partitionIterator.hasNext())
+        {
+            if (!hasNextRow(rowIterator))
+            {
+                FileUtils.closeQuietly(rowIterator);
+                rowIterator = partitionIterator.next();
+                continue;
+            }
+
+            Unfiltered unfiltered = rowIterator.next();
+            if (unfiltered.isRow())
+            {
+                Row row = (Row) unfiltered;
+                if (pkFactory.hasClustering())
+                    return pkFactory.create(rowIterator.partitionKey(), row.clustering());
+
+                return pkFactory.create(rowIterator.partitionKey());
+            }
+        }
+        return endOfData();
+    }
+
+    private static boolean hasNextRow(UnfilteredRowIterator rowIterator)
+    {
+        return rowIterator != null && rowIterator.hasNext();
+    }
+}

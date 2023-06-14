@@ -20,6 +20,7 @@ package org.apache.cassandra.index.sai.disk;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -213,6 +214,11 @@ public abstract class SSTableIndex implements SegmentOrdering
         }
     }
 
+    public boolean isEmpty()
+    {
+        return this instanceof EmptyIndex;
+    }
+
     public void release()
     {
         int n = references.decrementAndGet();
@@ -266,5 +272,11 @@ public abstract class SSTableIndex implements SegmentOrdering
                           .add("maxTerm", indexTermType.asString(maxTerm()))
                           .add("totalRows", sstableContext.sstable.getTotalRows())
                           .toString();
+    }
+
+    protected final List<KeyRangeIterator> allSSTableKeys(AbstractBounds<PartitionPosition> keyRange) throws IOException
+    {
+        PrimaryKeyMapIterator iterator = (PrimaryKeyMapIterator) PrimaryKeyMapIterator.create(sstableContext, keyRange);
+        return Collections.singletonList(iterator);
     }
 }

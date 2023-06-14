@@ -65,7 +65,8 @@ public class View implements Iterable<SSTableIndex>
      */
     public Collection<SSTableIndex> match(Expression expression)
     {
-        if (expression.getIndexOperator() == Expression.IndexOperator.ANN)
+        if (expression.getIndexOperator() == Expression.IndexOperator.ANN
+                || expression.getIndexOperator().isNonEquality())
             return getIndexes();
 
         return rangeTermTree.search(expression);

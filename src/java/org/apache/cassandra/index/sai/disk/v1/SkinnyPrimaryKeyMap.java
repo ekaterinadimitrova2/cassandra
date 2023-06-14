@@ -167,6 +167,12 @@ public class SkinnyPrimaryKeyMap implements PrimaryKeyMap
     }
 
     @Override
+    public long count()
+    {
+        return rowIdToTokenArray.length();
+    }
+
+    @Override
     public void close()
     {
         FileUtils.closeQuietly(Arrays.asList(partitionKeyCursor, rowIdToTokenArray, rowIdToPartitionIdArray));

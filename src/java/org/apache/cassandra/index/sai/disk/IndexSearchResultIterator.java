@@ -60,6 +60,17 @@ public class IndexSearchResultIterator extends KeyRangeIterator
                                                   boolean includeMemtables,
                                                   Runnable onClose)
     {
+        KeyRangeIterator keyIterator = buildKeyIterator(expression, sstableIndexes, keyRange, queryContext, includeMemtables, onClose);
+        return new IndexSearchResultIterator(keyIterator, onClose);
+    }
+
+    private static KeyRangeIterator buildKeyIterator(Expression expression,
+                                                     Collection<SSTableIndex> sstableIndexes,
+                                                     AbstractBounds<PartitionPosition> keyRange,
+                                                     QueryContext queryContext,
+                                                     boolean includeMemtables,
+                                                     Runnable onClose)
+    {
         List<KeyRangeIterator> subIterators = new ArrayList<>(sstableIndexes.size() + (includeMemtables ? 1 : 0));
 
         if (includeMemtables)
@@ -93,8 +104,7 @@ public class IndexSearchResultIterator extends KeyRangeIterator
             }
         }
 
-        KeyRangeIterator union = KeyRangeUnionIterator.build(subIterators, () -> {});
-        return new IndexSearchResultIterator(union, onClose);
+        return KeyRangeUnionIterator.build(subIterators, onClose);
     }
 
     public static IndexSearchResultIterator build(List<KeyRangeIterator> sstableIntersections,

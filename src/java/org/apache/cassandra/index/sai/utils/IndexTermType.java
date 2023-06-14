@@ -21,16 +21,7 @@ package org.apache.cassandra.index.sai.utils;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -238,20 +229,31 @@ public class IndexTermType
      * Returns {@code true} if the {@link RowFilter.Expression} passed is backed by a non-frozen collection and the
      * {@code Operator} is one that cannot be merged together.
      */
-    public boolean isMultiExpression(RowFilter.Expression expression)
+    public boolean isMultiExpression(RowFilter.Expression expression,
+                                     boolean perColumnIsEmpty,
+                                     Map<ColumnMetadata, Boolean> columnIsMultiExpression)
     {
-        boolean multiExpression = false;
+        boolean isMultiExpression = columnIsMultiExpression.getOrDefault(expression.column(), Boolean.FALSE);
         switch (expression.operator())
         {
             case EQ:
-                multiExpression = isNonFrozenCollection();
+                isMultiExpression = isNonFrozenCollection();
                 break;
             case CONTAINS:
             case CONTAINS_KEY:
-                multiExpression = true;
+            case NOT_CONTAINS:
+            case NOT_CONTAINS_KEY:
+                isMultiExpression = true;
+                break;
+            case NEQ:
+                // NEQ operator will always be a multiple expression if it is the only operator
+                // (e.g. multiple NEQ expressions)
+                isMultiExpression = isMultiExpression || perColumnIsEmpty;
                 break;
         }
-        return multiExpression;
+        columnIsMultiExpression.put(expression.column(), isMultiExpression);
+
+        return isMultiExpression;
     }
 
     /**
@@ -576,9 +578,14 @@ public class IndexTermType
 
         if (isNonFrozenCollection())
         {
-            if (indexTargetType == IndexTarget.Type.KEYS) return indexOperator == Expression.IndexOperator.CONTAINS_KEY;
-            if (indexTargetType == IndexTarget.Type.VALUES) return indexOperator == Expression.IndexOperator.CONTAINS_VALUE;
-            return indexTargetType == IndexTarget.Type.KEYS_AND_VALUES && indexOperator == Expression.IndexOperator.EQ;
+            if (indexTargetType == IndexTarget.Type.KEYS)
+                return indexOperator == Expression.IndexOperator.CONTAINS_KEY
+                        || indexOperator == Expression.IndexOperator.NOT_CONTAINS_KEY;
+            if (indexTargetType == IndexTarget.Type.VALUES)
+                return indexOperator == Expression.IndexOperator.CONTAINS_VALUE
+                        || indexOperator == Expression.IndexOperator.NOT_CONTAINS_VALUE;
+            return indexTargetType == IndexTarget.Type.KEYS_AND_VALUES &&
+                    (indexOperator == Expression.IndexOperator.EQ || indexOperator == Expression.IndexOperator.NEQ);
         }
 
         if (indexTargetType == IndexTarget.Type.FULL)

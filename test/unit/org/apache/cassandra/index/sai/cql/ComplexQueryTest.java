@@ -65,4 +65,29 @@ public class ComplexQueryTest extends SAITester
         var result = execute("SELECT pk FROM %s WHERE str_val = 'A' AND val = 'A'");
         assertRows(result, row(3));
     }
+
+    @Test
+    public void complexQueryWithMultipleNEQ()
+    {
+        createTable("CREATE TABLE %s (pk int, ck int, a int, b int, PRIMARY KEY(pk, ck))");
+        createIndex("CREATE CUSTOM INDEX ON %s(a) USING 'StorageAttachedIndex'");
+        createIndex("CREATE CUSTOM INDEX ON %s(b) USING 'StorageAttachedIndex'");
+
+        execute("INSERT INTO %s (pk, ck, a, b) VALUES (?, ?, ?, ?)", 1, 1, 1, 5);
+        execute("INSERT INTO %s (pk, ck, a, b) VALUES (?, ?, ?, ?)", 1, 2, 2, 6);
+        execute("INSERT INTO %s (pk, ck, a, b) VALUES (?, ?, ?, ?)", 1, 3, 3, 7);
+        execute("INSERT INTO %s (pk, ck, a, b) VALUES (?, ?, ?, ?)", 1, 4, 4, 8);
+        execute("INSERT INTO %s (pk, ck, a, b) VALUES (?, ?, ?, ?)", 1, 5, null, null);
+
+        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a != 2 AND b != 7"), row(1), row(4));
+        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a != 2 AND a != 3"), row(1), row(4));
+        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) ALLOW FILTERING"), row(1), row(4));
+        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) AND b NOT IN (7, 8) ALLOW FILTERING"), row(1));
+        assertInvalidRequestMessage("Cannot execute this query as it might involve data filtering and thus may have unpredictable performance." +
+                                    " If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING",
+                                    "SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3)");
+        assertInvalidRequestMessage("Cannot execute this query as it might involve data filtering and thus may have unpredictable performance." +
+                                    " If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING",
+                                    "SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) AND b NOT IN (7, 8)");
+    }
 }

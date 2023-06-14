@@ -21,6 +21,7 @@ package org.apache.cassandra.index.sai.disk.v1;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -36,6 +37,7 @@ import org.apache.cassandra.index.sai.StorageAttachedIndex;
 import org.apache.cassandra.index.sai.disk.SSTableIndex;
 import org.apache.cassandra.index.sai.disk.v1.segment.Segment;
 import org.apache.cassandra.index.sai.disk.v1.segment.SegmentMetadata;
+import org.apache.cassandra.index.sai.iterators.KeyRangeAntiJoinIterator;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.iterators.KeyRangeUnionIterator;
 import org.apache.cassandra.index.sai.plan.Expression;
@@ -161,6 +163,23 @@ public class V1SSTableIndex extends SSTableIndex
                                          AbstractBounds<PartitionPosition> keyRange,
                                          QueryContext context) throws IOException
     {
+        if (expression.getIndexOperator().isNonEquality())
+        {
+            // For NEQ, NOT_CONTAINS_KEY, NOT_CONTAINS we return everything minus the keys matching
+            // the expression.
+            //
+            // Keys k such that row(k) not contains v = (all keys) \ (keys k such that row(k) contains v)
+            //
+            // Note that we will not match rows in other indexes,
+            // so this can return false positives, but they are not a problem as post-filtering would get rid of them.
+            // We could not safely substract the keys matched in other indexes as indexes may contain false positives
+            // caused by deletes and updates.
+            Expression negExpression = expression.negated();
+            KeyRangeIterator allKeys = KeyRangeUnionIterator.build(allSSTableKeys(keyRange));
+            KeyRangeIterator matchedKeys = KeyRangeUnionIterator.build(search(negExpression, keyRange, context));
+            return Collections.singletonList(KeyRangeAntiJoinIterator.create(allKeys, matchedKeys, () -> {}));
+        }
+
         List<KeyRangeIterator> segmentIterators = new ArrayList<>();
 
         for (Segment segment : segments)

@@ -89,6 +89,11 @@ public interface PrimaryKeyMap extends Closeable
      */
     long floor(Token token);
 
+    /**
+     * Returns the number of primary keys in the map
+     */
+    long count();
+
     @Override
     default void close()
     {

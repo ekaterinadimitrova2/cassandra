@@ -45,6 +45,7 @@ import org.apache.cassandra.utils.bytecomparable.ByteComparable;
 public class MemtableIndex implements MemtableOrdering
 {
     private final MemoryIndex memoryIndex;
+
     private final LongAdder writeCount = new LongAdder();
     private final LongAdder estimatedMemoryUsed = new LongAdder();
     private final AbstractType<?> type;

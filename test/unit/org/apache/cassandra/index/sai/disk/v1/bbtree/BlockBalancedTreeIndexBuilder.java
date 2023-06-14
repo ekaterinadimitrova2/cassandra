@@ -91,6 +91,10 @@ public class BlockBalancedTreeIndexBuilder
         {
             return token.getLongValue();
         }
+        public long count()
+        {
+            return Long.MAX_VALUE;
+        }
     };
     public static final PrimaryKeyMap.Factory TEST_PRIMARY_KEY_MAP_FACTORY = () -> TEST_PRIMARY_KEY_MAP;
 

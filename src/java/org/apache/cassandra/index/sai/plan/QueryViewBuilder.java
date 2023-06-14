@@ -95,7 +95,7 @@ public class QueryViewBuilder
         for (Expression expression : expressions)
         {
             // Non-index column query should only act as FILTER BY for satisfiedBy(Row) method
-            // because otherwise it likely to go through the whole index.
+            // because otherwise it is likely to go through the whole index.
             if (expression.isNotIndexed())
                 continue;
 

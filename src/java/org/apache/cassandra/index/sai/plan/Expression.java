@@ -20,6 +20,8 @@ package org.apache.cassandra.index.sai.plan;
 
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Objects;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -79,7 +81,7 @@ public abstract class Expression
 
     public enum IndexOperator
     {
-        EQ, RANGE, CONTAINS_KEY, CONTAINS_VALUE, ANN;
+        EQ, NEQ, RANGE, CONTAINS_KEY, CONTAINS_VALUE, ANN, NOT_CONTAINS_KEY, NOT_CONTAINS_VALUE;
 
         public static IndexOperator valueOf(Operator operator)
         {
@@ -88,11 +90,20 @@ public abstract class Expression
                 case EQ:
                     return EQ;
 
+                case NEQ:
+                    return NEQ;
+
                 case CONTAINS:
                     return CONTAINS_VALUE; // non-frozen map: value contains term;
 
                 case CONTAINS_KEY:
                     return CONTAINS_KEY; // non-frozen map: value contains key term;
+
+                case NOT_CONTAINS:
+                    return NOT_CONTAINS_VALUE;
+
+                case NOT_CONTAINS_KEY:
+                    return NOT_CONTAINS_KEY;
 
                 case LT:
                 case GT:
@@ -117,6 +128,11 @@ public abstract class Expression
         public boolean isEqualityOrRange()
         {
             return isEquality() || this == RANGE;
+        }
+
+        public boolean isNonEquality()
+        {
+            return this == NEQ || this == NOT_CONTAINS_KEY || this == NOT_CONTAINS_VALUE;
         }
     }
 
@@ -167,13 +183,15 @@ public abstract class Expression
         switch (op)
         {
             case EQ:
+            case NEQ:
             case CONTAINS:
             case CONTAINS_KEY:
+            case NOT_CONTAINS:
+            case NOT_CONTAINS_KEY:
                 lower = new Bound(value, indexTermType, true);
                 upper = lower;
                 operator = IndexOperator.valueOf(op);
                 break;
-
             case LTE:
                 if (indexTermType.isReversed())
                 {
@@ -244,10 +262,13 @@ public abstract class Expression
     }
 
     /**
-     * Used in post-filtering to determine is an indexed value matches the expression
+     * Used in post-filtering to determine if an indexed value matches the expression
      */
     public boolean isSatisfiedBy(ByteBuffer columnValue)
     {
+        if (columnValue == null)
+            return false;
+
         // If the expression represents an ANN ordering then we return true because the actual result
         // is approximate and will rarely / never match the expression value
         if (indexTermType.isVector())
@@ -275,6 +296,9 @@ public abstract class Expression
                 if (operator == IndexOperator.EQ || operator == IndexOperator.CONTAINS_KEY || operator == IndexOperator.CONTAINS_VALUE)
                     return cmp == 0;
 
+                if (operator == IndexOperator.NEQ || operator == IndexOperator.NOT_CONTAINS_KEY || operator == IndexOperator.NOT_CONTAINS_VALUE)
+                    return cmp != 0;
+
                 if (cmp > 0 || (cmp == 0 && !lowerInclusive))
                     return false;
             }
@@ -294,6 +318,24 @@ public abstract class Expression
         }
 
         return true;
+    }
+
+    public boolean isSatisfiedBy(Iterator<ByteBuffer> values)
+    {
+        if (values == null)
+            values = Collections.emptyIterator();
+
+        if (!values.hasNext())
+            return false;
+
+        boolean success = operator.isNonEquality();
+        while (values.hasNext())
+        {
+            ByteBuffer v = values.next();
+            if (isSatisfiedBy(v) ^ success)
+                return !success;
+        }
+        return success;
     }
 
     private boolean validateStringValue(ByteBuffer columnValue, ByteBuffer requestedValue)
@@ -332,11 +374,42 @@ public abstract class Expression
             case CONTAINS_VALUE:
                 isMatch = indexTermType.compare(term, requestedValue) == 0;
                 break;
+            case NEQ:
+            case NOT_CONTAINS_KEY:
+            case NOT_CONTAINS_VALUE:
+                isMatch = indexTermType.compare(term, requestedValue) != 0;
+                break;
             case RANGE:
                 isMatch = isLowerSatisfiedBy(term) && isUpperSatisfiedBy(term);
                 break;
         }
         return isMatch;
+    }
+
+    /**
+     * Returns an expression that matches keys not matched by this expression.
+     */
+    public Expression negated()
+    {
+        Expression result = Expression.create(indexTermType);
+        result.lower = lower;
+        result.upper = upper;
+
+        switch (operator)
+        {
+            case NEQ:
+                result.operator = IndexOperator.EQ;
+                break;
+            case NOT_CONTAINS_KEY:
+                result.operator = IndexOperator.CONTAINS_KEY;
+                break;
+            case NOT_CONTAINS_VALUE:
+                result.operator = IndexOperator.CONTAINS_VALUE;
+                break;
+            default:
+                throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
+        }
+        return result;
     }
 
     private boolean hasLower()
@@ -436,6 +509,30 @@ public abstract class Expression
         AbstractAnalyzer getAnalyzer()
         {
             return index.analyzer();
+        }
+
+        @Override
+        public Expression negated()
+        {
+            Expression result = new IndexedExpression(index);
+            result.lower = lower;
+            result.upper = upper;
+
+            switch (operator)
+            {
+                case NEQ:
+                    result.operator = IndexOperator.EQ;
+                    break;
+                case NOT_CONTAINS_KEY:
+                    result.operator = IndexOperator.CONTAINS_KEY;
+                    break;
+                case NOT_CONTAINS_VALUE:
+                    result.operator = IndexOperator.CONTAINS_VALUE;
+                    break;
+                default:
+                    throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
+            }
+            return result;
         }
     }
 

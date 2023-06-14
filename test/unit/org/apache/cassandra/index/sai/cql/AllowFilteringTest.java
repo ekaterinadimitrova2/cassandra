@@ -87,6 +87,7 @@ public class AllowFilteringTest extends SAITester
         test("SELECT * FROM %s WHERE c3=0", false);
         test("SELECT * FROM %s WHERE c3>0", false);
         test("SELECT * FROM %s WHERE c3>0 AND c3<1", false);
+        test("SELECT * FROM %s WHERE c3!=0", false);
 
         // with additional simple filtering restrictions
         test("SELECT * FROM %s WHERE c3=0 AND k1=0", true);
@@ -136,6 +137,7 @@ public class AllowFilteringTest extends SAITester
         test("SELECT * FROM %s WHERE c2>0 AND c2<1 AND c4=0", false);
         test("SELECT * FROM %s WHERE c2>0 AND c4>0", false);
         test("SELECT * FROM %s WHERE c2>0 AND c2<1 AND c4>0 AND c4<1", false);
+        test("SELECT * FROM %s WHERE c2!=0 AND c4!=1", false);
 
         // with additional simple filtering restrictions
         test("SELECT * FROM %s WHERE c2=0 AND c4=0 AND k1=0", true);
@@ -177,6 +179,7 @@ public class AllowFilteringTest extends SAITester
         test("SELECT * FROM %s WHERE v1=0", false);
         test("SELECT * FROM %s WHERE v1>0", false);
         test("SELECT * FROM %s WHERE v1>0 AND v1<1", false);
+        test("SELECT * FROM %s WHERE v1!=0", false);
 
         // with additional simple filtering restrictions
         test("SELECT * FROM %s WHERE v1=0 AND k1=0", true);
@@ -223,6 +226,7 @@ public class AllowFilteringTest extends SAITester
         test("SELECT * FROM %s WHERE v1=0 AND v2>0", false);
         test("SELECT * FROM %s WHERE v1=0 AND v2>0 AND v2<1", false);
         test("SELECT * FROM %s WHERE v1>0 AND v1<1 AND v2>0 AND v2<1", false);
+        test("SELECT * FROM %s WHERE v1!=0 AND v2!=0", false);
 
         // with additional simple filtering restrictions
         test("SELECT * FROM %s WHERE v1=0 AND v2=0 AND k1=0", true);
@@ -268,6 +272,7 @@ public class AllowFilteringTest extends SAITester
         test("SELECT * FROM %s WHERE c2=0 AND c4=0 AND v1=0 AND v2=0", false);
         test("SELECT * FROM %s WHERE c2>0 AND c4>0 AND v1>0 AND v2>0", false);
         test("SELECT * FROM %s WHERE c2>0 AND c2<1 AND c4>0 AND c4<1 AND v1>0 AND v1<0 AND v2>0 AND v2<1", false);
+        test("SELECT * FROM %s WHERE c2!=0 AND c4!=1 AND v1!=0 AND v2!=0", false);
 
         // with additional simple filtering restrictions
         test("SELECT * FROM %s WHERE c2=0 AND c4=0 AND v1=0 AND v2=0 AND k1=0", true);

@@ -19,9 +19,7 @@
 package org.apache.cassandra.index.sai.plan;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -68,6 +66,7 @@ public class Operation
                                                                                     List<RowFilter.Expression> expressions)
     {
         ListMultimap<ColumnMetadata, Expression> analyzed = ArrayListMultimap.create();
+        Map<ColumnMetadata, Boolean> columnIsMultiExpression = new HashMap<>();
 
         // sort all the expressions in the operation by name and priority of the logical operator
         // this gives us an efficient way to handle inequality and combining into ranges without extra processing
@@ -86,9 +85,9 @@ public class Operation
                 List<Expression> perColumn = analyzed.get(expression.column());
 
                 if (index == null)
-                    buildUnindexedExpression(queryController, expression, perColumn);
+                    buildUnindexedExpression(queryController, expression, perColumn, columnIsMultiExpression);
                 else
-                    buildIndexedExpression(index, expression, perColumn);
+                    buildIndexedExpression(index, expression, perColumn, columnIsMultiExpression);
             }
         }
 
@@ -97,19 +96,20 @@ public class Operation
 
     private static void buildUnindexedExpression(QueryController queryController,
                                                  RowFilter.Expression expression,
-                                                 List<Expression> perColumn)
+                                                 List<Expression> perColumn,
+                                                 Map<ColumnMetadata, Boolean> columnIsMultiExpression)
     {
         IndexTermType indexTermType = IndexTermType.create(expression.column(),
                                                            queryController.metadata().partitionKeyColumns(),
                                                            determineIndexTargetType(expression));
-        if (indexTermType.isMultiExpression(expression))
+        if (indexTermType.isMultiExpression(expression, perColumn.isEmpty(), columnIsMultiExpression))
         {
             perColumn.add(Expression.create(indexTermType).add(expression.operator(), expression.getIndexValue().duplicate()));
         }
         else
         {
             Expression range;
-            if (perColumn.size() == 0)
+            if (perColumn.isEmpty())
             {
                 range = Expression.create(indexTermType);
                 perColumn.add(range);
@@ -122,7 +122,10 @@ public class Operation
         }
     }
 
-    private static void buildIndexedExpression(StorageAttachedIndex index, RowFilter.Expression expression, List<Expression> perColumn)
+    private static void buildIndexedExpression(StorageAttachedIndex index,
+                                               RowFilter.Expression expression,
+                                               List<Expression> perColumn,
+                                               Map<ColumnMetadata, Boolean> columnIsMultiExpression)
     {
         if (index.hasAnalyzer())
         {
@@ -131,7 +134,7 @@ public class Operation
             {
                 analyzer.reset(expression.getIndexValue().duplicate());
 
-                if (index.termType().isMultiExpression(expression))
+                if (index.termType().isMultiExpression(expression, perColumn.isEmpty(), columnIsMultiExpression))
                 {
                     while (analyzer.hasNext())
                     {
@@ -145,7 +148,7 @@ public class Operation
                 // not-equals is combined with the range iff operator is AND.
                 {
                     Expression range;
-                    if (perColumn.size() == 0)
+                    if (perColumn.isEmpty())
                     {
                         range = Expression.create(index);
                         perColumn.add(range);
@@ -176,14 +179,14 @@ public class Operation
         }
         else
         {
-            if (index.termType().isMultiExpression(expression))
+            if (index.termType().isMultiExpression(expression, perColumn.isEmpty(), columnIsMultiExpression))
             {
                 perColumn.add(Expression.create(index).add(expression.operator(), expression.getIndexValue().duplicate()));
             }
             else
             {
                 Expression range;
-                if (perColumn.size() == 0)
+                if (perColumn.isEmpty())
                 {
                     range = Expression.create(index);
                     perColumn.add(range);
@@ -213,16 +216,19 @@ public class Operation
                 switch (expression.operator())
                 {
                     case EQ:
+                    case NEQ:
                         indexTargetType = IndexTarget.Type.KEYS_AND_VALUES;
                         break;
                     case CONTAINS:
+                    case NOT_CONTAINS:
                         indexTargetType = IndexTarget.Type.VALUES;
                         break;
                     case CONTAINS_KEY:
+                    case NOT_CONTAINS_KEY:
                         indexTargetType = IndexTarget.Type.KEYS;
                         break;
                     default:
-                        throw new InvalidRequestException("Invalid operator");
+                        throw new InvalidRequestException("Invalid operator " + expression.operator() + " for map type");
                 }
             }
         }
@@ -233,18 +239,27 @@ public class Operation
     {
         switch (op)
         {
+            // KATE: This patch changed the priority of EQ to 7 and left the CONTAINS and CONTAINS_KEY at 6 in our fork
+            // KATE: I think this would be a breaking change maybe? To be checked; Leaving it for now as-is
             case EQ:
             case CONTAINS:
             case CONTAINS_KEY:
-                return 5;
+                return 6;
 
             case GTE:
             case GT:
-                return 3;
+                return 4;
 
             case LTE:
             case LT:
+                return 3;
+
+            case NOT_CONTAINS:
+            case NOT_CONTAINS_KEY:
                 return 2;
+
+            case NEQ:
+                return 1;
 
             default:
                 return 0;
@@ -259,7 +274,7 @@ public class Operation
     static KeyRangeIterator buildIterator(QueryController controller)
     {
         var orderings = controller.indexFilter().getExpressions()
-                                  .stream().filter(e -> e.operator() == Operator.ANN).collect(Collectors.toList());
+                .stream().filter(e -> e.operator() == Operator.ANN).collect(Collectors.toList());
         assert orderings.size() <= 1;
         if (controller.indexFilter().getExpressions().size() == 1 && orderings.size() == 1)
             // If we only have one expression, we just use the ANN index to order and limit.
