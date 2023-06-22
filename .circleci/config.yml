@@ -80,7 +80,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -187,7 +187,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -250,7 +250,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -358,7 +358,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -447,7 +447,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -536,7 +536,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -600,7 +600,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -709,7 +709,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -826,7 +826,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -934,7 +934,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1088,7 +1088,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1220,7 +1220,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1352,7 +1352,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1470,7 +1470,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1579,7 +1579,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1668,7 +1668,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1786,7 +1786,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1875,7 +1875,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1983,7 +1983,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2116,7 +2116,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2270,7 +2270,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2387,7 +2387,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2496,7 +2496,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2604,7 +2604,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2694,7 +2694,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2783,7 +2783,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2901,7 +2901,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3096,7 +3096,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3181,7 +3181,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3314,7 +3314,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3432,7 +3432,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3540,7 +3540,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3625,7 +3625,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3715,7 +3715,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3833,7 +3833,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3966,7 +3966,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4084,7 +4084,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4279,7 +4279,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4387,7 +4387,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4494,7 +4494,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4611,7 +4611,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4701,7 +4701,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4772,7 +4772,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4905,7 +4905,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5023,7 +5023,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5127,7 +5127,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5199,7 +5199,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5289,7 +5289,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5402,7 +5402,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5520,7 +5520,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5592,7 +5592,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5682,7 +5682,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5789,7 +5789,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5921,7 +5921,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6039,7 +6039,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6129,7 +6129,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6237,7 +6237,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6346,7 +6346,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6464,7 +6464,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6549,7 +6549,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6682,7 +6682,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6772,7 +6772,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6880,7 +6880,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6952,7 +6952,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7036,7 +7036,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7120,7 +7120,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7229,7 +7229,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7319,7 +7319,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7409,7 +7409,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7499,7 +7499,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7608,7 +7608,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7670,7 +7670,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7778,7 +7778,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7896,7 +7896,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8004,7 +8004,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8112,7 +8112,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8229,7 +8229,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8301,7 +8301,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8390,7 +8390,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8497,7 +8497,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8587,7 +8587,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8650,7 +8650,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8735,7 +8735,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8853,7 +8853,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8961,7 +8961,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9078,7 +9078,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9167,7 +9167,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9251,7 +9251,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9340,7 +9340,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9412,7 +9412,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9501,7 +9501,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9585,7 +9585,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9675,7 +9675,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9781,7 +9781,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9913,7 +9913,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -10002,7 +10002,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -10091,7 +10091,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: false
-    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_UTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleasesLogSpace
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
