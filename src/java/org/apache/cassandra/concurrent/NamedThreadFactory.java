@@ -24,6 +24,7 @@ import com.google.common.annotations.VisibleForTesting;
 
 import io.netty.util.concurrent.FastThreadLocalThread;
 import org.apache.cassandra.utils.JVMStabilityInspector;
+import org.github.jamm.Unmetered;
 
 /**
  * This class is an implementation of the <i>ThreadFactory</i> interface. This
@@ -45,8 +46,11 @@ public class NamedThreadFactory implements ThreadFactory
 
     public static class MetaFactory
     {
+        @Unmetered
         protected ClassLoader contextClassLoader;
+        @Unmetered
         protected ThreadGroup threadGroup;
+        @Unmetered
         protected Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 
         public MetaFactory(ClassLoader contextClassLoader, ThreadGroup threadGroup, Thread.UncaughtExceptionHandler uncaughtExceptionHandler)

@@ -21,9 +21,13 @@ package org.apache.cassandra.db.marshal;
 import java.nio.ByteBuffer;
 import java.util.Comparator;
 
+import org.github.jamm.Unmetered;
+
 public class ValueComparators
 {
+    @Unmetered
     public final Comparator<byte[]> array;
+    @Unmetered
     public final Comparator<ByteBuffer> buffer;
 
     public ValueComparators(Comparator<byte[]> array, Comparator<ByteBuffer> buffer)

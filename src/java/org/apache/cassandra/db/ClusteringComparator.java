@@ -34,6 +34,7 @@ import org.apache.cassandra.serializers.MarshalException;
 import org.apache.cassandra.io.sstable.IndexInfo;
 import org.apache.cassandra.utils.bytecomparable.ByteComparable;
 import org.apache.cassandra.utils.bytecomparable.ByteSource;
+import org.github.jamm.Unmetered;
 
 import static org.apache.cassandra.utils.bytecomparable.ByteSource.EXCLUDED;
 import static org.apache.cassandra.utils.bytecomparable.ByteSource.NEXT_COMPONENT;
@@ -53,10 +54,14 @@ public class ClusteringComparator implements Comparator<Clusterable>
 {
     private final List<AbstractType<?>> clusteringTypes;
 
+    @Unmetered
     private final Comparator<IndexInfo> indexComparator;
+    @Unmetered
     private final Comparator<IndexInfo> indexReverseComparator;
+    @Unmetered
     private final Comparator<Clusterable> reverseComparator;
 
+    @Unmetered
     private final Comparator<Row> rowComparator = (r1, r2) -> compare((ClusteringPrefix<?>) r1.clustering(),
                                                                       (ClusteringPrefix<?>) r2.clustering());
 

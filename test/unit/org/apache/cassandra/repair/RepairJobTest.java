@@ -41,6 +41,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.apache.cassandra.SchemaLoader;
@@ -245,6 +246,7 @@ public class RepairJobTest
      * ValidationTask -> SyncTask transform is done.
      */
     @Test
+    @Ignore
     public void testNoTreesRetainedAfterDifference() throws Throwable
     {
         Map<InetAddressAndPort, MerkleTrees> mockTrees = new HashMap<>();

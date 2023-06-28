@@ -57,6 +57,7 @@ import org.apache.cassandra.utils.Pair;
 import org.apache.cassandra.utils.concurrent.Future;
 import org.apache.cassandra.utils.concurrent.FutureCombiner;
 import org.apache.cassandra.utils.concurrent.ImmediateFuture;
+import org.github.jamm.Unmetered;
 
 import static org.apache.cassandra.config.DatabaseDescriptor.paxosRepairEnabled;
 import static org.apache.cassandra.service.paxos.Paxos.useV2;
@@ -73,6 +74,8 @@ public class RepairJob extends AsyncFuture<RepairResult> implements Runnable
     private final RepairJobDesc desc;
     private final RepairSession session;
     private final RepairParallelism parallelismDegree;
+
+    @Unmetered
     private final ExecutorPlus taskExecutor;
 
     @VisibleForTesting
