@@ -46,6 +46,7 @@ import org.apache.cassandra.utils.logging.LoggingSupportFactory;
  * This is better than the penalty of 1 to 3 percent using a standard {@code SecurityManager} with an <i>allow all</i> policy.
  * </p>
  */
+@SuppressWarnings("removal")
 public final class ThreadAwareSecurityManager extends SecurityManager
 {
     private static final Logger logger = LoggerFactory.getLogger(ThreadAwareSecurityManager.class);
