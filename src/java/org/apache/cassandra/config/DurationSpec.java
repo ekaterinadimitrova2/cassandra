@@ -39,7 +39,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  * users the opportunity to be able to provide config with a unit of their choice in cassandra.yaml as per the available
  * options. (CASSANDRA-15234)
  */
-public abstract class DurationSpec
+public abstract class
+DurationSpec
 {
     /**
      * The Regexp used to parse the duration provided as String.
