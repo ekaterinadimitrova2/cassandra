@@ -199,6 +199,10 @@
             </patternset>
             <mapper type="flatten"/>
         </unzip>
+
+        <copy todir="${build.dir.lib}/jars" >
+            <file file="${build.lib}/jamm-0.4.0-SNAPSHOT.jar"/>
+        </copy>
     </target>
 
     <target name="resolver-dist-lib" depends="resolver-retrieve-build">
