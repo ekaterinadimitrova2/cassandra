@@ -68,8 +68,9 @@ public class ComparisonReadBench
 {
     // Note: To see a printout of the usage for each object, add .enableDebug() here (most useful with smaller number of
     // partitions).
-    static MemoryMeter meter = new MemoryMeter().ignoreKnownSingletons()
-                                                .withGuessing(MemoryMeter.Guess.FALLBACK_UNSAFE);
+    static MemoryMeter meter = MemoryMeter.builder().withGuessing(MemoryMeter.Guess.INSTRUMENTATION_AND_SPECIFICATION,
+                                                                  MemoryMeter.Guess.UNSAFE)
+                                                                  .build();
 
     @Param({"ON_HEAP"})
     BufferType bufferType = BufferType.OFF_HEAP;
