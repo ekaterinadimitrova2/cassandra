@@ -90,7 +90,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -100,9 +100,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -197,7 +197,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -207,9 +207,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -261,7 +261,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -271,9 +271,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -369,7 +369,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -379,9 +379,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -458,7 +458,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -468,9 +468,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -547,7 +547,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -557,9 +557,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -612,7 +612,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -622,9 +622,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -721,7 +721,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -731,9 +731,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -838,7 +838,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -848,9 +848,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -946,7 +946,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -956,9 +956,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -1100,7 +1100,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1110,9 +1110,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -1232,7 +1232,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1242,9 +1242,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -1364,7 +1364,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1374,9 +1374,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1482,7 +1482,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1492,9 +1492,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1591,7 +1591,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1601,9 +1601,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -1680,7 +1680,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1690,9 +1690,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -1798,7 +1798,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1808,9 +1808,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -1887,7 +1887,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -1897,9 +1897,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -1995,7 +1995,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2005,9 +2005,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -2128,7 +2128,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2138,9 +2138,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -2282,7 +2282,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2292,9 +2292,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -2399,7 +2399,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2409,9 +2409,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -2508,7 +2508,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2518,9 +2518,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -2616,7 +2616,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2626,9 +2626,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -2706,7 +2706,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2716,9 +2716,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -2795,7 +2795,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2805,9 +2805,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -2913,7 +2913,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -2923,9 +2923,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -3108,7 +3108,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3118,9 +3118,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3193,7 +3193,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3203,9 +3203,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3326,7 +3326,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3336,9 +3336,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3444,7 +3444,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3454,9 +3454,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -3552,7 +3552,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3562,9 +3562,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3637,7 +3637,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3647,9 +3647,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3727,7 +3727,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3737,9 +3737,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3845,7 +3845,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3855,9 +3855,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -3978,7 +3978,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -3988,9 +3988,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -4096,7 +4096,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4106,9 +4106,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -4291,7 +4291,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4301,9 +4301,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -4399,7 +4399,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4409,9 +4409,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -4506,7 +4506,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4516,9 +4516,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -4623,7 +4623,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4633,9 +4633,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -4713,7 +4713,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4723,9 +4723,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -4784,7 +4784,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4794,9 +4794,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -4917,7 +4917,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -4927,9 +4927,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5035,7 +5035,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5045,9 +5045,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5139,7 +5139,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5149,9 +5149,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5211,7 +5211,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5221,9 +5221,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5301,7 +5301,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5311,9 +5311,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -5414,7 +5414,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5424,9 +5424,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5532,7 +5532,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5542,9 +5542,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5604,7 +5604,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5614,9 +5614,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5694,7 +5694,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5704,9 +5704,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -5801,7 +5801,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5811,9 +5811,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -5933,7 +5933,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -5943,9 +5943,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6051,7 +6051,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6061,9 +6061,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6141,7 +6141,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6151,9 +6151,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -6249,7 +6249,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6259,9 +6259,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6358,7 +6358,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6368,9 +6368,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6476,7 +6476,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6486,9 +6486,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6561,7 +6561,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6571,9 +6571,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6694,7 +6694,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6704,9 +6704,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6784,7 +6784,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6794,9 +6794,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -6892,7 +6892,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6902,9 +6902,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -6964,7 +6964,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -6974,9 +6974,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -7048,7 +7048,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7058,9 +7058,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -7132,7 +7132,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7142,9 +7142,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -7241,7 +7241,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7251,9 +7251,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -7331,7 +7331,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7341,9 +7341,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -7421,7 +7421,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7431,9 +7431,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -7511,7 +7511,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7521,9 +7521,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -7620,7 +7620,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7630,9 +7630,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -7683,7 +7683,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7693,9 +7693,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -7791,7 +7791,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7801,9 +7801,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -7909,7 +7909,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -7919,9 +7919,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -8017,7 +8017,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8027,9 +8027,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -8125,7 +8125,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8135,9 +8135,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -8242,7 +8242,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8252,9 +8252,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -8314,7 +8314,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8324,9 +8324,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -8403,7 +8403,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8413,9 +8413,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -8510,7 +8510,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8520,9 +8520,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -8600,7 +8600,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8610,9 +8610,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -8664,7 +8664,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8674,9 +8674,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -8749,7 +8749,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8759,9 +8759,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -8867,7 +8867,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8877,9 +8877,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -8975,7 +8975,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -8985,9 +8985,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9092,7 +9092,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9102,9 +9102,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9181,7 +9181,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9191,9 +9191,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9265,7 +9265,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9275,9 +9275,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9354,7 +9354,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9364,9 +9364,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -9426,7 +9426,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9436,9 +9436,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9515,7 +9515,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9525,9 +9525,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9599,7 +9599,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9609,9 +9609,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -9689,7 +9689,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9699,9 +9699,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9795,7 +9795,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9805,9 +9805,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -9927,7 +9927,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -9937,9 +9937,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -10016,7 +10016,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -10026,9 +10026,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
@@ -10105,7 +10105,7 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: null
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.repair.RepairJobTest.testNoTreesRetainedAfterDifference
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
@@ -10115,9 +10115,9 @@ jobs:
     - REPEATED_LARGE_DTESTS_COUNT: 100
     - REPEATED_UPGRADE_DTESTS: null
     - REPEATED_UPGRADE_DTESTS_COUNT: 25
-    - REPEATED_ANT_TEST_TARGET: test-jvm-dtest-some
-    - REPEATED_ANT_TEST_CLASS: org.apache.cassandra.repair.RepairJobTest
-    - REPEATED_ANT_TEST_METHODS: testNoTreesRetainedAfterDifference
+    - REPEATED_ANT_TEST_TARGET: testsome
+    - REPEATED_ANT_TEST_CLASS: null
+    - REPEATED_ANT_TEST_METHODS: null
     - REPEATED_ANT_TEST_VNODES: false
     - REPEATED_ANT_TEST_COUNT: 500
     - JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
@@ -10150,6 +10150,18 @@ workflows:
         requires:
         - start_j11_jvm_dtests_vnode
         - j11_build
+    - start_j11_jvm_dtests_repeat:
+        type: approval
+    - j11_jvm_dtests_repeat:
+        requires:
+        - start_j11_jvm_dtests_repeat
+        - j11_build
+    - start_j11_jvm_dtests_vnode_repeat:
+        type: approval
+    - j11_jvm_dtests_vnode_repeat:
+        requires:
+        - start_j11_jvm_dtests_vnode_repeat
+        - j11_build
     - start_j17_jvm_dtests:
         type: approval
     - j17_jvm_dtests:
@@ -10161,6 +10173,18 @@ workflows:
     - j17_jvm_dtests_vnode:
         requires:
         - start_j17_jvm_dtests_vnode
+        - j11_build
+    - start_j17_jvm_dtests_repeat:
+        type: approval
+    - j17_jvm_dtests_repeat:
+        requires:
+        - start_j17_jvm_dtests_repeat
+        - j11_build
+    - start_j17_jvm_dtests_vnode_repeat:
+        type: approval
+    - j17_jvm_dtests_vnode_repeat:
+        requires:
+        - start_j17_jvm_dtests_vnode_repeat
         - j11_build
     - start_j11_simulator_dtests:
         type: approval
@@ -10452,18 +10476,6 @@ workflows:
         requires:
         - start_j11_upgrade_dtests
         - j11_build
-    - start_j11_repeated_ant_test:
-        type: approval
-    - j11_repeated_ant_test:
-        requires:
-        - start_j11_repeated_ant_test
-        - j11_build
-    - start_j17_repeated_ant_test:
-        type: approval
-    - j17_repeated_ant_test:
-        requires:
-        - start_j17_repeated_ant_test
-        - j11_build
   java11_pre-commit_tests:
     jobs:
     - start_pre-commit_tests:
@@ -10483,13 +10495,25 @@ workflows:
     - j11_jvm_dtests:
         requires:
         - j11_build
+    - j11_jvm_dtests_repeat:
+        requires:
+        - j11_build
     - j11_jvm_dtests_vnode:
+        requires:
+        - j11_build
+    - j11_jvm_dtests_vnode_repeat:
         requires:
         - j11_build
     - j17_jvm_dtests:
         requires:
         - j11_build
+    - j17_jvm_dtests_repeat:
+        requires:
+        - j11_build
     - j17_jvm_dtests_vnode:
+        requires:
+        - j11_build
+    - j17_jvm_dtests_vnode_repeat:
         requires:
         - j11_build
     - j11_cqlshlib_tests:
@@ -10727,6 +10751,18 @@ workflows:
         requires:
         - start_j17_jvm_dtests_vnode
         - j17_build
+    - start_j17_jvm_dtests_repeat:
+        type: approval
+    - j17_jvm_dtests_repeat:
+        requires:
+        - start_j17_jvm_dtests_repeat
+        - j17_build
+    - start_j17_jvm_dtests_vnode_repeat:
+        type: approval
+    - j17_jvm_dtests_vnode_repeat:
+        requires:
+        - start_j17_jvm_dtests_vnode_repeat
+        - j17_build
     - start_j17_cqlshlib_tests:
         type: approval
     - j17_cqlshlib_tests:
@@ -10857,12 +10893,6 @@ workflows:
         requires:
         - start_j17_utests_system_keyspace_directory
         - j17_build
-    - start_j17_repeated_ant_test:
-        type: approval
-    - j17_repeated_ant_test:
-        requires:
-        - start_j17_repeated_ant_test
-        - j17_build
   java17_pre-commit_tests:
     jobs:
     - start_pre-commit_tests:
@@ -10879,7 +10909,13 @@ workflows:
     - j17_jvm_dtests:
         requires:
         - j17_build
+    - j17_jvm_dtests_repeat:
+        requires:
+        - j17_build
     - j17_jvm_dtests_vnode:
+        requires:
+        - j17_build
+    - j17_jvm_dtests_vnode_repeat:
         requires:
         - j17_build
     - j17_cqlshlib_tests:
