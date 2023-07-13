@@ -422,6 +422,8 @@
         <groupId>com.github.jbellis</groupId>
         <artifactId>jamm</artifactId>
         <version>${jamm.version}</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/jamm-0.4.0-SNAPSHOT.jar</systemPath>
       </dependency>
       <dependency>
         <groupId>org.yaml</groupId>
