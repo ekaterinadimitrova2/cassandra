@@ -65,7 +65,7 @@ public class ObjectSizesTest
     private void checkBufferSizeExcludingData(ByteBuffer buffer, int dataSize)
     {
         assertEquals(meter.measureDeep(buffer, SLAB_ALLOCATION_NO_SLICE) - dataSize, ObjectSizes.sizeOnHeapExcludingDataOf(buffer));
-    };
+    }
 
     @Test
     public void testSizeOnHeapOf()
@@ -98,5 +98,5 @@ public class ObjectSizesTest
     private void checkBufferSize(ByteBuffer buffer)
     {
         assertEquals(meter.measureDeep(buffer, SLAB_ALLOCATION_NO_SLICE), ObjectSizes.sizeOnHeapOf(buffer));
-    };
+    }
 }
