@@ -297,6 +297,12 @@
         <groupId>com.google.jimfs</groupId>
         <artifactId>jimfs</artifactId>
         <version>1.1</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.hdrhistogram</groupId>
