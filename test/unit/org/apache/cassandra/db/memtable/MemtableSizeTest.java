@@ -44,7 +44,7 @@ import org.github.jamm.MemoryMeter.Guess;
 // Note: This test can be run in idea with the allocation type configured in the test yaml and memtable using the
 // value memtableClass is initialized with.
 @RunWith(Parameterized.class)
-public abstract class MemtableSizeTestBase extends CQLTester
+public class MemtableSizeTest extends CQLTester
 {
     // Note: To see a printout of the usage for each object, add .printVisitedTree() here (most useful with smaller number of
     // partitions).
@@ -54,7 +54,7 @@ public abstract class MemtableSizeTestBase extends CQLTester
 //                                           .printVisitedTreeUpTo(1000)
                                            .build();
 
-    static final Logger logger = LoggerFactory.getLogger(MemtableSizeTestBase.class);
+    static final Logger logger = LoggerFactory.getLogger(MemtableSizeTest.class);
 
     static final int partitions = 50_000;
     static final int rowsPerPartition = 4;
