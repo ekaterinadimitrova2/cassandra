@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import net.openhft.chronicle.wire.WireOut;
 import org.apache.cassandra.config.DatabaseDescriptor;
-import org.apache.cassandra.fql.FullQueryLogger.Query;
 import org.apache.cassandra.io.util.File;
 import org.apache.cassandra.utils.ObjectSizes;
 import org.apache.cassandra.utils.binlog.BinLog;

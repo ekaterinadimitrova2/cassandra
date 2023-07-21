@@ -50,7 +50,6 @@ import org.apache.cassandra.utils.binlog.BinLog;
 import org.apache.cassandra.utils.binlog.BinLogOptions;
 import org.apache.cassandra.utils.concurrent.UncheckedInterruptedException;
 import org.apache.cassandra.utils.concurrent.WeightedQueue;
-import org.github.jamm.Unmetered;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
