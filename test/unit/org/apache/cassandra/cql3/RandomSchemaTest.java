@@ -128,18 +128,18 @@ public class RandomSchemaTest extends CQLTester.InMemory
                 {
                     ByteBuffer[] partitionKeys = Arrays.copyOf(expected, partitionColumnCount);
                     ByteBuffer[] rowKey = Arrays.copyOf(expected, primaryColumnCount);
-                    execute(insertStmt, expected);
+                    execute(insertStmt, (Object[]) expected);
                     // check memtable
-                    assertRows(execute(selectStmt, rowKey), expected);
-                    assertRows(execute(tokenStmt, partitionKeys), partitionKeys);
-                    assertRowsNet(executeNet(selectStmt, rowKey), expected);
+                    assertRows(execute(selectStmt, (Object[]) rowKey), expected);
+                    assertRows(execute(tokenStmt, (Object[]) partitionKeys), partitionKeys);
+                    assertRowsNet(executeNet(selectStmt, (Object[]) rowKey), expected);
 
                     // check sstable
                     flush(KEYSPACE, metadata.name);
                     compact(KEYSPACE, metadata.name);
-                    assertRows(execute(selectStmt, rowKey), expected);
-                    assertRows(execute(tokenStmt, partitionKeys), partitionKeys);
-                    assertRowsNet(executeNet(selectStmt, rowKey), expected);
+                    assertRows(execute(selectStmt, (Object[]) rowKey), expected);
+                    assertRows(execute(tokenStmt, (Object[]) partitionKeys), partitionKeys);
+                    assertRowsNet(executeNet(selectStmt, (Object[]) rowKey), expected);
 
                     execute("TRUNCATE " + metadata);
                 }
