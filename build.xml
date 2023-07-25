@@ -1720,12 +1720,12 @@
           <fileset dir="${test.classes}"/>
           <fileset dir="${test.conf}" />
       </copy>
-      <unzip dest="${build.dir}/dtest">
-          <fileset dir="${test.lib}/jars" includes="jimfs-1.1.jar,dtest-api-*.jar,asm-*.jar,javassist-*.jar,reflections-*.jar,semver4j-*.jar"/>
-      </unzip>
-      <unzip dest="${build.dir}/dtest">
-          <fileset dir="${build.dir.lib}/jars" includes="*.jar"/>
-      </unzip>
+      <copy todir="${build.dir}/dtest">
+          <zipfileset dir="${test.lib}/jars" includes="jimfs-1.1.jar,dtest-api-*.jar,asm-*.jar,javassist-*.jar,reflections-*.jar,semver4j-*.jar"/>
+      </copy>
+      <copy todir="${build.dir}/dtest">
+          <zipfileset dir="${build.dir.lib}/jars" includes="*.jar"/>
+      </copy>
 
       <jar jarfile="${build.dir}/dtest-${base.version}.jar" duplicate="preserve">
           <fileset dir="${build.dir}/dtest">
