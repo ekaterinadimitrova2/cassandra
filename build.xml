@@ -1722,9 +1722,11 @@
       </copy>
       <copy todir="${build.dir}/dtest">
           <zipfileset dir="${test.lib}/jars" includes="jimfs-1.1.jar,dtest-api-*.jar,asm-*.jar,javassist-*.jar,reflections-*.jar,semver4j-*.jar"/>
+          <cutdirsmapper dirs="1"/>
       </copy>
       <copy todir="${build.dir}/dtest">
           <zipfileset dir="${build.dir.lib}/jars" includes="*.jar"/>
+          <cutdirsmapper dirs="1"/>
       </copy>
 
       <jar jarfile="${build.dir}/dtest-${base.version}.jar" duplicate="preserve">
