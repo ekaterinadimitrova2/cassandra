@@ -53,7 +53,8 @@ import org.apache.cassandra.io.util.File;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class SSLFactoryTest
+public class
+SSLFactoryTest
 {
     private static final Logger logger = LoggerFactory.getLogger(SSLFactoryTest.class);
 
