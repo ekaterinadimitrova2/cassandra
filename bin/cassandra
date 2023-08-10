@@ -241,7 +241,7 @@ while true; do
             allow_root="yes"
             shift
         ;;
-	-J)
+	      -J)
            allow_experimental_java_ver="yes"
            shift
         ;;
