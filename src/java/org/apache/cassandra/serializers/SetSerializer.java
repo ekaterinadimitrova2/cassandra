@@ -68,12 +68,6 @@ public class SetSerializer<T> extends AbstractMapSerializer<Set<T>>
     }
 
     @Override
-    public int getElementCount(Set<T> value)
-    {
-        return value.size();
-    }
-
-    @Override
     public <V> void validate(V input, ValueAccessor<V> accessor)
     {
         if (accessor.isEmpty(input))

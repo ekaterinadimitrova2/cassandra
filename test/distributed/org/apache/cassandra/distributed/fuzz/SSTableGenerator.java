@@ -35,7 +35,7 @@ import harry.operations.Query;
 import harry.operations.QueryGenerator;
 import harry.util.BitSet;
 import org.apache.cassandra.Util;
-import org.apache.cassandra.cql3.AbstractMarker;
+import org.apache.cassandra.cql3.terms.Marker;
 import org.apache.cassandra.cql3.ColumnIdentifier;
 import org.apache.cassandra.cql3.Operator;
 import org.apache.cassandra.cql3.QueryOptions;
@@ -293,7 +293,7 @@ public class SSTableGenerator
             values.add(ByteBufferUtil.objectToBytes(partitionKey[i]));
             builder.add(new SingleColumnRelation(ColumnIdentifier.getInterned(name, true),
                                                  toOperator(Relation.RelationKind.EQ),
-                                                 new AbstractMarker.Raw(values.size() - 1)));
+                                                 new Marker.Raw(values.size() - 1)));
         }
 
         for (Relation relation : query.relations)
@@ -304,7 +304,7 @@ public class SSTableGenerator
             values.add(ByteBufferUtil.objectToBytes(relation.value()));
             builder.add(new SingleColumnRelation(ColumnIdentifier.getInterned(name, false),
                                                  toOperator(relation.kind),
-                                                 new AbstractMarker.Raw(values.size() - 1)));
+                                                 new Marker.Raw(values.size() - 1)));
         }
 
         StatementRestrictions restrictions = new StatementRestrictions(null,
