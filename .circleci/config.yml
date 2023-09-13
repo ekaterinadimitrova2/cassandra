@@ -124,7 +124,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -215,7 +215,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -281,7 +281,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -392,7 +392,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -548,7 +548,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -635,7 +635,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -754,7 +754,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -828,7 +828,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -919,7 +919,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1030,7 +1030,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1150,7 +1150,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1241,7 +1241,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1360,7 +1360,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1471,7 +1471,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1581,7 +1581,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1673,7 +1673,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1869,7 +1869,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1956,7 +1956,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2091,7 +2091,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2202,7 +2202,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2312,7 +2312,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2399,7 +2399,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2491,7 +2491,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2602,7 +2602,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2712,7 +2712,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2778,7 +2778,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2897,7 +2897,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2971,7 +2971,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3091,7 +3091,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3225,7 +3225,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3359,7 +3359,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3494,7 +3494,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3613,7 +3613,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3729,7 +3729,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3848,7 +3848,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3921,7 +3921,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4013,7 +4013,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4099,7 +4099,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4172,7 +4172,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4283,7 +4283,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4417,7 +4417,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4508,7 +4508,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4665,7 +4665,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4757,7 +4757,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4848,7 +4848,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4967,7 +4967,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5078,7 +5078,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5188,7 +5188,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5280,7 +5280,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5390,7 +5390,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5482,7 +5482,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5616,7 +5616,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5727,7 +5727,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5818,7 +5818,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5952,7 +5952,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6062,7 +6062,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6149,7 +6149,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6257,7 +6257,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6349,7 +6349,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6459,7 +6459,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6551,7 +6551,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6662,7 +6662,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6754,7 +6754,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6840,7 +6840,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6959,7 +6959,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7078,7 +7078,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7170,7 +7170,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7279,7 +7279,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7366,7 +7366,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7452,7 +7452,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7516,7 +7516,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7608,7 +7608,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7716,7 +7716,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7912,7 +7912,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7985,7 +7985,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8104,7 +8104,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8214,7 +8214,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8348,7 +8348,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8467,7 +8467,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8575,7 +8575,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8685,7 +8685,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8776,7 +8776,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8850,7 +8850,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8914,7 +8914,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9022,7 +9022,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9114,7 +9114,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9248,7 +9248,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9339,7 +9339,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9445,7 +9445,7 @@ jobs:
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: org.apache.cassandra.utils.binlog.BinLogTest.testTruncationReleaseLogSpace
+    - REPEATED_DTESTS: transient_replication_ring_test.py::TestTransientReplicationRing::test_move_backwards_and_cleanup
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
