@@ -132,8 +132,13 @@ public abstract class DescribeStatement<T> extends CQLStatement.Raw implements C
     @Override
     public ResultMessage executeLocally(QueryState state, QueryOptions options)
     {
-        UUID schemaVersion = Schema.instance.getVersion();
-        Keyspaces keyspaces = Schema.instance.snapshot();
+        UUID schemaVersion;
+        Keyspaces keyspaces;
+        do
+        {
+            schemaVersion = Schema.instance.getVersionSync();
+            keyspaces = Schema.instance.snapshot();
+        } while (!Objects.equals(schemaVersion, Schema.instance.getVersionSync()));
 
         keyspaces = Keyspaces.builder()
                              .add(keyspaces)

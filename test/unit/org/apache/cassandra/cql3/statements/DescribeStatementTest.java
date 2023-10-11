@@ -995,7 +995,7 @@ public class DescribeStatementTest extends CQLTester
         // before the statement was started. Also, all keyspaces should be returned only once!
         ResultSet describe = describeFuture.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
         List<String> names = Streams.stream(describe).map(r -> r.getString("keyspace_name")).collect(Collectors.toList());
-        Assertions.assertThat(names).contains("ks1");
+        Assertions.assertThat(names).contains("ks1", "ks0");
         Assertions.assertThat(names).withFailMessage("The returned keyspaces contain duplicates: %s", names).hasSize(new HashSet<>(names).size());
     }
 

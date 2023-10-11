@@ -529,6 +529,14 @@ public final class Schema implements SchemaProvider
     }
 
     /**
+     * Wait until the undergoing schema transformation is finished before returning the schema version.
+     */
+    public synchronized UUID getVersionSync()
+    {
+        return version;
+    }
+
+    /**
      * Checks whether the given schema version is the same as the current local schema.
      */
     public boolean isSameVersion(UUID schemaVersion)
