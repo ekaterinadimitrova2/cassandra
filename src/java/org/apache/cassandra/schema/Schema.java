@@ -88,8 +88,19 @@ public class Schema implements SchemaProvider
 
     public static final Schema instance = new Schema();
 
-    private volatile Keyspaces distributedKeyspaces = Keyspaces.none();
-    private volatile Keyspaces distributedAndLocalKeyspaces;
+    private static class Holder
+    {
+        private final Keyspaces distributedKeyspaces;
+        private final Keyspaces distributedAndLocalKeyspaces;
+
+        private Holder(Keyspaces distributedKeyspaces, Keyspaces distributedAndLocalKeyspaces)
+        {
+            this.distributedKeyspaces = distributedKeyspaces;
+            this.distributedAndLocalKeyspaces = distributedAndLocalKeyspaces;
+        }
+    }
+
+    private volatile Holder holder;
 
     private final Keyspaces localKeyspaces;
 
@@ -121,7 +132,7 @@ public class Schema implements SchemaProvider
         this.localKeyspaces = (CassandraRelevantProperties.FORCE_LOAD_LOCAL_KEYSPACES.getBoolean() || isDaemonInitialized() || isToolInitialized())
                               ? Keyspaces.of(SchemaKeyspace.metadata(), SystemKeyspace.metadata())
                               : Keyspaces.none();
-        this.distributedAndLocalKeyspaces = this.localKeyspaces;
+        this.holder = new Holder(Keyspaces.none(), localKeyspaces);
 
         this.localKeyspaces.forEach(this::loadNew);
         this.updateHandler = SchemaUpdateHandlerFactoryProvider.instance.get().getSchemaUpdateHandler(online, this::mergeAndUpdateVersion);
@@ -132,7 +143,7 @@ public class Schema implements SchemaProvider
     {
         this.online = online;
         this.localKeyspaces = localKeyspaces;
-        this.distributedAndLocalKeyspaces = this.localKeyspaces;
+        this.holder = new Holder(Keyspaces.none(), localKeyspaces);
         this.updateHandler = updateHandler;
     }
 
@@ -166,15 +177,16 @@ public class Schema implements SchemaProvider
     private synchronized void load(KeyspaceMetadata ksm)
     {
         Preconditions.checkArgument(!SchemaConstants.isLocalSystemKeyspace(ksm.name));
-        KeyspaceMetadata previous = distributedKeyspaces.getNullable(ksm.name);
+        KeyspaceMetadata previous = holder.distributedKeyspaces.getNullable(ksm.name);
 
         if (previous == null)
             loadNew(ksm);
         else
             reload(previous, ksm);
 
-        distributedKeyspaces = distributedKeyspaces.withAddedOrUpdated(ksm);
-        distributedAndLocalKeyspaces = distributedAndLocalKeyspaces.withAddedOrUpdated(ksm);
+        Keyspaces distributedKeyspaces = holder.distributedKeyspaces.withAddedOrUpdated(ksm);
+        Keyspaces distributedAndLocalKeyspaces = holder.distributedAndLocalKeyspaces.withAddedOrUpdated(ksm);
+        holder = new Holder(distributedKeyspaces, distributedAndLocalKeyspaces);
     }
 
     private synchronized void loadNew(KeyspaceMetadata ksm)
@@ -265,12 +277,12 @@ public class Schema implements SchemaProvider
 
     public Keyspaces distributedAndLocalKeyspaces()
     {
-        return distributedAndLocalKeyspaces;
+        return holder.distributedAndLocalKeyspaces;
     }
 
     public Keyspaces distributedKeyspaces()
     {
-        return distributedKeyspaces;
+        return holder.distributedKeyspaces;
     }
 
     /**
@@ -293,8 +305,9 @@ public class Schema implements SchemaProvider
      */
     private synchronized void unload(KeyspaceMetadata ksm)
     {
-        distributedKeyspaces = distributedKeyspaces.without(ksm.name);
-        distributedAndLocalKeyspaces = distributedAndLocalKeyspaces.without(ksm.name);
+        Keyspaces distributedKeyspaces = holder.distributedKeyspaces.without(ksm.name);
+        Keyspaces distributedAndLocalKeyspaces = holder.distributedAndLocalKeyspaces.without(ksm.name);
+        holder = new Holder(distributedKeyspaces, distributedAndLocalKeyspaces);
 
         this.tableMetadataRefCache = tableMetadataRefCache.withRemovedRefs(ksm);
 
@@ -336,7 +349,7 @@ public class Schema implements SchemaProvider
     @Deprecated
     public Keyspaces getNonSystemKeyspaces()
     {
-        return distributedKeyspaces;
+        return holder.distributedKeyspaces;
     }
 
     /**
@@ -344,7 +357,7 @@ public class Schema implements SchemaProvider
      */
     public Keyspaces getNonLocalStrategyKeyspaces()
     {
-        return distributedKeyspaces.filter(keyspace -> keyspace.params.replication.klass != LocalStrategy.class);
+        return holder.distributedKeyspaces.filter(keyspace -> keyspace.params.replication.klass != LocalStrategy.class);
     }
 
     /**
@@ -353,7 +366,7 @@ public class Schema implements SchemaProvider
      */
     public Keyspaces getUserKeyspaces()
     {
-        return distributedKeyspaces.without(SchemaConstants.REPLICATED_SYSTEM_KEYSPACE_NAMES);
+        return holder.distributedKeyspaces.without(SchemaConstants.REPLICATED_SYSTEM_KEYSPACE_NAMES);
     }
 
     /**
@@ -365,7 +378,7 @@ public class Schema implements SchemaProvider
     public Iterable<TableMetadata> getTablesAndViews(String keyspaceName)
     {
         Preconditions.checkNotNull(keyspaceName);
-        KeyspaceMetadata ksm = ObjectUtils.getFirstNonNull(() -> distributedKeyspaces.getNullable(keyspaceName),
+        KeyspaceMetadata ksm = ObjectUtils.getFirstNonNull(() -> holder.distributedKeyspaces.getNullable(keyspaceName),
                                                            () -> localKeyspaces.getNullable(keyspaceName));
         Preconditions.checkNotNull(ksm, "Keyspace %s not found", keyspaceName);
         return ksm.tablesAndViews();
@@ -445,7 +458,7 @@ public class Schema implements SchemaProvider
     @Override
     public TableMetadata getTableMetadata(TableId id)
     {
-        return ObjectUtils.getFirstNonNull(() -> distributedKeyspaces.getTableOrViewNullable(id),
+        return ObjectUtils.getFirstNonNull(() -> holder.distributedKeyspaces.getTableOrViewNullable(id),
                                            () -> localKeyspaces.getTableOrViewNullable(id),
                                            () -> VirtualKeyspaceRegistry.instance.getTableMetadataNullable(id));
     }
@@ -560,7 +573,7 @@ public class Schema implements SchemaProvider
      */
     private synchronized SchemaTransformationResult localDiff(SchemaTransformationResult result)
     {
-        Keyspaces localBefore = distributedKeyspaces;
+        Keyspaces localBefore = holder.distributedKeyspaces;
         UUID localVersion = version;
         boolean needNewDiff = false;
 
