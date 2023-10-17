@@ -35,7 +35,7 @@ import org.apache.cassandra.utils.vint.VIntCoding;
 public class Epoch implements Comparable<Epoch>, Serializable
 {
     public static final EpochSerializer serializer = new EpochSerializer();
-    public static final IVersionedSerializer<Epoch> messageSerializer = new IVersionedSerializer<Epoch>()
+    public static final IVersionedSerializer<Epoch> messageSerializer = new IVersionedSerializer<>()
     {
         @Override
         public void serialize(Epoch t, DataOutputPlus out, int version) throws IOException
