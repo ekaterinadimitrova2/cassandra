@@ -133,11 +133,12 @@ public class BulkLoaderTest extends OfflineToolUtils
                                                         "cluster[0-9]-connection-reaper-[0-9]",
                                                         "Attach Listener",
                                                         "process reaper",
-                                                        "JNA Cleaner"},
+                                                        "JNA Cleaner",
+                                                        "cluster[0-9]-nio-worker-[0-9]"},
                                          false);
-    assertSchemaNotLoaded();
-    assertCLSMNotLoaded();
-    assertSystemKSNotLoaded();
+        assertSchemaNotLoaded();
+        assertCLSMNotLoaded();
+        assertSystemKSNotLoaded();
         assertKeyspaceNotLoaded();
         assertServerNotLoaded();
     }
