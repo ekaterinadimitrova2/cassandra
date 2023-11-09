@@ -1257,6 +1257,7 @@ public class CompactionManager implements CompactionManagerMBean
     /* Used in tests. */
     public void disableAutoCompaction()
     {
+        logger.info("CompactionManager KATE:" +  Schema.instance.distributedKeyspaces().names());
         for (String ksname : Schema.instance.distributedKeyspaces().names())
         {
             for (ColumnFamilyStore cfs : Keyspace.open(ksname).getColumnFamilyStores())

@@ -5487,6 +5487,13 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
             totalCFs = 0;
             for (Keyspace keyspace : Keyspace.nonLocalStrategy())
                 totalCFs += keyspace.getColumnFamilyStores().size();
+
+            Iterator<Keyspace> thisIter =  Keyspace.nonLocalStrategy().iterator();
+            while(thisIter.hasNext())
+            {
+                logger.info("drain KATE: " +thisIter.next().toString());
+            }
+
             remainingCFs = totalCFs;
             // flush
             List<Future<?>> flushes = new ArrayList<>();
