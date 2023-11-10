@@ -34,6 +34,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.stream.Stream;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.RateLimiter;
 import org.slf4j.Logger;
@@ -751,6 +752,11 @@ public class Keyspace
 
     public static Iterable<Keyspace> nonLocalStrategy()
     {
+        ImmutableSet<String> keyspaces = Schema.instance.distributedKeyspaces().names();
+        for (String keyspace : keyspaces)
+        {
+            logger.info("KATE (print from nonLocalStrategy): " + keyspace);
+        }
         return Iterables.transform(Schema.instance.distributedKeyspaces().names(), Keyspace::open);
     }
 

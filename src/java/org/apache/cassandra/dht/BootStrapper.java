@@ -74,6 +74,11 @@ public class BootStrapper extends ProgressEventNotifierSupport
                                                    true,
                                                    DatabaseDescriptor.getStreamingConnectionsPerHost());
         final Collection<String> nonLocalStrategyKeyspaces = Schema.instance.distributedKeyspaces().names();
+
+        for (String keyspace : nonLocalStrategyKeyspaces)
+        {
+            logger.info("KATE (Bootstraper): " + keyspace);
+        }
         if (nonLocalStrategyKeyspaces.isEmpty())
             logger.debug("Schema does not contain any non-local keyspaces to stream on bootstrap");
         for (String keyspaceName : nonLocalStrategyKeyspaces)

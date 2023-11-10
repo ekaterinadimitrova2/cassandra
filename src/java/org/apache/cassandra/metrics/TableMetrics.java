@@ -61,6 +61,8 @@ import org.apache.cassandra.utils.EstimatedHistogram;
 import org.apache.cassandra.utils.ExpMovingAverage;
 import org.apache.cassandra.utils.MovingAverage;
 import org.apache.cassandra.utils.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.util.concurrent.TimeUnit.MICROSECONDS;
 import static org.apache.cassandra.metrics.CassandraMetricsRegistry.Metrics;
@@ -71,6 +73,7 @@ import static org.apache.cassandra.utils.Clock.Global.nanoTime;
  */
 public class TableMetrics
 {
+    private static final Logger logger = LoggerFactory.getLogger(TableMetrics.class);
     /**
      * stores metrics that will be rolled into a single global metric
      */
@@ -285,7 +288,7 @@ public class TableMetrics
         long filtered = 0;
         for (String keyspace : Schema.instance.distributedKeyspaces().names())
         {
-
+            logger.info("KATE: (TableMetrics): " + keyspace);
             Keyspace k = Schema.instance.getKeyspaceInstance(keyspace);
             if (SchemaConstants.DISTRIBUTED_KEYSPACE_NAME.equals(k.getName()))
                 continue;

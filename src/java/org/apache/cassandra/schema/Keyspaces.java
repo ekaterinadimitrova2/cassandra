@@ -28,9 +28,12 @@ import javax.annotation.Nullable;
 import com.google.common.collect.*;
 
 import org.apache.cassandra.schema.KeyspaceMetadata.KeyspaceDiff;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class Keyspaces implements Iterable<KeyspaceMetadata>
 {
+    private static final Logger logger = LoggerFactory.getLogger(Keyspaces.class);
     private static final Keyspaces NONE = builder().build();
 
     private final ImmutableMap<String, KeyspaceMetadata> keyspaces;
@@ -69,6 +72,10 @@ public final class Keyspaces implements Iterable<KeyspaceMetadata>
 
     public ImmutableSet<String> names()
     {
+        for(String k: keyspaces.keySet())
+        {
+            logger.info("KATE: " + k);
+        }
         return keyspaces.keySet();
     }
 

@@ -1478,7 +1478,10 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
             if (keyspace == null)
             {
                 for (String keyspaceName : Schema.instance.distributedKeyspaces().names())
+                {
+                    logger.info("KATE:" + keyspaceName);
                     streamer.addRanges(keyspaceName, getLocalReplicas(keyspaceName));
+                }
             }
             else if (tokens == null)
             {
@@ -2409,6 +2412,8 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         if (keyspace == null)
             keyspace = Schema.instance.distributedKeyspaces().iterator().next().name;
 
+        logger.info("KATE: " + keyspace);
+
         Map<List<String>, List<String>> map = new HashMap<>();
         for (Map.Entry<Range<Token>, EndpointsForRange> entry : tokenMetadata.getPendingRangesMM(keyspace).asMap().entrySet())
         {
@@ -2462,6 +2467,8 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         // non-system keyspace.
         if (keyspace == null)
             keyspace = Schema.instance.distributedKeyspaces().iterator().next().name;
+
+        logger.info("KATE: " + keyspace);
 
         List<Range<Token>> ranges = getAllRanges(sortedTokens);
         return constructRangeToEndpointMap(keyspace, ranges);
@@ -3584,6 +3591,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
 
         for (String keyspaceName : Schema.instance.distributedKeyspaces().names())
         {
+            logger.info("KATE: " + keyspaceName);
             logger.debug("Restoring replica count for keyspace {}", keyspaceName);
             EndpointsByReplica changedReplicas = getChangedReplicasForLeaving(keyspaceName, endpoint, tokenMetadata, Keyspace.open(keyspaceName).getReplicationStrategy());
             Set<LeavingReplica> myNewReplicas = new HashSet<>();
@@ -5217,6 +5225,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
                 int rf, numNodes;
                 for (String keyspaceName : Schema.instance.distributedKeyspaces().names())
                 {
+                    logger.info("KATE: " + keyspaceName);
                     if (!force)
                     {
                         boolean notEnoughLiveNodes = false;
@@ -5446,6 +5455,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         // checking if data is moving to this node
         for (String keyspaceName : keyspacesToProcess)
         {
+            logger.info("KATE:" + keyspaceName);
             // TODO: do we care about fixing transient/full self-movements here?
             if (tokenMetadata.getPendingRanges(keyspaceName, localAddress).size() > 0)
                 throw new UnsupportedOperationException("data is currently moving to this node; unable to leave the ring");
@@ -5589,6 +5599,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
         // Find the endpoints that are going to become responsible for data
         for (String keyspaceName : Schema.instance.distributedKeyspaces().names())
         {
+            logger.info("KATE:" + keyspaceName);
             // if the replication factor is 1 the data is lost so we shouldn't wait for confirmation
             if (Keyspace.open(keyspaceName).getReplicationStrategy().getReplicationFactor().allReplicas == 1)
                 continue;
@@ -5793,6 +5804,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
             List<Future<?>> flushes = new ArrayList<>();
             for (Keyspace keyspace : Keyspace.nonLocalStrategy())
             {
+                logger.info("KATE: " + keyspace.getName());
                 for (ColumnFamilyStore cfs : keyspace.getColumnFamilyStores())
                     flushes.add(cfs.forceFlush(ColumnFamilyStore.FlushReason.DRAIN));
             }
@@ -6028,6 +6040,7 @@ public class StorageService extends NotificationBroadcasterSupport implements IE
             Keyspace keyspaceInstance = Schema.instance.getKeyspaceInstance(keyspace);
             if (keyspaceInstance == null)
                 throw new IllegalArgumentException("The keyspace " + keyspace + ", does not exist");
+            logger.info("KATE: " + keyspace);
 
             if (keyspaceInstance.getReplicationStrategy() instanceof LocalStrategy)
                 throw new IllegalStateException("Ownership values for keyspaces with LocalStrategy are meaningless");

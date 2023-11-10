@@ -1296,6 +1296,7 @@ public class CompactionManager implements CompactionManagerMBean, ICompactionMan
     {
         for (String ksname : Schema.instance.distributedKeyspaces().names())
         {
+            logger.info("CompactionManager KATE:" +  Schema.instance.distributedKeyspaces().names());
             for (ColumnFamilyStore cfs : Keyspace.open(ksname).getColumnFamilyStores())
                 cfs.disableAutoCompaction();
         }
