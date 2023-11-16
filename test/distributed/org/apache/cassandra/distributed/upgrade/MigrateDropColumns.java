@@ -25,20 +25,20 @@ import java.util.Objects;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.vdurmont.semver4j.Semver;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.vdurmont.semver4j.Semver;
 import org.apache.cassandra.db.marshal.CompositeType;
 import org.apache.cassandra.db.marshal.Int32Type;
 import org.apache.cassandra.db.marshal.MapType;
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.api.Feature;
 import org.apache.cassandra.distributed.api.ICoordinator;
 import org.apache.cassandra.distributed.api.QueryResults;
 import org.apache.cassandra.distributed.api.SimpleQueryResult;
 import org.apache.cassandra.distributed.shared.AssertUtils;
-import org.apache.cassandra.distributed.shared.Versions;
 import org.apache.cassandra.distributed.test.ThriftClientUtils;
 import org.apache.cassandra.thrift.Deletion;
 import org.apache.cassandra.thrift.Mutation;
@@ -67,7 +67,10 @@ public abstract class MigrateDropColumns extends UpgradeTestBase
             testcase = testcase.singleUpgrade(initial, upgrade);
         
 				testcase
-			    .withConfig(c -> c.with(Feature.NATIVE_PROTOCOL))
+			    .withConfig(c -> c.with(Feature.NATIVE_PROTOCOL)
+                                  // below property is conciesly set to false as we have new config in the next version
+                                  // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+                                  .set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
           .setup(cluster -> {
             cluster.schemaChange(withKeyspace("CREATE TABLE %s.tbl(pk int, tables map<int, int>, PRIMARY KEY (pk))"));
 

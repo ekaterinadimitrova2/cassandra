@@ -23,9 +23,8 @@ import java.util.Iterator;
 import com.google.common.collect.Iterators;
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
-import org.apache.cassandra.distributed.api.Feature;
-import org.apache.cassandra.distributed.shared.Versions;
 
 import junit.framework.Assert;
 import static org.apache.cassandra.distributed.shared.AssertUtils.*;
@@ -38,6 +37,9 @@ public class UpgradeTest extends UpgradeTestBase
     {
         new TestCase()
         .upgradesFrom(v22)
+        // below property is conciesly set to false as we have new config in the next version
+        // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+        .withConfig(c -> c.set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> {
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck int, v int, PRIMARY KEY (pk, ck))");
 
@@ -62,6 +64,9 @@ public class UpgradeTest extends UpgradeTestBase
         .singleUpgrade(v22, v30)
         .nodes(2)
         .nodesToUpgrade(2)
+        // below property is conciesly set to false as we have new config in the next version
+        // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+        .withConfig(c -> c.set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> {
             cluster.schemaChange("ALTER KEYSPACE " + KEYSPACE + " WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}");
             cluster.schemaChange("CREATE TABLE " + KEYSPACE + ".tbl (pk int, ck int, v int, PRIMARY KEY (pk, ck)) with compact storage");

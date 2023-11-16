@@ -24,10 +24,10 @@ import java.util.Iterator;
 import com.google.common.collect.Iterators;
 import org.junit.Test;
 
+import org.apache.cassandra.distributed.Constants;
 import org.apache.cassandra.distributed.UpgradeableCluster;
 import org.apache.cassandra.distributed.api.ConsistencyLevel;
 import org.apache.cassandra.distributed.shared.DistributedTestBase;
-import org.apache.cassandra.distributed.shared.Versions;
 
 import static org.junit.Assert.fail;
 
@@ -39,6 +39,9 @@ public class MixedModeReadRepairTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .singleUpgrade(v22, v30)
+        // below property is conciesly set to false as we have new config in the next version
+        // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+        .withConfig(c -> c.set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) -> cluster.schemaChange("CREATE TABLE " + DistributedTestBase.KEYSPACE + ".tbl (pk ascii, b boolean, v blob, PRIMARY KEY (pk)) WITH COMPACT STORAGE"))
         .runAfterNodeUpgrade((cluster, node) -> {
             if (node != 1)
@@ -76,6 +79,9 @@ public class MixedModeReadRepairTest extends UpgradeTestBase
         new TestCase()
         .nodes(2)
         .singleUpgrade(v22, v30)
+        // below property is conciesly set to false as we have new config in the next version
+        // that doesn't exist in the earlier one; we want to ignore it. (CASSANDRA-17532)
+        .withConfig(c -> c.set(Constants.KEY_DTEST_API_CONFIG_CHECK, false))
         .setup((cluster) ->
         {
             cluster.schemaChange("CREATE TABLE " + DistributedTestBase.KEYSPACE + ".tbl (pk int, ck int, v map<text, text>, PRIMARY KEY (pk, ck));");
