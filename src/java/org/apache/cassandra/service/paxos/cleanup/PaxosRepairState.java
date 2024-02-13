@@ -19,69 +19,120 @@
 package org.apache.cassandra.service.paxos.cleanup;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+
+import com.google.common.base.Preconditions;
 
 import org.apache.cassandra.concurrent.Stage;
 import org.apache.cassandra.db.SystemKeyspace;
-import org.apache.cassandra.exceptions.RequestFailureReason;
 import org.apache.cassandra.io.FSWriteError;
 import org.apache.cassandra.locator.InetAddressAndPort;
-import org.apache.cassandra.net.*;
+import org.apache.cassandra.net.Message;
 import org.apache.cassandra.repair.SharedContext;
 import org.apache.cassandra.schema.Schema;
+import org.apache.cassandra.schema.TableId;
 import org.apache.cassandra.service.paxos.Ballot;
 import org.apache.cassandra.service.paxos.PaxosState;
 import org.apache.cassandra.utils.Throwables;
-import org.apache.cassandra.utils.concurrent.AsyncFuture;
 import org.apache.cassandra.utils.concurrent.IntrusiveStack;
 
 import static org.apache.cassandra.exceptions.RequestFailureReason.UNKNOWN;
 import static org.apache.cassandra.net.NoPayload.noPayload;
 
-public class PaxosFinishPrepareCleanup extends AsyncFuture<Void> implements RequestCallbackWithFailure<Void>
+public class PaxosRepairState
 {
-    private final Set<InetAddressAndPort> waitingResponse;
+    private final SharedContext ctx;
+    private final AtomicReference<PendingCleanup> pendingCleanup = new AtomicReference();
+    private final Map<UUID, PaxosCleanupSession> sessions = new ConcurrentHashMap<>();
+    private final ConcurrentMap<TableId, PaxosTableRepairs> tableRepairsMap = new ConcurrentHashMap<>();
 
-    PaxosFinishPrepareCleanup(Collection<InetAddressAndPort> endpoints)
+    public PaxosRepairState(SharedContext ctx)
     {
-        this.waitingResponse = new HashSet<>(endpoints);
+        this.ctx = ctx;
     }
 
-    public static PaxosFinishPrepareCleanup finish(SharedContext ctx, Collection<InetAddressAndPort> endpoints, PaxosCleanupHistory result)
+    public static PaxosRepairState instance()
     {
-        PaxosFinishPrepareCleanup callback = new PaxosFinishPrepareCleanup(endpoints);
-        synchronized (callback)
-        {
-            Message<PaxosCleanupHistory> message = Message.out(Verb.PAXOS2_CLEANUP_FINISH_PREPARE_REQ, result);
-            for (InetAddressAndPort endpoint : endpoints)
-                ctx.messaging().sendWithCallback(message, endpoint, callback);
-        }
-        return callback;
+        return Holder.instance;
     }
 
-    @Override
-    public void onFailure(InetAddressAndPort from, RequestFailureReason reason)
+    PaxosTableRepairs getForTable(TableId tableId)
     {
-        tryFailure(new PaxosCleanupException(reason + " failure response from " + from));
+        return tableRepairsMap.computeIfAbsent(tableId, k -> new PaxosTableRepairs());
     }
 
-    public synchronized void onResponse(Message<Void> msg)
+    public void evictHungRepairs()
     {
-        if (isDone())
-            return;
+        long deadline = ctx.clock().nanoTime() - TimeUnit.MINUTES.toNanos(5);
+        for (PaxosTableRepairs repairs : tableRepairsMap.values())
+            repairs.evictHungRepairs(deadline);
+    }
 
-        if (!waitingResponse.remove(msg.from()))
-            throw new IllegalArgumentException("Received unexpected response from " + msg.from());
+    public void clearRepairs()
+    {
+        for (PaxosTableRepairs repairs : tableRepairsMap.values())
+            repairs.clear();
+    }
 
-        if (waitingResponse.isEmpty())
-            trySuccess(null);
+
+    public void setSession(PaxosCleanupSession session)
+    {
+        //TODO (review): I copy/pasted from PaxosCleanupSession... this is a check-then-act pattern which is not thread safe...
+        Preconditions.checkState(!sessions.containsKey(session.session));
+        sessions.put(session.session, session);
+    }
+
+    public void removeSession(PaxosCleanupSession session)
+    {
+        //TODO (review): I copy/pasted from PaxosCleanupSession... this is a check-then-act pattern which is not thread safe...
+        Preconditions.checkState(sessions.containsKey(session.session));
+        sessions.remove(session.session);
+    }
+
+    public void finishSession(InetAddressAndPort from, PaxosCleanupResponse response)
+    {
+        PaxosCleanupSession session = sessions.get(response.session);
+        if (session != null)
+            session.finish(from, response);
+    }
+    
+    public void addCleanupHistory(Message<PaxosCleanupHistory> message)
+    {
+        PendingCleanup.add(ctx, pendingCleanup, message);
+    }
+
+    private static class Holder
+    {
+        private static final PaxosRepairState instance = new PaxosRepairState(SharedContext.Global.instance);
     }
 
     static class PendingCleanup extends IntrusiveStack<PendingCleanup>
     {
-        private static final AtomicReference<PendingCleanup> pendingCleanup = new AtomicReference();
-        private static final Runnable CLEANUP = () -> {
+        private final Message<PaxosCleanupHistory> message;
+
+        PendingCleanup(Message<PaxosCleanupHistory> message)
+        {
+            this.message = message;
+        }
+
+        private static void add(SharedContext ctx, AtomicReference<PendingCleanup> pendingCleanup, Message<PaxosCleanupHistory> message)
+        {
+            PendingCleanup next = new PendingCleanup(message);
+            PendingCleanup prev = IntrusiveStack.push(AtomicReference::get, AtomicReference::compareAndSet, pendingCleanup, next);
+            if (prev == null)
+                Stage.MISC.execute(() -> cleanup(ctx, pendingCleanup));
+        }
+
+        private static void cleanup(SharedContext ctx, AtomicReference<PendingCleanup> pendingCleanup)
+        {
             PendingCleanup list = pendingCleanup.getAndSet(null);
             if (list == null)
                 return;
@@ -107,7 +158,7 @@ public class PaxosFinishPrepareCleanup extends AsyncFuture<Void> implements Requ
             catch (Throwable t)
             {
                 for (PendingCleanup pending : IntrusiveStack.iterable(list))
-                    MessagingService.instance().respondWithFailure(UNKNOWN, pending.message);
+                    ctx.messaging().respondWithFailure(UNKNOWN, pending.message);
                 throw t;
             }
 
@@ -126,7 +177,7 @@ public class PaxosFinishPrepareCleanup extends AsyncFuture<Void> implements Requ
                     if (failed == null)
                         failed = Collections.newSetFromMap(new IdentityHashMap<>());
                     failed.add(pending);
-                    MessagingService.instance().respondWithFailure(UNKNOWN, pending.message);
+                    ctx.messaging().respondWithFailure(UNKNOWN, pending.message);
                 }
             }
 
@@ -136,7 +187,7 @@ public class PaxosFinishPrepareCleanup extends AsyncFuture<Void> implements Requ
                 for (PendingCleanup pending : IntrusiveStack.iterable(list))
                 {
                     if (failed == null || !failed.contains(pending))
-                        MessagingService.instance().respond(noPayload, pending.message);
+                        ctx.messaging().respond(noPayload, pending.message);
                 }
             }
             catch (Throwable t)
@@ -145,31 +196,10 @@ public class PaxosFinishPrepareCleanup extends AsyncFuture<Void> implements Requ
                 for (PendingCleanup pending : IntrusiveStack.iterable(list))
                 {
                     if (failed == null || !failed.contains(pending))
-                        MessagingService.instance().respondWithFailure(UNKNOWN, pending.message);
+                        ctx.messaging().respondWithFailure(UNKNOWN, pending.message);
                 }
             }
             Throwables.maybeFail(fail);
-        };
-
-        final Message<PaxosCleanupHistory> message;
-        PendingCleanup(Message<PaxosCleanupHistory> message)
-        {
-            this.message = message;
-        }
-
-        public static void add(Message<PaxosCleanupHistory> message)
-        {
-            PendingCleanup next = new PendingCleanup(message);
-            PendingCleanup prev = IntrusiveStack.push(AtomicReference::get, AtomicReference::compareAndSet, pendingCleanup, next);
-            if (prev == null)
-                Stage.MISC.execute(CLEANUP);
         }
     }
-
-    public static IVerbHandler<PaxosCleanupHistory> createVerbHandler(SharedContext ctx)
-    {
-        return ctx.paxosRepairState()::addCleanupHistory;
-    }
-
-    public static final IVerbHandler<PaxosCleanupHistory> verbHandler = createVerbHandler(SharedContext.Global.instance);
 }

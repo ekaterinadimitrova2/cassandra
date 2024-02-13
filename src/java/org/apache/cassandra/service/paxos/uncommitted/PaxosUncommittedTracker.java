@@ -46,6 +46,7 @@ import org.apache.cassandra.schema.SchemaConstants;
 import org.apache.cassandra.schema.TableId;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.StorageService;
+import org.apache.cassandra.service.paxos.cleanup.PaxosRepairState;
 import org.apache.cassandra.service.paxos.cleanup.PaxosTableRepairs;
 import org.apache.cassandra.utils.CloseableIterator;
 
@@ -322,7 +323,7 @@ public class PaxosUncommittedTracker
     {
         runAndLogException("file consolidation", this::consolidateFiles);
         runAndLogException("schedule auto repairs", this::schedulePaxosAutoRepairs);
-        runAndLogException("evict hung repairs", PaxosTableRepairs::evictHungRepairs);
+        runAndLogException("evict hung repairs", PaxosRepairState.instance()::evictHungRepairs);
     }
 
     public synchronized void startAutoRepairs()

@@ -67,7 +67,6 @@ import org.apache.cassandra.service.ActiveRepairService;
 import org.apache.cassandra.service.paxos.Paxos;
 import org.apache.cassandra.service.paxos.cleanup.PaxosCleanupRequest;
 import org.apache.cassandra.service.paxos.cleanup.PaxosCleanupResponse;
-import org.apache.cassandra.service.paxos.cleanup.PaxosCleanupSession;
 import org.apache.cassandra.streaming.PreviewKind;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.cassandra.utils.FBUtilities;
@@ -875,7 +874,7 @@ public class RepairJobTest
                 if (message.verb() == PAXOS2_CLEANUP_REQ)
                 {
                     PaxosCleanupRequest request = (PaxosCleanupRequest) message.payload;
-                    PaxosCleanupSession.finishSession(to, new PaxosCleanupResponse(request.session, true, null));
+                    SharedContext.Global.instance.paxosRepairState().finishSession(to, new PaxosCleanupResponse(request.session, true, null));
                     return false;
                 }
 
