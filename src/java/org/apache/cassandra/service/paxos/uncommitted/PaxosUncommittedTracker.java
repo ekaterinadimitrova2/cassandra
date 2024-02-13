@@ -47,7 +47,6 @@ import org.apache.cassandra.schema.TableId;
 import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.service.StorageService;
 import org.apache.cassandra.service.paxos.cleanup.PaxosRepairState;
-import org.apache.cassandra.service.paxos.cleanup.PaxosTableRepairs;
 import org.apache.cassandra.utils.CloseableIterator;
 
 import static org.apache.cassandra.config.CassandraRelevantProperties.AUTO_REPAIR_FREQUENCY_SECONDS;
