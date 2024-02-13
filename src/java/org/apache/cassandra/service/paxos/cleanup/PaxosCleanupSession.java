@@ -84,7 +84,7 @@ public class PaxosCleanupSession extends AsyncFuture<Void> implements Runnable,
 
         ScheduledFuture<?> schedule(long delayNanos)
         {
-            return ctx.nonPeriodicTasks().scheduleTimeoutWithDelay(this, delayNanos, TimeUnit.NANOSECONDS);
+            return ctx.scheduledTasks().scheduleTimeoutWithDelay(this, delayNanos, TimeUnit.NANOSECONDS);
         }
 
         private static ScheduledFuture<?> schedule(PaxosCleanupSession session)
