@@ -397,7 +397,6 @@ build_dev_min_jobs()
   delete_job "$1" "start_j17_cqlsh_tests"
   delete_job "$1" "start_j17_cqlsh_tests_offheap"
   delete_job "$1" "start_j11_cqlsh_tests_offheap"
-  delete_job "$1" "start_j11_cqlsh_tests"
 }
 
 delete_repeated_jobs "config.yml"
