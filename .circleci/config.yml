@@ -9529,14 +9529,10 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
-    - start_j11_cqlsh_tests:
-        type: approval
-    - start_j11_cqlsh_tests_offheap:
-        type: approval
-    - start_j17_cqlsh_tests:
-        type: approval
-    - start_j17_cqlsh_tests_offheap:
-        type: approval
+    - j11_cqlsh_dtests_py311:
+        requires:
+        - start_j11_cqlsh_tests
+        - j11_build
     - start_j11_upgrade_dtests:
         type: approval
     - j11_upgrade_dtests:
@@ -9580,6 +9576,9 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
+    - j11_cqlsh_dtests_py311:
+        requires:
+        - j11_build
     - start_j11_upgrade_dtests:
         type: approval
     - j11_upgrade_dtests:
@@ -9593,8 +9592,6 @@ workflows:
     - j17_build:
         requires:
         - start_j17_build
-    - start_j17_cqlsh_tests:
-        type: approval
   java17_pre-commit_tests:
     jobs:
     - start_pre-commit_tests:
