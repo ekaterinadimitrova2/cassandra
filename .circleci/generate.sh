@@ -34,7 +34,7 @@ print_help()
   echo "   -a Generate the config.yml, config.yml.FREE and config.yml.PAID expanded configuration"
   echo "      files from the main config_template.yml reusable configuration file."
   echo "      Use this for permanent changes in config.yml that will be committed to the main repo."
-  echo "   -d Deduplicate. Removes all config variations for each test groups leaving only the vanilla one to run. Skinny test run."
+  echo "   -d Minimal development checks only. Sanity check during your dev before sending it to review for speed and cost reductions."
   echo "   -f Generate config.yml for tests compatible with the CircleCI free tier resources"
   echo "   -p Generate config.yml for tests compatible with the CircleCI paid tier resources"
   echo "   -b Specify the base git branch for comparison when determining changed tests to"
@@ -81,7 +81,7 @@ print_help()
 all=false
 free=false
 paid=false
-dedup=false
+dev_min=false
 env_vars=""
 has_env_vars=false
 check_env_vars=true
@@ -91,7 +91,7 @@ while getopts "e:afpdib:s" opt; do
       a ) all=true
           detect_changed_tests=false
           ;;
-      d ) dedup=true
+      d ) dev_min=true
           ;;
       f ) free=true
           ;;
@@ -336,16 +336,16 @@ delete_repeated_jobs()
   fi
 }
 
-# Define function to leave only a single config run for each test group
+# Define function to leave only a single config run for each test group.
+# This builds a minimal sanity check config for dev only for time and cost purposes.
 # The first and only argument is the file name.
-dedup_jobs()
+build_dev_min_jobs()
 {
   delete_job "$1" "j11_cqlsh_dtests_py311_offheap"
   delete_job "$1" "j11_cqlsh_dtests_py38_offheap"
   delete_job "$1" "j17_cqlsh_dtests_py311_offheap"
   delete_job "$1" "j17_cqlsh_dtests_py38_offheap"
   delete_job "$1" "j11_cqlsh_dtests_py311_vnode"
-  delete_job "$1" "j11_cqlsh_dtests_py311"
   delete_job "$1" "j11_cqlsh_dtests_py38_vnode"
   delete_job "$1" "j11_cqlsh_dtests_py38"
   delete_job "$1" "j11_cqlshlib_cython_tests"
@@ -402,6 +402,6 @@ if $all; then
   delete_repeated_jobs "config.yml.PAID"
 fi
 
-if $dedup; then
-  dedup_jobs "config.yml"
+if $dev_min; then
+  build_dev_min_jobs "config.yml"
 fi
