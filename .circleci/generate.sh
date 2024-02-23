@@ -336,8 +336,21 @@ delete_repeated_jobs()
   fi
 }
 
+# Update the workflow names
+rename_pre-commit_tests_workflows()
+{
+  file="$BASEDIR/$1"
+  echo "Updating workflow names in the configuration:"
+
+  sed -Ei.bak "s/java11_pre-commit_tests/java11_during_dev_tests/g" "$file"
+  sed -Ei.bak "s/java17_pre-commit_tests/java17_during_dev_tests/g" "$file"
+
+  echo "Workflow names updated successfully."
+}
+
 # Define function to leave only a single config run for each test group.
 # This builds a minimal sanity check config for dev only for time and cost purposes.
+# Rename java17_pre-commit_tests and java11_pre-commit_tests to java17_during_dev_tests and java11_during_dev_tests.
 # The first and only argument is the file name.
 build_dev_min_jobs()
 {
@@ -406,5 +419,6 @@ if $all; then
 fi
 
 if $dev_min; then
+  rename_pre-commit_tests_workflows "config.yml"
   build_dev_min_jobs "config.yml"
 fi
