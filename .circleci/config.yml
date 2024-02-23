@@ -9529,6 +9529,8 @@ workflows:
         requires:
         - start_j11_dtests_large
         - j11_build
+    - start_j11_cqlsh_tests:
+        type: approval
     - j11_cqlsh_dtests_py311:
         requires:
         - start_j11_cqlsh_tests
