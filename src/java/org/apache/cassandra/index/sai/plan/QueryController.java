@@ -198,6 +198,7 @@ public class QueryController
         KeyRangeIterator.Builder builder = command.rowFilter().isStrict()
                                            ? KeyRangeIntersectionIterator.builder(expressions.size())
                                            : KeyRangeUnionIterator.builder(expressions.size());
+
         QueryViewBuilder.QueryView queryView = new QueryViewBuilder(expressions, mergeRange).build();
 
         try
@@ -235,7 +236,7 @@ public class QueryController
                             IndexSearchResultIterator.build(queryViewPair.left, unrepaired, mergeRange, queryContext, true);
 
                     // ...but ignore it if our combined results are empty.
-                    if (unrepairedIterator.getCount() > 0)
+                    if (unrepairedIterator.getMaxKeys() > 0)
                     {
                         builder.add(unrepairedIterator);
                         queryContext.hasUnrepairedMatches = true;
@@ -257,9 +258,11 @@ public class QueryController
         }
         catch (Throwable t)
         {
+            int rangeCount = builder.rangeCount();
             // all sstable indexes in view have been referenced, need to clean up when exception is thrown
             builder.cleanup();
-            queryView.referencedIndexes.forEach(SSTableIndex::releaseQuietly);
+            if (rangeCount == 0)
+                queryView.referencedIndexes.forEach(SSTableIndex::releaseQuietly);
             throw t;
         }
         return builder;

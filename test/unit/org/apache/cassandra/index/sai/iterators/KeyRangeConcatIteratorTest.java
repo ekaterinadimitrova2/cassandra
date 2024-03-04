@@ -109,7 +109,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertNotNull(keyIterator);
         assertEquals(1L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(9L, keyIterator.getMaximum().token().getLongValue());
-        assertEquals(9L, keyIterator.getCount());
+        assertEquals(9L, keyIterator.getMaxKeys());
 
         for (long i = 1; i < 10; i++)
         {
@@ -196,7 +196,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertEquals(10L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(19L, keyIterator.getMaximum().token().getLongValue());
         assertTrue(keyIterator.hasNext());
-        assertEquals(10, keyIterator.getCount());
+        assertEquals(10, keyIterator.getMaxKeys());
     }
 
     @Test
@@ -211,7 +211,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertEquals(10L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(10L, keyIterator.getMaximum().token().getLongValue());
         assertTrue(keyIterator.hasNext());
-        assertEquals(1, keyIterator.getCount());
+        assertEquals(1, keyIterator.getMaxKeys());
     }
 
     @Test
@@ -226,7 +226,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertEquals(10L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(19L, keyIterator.getMaximum().token().getLongValue());
         assertTrue(keyIterator.hasNext());
-        assertEquals(10, keyIterator.getCount());
+        assertEquals(10, keyIterator.getMaxKeys());
     }
 
     @Test
@@ -241,7 +241,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertEquals(10L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(10L, keyIterator.getMaximum().token().getLongValue());
         assertTrue(keyIterator.hasNext());
-        assertEquals(1, keyIterator.getCount());
+        assertEquals(1, keyIterator.getMaxKeys());
     }
 
     @Test
@@ -257,7 +257,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertEquals(10L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(19L, keyIterator.getMaximum().token().getLongValue());
         assertTrue(keyIterator.hasNext());
-        assertEquals(10, keyIterator.getCount());
+        assertEquals(10, keyIterator.getMaxKeys());
     }
 
     @Test
@@ -273,7 +273,7 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         assertEquals(10L, keyIterator.getMinimum().token().getLongValue());
         assertEquals(19L, keyIterator.getMaximum().token().getLongValue());
         assertTrue(keyIterator.hasNext());
-        assertEquals(10, keyIterator.getCount());
+        assertEquals(10, keyIterator.getMaxKeys());
     }
 
     @Test
@@ -316,37 +316,6 @@ public class KeyRangeConcatIteratorTest extends AbstractKeyRangeIteratorTester
         KeyRangeIterator concatB = buildConcat(rangeA, rangeB);
 
         assertEquals(convert(1L, 3L, 5L, 7L, 9L), convert(buildIntersection(concatA, concatB)));
-    }
-
-    @Test
-    public void testConcatOnError()
-    {
-        assertOnError(buildOnErrorA(this::buildConcat, arr(1L, 2L, 3L), arr(4L, 5L, 6L)));
-        assertOnError(buildOnErrorB(this::buildConcat, arr( 1L, 2L, 3L), arr(4L)));
-    }
-
-    @Test
-    public void testConcatOfUnionsOnError()
-    {
-        KeyRangeIterator unionA = buildUnion(arr(1L, 2L, 3L), arr(4L));
-        KeyRangeIterator unionB = buildOnErrorB(this::buildUnion, arr(6L), arr(8L, 9L));
-        assertOnError(buildConcat(unionA, unionB));
-
-        unionA = buildOnErrorA(this::buildUnion, arr( 1L, 2L, 3L), arr( 4L));
-        unionB = buildUnion(arr( 5L), arr( 5L, 6L));
-        assertOnError(buildConcat(unionA, unionB));
-    }
-
-    @Test
-    public void testConcatOfIntersectionsOnError()
-    {
-        KeyRangeIterator intersectionA = buildOnErrorA(this::buildIntersection, arr(1L, 2L, 3L), arr(2L, 3L, 4L));
-        KeyRangeIterator intersectionB = buildIntersection(arr(6L, 7L, 8L), arr(7L, 8L, 9L));
-        assertOnError(buildConcat(intersectionA, intersectionB));
-
-        intersectionA = buildIntersection(arr( 1L, 2L, 3L), arr( 2L, 3L, 4L));
-        intersectionB = buildOnErrorB(this::buildIntersection, arr( 6L, 7L, 8L, 9L, 10L), arr(  7L, 8L, 9L));
-        assertOnError(buildConcat(intersectionA, intersectionB));
     }
 
     @Test

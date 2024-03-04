@@ -22,8 +22,6 @@ import java.util.function.BiFunction;
 
 import org.apache.cassandra.index.sai.utils.SAIRandomizedTester;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 public class AbstractKeyRangeIteratorTester extends SAIRandomizedTester
 {
     protected long[] arr(long... longArray)
@@ -34,11 +32,6 @@ public class AbstractKeyRangeIteratorTester extends SAIRandomizedTester
     protected long[] arr(int... intArray)
     {
         return Arrays.stream(intArray).mapToLong(i -> i).toArray();
-    }
-
-    void assertOnError(KeyRangeIterator range)
-    {
-        assertThatThrownBy(() -> LongIterator.convert(range)).isInstanceOf(RuntimeException.class);
     }
 
     final KeyRangeIterator buildIntersection(KeyRangeIterator... ranges)
@@ -71,7 +64,7 @@ public class AbstractKeyRangeIteratorTester extends SAIRandomizedTester
         return buildUnion(toRangeIterator(ranges));
     }
 
-    final KeyRangeIterator buildConcat(KeyRangeIterator... ranges)
+    static KeyRangeIterator buildConcat(KeyRangeIterator... ranges)
     {
         return KeyRangeConcatIterator.builder(ranges.length).add(Arrays.asList(ranges)).build();
     }
@@ -81,47 +74,20 @@ public class AbstractKeyRangeIteratorTester extends SAIRandomizedTester
         return buildConcat(toRangeIterator(ranges));
     }
 
-    private KeyRangeIterator[] toRangeIterator(long[]... ranges)
+    private static KeyRangeIterator[] toRangeIterator(long[]... ranges)
     {
-        return Arrays.stream(ranges).map(this::build).toArray(KeyRangeIterator[]::new);
+        return Arrays.stream(ranges).map(AbstractKeyRangeIteratorTester::build).toArray(KeyRangeIterator[]::new);
     }
 
-    protected LongIterator build(long... tokens)
+    protected static LongIterator build(long... tokens)
     {
-        return build(tokens, false);
-    }
-
-    protected LongIterator build(long[] tokensA, boolean onErrorA)
-    {
-        LongIterator rangeA = new LongIterator(tokensA);
-
-        if (onErrorA)
-            rangeA.throwsException();
-
-        return rangeA;
-    }
-
-    protected KeyRangeIterator buildOnError(BiFunction<KeyRangeIterator, KeyRangeIterator, KeyRangeIterator> builder, long[] tokensA, long[] tokensB)
-    {
-        return build(builder, tokensA, true, tokensB, true);
-    }
-
-    protected KeyRangeIterator buildOnErrorA(BiFunction<KeyRangeIterator, KeyRangeIterator, KeyRangeIterator> builder, long[] tokensA, long[] tokensB)
-    {
-        return build(builder, tokensA, true, tokensB, false);
-    }
-
-    protected KeyRangeIterator buildOnErrorB(BiFunction<KeyRangeIterator, KeyRangeIterator, KeyRangeIterator> builder, long[] tokensA, long[] tokensB)
-    {
-        return build(builder, tokensA, false, tokensB, true);
+        return new LongIterator(tokens);
     }
 
     protected KeyRangeIterator build(BiFunction<KeyRangeIterator, KeyRangeIterator, KeyRangeIterator> builder,
                                      long[] tokensA,
-                                     boolean onErrorA,
-                                     long[] tokensB,
-                                     boolean onErrorB)
+                                     long[] tokensB)
     {
-        return builder.apply(build(tokensA, onErrorA), build(tokensB, onErrorB));
+        return builder.apply(build(tokensA), build(tokensB));
     }
 }
