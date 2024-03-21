@@ -1816,8 +1816,12 @@ relation[WhereClause.Builder clauses]
     | K_TOKEN l=tupleOfIdentifiers K_BETWEEN betweenValues=singleColumnBetweenValues { $clauses.add(Relation.token(l, Operator.BETWEEN, betweenValues)); }
     | name=cident K_IN marker=inMarker
         { $clauses.add(Relation.singleColumn(name, Operator.IN, marker)); }
+    | name=cident K_NOT K_IN marker=inMarker
+        { $clauses.add(Relation.singleColumn(name, Operator.NOT_IN, marker)); }
     | name=cident K_IN inValues=singleColumnInValues
         { $clauses.add(Relation.singleColumn($name.id, Operator.IN, inValues)); }
+    | name=cident K_NOT K_IN inValues=singleColumnInValues
+        { $clauses.add(Relation.singleColumn($name.id, Operator.NOT_IN, inValues)); }
     | name=cident rt=containsOperator t=term { $clauses.add(Relation.singleColumn(name, rt, t)); }
     | name=cident '[' key=term ']' type=relationType t=term { $clauses.add(Relation.mapElement(name, key, type, t)); }
     | ids=tupleOfIdentifiers
@@ -1833,6 +1837,18 @@ relation[WhereClause.Builder clauses]
           | markers=tupleOfMarkersForTuples /* (a, b, c) IN (?, ?, ...) */
               { $clauses.add(Relation.multiColumn(ids, Operator.IN, markers)); }
           )
+      | K_NOT K_IN
+         ( '(' ')'
+             { $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, Terms.Raw.of(Collections.emptyList()))); }
+         | tupleInMarker=inMarker /* (a, b, c) NOT IN ? */
+             { $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, tupleInMarker)); }
+         | literals=tupleOfTupleLiterals /* (a, b, c) NOT IN ((1, 2, 3), (4, 5, 6), ...) */
+             {
+                 $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, literals));
+             }
+         | markers=tupleOfMarkersForTuples /* (a, b, c) NOT IN (?, ?, ...) */
+             { $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, markers)); }
+         )
       | type=relationType literal=tupleLiteral /* (a, b, c) > (1, 2, 3) or (a, b, c) > (?, ?, ?) */
           {
               $clauses.add(Relation.multiColumn(ids, type, literal));
@@ -1851,6 +1867,7 @@ relation[WhereClause.Builder clauses]
 
 containsOperator returns [Operator o]
     : K_CONTAINS { o = Operator.CONTAINS; } (K_KEY { o = Operator.CONTAINS_KEY; })?
+    | K_NOT K_CONTAINS { o = Operator.NOT_CONTAINS; } (K_KEY { o = Operator.NOT_CONTAINS_KEY; })?
     ;
 
 inMarker returns [InMarker.Raw marker]
