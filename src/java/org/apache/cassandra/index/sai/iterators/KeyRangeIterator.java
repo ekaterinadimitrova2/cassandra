@@ -26,6 +26,8 @@ import com.google.common.collect.Iterables;
 import org.apache.cassandra.index.sai.utils.PrimaryKey;
 import org.apache.cassandra.utils.AbstractGuavaIterator;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * An abstract implementation of {@link AbstractGuavaIterator} that supports the building and management of
  * concatanation, union and intersection iterators.
@@ -35,11 +37,12 @@ import org.apache.cassandra.utils.AbstractGuavaIterator;
  * <p>
  * Only certain methods are designed to be overriden.  The others are marked private or final.
  */
+@NotThreadSafe
 public abstract class KeyRangeIterator extends AbstractGuavaIterator<PrimaryKey> implements Closeable
 {
     private final PrimaryKey min, max;
     private final long count;
-    private final Runnable onClose;
+    private Runnable onClose;
 
     protected KeyRangeIterator(Builder.Statistics statistics, Runnable onClose)
     {
@@ -126,7 +129,12 @@ public abstract class KeyRangeIterator extends AbstractGuavaIterator<PrimaryKey>
      * or the first one after it if not present.
      */
     protected abstract void performSkipTo(PrimaryKey nextKey);
-    
+
+    public void setOnClose(Runnable onClose)
+    {
+        this.onClose = onClose;
+    }
+
     @Override
     public void close()
     {
@@ -186,9 +194,14 @@ public abstract class KeyRangeIterator extends AbstractGuavaIterator<PrimaryKey>
         public final KeyRangeIterator build()
         {
             if (rangeCount() == 0)
+            {
+                onClose.run();
                 return empty();
+            }
             else
+            {
                 return buildIterator();
+            }
         }
 
         public abstract Builder add(KeyRangeIterator range);

@@ -24,6 +24,8 @@ import java.util.NoSuchElementException;
 
 import com.google.common.collect.PeekingIterator;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 import static com.google.common.base.Preconditions.checkState;
 
 /**
@@ -31,6 +33,7 @@ import static com.google.common.base.Preconditions.checkState;
  * is that the next variable is now protected so that the KeyRangeIterator.skipTo
  * method can avoid early state changed.
  */
+@NotThreadSafe
 public abstract class AbstractGuavaIterator<T> implements PeekingIterator<T>
 {
     protected State state = State.NOT_READY;

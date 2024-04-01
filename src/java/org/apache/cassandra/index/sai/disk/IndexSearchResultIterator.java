@@ -127,6 +127,7 @@ public class IndexSearchResultIterator extends KeyRangeIterator
     @Override
     public void close()
     {
+        super.close();
         FileUtils.closeQuietly(union);
     }
 }

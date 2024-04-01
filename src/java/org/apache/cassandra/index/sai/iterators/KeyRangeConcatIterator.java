@@ -151,9 +151,16 @@ public class KeyRangeConcatIterator extends KeyRangeIterator
         protected KeyRangeIterator buildIterator()
         {
             if (rangeCount() == 0)
+            {
+                onClose.run();
                 return empty();
+            }
             if (rangeCount() == 1)
-                return ranges.get(0);
+            {
+                KeyRangeIterator single = ranges.get(0);
+                single.setOnClose(onClose);
+                return single;
+            }
 
             return new KeyRangeConcatIterator(statistics, ranges, onClose);
         }

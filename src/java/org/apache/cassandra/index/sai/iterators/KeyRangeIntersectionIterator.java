@@ -307,11 +307,16 @@ public class KeyRangeIntersectionIterator extends KeyRangeIterator
             if (isDisjoint)
             {
                 FileUtils.closeQuietly(ranges);
+                onClose.run();
                 return KeyRangeIterator.empty();
             }
 
             if (ranges.size() == 1)
-                return ranges.get(0);
+            {
+                KeyRangeIterator single = ranges.get(0);
+                single.setOnClose(onClose);
+                return single;
+            }
 
             // Make sure intersection is supported on the ranges provided:
             PrimaryKey.Kind firstKind = null;
