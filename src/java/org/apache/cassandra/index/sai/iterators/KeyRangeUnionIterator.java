@@ -182,7 +182,11 @@ public class KeyRangeUnionIterator extends KeyRangeIterator
         protected KeyRangeIterator buildIterator()
         {
             if (rangeCount() == 1)
-                return rangeIterators.get(0);
+            {
+                KeyRangeIterator single = rangeIterators.get(0);
+                single.setOnClose(onClose);
+                return single;
+            }
 
             return new KeyRangeUnionIterator(statistics, rangeIterators, onClose);
         }
