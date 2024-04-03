@@ -80,7 +80,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -90,11 +90,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -187,7 +187,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -197,11 +197,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -304,7 +304,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -314,11 +314,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -369,7 +369,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -379,11 +379,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -458,7 +458,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -468,11 +468,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -591,7 +591,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -601,11 +601,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -656,7 +656,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -666,11 +666,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -774,7 +774,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -784,11 +784,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -882,7 +882,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -892,11 +892,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1036,7 +1036,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1046,11 +1046,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1168,7 +1168,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1178,11 +1178,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1277,7 +1277,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1287,11 +1287,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1394,7 +1394,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1404,11 +1404,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1484,7 +1484,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1494,11 +1494,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1602,7 +1602,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1612,11 +1612,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1710,7 +1710,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1720,11 +1720,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1800,7 +1800,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1810,11 +1810,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -1908,7 +1908,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -1918,11 +1918,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2041,7 +2041,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2051,11 +2051,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2195,7 +2195,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2205,11 +2205,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2312,7 +2312,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2322,11 +2322,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2402,7 +2402,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2412,11 +2412,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2510,7 +2510,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2520,11 +2520,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2618,7 +2618,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2628,11 +2628,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2708,7 +2708,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2718,11 +2718,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2797,7 +2797,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2807,11 +2807,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -2915,7 +2915,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -2925,11 +2925,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3110,7 +3110,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3120,11 +3120,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3195,7 +3195,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3205,11 +3205,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3328,7 +3328,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3338,11 +3338,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3413,7 +3413,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3423,11 +3423,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3503,7 +3503,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3513,11 +3513,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3621,7 +3621,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3631,11 +3631,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3754,7 +3754,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3764,11 +3764,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -3872,7 +3872,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -3882,11 +3882,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4067,7 +4067,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4077,11 +4077,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4173,7 +4173,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4183,11 +4183,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4290,7 +4290,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4300,11 +4300,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4380,7 +4380,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4390,11 +4390,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4497,7 +4497,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4507,11 +4507,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4568,7 +4568,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4578,11 +4578,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4658,7 +4658,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4668,11 +4668,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4748,7 +4748,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4758,11 +4758,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4851,7 +4851,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4861,11 +4861,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -4923,7 +4923,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -4933,11 +4933,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5013,7 +5013,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5023,11 +5023,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5126,7 +5126,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5136,11 +5136,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5244,7 +5244,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5254,11 +5254,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5316,7 +5316,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5326,11 +5326,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5406,7 +5406,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5416,11 +5416,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5513,7 +5513,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5523,11 +5523,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5645,7 +5645,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5655,11 +5655,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5763,7 +5763,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5773,11 +5773,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -5881,7 +5881,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -5891,11 +5891,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6014,7 +6014,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6024,11 +6024,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6103,7 +6103,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6113,11 +6113,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6188,7 +6188,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6198,11 +6198,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6321,7 +6321,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6331,11 +6331,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6411,7 +6411,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6421,11 +6421,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6482,7 +6482,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6492,11 +6492,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6566,7 +6566,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6576,11 +6576,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6674,7 +6674,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6684,11 +6684,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6764,7 +6764,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6774,11 +6774,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6854,7 +6854,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6864,11 +6864,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -6963,7 +6963,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -6973,11 +6973,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7027,7 +7027,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7037,11 +7037,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7135,7 +7135,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7145,11 +7145,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7253,7 +7253,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7263,11 +7263,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7361,7 +7361,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7371,11 +7371,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7469,7 +7469,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7479,11 +7479,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7586,7 +7586,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7596,11 +7596,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7693,7 +7693,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7703,11 +7703,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7810,7 +7810,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7820,11 +7820,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7881,7 +7881,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7891,11 +7891,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -7987,7 +7987,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -7997,11 +7997,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8077,7 +8077,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8087,11 +8087,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8162,7 +8162,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8172,11 +8172,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8226,7 +8226,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8236,11 +8236,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8311,7 +8311,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8321,11 +8321,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8420,7 +8420,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8430,11 +8430,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8537,7 +8537,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8547,11 +8547,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8626,7 +8626,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8636,11 +8636,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8710,7 +8710,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8720,11 +8720,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8799,7 +8799,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8809,11 +8809,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8871,7 +8871,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8881,11 +8881,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -8960,7 +8960,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -8970,11 +8970,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9044,7 +9044,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9054,11 +9054,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9134,7 +9134,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9144,11 +9144,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9266,7 +9266,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9276,11 +9276,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9355,7 +9355,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9365,11 +9365,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9444,7 +9444,7 @@ jobs:
     - CCM_MAX_HEAP_SIZE: 1024M
     - CCM_HEAP_NEWSIZE: 256M
     - REPEATED_TESTS_STOP_ON_FAILURE: true
-    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest.testIncompleteState
+    - REPEATED_UTESTS: org.apache.cassandra.gms.NewGossiperTest
     - REPEATED_UTESTS_COUNT: 500
     - REPEATED_UTESTS_FQLTOOL: null
     - REPEATED_UTESTS_FQLTOOL_COUNT: 500
@@ -9454,11 +9454,11 @@ jobs:
     - REPEATED_UTESTS_STRESS_COUNT: 500
     - REPEATED_SIMULATOR_DTESTS: null
     - REPEATED_SIMULATOR_DTESTS_COUNT: 500
-    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest.testMixedVersionBlockDecom
+    - REPEATED_JVM_DTESTS: org.apache.cassandra.distributed.test.ring.DecommissionTest
     - REPEATED_JVM_DTESTS_COUNT: 500
     - REPEATED_JVM_UPGRADE_DTESTS: null
     - REPEATED_JVM_UPGRADE_DTESTS_COUNT: 500
-    - REPEATED_DTESTS: topology_test.py::TestTopology::test_simple_decommission
+    - REPEATED_DTESTS: null
     - REPEATED_DTESTS_COUNT: 500
     - REPEATED_LARGE_DTESTS: null
     - REPEATED_LARGE_DTESTS_COUNT: 100
@@ -9769,12 +9769,6 @@ workflows:
         requires:
         - start_j11_dtests_latest
         - j11_build
-    - start_j11_dtests_latest_repeat:
-        type: approval
-    - j11_dtests_latest_repeat:
-        requires:
-        - start_j11_dtests_latest_repeat
-        - j11_build
     - start_j17_dtests:
         type: approval
     - j17_dtests:
@@ -9792,12 +9786,6 @@ workflows:
     - j17_dtests_latest:
         requires:
         - start_j17_dtests_latest
-        - j11_build
-    - start_j17_dtests_latest_repeat:
-        type: approval
-    - j17_dtests_latest_repeat:
-        requires:
-        - start_j17_dtests_latest_repeat
         - j11_build
     - start_j11_dtests_large:
         type: approval
@@ -9884,30 +9872,6 @@ workflows:
     - j11_upgrade_dtests:
         requires:
         - start_j11_upgrade_dtests
-        - j11_build
-    - start_j11_dtests_repeat:
-        type: approval
-    - j11_dtests_repeat:
-        requires:
-        - start_j11_dtests_repeat
-        - j11_build
-    - start_j11_dtests_vnode_repeat:
-        type: approval
-    - j11_dtests_vnode_repeat:
-        requires:
-        - start_j11_dtests_vnode_repeat
-        - j11_build
-    - start_j17_dtests_repeat:
-        type: approval
-    - j17_dtests_repeat:
-        requires:
-        - start_j17_dtests_repeat
-        - j11_build
-    - start_j17_dtests_vnode_repeat:
-        type: approval
-    - j17_dtests_vnode_repeat:
-        requires:
-        - start_j17_dtests_vnode_repeat
         - j11_build
   java11_pre-commit_tests:
     jobs:
@@ -10085,37 +10049,19 @@ workflows:
     - j11_dtests:
         requires:
         - j11_build
-    - j11_dtests_repeat:
-        requires:
-        - j11_build
     - j11_dtests_vnode:
-        requires:
-        - j11_build
-    - j11_dtests_vnode_repeat:
         requires:
         - j11_build
     - j11_dtests_latest:
         requires:
         - j11_build
-    - j11_dtests_latest_repeat:
-        requires:
-        - j11_build
     - j17_dtests:
-        requires:
-        - j11_build
-    - j17_dtests_repeat:
         requires:
         - j11_build
     - j17_dtests_vnode:
         requires:
         - j11_build
-    - j17_dtests_vnode_repeat:
-        requires:
-        - j11_build
     - j17_dtests_latest:
-        requires:
-        - j11_build
-    - j17_dtests_latest_repeat:
         requires:
         - j11_build
     - start_j11_dtests_large:
@@ -10261,12 +10207,6 @@ workflows:
         requires:
         - start_j17_dtests_latest
         - j17_build
-    - start_j17_dtests_latest_repeat:
-        type: approval
-    - j17_dtests_latest_repeat:
-        requires:
-        - start_j17_dtests_latest_repeat
-        - j17_build
     - start_j17_dtests_large:
         type: approval
     - j17_dtests_large:
@@ -10385,18 +10325,6 @@ workflows:
         requires:
         - start_j17_utests_system_keyspace_directory_repeat
         - j17_build
-    - start_j17_dtests_repeat:
-        type: approval
-    - j17_dtests_repeat:
-        requires:
-        - start_j17_dtests_repeat
-        - j17_build
-    - start_j17_dtests_vnode_repeat:
-        type: approval
-    - j17_dtests_vnode_repeat:
-        requires:
-        - start_j17_dtests_vnode_repeat
-        - j17_build
   java17_pre-commit_tests:
     jobs:
     - start_pre-commit_tests:
@@ -10443,19 +10371,10 @@ workflows:
     - j17_dtests:
         requires:
         - j17_build
-    - j17_dtests_repeat:
-        requires:
-        - j17_build
     - j17_dtests_vnode:
         requires:
         - j17_build
-    - j17_dtests_vnode_repeat:
-        requires:
-        - j17_build
     - j17_dtests_latest:
-        requires:
-        - j17_build
-    - j17_dtests_latest_repeat:
         requires:
         - j17_build
     - start_j17_dtests_large:
