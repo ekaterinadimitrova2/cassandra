@@ -973,7 +973,7 @@ public abstract class ModificationStatement implements CQLStatement.SingleKeyspa
             for (Pair<ColumnIdentifier, ColumnCondition.Raw> entry : conditions)
             {
                 ColumnMetadata def = metadata.getExistingColumn(entry.left);
-                ColumnCondition condition = entry.right.prepare(keyspace(), def, metadata);
+                ColumnCondition condition = entry.right.prepare(metadata);
                 condition.collectMarkerSpecification(bindVariables);
 
                 checkFalse(def.isPrimaryKeyColumn(), "PRIMARY KEY column '%s' cannot have IF conditions", def.name);

@@ -1719,25 +1719,25 @@ udtColumnOperation[List<Pair<ColumnIdentifier, Operation.RawUpdate>> operations,
 
 columnCondition[List<Pair<ColumnIdentifier, ColumnCondition.Raw>> conditions]
     // Note: we'll reject duplicates later
-    : key=cident
-        ( op=relationType t=term { conditions.add(Pair.create(key, ColumnCondition.Raw.simpleCondition(t, op))); }
-        | op=containsOperator t=term { conditions.add(Pair.create(key, ColumnCondition.Raw.simpleCondition(t, op))); }
+    : column=cident
+        ( op=relationType t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, op, Terms.Raw.of(t)))); }
+        | op=containsOperator t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, op, Terms.Raw.of(t)))); }
         | K_IN
-            ( values=singleColumnInValues { conditions.add(Pair.create(key, ColumnCondition.Raw.simpleInCondition(values))); }
-            | marker=inMarker { conditions.add(Pair.create(key, ColumnCondition.Raw.simpleInCondition(marker))); }
+            ( values=singleColumnInValues { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, Operator.IN, values))); }
+            | marker=inMarker { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, Operator.IN, marker))); }
             )
         | '[' element=term ']'
-            ( op=relationType t=term { conditions.add(Pair.create(key, ColumnCondition.Raw.collectionCondition(t, element, op))); }
+            ( op=relationType t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.collectionCondition(column, element, op, Terms.Raw.of(t)))); }
             | K_IN
-                ( values=singleColumnInValues { conditions.add(Pair.create(key, ColumnCondition.Raw.collectionInCondition(element, values))); }
-                | marker=inMarker { conditions.add(Pair.create(key, ColumnCondition.Raw.collectionInCondition(element, marker))); }
+                ( values=singleColumnInValues { conditions.add(Pair.create(column, ColumnCondition.Raw.collectionCondition(column, element, Operator.IN, values))); }
+                | marker=inMarker { conditions.add(Pair.create(column, ColumnCondition.Raw.collectionCondition(column, element, Operator.IN, marker))); }
                 )
             )
         | '.' field=fident
-            ( op=relationType t=term { conditions.add(Pair.create(key, ColumnCondition.Raw.udtFieldCondition(t, field, op))); }
+            ( op=relationType t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.udtFieldCondition(column, field, op, Terms.Raw.of(t)))); }
             | K_IN
-                ( values=singleColumnInValues { conditions.add(Pair.create(key, ColumnCondition.Raw.udtFieldInCondition(field, values))); }
-                | marker=inMarker { conditions.add(Pair.create(key, ColumnCondition.Raw.udtFieldInCondition(field, marker))); }
+                ( values=singleColumnInValues { conditions.add(Pair.create(column, ColumnCondition.Raw.udtFieldCondition(column, field, Operator.IN, values))); }
+                | marker=inMarker { conditions.add(Pair.create(column, ColumnCondition.Raw.udtFieldCondition(column, field, Operator.IN, marker))); }
                 )
             )
         )

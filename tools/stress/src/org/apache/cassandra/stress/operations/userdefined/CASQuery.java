@@ -89,7 +89,7 @@ public class CASQuery extends SchemaStatement
         casReadConditionQuery.append("SELECT ");
         for (final Pair<ColumnIdentifier, ColumnCondition.Raw> condition : casConditionList)
         {
-            if (!condition.right.getValue().getText().equals("?"))
+            if (!condition.right.containsBindMarkers())
             {
                 //condition uses static value, ignore it
                 continue;
