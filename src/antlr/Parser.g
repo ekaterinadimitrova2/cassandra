@@ -545,16 +545,15 @@ updateStatement returns [UpdateStatement.ParsedUpdate expr]
                                                    attrs,
                                                    operations,
                                                    wclause.build(),
-                                                   conditions == null ? Collections.<Pair<ColumnIdentifier, ColumnCondition.Raw>>emptyList() : conditions,
+                                                   conditions == null ? Collections.<ColumnCondition.Raw>emptyList() : conditions,
                                                    ifExists);
      }
     ;
 
-updateConditions returns [List<Pair<ColumnIdentifier, ColumnCondition.Raw>> conditions]
-    @init { conditions = new ArrayList<Pair<ColumnIdentifier, ColumnCondition.Raw>>(); }
-    : columnCondition[conditions] ( K_AND columnCondition[conditions] )*
+updateConditions returns [List<ColumnCondition.Raw> conditions]
+    @init { conditions = new ArrayList<ColumnCondition.Raw>(); }
+    : c1=columnCondition { $conditions.add(c1);} ( K_AND cn=columnCondition { $conditions.add(cn); })*
     ;
-
 
 /**
  * DELETE name1, name2
@@ -579,7 +578,7 @@ deleteStatement returns [DeleteStatement.Parsed expr]
                                              attrs,
                                              columnDeletions,
                                              wclause.build(),
-                                             conditions == null ? Collections.<Pair<ColumnIdentifier, ColumnCondition.Raw>>emptyList() : conditions,
+                                             conditions == null ? Collections.<ColumnCondition.Raw>emptyList() : conditions,
                                              ifExists);
       }
     ;
@@ -1717,28 +1716,19 @@ udtColumnOperation[List<Pair<ColumnIdentifier, Operation.RawUpdate>> operations,
       }
     ;
 
-columnCondition[List<Pair<ColumnIdentifier, ColumnCondition.Raw>> conditions]
+columnCondition returns [ColumnCondition.Raw condition]
     // Note: we'll reject duplicates later
-    : column=cident
-        ( op=relationType t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, op, Terms.Raw.of(t)))); }
-        | op=containsOperator t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, op, Terms.Raw.of(t)))); }
-        | K_IN
-            ( values=singleColumnInValues { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, Operator.IN, values))); }
-            | marker=inMarker { conditions.add(Pair.create(column, ColumnCondition.Raw.simpleCondition(column, Operator.IN, marker))); }
-            )
+        : column=cident
+            ( op=relationType t=term       { $condition = ColumnCondition.Raw.simpleCondition(column, op, Terms.Raw.of(t)); }
+            | op=containsOperator t=term   { $condition = ColumnCondition.Raw.simpleCondition(column, op, Terms.Raw.of(t)); }
+            | K_IN v=singleColumnInValues  { $condition = ColumnCondition.Raw.simpleCondition(column, Operator.IN, v); }
         | '[' element=term ']'
-            ( op=relationType t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.collectionCondition(column, element, op, Terms.Raw.of(t)))); }
-            | K_IN
-                ( values=singleColumnInValues { conditions.add(Pair.create(column, ColumnCondition.Raw.collectionCondition(column, element, Operator.IN, values))); }
-                | marker=inMarker { conditions.add(Pair.create(column, ColumnCondition.Raw.collectionCondition(column, element, Operator.IN, marker))); }
-                )
+            ( op=relationType t=term      { $condition = ColumnCondition.Raw.collectionCondition(column, element, op, Terms.Raw.of(t)); }
+            | K_IN v=singleColumnInValues { $condition = ColumnCondition.Raw.collectionCondition(column, element, Operator.IN, v); }
             )
         | '.' field=fident
-            ( op=relationType t=term { conditions.add(Pair.create(column, ColumnCondition.Raw.udtFieldCondition(column, field, op, Terms.Raw.of(t)))); }
-            | K_IN
-                ( values=singleColumnInValues { conditions.add(Pair.create(column, ColumnCondition.Raw.udtFieldCondition(column, field, Operator.IN, values))); }
-                | marker=inMarker { conditions.add(Pair.create(column, ColumnCondition.Raw.udtFieldCondition(column, field, Operator.IN, marker))); }
-                )
+            ( op=relationType t=term      { $condition = ColumnCondition.Raw.udtFieldCondition(column, field, op, Terms.Raw.of(t)); }
+            | K_IN v=singleColumnInValues { $condition = ColumnCondition.Raw.udtFieldCondition(column, field, Operator.IN, v); }
             )
         )
     ;
