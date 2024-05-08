@@ -127,7 +127,7 @@ public final class ColumnCondition
     private Bound bindUdtField(QueryOptions options)
     {
         ColumnMetadata column = columnsExpression.firstColumn();
-        return new UDTFieldAccessBound(column, columnsExpression.udtField(), operator, bindAndGetTerms(options));
+        return new UDTFieldAccessBound(column, ((ElementExpression.UDTFieldExpression) columnsExpression.collectionElement()).element(), operator, bindAndGetTerms(options));
     }
 
     private List<ByteBuffer> bindAndGetTerms(QueryOptions options)
@@ -140,7 +140,9 @@ public final class ColumnCondition
 
     private ByteBuffer bindAndGetCollectionElement(QueryOptions options)
     {
-        return columnsExpression.collectionElement().bindAndGet(options);
+        ElementExpression.CollectionElementExpression el = (ElementExpression.CollectionElementExpression) columnsExpression.collectionElement();
+        Term collectionElement = el.element();
+        return collectionElement.bindAndGet(options);
     }
 
     private Terms.Terminals bindTerms(QueryOptions options)
@@ -171,7 +173,7 @@ public final class ColumnCondition
      */
     public static ColumnCondition simpleColumnCondition(ColumnsExpression column, Operator op, Terms terms)
     {
-        assert column.udtField() == null && column.collectionElement() == null;
+        assert column.collectionElement() == null;
 
         return new ColumnCondition(column, op, terms);
     }
@@ -191,7 +193,7 @@ public final class ColumnCondition
      */
     public static ColumnCondition udtFieldCondition(ColumnsExpression column, Operator op, Terms terms)
     {
-        assert column.udtField() != null;
+        assert column.collectionElement() != null;
 
         return new ColumnCondition(column, op, terms);
     }
