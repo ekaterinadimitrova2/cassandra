@@ -30,7 +30,6 @@ import org.apache.cassandra.schema.ColumnMetadata;
 import org.apache.cassandra.schema.TableMetadata;
 import org.apache.cassandra.exceptions.InvalidRequestException;
 
-import static org.apache.cassandra.cql3.ColumnsExpression.Kind.COLLECTION_ELEMENT;
 import static org.apache.cassandra.cql3.statements.RequestValidations.*;
 import static org.apache.cassandra.cql3.statements.RequestValidations.checkTrue;
 
@@ -174,7 +173,7 @@ public final class Relation
         ColumnsExpression expression = rawExpressions.prepare(table);
 
         // TODO support restrictions on list elements as we do in conditions
-        if (expression.kind() == COLLECTION_ELEMENT)
+        if (expression.isCollectionElementExpression())
         {
             ColumnMetadata receiver = table.getExistingColumn(column());
             switch ((((CollectionType<?>) receiver.type).kind)) {
