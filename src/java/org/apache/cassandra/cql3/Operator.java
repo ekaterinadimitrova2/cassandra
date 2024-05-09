@@ -630,7 +630,7 @@ public enum Operator
                         checkFalse(type.isCollection()
                                     && !this.appliesToMapKeys()
                                     && !this.appliesToCollectionElements()
-                                    && !expression.isCollectionElementExpression(),
+                                    && ((CollectionType<?>)type).kind != CollectionType.Kind.MAP,
                                     "Collection column '%s' (%s) cannot be restricted by a '%s' relation",
                                     column.name,
                                     type.asCQL3Type(),
