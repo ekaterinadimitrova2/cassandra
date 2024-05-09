@@ -613,31 +613,29 @@ public enum Operator
                     checkFalse(appliesToCollectionElements() && !columnType.isCollection(), "Cannot use %s on non-collection column %s", this, firstColumn.name);
                 }
 
+            // intentional fallthrough - missing break statement
             case ELEMENT:
-                if (expression.isCollectionElementExpression())
+                ColumnMetadata column = expression.firstColumn();
+                AbstractType<?> type = column.type;
+                if (type.isMultiCell())
                 {
-                    ColumnMetadata column = expression.firstColumn();
-                    AbstractType<?> type = column.type;
-                    if (type.isMultiCell())
-                    {
-                        // Non-frozen UDTs don't support any operator
-                        checkFalse(type.isUDT(),
-                                   "Non-frozen UDT column '%s' (%s) cannot be restricted by any relation",
-                                    column.name,
-                                    type.asCQL3Type());
+                    // Non-frozen UDTs don't support any operator
+                    checkFalse(type.isUDT(),
+                               "Non-frozen UDT column '%s' (%s) cannot be restricted by any relation",
+                               column.name,
+                               type.asCQL3Type());
 
-                        // We don't support relations against entire collections (unless they're frozen), like "numbers = {1, 2, 3}"
-                        checkFalse(type.isCollection()
-                                    && !this.appliesToMapKeys()
-                                    && !this.appliesToCollectionElements()
-                                    && ((CollectionType<?>)type).kind != CollectionType.Kind.MAP,
-                                    "Collection column '%s' (%s) cannot be restricted by a '%s' relation",
-                                    column.name,
-                                    type.asCQL3Type(),
-                                    this);
-                    }
+                    // We don't support relations against entire collections (unless they're frozen), like "numbers = {1, 2, 3}"
+                    checkFalse(type.isCollection()
+                               && !this.appliesToMapKeys()
+                               && !this.appliesToCollectionElements()
+                               && !expression.isCollectionElementExpression(),
+                               "Collection column '%s' (%s) cannot be restricted by a '%s' relation",
+                               column.name,
+                               type.asCQL3Type(),
+                               this);
                 }
-                break;
+            break;
         }
     }
 
