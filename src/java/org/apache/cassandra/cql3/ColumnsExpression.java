@@ -395,6 +395,11 @@ public final class ColumnsExpression
         return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT;
     }
 
+    public boolean isUDTFieldElementExpression()
+    {
+        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.UDT_FIELD;
+    }
+
     /**
      * Returns the element in case of ELEMENT columns expression.
      * @return the ELEMENT expression element - udt field, collection element.

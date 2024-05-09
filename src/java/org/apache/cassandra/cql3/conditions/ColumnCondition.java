@@ -203,7 +203,7 @@ public final class ColumnCondition
      */
     public static ColumnCondition udtFieldCondition(ColumnsExpression column, Operator op, Terms terms)
     {
-        assert column.element() != null;
+        assert column.isUDTFieldElementExpression() : "Column must be a UDT field element expression";
 
         return new ColumnCondition(column, op, terms);
     }
