@@ -18,6 +18,7 @@
 
 package org.apache.cassandra.cql3;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,13 +30,26 @@ import org.apache.cassandra.db.marshal.CollectionType;
 import org.apache.cassandra.db.marshal.UserType;
 import org.apache.cassandra.schema.ColumnMetadata;
 import org.apache.cassandra.schema.TableMetadata;
+import org.apache.cassandra.utils.ByteBufferUtil;
 
 import static org.apache.cassandra.cql3.statements.RequestValidations.invalidRequest;
 
+/**
+ * An element expression representation in case of element column expression.
+ *
+ * <p>This class can be modified to add support for more element expressions like range of elements, for example. </p>
+ */
+
 public final class ElementExpression
 {
+    /**
+     * Represent the expression kind
+     */
     public enum Kind
     {
+        /**
+         * UDT field expression (e.g. {@code columnA.fieldA})
+         */
         UDT_FIELD
         {
             @Override
@@ -61,6 +75,9 @@ public final class ElementExpression
                 return "UDT field";
             }
         },
+        /**
+         * Collection element expression (e.g. {@code columnA[?]})
+         */
         COLLECTION_ELEMENT
         {
             @Override
@@ -88,20 +105,27 @@ public final class ElementExpression
     }
 
     /**
-     * The kind of element expression.
+     * The kind of element expression - udt field or collection element.
      */
     private final ElementExpression.Kind kind;
 
     /**
      * The type represented by this expression:
-     *  - for a single column the type of the expression will be the one of the column
-     *  - for a map element expression the type will be the one of the map value
-     *  - for a multi-column expression the type will be a tuple type
      *  - for a collection element expression the type will be the one of the collection elements
      *  - for a UDT field expression the type will be the one of the UDT field
      */
     private final AbstractType<?> type;
+
+    /**
+     * The field identifier in case of UDT_FIELD expression,
+     * {@code null} otherwise.
+     */
     private final FieldIdentifier fieldIdentifier;
+
+    /**
+     * The collection element in case of COLLECTION_ELEMENT expression,
+     * {@code null} otherwise.
+     */
     private final Term collectionElement;
 
     ElementExpression(ElementExpression.Kind kind, AbstractType<?> type, FieldIdentifier udtField, Term collectionElement)
@@ -141,11 +165,22 @@ public final class ElementExpression
 
     /**
      * Returns the expression collection element in case of a collection element expression.
+     * In case of maps - this is the map key which we use to access the map value.
      * @return the expression collection element.
      */
     public Term collectionElement()
     {
         return collectionElement;
+    }
+
+    public ByteBuffer mapKey(ColumnMetadata column, QueryOptions options)
+    {
+        ByteBuffer key = collectionElement().bindAndGet(options);
+        if (key == null)
+            throw invalidRequest("Invalid null map key for column %s", column.name.toCQLString());
+        if (key == ByteBufferUtil.UNSET_BYTE_BUFFER)
+            throw invalidRequest("Invalid unset map key for column %s", column.name.toCQLString());
+        return key;
     }
 
     @Override

@@ -170,17 +170,18 @@ public final class Relation
         if (operator == Operator.NEQ)
             throw invalidRequest("Unsupported '!=' relation: %s", this);
 
-        ColumnsExpression expression = rawExpressions.prepare(table);
+        ColumnsExpression columnsExpression = rawExpressions.prepare(table);
 
+        // KATE: not for reviewer: below can be probably simplified
         // TODO support restrictions on list elements as we do in conditions
-        if (expression.isCollectionElementExpression())
+        if (columnsExpression.isCollectionElementExpression())
         {
             ColumnMetadata receiver = table.getExistingColumn(column());
             switch ((((CollectionType<?>) receiver.type).kind)) {
                 case LIST:
                     throw invalidRequest("Invalid element access syntax for list column %s", receiver.name);
                 case MAP:
-                    ColumnMetadata column = expression.firstColumn();
+                    ColumnMetadata column = columnsExpression.firstColumn();
                     checkFalse(column.type instanceof ListType, "Indexes on list entries (%s[index] = value) are not supported.", column.name);
                     checkTrue(column.type instanceof MapType, "Column %s cannot be used as a map", column.name);
                     checkTrue(column.type.isMultiCell(), "Map-entry predicates on frozen map column %s are not supported", column.name);
@@ -192,11 +193,12 @@ public final class Relation
             }
         }
 
-        expression.collectMarkerSpecification(boundNames);
+        if (columnsExpression.isMapElementExpression())
+            columnsExpression.collectMarkerSpecification(boundNames);
 
-        operator.validateFor(expression);
+        operator.validateFor(columnsExpression);
 
-        ColumnSpecification receiver = expression.columnSpecification();
+        ColumnSpecification receiver = columnsExpression.columnSpecification();
         if (!operator.appliesToColumnValues())
             receiver = ((CollectionType<?>) receiver.type).makeCollectionReceiver(receiver, operator.appliesToMapKeys());
 
@@ -205,9 +207,9 @@ public final class Relation
 
         // An IN restriction with only one element is the same as an EQ restriction
         if (operator.isIN() && terms.containsSingleTerm())
-            return new SimpleRestriction(expression, Operator.EQ, terms);
+            return new SimpleRestriction(columnsExpression, Operator.EQ, terms);
 
-        return new SimpleRestriction(expression, operator, terms);
+        return new SimpleRestriction(columnsExpression, operator, terms);
     }
 
     public ColumnIdentifier column()

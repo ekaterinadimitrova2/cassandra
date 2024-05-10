@@ -18,7 +18,6 @@
 
 package org.apache.cassandra.cql3;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +37,6 @@ import org.apache.cassandra.db.marshal.TupleType;
 import org.apache.cassandra.exceptions.InvalidRequestException;
 import org.apache.cassandra.schema.ColumnMetadata;
 import org.apache.cassandra.schema.TableMetadata;
-import org.apache.cassandra.utils.ByteBufferUtil;
 
 import static org.apache.cassandra.cql3.statements.RequestValidations.checkContainsNoDuplicates;
 import static org.apache.cassandra.cql3.statements.RequestValidations.checkContainsOnly;
@@ -193,12 +191,6 @@ public final class ColumnsExpression
             {
                 return columns.findFirst().orElseThrow() + elementExpression.kind().toCQLString(element);
             }
-
-            @Override
-            public String toString()
-            {
-                return elementExpression.toString();
-            }
         };
 
         void setElementExpression(ElementExpression.Raw elementExpression)
@@ -293,6 +285,7 @@ public final class ColumnsExpression
      *  - for a multi-column expression the type will be a tuple type
      *  - for a collection element expression the type will be the one of the collection elements
      *  - for a UDT field expression the type will be the one of the UDT field
+     *  - for an element expression the type will be the one of the element (udt field or collection element)
      */
     private final AbstractType<?> type;
 
@@ -368,15 +361,6 @@ public final class ColumnsExpression
     }
 
     /**
-     * Returns the column type.
-     * @return the column type.
-     */
-    public AbstractType<?> type()
-    {
-        return type;
-    }
-
-    /**
      * Returns the column kind (partition key, clustering, static or regular).
      * @return the column kind.
      */
@@ -403,6 +387,11 @@ public final class ColumnsExpression
     public boolean isUDTFieldElementExpression()
     {
         return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.UDT_FIELD;
+    }
+
+    public boolean isMapElementExpression()
+    {
+        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT && firstColumn().type instanceof MapType;
     }
 
     /**
@@ -433,17 +422,6 @@ public final class ColumnsExpression
         return this.element().kind();
     }
 
-    public ByteBuffer mapKey(QueryOptions options)
-    {
-        // KATE We should assert this is a map somewhere from element expression
-        ByteBuffer key = collectionElement().bindAndGet(options);
-        if (key == null)
-            throw invalidRequest("Invalid null map key for column %s", firstColumn().name.toCQLString());
-        if (key == ByteBufferUtil.UNSET_BYTE_BUFFER)
-            throw invalidRequest("Invalid unset map key for column %s", firstColumn().name.toCQLString());
-        return key;
-    }
-
     /**
      * Collects the column specifications for the bind variables in the map key.
      * This is obviously a no-op if the expression is not a {@code COLLECTION_ELEMENT} expression.
@@ -453,10 +431,7 @@ public final class ColumnsExpression
      */
     public void collectMarkerSpecification(VariableSpecifications boundNames)
     {
-        // KATE only map elements?
-        if (isCollectionElementExpression())
-            collectionElement().collectMarkerSpecification(boundNames);
-
+        collectionElement().collectMarkerSpecification(boundNames);
     }
 
     /**
@@ -475,8 +450,7 @@ public final class ColumnsExpression
      */
     public void addFunctionsTo(List<Function> functions)
     {
-        // KATE only map elements?
-        if (isCollectionElementExpression())
+        if (isMapElementExpression())
             collectionElement().addFunctionsTo(functions);
     }
 
