@@ -447,7 +447,7 @@ public final class ColumnsExpression
 
     /**
      * Collects the column specifications for the bind variables.
-     * This is obviously a no-op if the expression is not a {@code COLLECTION_ELEMENT} expression.
+     * This is obviously a no-op if the expression is not a {@code ELEMENET_EXPRESSION} expression.
      *
      * @param boundNames the variables specification where to collect the
      * bind variables of the map key/collection element in.
@@ -506,8 +506,8 @@ public final class ColumnsExpression
     }
 
     /**
-     * The parsed version of the {@code ColumnsExpression} as outputed by the CQL parser.
-     * {@code Raw.prepare} will be called upon schema binding to create the {@code ColumnsExpression}.
+     * The parsed version of the {@link ColumnsExpression} as outputed by the CQL parser.
+     * {@code Raw.prepare} will be called upon schema binding to create the {@link ColumnsExpression}.
      */
     public static final class Raw
     {
@@ -614,10 +614,10 @@ public final class ColumnsExpression
         }
 
         /**
-         * Bind this {@code Raw} instance to the schema and return the resulting {@code ColumnsExpression}.
+         * Bind this {@link Raw} instance to the schema and return the resulting {@link ColumnsExpression}.
          *
          * @param table the table schema
-         * @return the {@code ColumnsExpression} resulting from the schema binding
+         * @return the {@link ColumnsExpression} resulting from the schema binding
          */
         public ColumnsExpression prepare(TableMetadata table)
         {

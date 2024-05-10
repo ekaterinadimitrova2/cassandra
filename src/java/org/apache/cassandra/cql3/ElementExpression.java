@@ -117,13 +117,13 @@ public final class ElementExpression
     private final AbstractType<?> type;
 
     /**
-     * The field identifier in case of UDT_FIELD expression,
+     * The field identifier in case of {@code UDT_FIELD} expression,
      * {@code null} otherwise.
      */
     private final FieldIdentifier fieldIdentifier;
 
     /**
-     * The collection element in case of COLLECTION_ELEMENT expression,
+     * The collection element in case of {@code COLLECTION_ELEMENT} expression,
      * {@code null} otherwise.
      */
     private final Term collectionElement;
@@ -231,7 +231,7 @@ public final class ElementExpression
         }
 
         /**
-         * Bind this {@link Raw} instance to the schema and return the resulting {@code ElementExpression}.
+         * Bind this {@link Raw} instance to the schema and return the resulting {@link ElementExpression}.
          *
          * @param table      the table schema
          * @param identifier the column identifier
