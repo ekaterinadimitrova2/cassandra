@@ -454,7 +454,8 @@ public final class ColumnsExpression
      */
     public void collectMarkerSpecification(VariableSpecifications boundNames)
     {
-        collectionElement().collectMarkerSpecification(boundNames);
+        if (this.isCollectionElementExpression())
+            collectionElement().collectMarkerSpecification(boundNames);
     }
 
     /**
@@ -473,7 +474,8 @@ public final class ColumnsExpression
      */
     public void addFunctionsTo(List<Function> functions)
     {
-        collectionElement().addFunctionsTo(functions);
+        if (this.isCollectionElementExpression())
+            collectionElement().addFunctionsTo(functions);
     }
 
     /**
