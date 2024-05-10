@@ -166,6 +166,10 @@ public final class ColumnsExpression
                 return "token";
             }
         },
+        /**
+         * Element expression (e.g. {@code columnA[?]}). This is used for collection elements and UDT fields. For more
+         * information see {@link ElementExpression}.
+         */
         ELEMENT
         {
             private ElementExpression.Raw elementExpression = null;
@@ -195,8 +199,7 @@ public final class ColumnsExpression
 
         void setElementExpression(ElementExpression.Raw elementExpression)
         {
-            throw new UnsupportedOperationException("ElementExpression is not supported for this kind of expression. " +
-                                                    "If you hit this exception, please report it in Jira.");
+            throw new UnsupportedOperationException();
         }
 
         /**
@@ -211,6 +214,7 @@ public final class ColumnsExpression
          *
          * @param table             the table metadata
          * @param columns           the expression columns
+         * @param element           the element expression in case of ELEMENT columns expression
          * @return the expression type
          */
         abstract AbstractType<?> type(TableMetadata table, List<ColumnMetadata> columns, ElementExpression.Raw element);
@@ -219,6 +223,7 @@ public final class ColumnsExpression
          * Returns CQL representation of the expression.
          *
          * @param columns           the expression's columns
+         * @param element           the element in case of ELEMENT columns expression
          * @return the CQL representation of the expression.
          */
         abstract String toCQLString(Stream<String> columns, String element);
@@ -273,19 +278,13 @@ public final class ColumnsExpression
         }
     }
 
-    /**
-     * The kind of columns expression.
-     */
     private final Kind kind;
 
     /**
      * The type represented by this expression:
      *  - for a single column the type of the expression will be the one of the column
-     *  - for a map element expression the type will be the one of the map value
      *  - for a multi-column expression the type will be a tuple type
-     *  - for a collection element expression the type will be the one of the collection elements
-     *  - for a UDT field expression the type will be the one of the UDT field
-     *  - for an element expression the type will be the one of the element (udt field or collection element)
+     *  - for an element expression the type will be the one of the element of interest(udt field or collection element)
      */
     private final AbstractType<?> type;
 
@@ -295,7 +294,7 @@ public final class ColumnsExpression
     private final List<ColumnMetadata> columns;
 
     /**
-     * The element if this is an Element expression, {@code null} otherwise.
+     * The element if this is an ELEMENT expression, {@code null} otherwise.
      * Like UDT field or collection element.
      */
     private final ElementExpression element; //Only relevant for ELEMENT kind
@@ -379,21 +378,6 @@ public final class ColumnsExpression
         return kind;
     }
 
-    public boolean isCollectionElementExpression()
-    {
-        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT;
-    }
-
-    public boolean isUDTFieldElementExpression()
-    {
-        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.UDT_FIELD;
-    }
-
-    public boolean isMapElementExpression()
-    {
-        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT && firstColumn().type instanceof MapType;
-    }
-
     /**
      * Returns the element in case of ELEMENT columns expression.
      * @return the ELEMENT expression element - udt field, collection element.
@@ -403,6 +387,10 @@ public final class ColumnsExpression
         return element;
     }
 
+    /**
+     * Returns the element in case of ELEMENT columns expression - COLLECTION_ELEMENT.
+     * @return the ELEMENT expression element - collection element.
+     */
     public Term collectionElement()
     {
         assert kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT;
@@ -410,6 +398,10 @@ public final class ColumnsExpression
         return element.collectionElement();
     }
 
+    /**
+     * Returns the element in case of ELEMENT columns expression - UDT_FIELD.
+     * @return the ELEMENT expression element - UDT field.
+     */
     public FieldIdentifier udtField()
     {
         assert kind == Kind. ELEMENT &&  element != null && element.kind() == ElementExpression.Kind.UDT_FIELD;
@@ -417,17 +409,48 @@ public final class ColumnsExpression
         return element.fieldIdentifier();
     }
 
+    /**
+     * Returns the element expression kind in case of ELEMENT columns expression.
+     * @return the element expression kind.
+     */
     public ElementExpression.Kind elementKind()
     {
         return this.element().kind();
     }
 
     /**
-     * Collects the column specifications for the bind variables in the map key.
+     * Checks if this instance is a collection element expression.
+     * @return {@code true} if this instance is a collection element expression, {@code false} otherwise.
+     */
+    public boolean isCollectionElementExpression()
+    {
+        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT;
+    }
+
+    /**
+     * Checks if this instance is a UDT field element expression.
+     * @return {@code true} if this instance is a UDT field element expression, {@code false} otherwise.
+     */
+    public boolean isUDTFieldElementExpression()
+    {
+        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.UDT_FIELD;
+    }
+
+    /**
+     * Checks if this instance is a map element expression.
+     * @return {@code true} if this instance is a map element expression, {@code false} otherwise.
+     */
+    public boolean isMapElementExpression()
+    {
+        return kind == Kind.ELEMENT && element != null && element.kind() == ElementExpression.Kind.COLLECTION_ELEMENT && firstColumn().type instanceof MapType;
+    }
+
+    /**
+     * Collects the column specifications for the bind variables.
      * This is obviously a no-op if the expression is not a {@code COLLECTION_ELEMENT} expression.
      *
      * @param boundNames the variables specification where to collect the
-     * bind variables of the map key in.
+     * bind variables of the map key/collection element in.
      */
     public void collectMarkerSpecification(VariableSpecifications boundNames)
     {
@@ -450,8 +473,7 @@ public final class ColumnsExpression
      */
     public void addFunctionsTo(List<Function> functions)
     {
-        if (isMapElementExpression())
-            collectionElement().addFunctionsTo(functions);
+        collectionElement().addFunctionsTo(functions);
     }
 
     /**
@@ -528,6 +550,7 @@ public final class ColumnsExpression
 
         /**
          * Creates a raw expression for multi-column (e.g. {@code (columnA, columnB)}).
+         *
          * @param identifiers the columns identifier
          * @return a raw expression for multi-column.
          */
@@ -538,6 +561,7 @@ public final class ColumnsExpression
 
         /**
          * Creates a raw expression for token restrictions (e.g. {@code token(columnA, columnB)}).
+         *
          * @param identifiers the columns identifiers
          * @return a raw token expression.
          */
@@ -547,7 +571,8 @@ public final class ColumnsExpression
         }
 
         /**
-         * Creates a raw expression for a collection element conditions (e.g. {@code columnA[?]}).
+         * Creates a raw expression for collection element conditions (e.g. {@code columnA[?]}).
+         *
          * @param identifier the collection element column identifier
          * @param rawCollectionElement the raw collection element
          * @return a raw element expression.
@@ -559,6 +584,7 @@ public final class ColumnsExpression
 
         /**
          * Creates a raw expression for a UDT field conditions.
+         *
          * @param identifier the UDT field column identifier
          * @param rawUdtField the raw UDT field
          * @return a raw element expression.
@@ -570,6 +596,7 @@ public final class ColumnsExpression
 
         /**
          * Renames an identifier in this expression, if applicable.
+         *
          * @param from the old identifier
          * @param to the new identifier
          * @return this object, if the old identifier is not in the set of identifiers that this expression covers; otherwise
@@ -610,6 +637,7 @@ public final class ColumnsExpression
          * Returns the columns corresponding to the identifiers.
          *
          * @param table the table metadata
+         * @param identifiers the columns identifiers
          * @return the definition of the columns to which apply the token restriction.
          * @throws InvalidRequestException if the entity cannot be resolved
          */
@@ -623,6 +651,7 @@ public final class ColumnsExpression
 
         /**
          * Returns the columns' identifiers.
+         *
          * @return identifiers.
          */
         public List<ColumnIdentifier> identifiers()
@@ -651,6 +680,7 @@ public final class ColumnsExpression
 
         /**
          * Returns CQL representation of this raw expression.
+         *
          * @return the CQL representation of this raw expression.
          */
         public String toCQLString()

@@ -157,7 +157,8 @@ public final class SimpleRestriction implements SingleRestriction
     @Override
     public void addFunctionsTo(List<Function> functions)
     {
-        columnsExpression.addFunctionsTo(functions);
+        if (columnsExpression.isMapElementExpression())
+            columnsExpression.addFunctionsTo(functions);
         values.addFunctionsTo(functions);
     }
 

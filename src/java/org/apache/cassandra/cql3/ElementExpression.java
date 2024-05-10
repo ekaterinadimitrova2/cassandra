@@ -203,6 +203,41 @@ public final class ElementExpression
             this.kind = kind;
         }
 
+        /**
+         * Returns the expression kind.
+         * @return the expression kind.
+         */
+        public Kind kind()
+        {
+            return kind;
+        }
+
+        /**
+         * Returns the collection element if this is a collection element expression, {@code null} otherwise.
+         * @return rawCollectionElement.
+         */
+        public Term.Raw rawCollectionElement()
+        {
+            return rawCollectionElement;
+        }
+
+        /**
+         * Returns the collection element if this is a collection element expression, {@code null} otherwise.
+         * @return rawCollectionElement.
+         */
+        public FieldIdentifier rawUdtField()
+        {
+            return udtField;
+        }
+
+        /**
+         * Bind this {@link Raw} instance to the schema and return the resulting {@code ElementExpression}.
+         *
+         * @param table      the table schema
+         * @param identifier the column identifier
+         * @param type       the column type
+         * @return the {@link ElementExpression} resulting from the schema binding
+         */
         ElementExpression prepare(TableMetadata table, ColumnIdentifier identifier, AbstractType<?> type)
         {
             if (rawCollectionElement != null)
@@ -233,28 +268,10 @@ public final class ElementExpression
             return rawCollectionElement.prepare(table.keyspace, elementSpec);
         }
 
-        /**
-         * Returns the collection element if this is a collection element expression, {@code null} otherwise.
-         * @return rawCollectionElement.
-         */
-        public Term.Raw rawCollectionElement()
-        {
-            return rawCollectionElement;
-        }
-
-        /**
-         * Returns the collection element if this is a collection element expression, {@code null} otherwise.
-         * @return rawCollectionElement.
-         */
-        public FieldIdentifier rawUdtField()
-        {
-            return udtField;
-        }
-
         @Override
         public int hashCode()
         {
-            return Objects.hash(rawCollectionElement, udtField);
+            return Objects.hash(kind, rawCollectionElement, udtField);
         }
 
         @Override
@@ -267,12 +284,7 @@ public final class ElementExpression
                 return false;
 
             ElementExpression.Raw r = (ElementExpression.Raw) o;
-            return Objects.equals(rawCollectionElement, r.rawCollectionElement) && Objects.equals(udtField, r.udtField);
-        }
-
-        public Kind kind()
-        {
-            return kind;
+            return kind == r.kind && Objects.equals(rawCollectionElement, r.rawCollectionElement) && Objects.equals(udtField, r.udtField);
         }
 
         @Override
