@@ -33,6 +33,7 @@ import com.google.common.collect.ImmutableList;
 import org.apache.cassandra.cql3.functions.Function;
 import org.apache.cassandra.cql3.terms.Term;
 import org.apache.cassandra.db.marshal.AbstractType;
+import org.apache.cassandra.db.marshal.MapType;
 import org.apache.cassandra.db.marshal.TupleType;
 import org.apache.cassandra.exceptions.InvalidRequestException;
 import org.apache.cassandra.schema.ColumnMetadata;
@@ -232,21 +233,25 @@ public final class ColumnsExpression
 
         String toCQLString(List<ColumnMetadata> columns, ElementExpression elementExpression)
         {
-            CQL3Type type;
+            CQL3Type cql3Type;
             String element = null;
             if (elementExpression != null)
             {
                 switch (elementExpression.kind())
                 {
                     case COLLECTION_ELEMENT:
-                        type = elementExpression.type().asCQL3Type();
+                        AbstractType<?> type = columns.get(0).type;
+                        if (type instanceof MapType<?,?>)
+                            cql3Type = ((MapType<?,?>) type).getKeysType().asCQL3Type();
+                        else
+                            cql3Type = elementExpression.type().asCQL3Type();
                         // If a Term is not terminal it can be a row marker or a function.
                         // We ignore the fact that it could be a function for now.
-                        element = elementExpression.collectionElement().isTerminal() ? type.toCQLLiteral(((Term.Terminal) elementExpression.collectionElement()).get()) : "?";
+                        element = elementExpression.collectionElement().isTerminal() ? cql3Type.toCQLLiteral(((Term.Terminal) elementExpression.collectionElement()).get()) : "?";
                         break;
                     case UDT_FIELD:
-                        type = elementExpression.type().asCQL3Type();
-                        element = type.toCQLLiteral(elementExpression.fieldIdentifier().bytes);
+                        cql3Type = elementExpression.type().asCQL3Type();
+                        element = cql3Type.toCQLLiteral(elementExpression.fieldIdentifier().bytes);
                         break;
                 }
             }
