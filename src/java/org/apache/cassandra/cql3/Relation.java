@@ -172,29 +172,16 @@ public final class Relation
 
         ColumnsExpression columnsExpression = rawExpressions.prepare(table);
 
-        // KATE: not for reviewer: below can be probably simplified
-        // TODO support restrictions on list elements as we do in conditions
-        if (columnsExpression.isCollectionElementExpression())
-        {
-            ColumnMetadata receiver = table.getExistingColumn(column());
-            switch ((((CollectionType<?>) receiver.type).kind)) {
-                case LIST:
-                    throw invalidRequest("Invalid element access syntax for list column %s", receiver.name);
-                case MAP:
-                    ColumnMetadata column = columnsExpression.firstColumn();
-                    checkFalse(column.type instanceof ListType, "Indexes on list entries (%s[index] = value) are not supported.", column.name);
-                    checkTrue(column.type instanceof MapType, "Column %s cannot be used as a map", column.name);
-                    checkTrue(column.type.isMultiCell(), "Map-entry predicates on frozen map column %s are not supported", column.name);
-                    break;
-                case SET:
-                    throw invalidRequest("Invalid element access syntax for set column %s", receiver.name);
-                default:
-                    throw new AssertionError();
-            }
-        }
-
+        // TODO support restrictions on list elements as we do in conditions, then we can probably move below validations
+        //  to ElementExpression prepare/validateColumns
         if (columnsExpression.isMapElementExpression())
+        {
+            ColumnMetadata column = columnsExpression.firstColumn();
+            checkFalse(column.type instanceof ListType, "Indexes on list entries (%s[index] = value) are not supported.", column.name);
+            checkTrue(column.type instanceof MapType, "Column %s cannot be used as a map", column.name);
+            checkTrue(column.type.isMultiCell(), "Map-entry predicates on frozen map column %s are not supported", column.name);
             columnsExpression.collectMarkerSpecification(boundNames);
+        }
 
         operator.validateFor(columnsExpression);
 
