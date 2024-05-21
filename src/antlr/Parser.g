@@ -1797,15 +1797,15 @@ relation[WhereClause.Builder clauses]
           )
       | K_NOT K_IN
          ( '(' ')'
-             { $clauses.add(Relation.multiColumns(ids, Operator.NOT_IN, Terms.Raw.of(Collections.emptyList()))); }
+             { $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, Terms.Raw.of(Collections.emptyList()))); }
          | tupleInMarker=inMarker /* (a, b, c) NOT IN ? */
-             { $clauses.add(Relation.multiColumns(ids, Operator.NOT_IN, tupleInMarker)); }
+             { $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, tupleInMarker)); }
          | literals=tupleOfTupleLiterals /* (a, b, c) NOT IN ((1, 2, 3), (4, 5, 6), ...) */
              {
-                 $clauses.add(Relation.multiColumns(ids, Operator.NOT_IN, literals));
+                 $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, literals));
              }
          | markers=tupleOfMarkersForTuples /* (a, b, c) NOT IN (?, ?, ...) */
-             { $clauses.add(Relation.multiColumns(ids, Operator.NOT_IN, markers)); }
+             { $clauses.add(Relation.multiColumn(ids, Operator.NOT_IN, markers)); }
          )
       | type=relationType literal=tupleLiteral /* (a, b, c) > (1, 2, 3) or (a, b, c) > (?, ?, ?) */
           {

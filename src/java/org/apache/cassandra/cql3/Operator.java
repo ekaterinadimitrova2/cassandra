@@ -398,11 +398,10 @@ public enum Operator
         }
 
         @Override
-        public RangeSet<ClusteringElements> restrict(RangeSet<ClusteringElements> rangeSet, List<ClusteringElements> args)
+        public void restrict(RangeSet<ClusteringElements> rangeSet, List<ClusteringElements> args)
         {
             assert args.size() == 1;
             rangeSet.remove(ClusteringElements.notEqualTo(args.get(0)));
-            return rangeSet;
         }
 
         @Override
@@ -561,13 +560,10 @@ public enum Operator
         }
 
         @Override
-        public RangeSet<ClusteringElements> restrict(RangeSet<ClusteringElements> rangeSet, List<ClusteringElements> args)
+        public void restrict(RangeSet<ClusteringElements> rangeSet, List<ClusteringElements> args)
         {
             for (ClusteringElements clustering : args)
-            {
                 rangeSet.remove(ClusteringElements.notEqualTo(clustering));
-            }
-            return rangeSet;
         }
 
         @Override
