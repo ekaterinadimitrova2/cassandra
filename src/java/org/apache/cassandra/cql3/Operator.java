@@ -577,6 +577,12 @@ public enum Operator
         {
             return true;
         }
+
+        @Override
+        public boolean canBeUsedWith(ColumnsExpression.Kind kind)
+        {
+            return kind == ColumnsExpression.Kind.SINGLE_COLUMN || kind == ColumnsExpression.Kind.MULTI_COLUMN;
+        }
     },
     NOT_CONTAINS(17)
     {

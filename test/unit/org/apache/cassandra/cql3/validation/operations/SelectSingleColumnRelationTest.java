@@ -38,11 +38,11 @@ public class SelectSingleColumnRelationTest extends CQLTester
         createIndex("CREATE INDEX ON %s (d)");
 
         assertInvalidMessage("Collection column 'b' (set<int>) cannot be restricted by a '=' relation",
-                             "SELECT * FROM %s WHERE a = 0 AND b=?", set(0));
+                             "SELECT * FROM %s WHERE a = 0 AND b = ?", set(0));
         assertInvalidMessage("Collection column 'c' (list<int>) cannot be restricted by a '=' relation",
-                             "SELECT * FROM %s WHERE a = 0 AND c=?", list(0));
+                             "SELECT * FROM %s WHERE a = 0 AND c = ?", list(0));
         assertInvalidMessage("Collection column 'd' (map<int, int>) cannot be restricted by a '=' relation",
-                             "SELECT * FROM %s WHERE a = 0 AND d=?", map(0, 0));
+                             "SELECT * FROM %s WHERE a = 0 AND d = ?", map(0, 0));
     }
 
     @Test
