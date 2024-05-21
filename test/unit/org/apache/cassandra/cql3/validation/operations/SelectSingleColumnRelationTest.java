@@ -207,7 +207,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testClusteringColumnRelationsWithClusteringOrder() throws Throwable
+    public void testClusteringColumnRelationsWithClusteringOrder()
     {
         createTable("CREATE TABLE %s (a text, b int, c int, d int, primary key(a, b, c)) WITH CLUSTERING ORDER BY (b DESC, c ASC);");
         execute("insert into %s (a, b, c, d) values (?, ?, ?, ?)", "first", 1, 5, 1);
@@ -287,7 +287,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testAllowFilteringWithIndexedColumnAndStaticColumns() throws Throwable
+    public void testAllowFilteringWithIndexedColumnAndStaticColumns()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, s int static, PRIMARY KEY(a, b))");
         createIndex("CREATE INDEX ON %s(c)");
@@ -306,7 +306,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testIndexQueriesOnComplexPrimaryKey() throws Throwable
+    public void testIndexQueriesOnComplexPrimaryKey()
     {
         createTable("CREATE TABLE %s (pk0 int, pk1 int, ck0 int, ck1 int, ck2 int, value int, PRIMARY KEY ((pk0, pk1), ck0, ck1, ck2))");
 
@@ -429,7 +429,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testINWithDuplicateValue() throws Throwable
+    public void testINWithDuplicateValue()
     {
         createTable("CREATE TABLE %s (k1 int, k2 int, v int, PRIMARY KEY (k1, k2))");
         execute("INSERT INTO %s (k1,  k2, v) VALUES (?, ?, ?)", 1, 1, 1);
@@ -445,7 +445,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testLargeClusteringINValues() throws Throwable
+    public void testLargeClusteringINValues()
     {
         createTable("CREATE TABLE %s (k int, c int, v int, PRIMARY KEY (k, c))");
         execute("INSERT INTO %s (k, c, v) VALUES (0, 0, 0)");
@@ -551,7 +551,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testLimitWithUnset() throws Throwable
+    public void testLimitWithUnset()
     {
         createTable("CREATE TABLE %s (k int PRIMARY KEY, i int)");
         execute("INSERT INTO %s (k, i) VALUES (1, 1)");
@@ -689,7 +689,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testInRestrictionsWithAllowFiltering() throws Throwable
+    public void testInRestrictionsWithAllowFiltering()
     {
         createTable("CREATE TABLE %s (pk1 int, pk2 int, c text, s int static, v int, primary key((pk1, pk2), c))");
         execute("INSERT INTO %s (pk1, pk2, c, s, v) values (?, ?, ?, ?, ?)", 1, 0, "5", 1, 3);
@@ -742,7 +742,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testInRestrictionsWithAllowFilteringAndOrdering() throws Throwable
+    public void testInRestrictionsWithAllowFilteringAndOrdering()
     {
         createTable("CREATE TABLE %s (pk int, c text, v int, primary key(pk, c)) WITH CLUSTERING ORDER BY (c DESC)");
         execute("INSERT INTO %s (pk, c, v) values (?, ?, ?)", 1, "0", 5);
@@ -789,7 +789,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testSliceRestrictionWithNegativeClusteringColumnValues() throws Throwable
+    public void testSliceRestrictionWithNegativeClusteringColumnValues()
     {
         createTable("CREATE TABLE %s (pk int, c int, v int, PRIMARY KEY (pk, c))");
 
@@ -940,7 +940,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
                    row("key", 4, 1, 7),
                    row("key", 4, 2, 8));
 
-        // NOT IN value outside of the slice range:
+        // NOT IN value outside the slice range:
         assertRows(execute("select * from %s where a = ? and b not in ? and b > ? and b < ?", "key", list(0), 2, 4),
                    row("key", 3, 8, 5),
                    row("key", 3, 9, 6));
@@ -1088,7 +1088,7 @@ public class SelectSingleColumnRelationTest extends CQLTester
                    row("key", 3, 9, 6),
                    row("key", 3, 8, 5));
 
-        // NOT IN value outside of the slice range:
+        // NOT IN value outside the slice range:
         assertRows(execute("select * from %s where a = ? and b not in ? and b > ? and b < ?", "key", list(0), 2, 4),
                    row("key", 3, 9, 6),
                    row("key", 3, 8, 5));

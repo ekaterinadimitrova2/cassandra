@@ -32,10 +32,9 @@ import org.apache.cassandra.cql3.restrictions.StatementRestrictions;
 import org.apache.cassandra.exceptions.InvalidRequestException;
 import org.apache.cassandra.index.internal.CassandraIndex;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.apache.cassandra.utils.ByteBufferUtil.EMPTY_BYTE_BUFFER;
 import static org.apache.cassandra.utils.ByteBufferUtil.bytes;
+import static org.junit.Assert.*;
 
 
 /**
@@ -301,7 +300,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.select_key_in_test()
      */
     @Test
-    public void testSelectKeyIn() throws Throwable
+    public void testSelectKeyIn()
     {
         createTable("CREATE TABLE %s (userid uuid PRIMARY KEY, firstname text, lastname text, age int)");
 
@@ -635,7 +634,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.token_range_test()
      */
     @Test
-    public void testTokenRange() throws Throwable
+    public void testTokenRange()
     {
         createTable(" CREATE TABLE %s (k int PRIMARY KEY, c int, v int)");
 
@@ -668,7 +667,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.count_test()
      */
     @Test
-    public void testSelectCount() throws Throwable
+    public void testSelectCount()
     {
         createTable(" CREATE TABLE %s (kind text, time int, value1 int, value2 int, PRIMARY KEY(kind, time))");
 
@@ -691,7 +690,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.range_query_test()
      */
     @Test
-    public void testRangeQuery() throws Throwable
+    public void testRangeQuery()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, e int, f text, PRIMARY KEY (a, b, c, d, e) )");
 
@@ -765,7 +764,7 @@ public class SelectTest extends CQLTester
      * Migrated from cql_tests.py:TestCQL.bug_4882_test()
      */
     @Test
-    public void testDifferentOrdering() throws Throwable
+    public void testDifferentOrdering()
     {
         createTable(" CREATE TABLE %s ( k int, c1 int, c2 int, v int, PRIMARY KEY (k, c1, c2) ) WITH CLUSTERING ORDER BY (c1 ASC, c2 DESC)");
 
@@ -910,7 +909,7 @@ public class SelectTest extends CQLTester
      * Migrated from cql_tests.py:TestCQL.ticket_5230_test()
      */
     @Test
-    public void testMultipleClausesOnPrimaryKey() throws Throwable
+    public void testMultipleClausesOnPrimaryKey()
     {
         createTable("CREATE TABLE %s (key text, c text, v text, PRIMARY KEY(key, c))");
 
@@ -930,7 +929,7 @@ public class SelectTest extends CQLTester
     {
         createTable("CREATE TABLE %s (key text PRIMARY KEY)");
 
-        // We just want to make sure this doesn 't NPE server side
+        // We just want to make sure this doesn't NPE server side
         assertInvalid("select * from %s where token(key) > token(int(3030343330393233)) limit 1");
     }
 
@@ -938,7 +937,7 @@ public class SelectTest extends CQLTester
      * Migrated from cql_tests.py:TestCQL.clustering_order_and_functions_test()
      */
     @Test
-    public void testFunctionsWithClusteringDesc() throws Throwable
+    public void testFunctionsWithClusteringDesc()
     {
         createTable("CREATE TABLE %s ( k int, t timeuuid, PRIMARY KEY (k, t) ) WITH CLUSTERING ORDER BY (t DESC)");
 
@@ -1026,7 +1025,7 @@ public class SelectTest extends CQLTester
      * Migrated from cql_tests.py:TestCQL.select_distinct_with_deletions_test()
      */
     @Test
-    public void testSelectDistinctWithDeletions() throws Throwable
+    public void testSelectDistinctWithDeletions()
     {
         createTable("CREATE TABLE %s (k int PRIMARY KEY, c int, v int)");
 
@@ -1127,7 +1126,7 @@ public class SelectTest extends CQLTester
      * Migrated from cql_tests.py:TestCQL.bug_6327_test()
      */
     @Test
-    public void testSelectInClauseAtOne() throws Throwable
+    public void testSelectInClauseAtOne()
     {
         createTable("CREATE TABLE %s ( k int, v int, PRIMARY KEY (k, v))");
 
@@ -1144,7 +1143,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.select_count_paging_test()
      */
     @Test
-    public void testSelectCountPaging() throws Throwable
+    public void testSelectCountPaging()
     {
         createTable("create table %s (field1 text, field2 timeuuid, field3 boolean, primary key(field1, field2))");
         createIndex("create index on %s (field3)");
@@ -1161,7 +1160,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.clustering_order_in_test()
      */
     @Test
-    public void testClusteringOrder() throws Throwable
+    public void testClusteringOrder()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, PRIMARY KEY ((a, b), c) ) with clustering order by (c desc)");
 
@@ -1180,7 +1179,7 @@ public class SelectTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.bug7105_test()
      */
     @Test
-    public void testSelectInFinalColumn() throws Throwable
+    public void testSelectInFinalColumn()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, PRIMARY KEY (a, b))");
 
@@ -1728,7 +1727,7 @@ public class SelectTest extends CQLTester
     }
 
     @Test
-    public void testCKQueryWithValueOver64K() throws Throwable
+    public void testCKQueryWithValueOver64K()
     {
         createTable("CREATE TABLE %s (a text, b text, PRIMARY KEY (a, b))");
 
@@ -2502,7 +2501,7 @@ public class SelectTest extends CQLTester
      * Check select with ith different column order. See CASSANDRA-10988
      */
     @Test
-    public void testClusteringOrderWithSlice() throws Throwable
+    public void testClusteringOrderWithSlice()
     {
         // non-compound, ASC order
         createTable("CREATE TABLE %s (a text, b int, PRIMARY KEY (a, b)) WITH CLUSTERING ORDER BY (b ASC)");
@@ -2933,7 +2932,7 @@ public class SelectTest extends CQLTester
     }
 
     @Test
-    public void testWithDistinctAndJsonAsColumnName() throws Throwable
+    public void testWithDistinctAndJsonAsColumnName()
     {
         createTable("CREATE TABLE %s (distinct int, json int, value int, PRIMARY KEY(distinct, json))");
         execute("INSERT INTO %s (distinct, json, value) VALUES (0, 0, 0)");
@@ -3178,7 +3177,7 @@ public class SelectTest extends CQLTester
     }
 
     @Test
-    public void testMixedTTLOnColumns() throws Throwable
+    public void testMixedTTLOnColumns()
     {
         createTable("CREATE TABLE %s (k int PRIMARY KEY, i int)");
         execute("INSERT INTO %s (k) VALUES (2);");
@@ -3197,14 +3196,14 @@ public class SelectTest extends CQLTester
             if ( i % 2 == 0) // Every odd row has a null i/ttl
                 assertTrue(row.getInt("name_ttl") >= 90 && row.getInt("name_ttl") <= 100);
             else
-                assertTrue(row.has("name_ttl") == false);
+                assertFalse(row.has("name_ttl"));
 
             i++;
         }
     }
 
     @Test
-    public void testMixedTTLOnColumnsWide() throws Throwable
+    public void testMixedTTLOnColumnsWide()
     {
         createTable("CREATE TABLE %s (k int, c int, i int, PRIMARY KEY (k, c))");
         execute("INSERT INTO %s (k, c) VALUES (2, 2);");
@@ -3227,14 +3226,14 @@ public class SelectTest extends CQLTester
             if ( i % 2 == 0) // Every odd row has a null i/ttl
                 assertTrue(row.getInt("name_ttl") >= 90 && row.getInt("name_ttl") <= 100);
             else
-                assertTrue(row.has("name_ttl") == false);
+                assertFalse(row.has("name_ttl"));
 
             i++;
         }
     }
 
     @Test // CASSANDRA-14989
-    public void testTokenFctAcceptsValidArguments() throws Throwable
+    public void testTokenFctAcceptsValidArguments()
     {
         createTable("CREATE TABLE %s (k1 uuid, k2 text, PRIMARY KEY ((k1, k2)))");
         execute("INSERT INTO %s (k1, k2) VALUES (uuid(), 'k2')");
@@ -3308,7 +3307,7 @@ public class SelectTest extends CQLTester
     }
 
     @Test
-    public void testQuotedMapTextData() throws Throwable
+    public void testQuotedMapTextData()
     {
         createTable("CREATE TABLE " + KEYSPACE + ".t1 (id int, data text, PRIMARY KEY (id))");
         createTable("CREATE TABLE " + KEYSPACE + ".t2 (id int, data map<int, text>, PRIMARY KEY (id))");
@@ -3321,7 +3320,7 @@ public class SelectTest extends CQLTester
     }
 
     @Test
-    public void testQuotedSimpleCollectionsData() throws Throwable
+    public void testQuotedSimpleCollectionsData()
     {
         createTable("CREATE TABLE " + KEYSPACE + ".t3 (id int, set_data set<text>, list_data list<text>, tuple_data tuple<int, text>, PRIMARY KEY (id))");
 
@@ -3333,7 +3332,7 @@ public class SelectTest extends CQLTester
     }
 
     @Test
-    public void testQuotedUDTData() throws Throwable
+    public void testQuotedUDTData()
     {
         createType("CREATE TYPE " + KEYSPACE + ".random (data text)");
         createTable("CREATE TABLE " + KEYSPACE + ".t4 (id int, udt_data frozen<random>, PRIMARY KEY (id))");

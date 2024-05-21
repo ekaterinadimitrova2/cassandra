@@ -120,7 +120,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMultiAndSingleColumnRelationMix() throws Throwable
+    public void testMultiAndSingleColumnRelationMix()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, PRIMARY KEY (a, b, c, d))");
 
@@ -215,7 +215,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testSeveralMultiColumnRelation() throws Throwable
+    public void testSeveralMultiColumnRelation()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, PRIMARY KEY (a, b, c, d))");
 
@@ -366,7 +366,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testNonEqualsRelation() throws Throwable
+    public void testNonEqualsRelation()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, PRIMARY KEY (a, b, c))");
         execute("INSERT INTO %s (a, b, c) VALUES (?, ?, ?)", 0, 0, 0);
@@ -780,7 +780,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMultipleClusteringReversedComponents() throws Throwable
+    public void testMultipleClusteringReversedComponents()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, PRIMARY KEY (a, b, c, d)) WITH CLUSTERING ORDER BY (b DESC, c ASC, d DESC)");
 
@@ -1075,7 +1075,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testINWithDuplicateValue() throws Throwable
+    public void testINWithDuplicateValue()
     {
         createTable("CREATE TABLE %s (k1 int, k2 int, v int, PRIMARY KEY (k1, k2))");
         execute("INSERT INTO %s (k1,  k2, v) VALUES (?, ?, ?)", 1, 1, 1);
@@ -1109,7 +1109,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMixedOrderColumns1() throws Throwable
+    public void testMixedOrderColumns1()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, e int, PRIMARY KEY (a, b, c, d, e)) WITH " +
                     " CLUSTERING ORDER BY (b DESC, c ASC, d DESC, e ASC)");
@@ -1552,7 +1552,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMixedOrderColumns2() throws Throwable
+    public void testMixedOrderColumns2()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, e int, PRIMARY KEY (a, b, c, d, e)) WITH " +
                     "CLUSTERING ORDER BY (b DESC, c ASC, d ASC, e ASC)");
@@ -1613,7 +1613,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMixedOrderColumns3() throws Throwable
+    public void testMixedOrderColumns3()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, PRIMARY KEY (a, b, c)) WITH " +
                     "CLUSTERING ORDER BY (b DESC, c ASC)");
@@ -1646,7 +1646,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMixedOrderColumns4() throws Throwable
+    public void testMixedOrderColumns4()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, d int, e int, PRIMARY KEY (a, b, c, d, e)) WITH " +
                     "CLUSTERING ORDER BY (b ASC, c DESC, d DESC, e ASC)");
@@ -1960,7 +1960,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
     }
 
     @Test
-    public void testMixedOrderColumnsInReverse() throws Throwable
+    public void testMixedOrderColumnsInReverse()
     {
         createTable("CREATE TABLE %s (a int, b int, c int, PRIMARY KEY (a, b, c)) WITH CLUSTERING ORDER BY (b ASC, c DESC);");
 
@@ -1989,7 +1989,7 @@ public class SelectMultiColumnRelationTest extends CQLTester
      * migrated from cql_tests.py:TestCQL.simple_tuple_query_test()
      */
     @Test
-    public void testSimpleTupleQuery() throws Throwable
+    public void testSimpleTupleQuery()
     {
         createTable("create table %s (a int, b int, c int, d int , e int, PRIMARY KEY (a, b, c, d, e))");
 
