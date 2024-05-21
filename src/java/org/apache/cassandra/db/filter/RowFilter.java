@@ -771,7 +771,7 @@ public class RowFilter implements Iterable<RowFilter.Expression>
         public MapElementExpression(ColumnMetadata column, ByteBuffer key, Operator operator, ByteBuffer value)
         {
             super(column, operator, value);
-            assert column.type instanceof MapType && operator == Operator.EQ;
+            assert column.type instanceof MapType && (operator == Operator.EQ || operator == Operator.NEQ);
             this.key = key;
         }
 

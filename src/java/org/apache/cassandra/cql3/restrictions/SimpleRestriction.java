@@ -140,6 +140,8 @@ public final class SimpleRestriction implements SingleRestriction
     {
         return operator == Operator.CONTAINS
                || operator == Operator.CONTAINS_KEY
+               || operator == Operator.NOT_CONTAINS
+               || operator == Operator.NOT_CONTAINS_KEY
                || columnsExpression.kind() == ColumnsExpression.Kind.MAP_ELEMENT;
     }
 

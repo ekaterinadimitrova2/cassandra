@@ -1374,7 +1374,7 @@ public class SelectTest extends CQLTester
         execute("INSERT INTO %s (a, b, c, d, e) VALUES (1, 4, [1, 2], {2, 4}, {1: 2})");
         execute("INSERT INTO %s (a, b, c, d, e) VALUES (2, 3, [3, 6], {6, 12}, {3: 6})");
 
-//        beforeAndAfterFlush(() -> {
+        beforeAndAfterFlush(() -> {
 
             // Checks filtering for lists
             assertInvalidMessage(StatementRestrictions.REQUIRES_ALLOW_FILTERING_MESSAGE,
@@ -1475,7 +1475,7 @@ public class SelectTest extends CQLTester
                        row(1, 3, list(3, 2), set(6, 4), map(3, 2)));
 
 
-//        });
+        });
 
         // Checks filtering with null
         assertInvalidMessage("Invalid null value for column c",
@@ -1491,17 +1491,17 @@ public class SelectTest extends CQLTester
         assertInvalidMessage("Invalid null value for e[1]",
                              "SELECT * FROM %s WHERE e[1] = null ALLOW FILTERING");
 
-        assertInvalidMessage("Unsupported null value for column c",
+        assertInvalidMessage("Invalid null value for column c",
                              "SELECT * FROM %s WHERE c NOT CONTAINS null ALLOW FILTERING");
-        assertInvalidMessage("Unsupported null value for column d",
+        assertInvalidMessage("Invalid null value for column d",
                              "SELECT * FROM %s WHERE d NOT CONTAINS null ALLOW FILTERING");
-        assertInvalidMessage("Unsupported null value for column e",
+        assertInvalidMessage("Invalid null value for column e",
                              "SELECT * FROM %s WHERE e NOT CONTAINS null ALLOW FILTERING");
-        assertInvalidMessage("Unsupported null value for column e",
+        assertInvalidMessage("Invalid null value for column e",
                              "SELECT * FROM %s WHERE e NOT CONTAINS KEY null ALLOW FILTERING");
-        assertInvalidMessage("Unsupported null map key for column e",
+        assertInvalidMessage("Invalid null map key for column e",
                              "SELECT * FROM %s WHERE e[null] != 2 ALLOW FILTERING");
-        assertInvalidMessage("Unsupported null map value for column e",
+        assertInvalidMessage("Invalid null value for e[1]",
                              "SELECT * FROM %s WHERE e[1] != null ALLOW FILTERING");
 
         // Checks filtering with unset
@@ -1524,22 +1524,22 @@ public class SelectTest extends CQLTester
                              "SELECT * FROM %s WHERE e[1] = ? ALLOW FILTERING",
                              unset());
 
-        assertInvalidMessage("Unsupported unset value for column c",
+        assertInvalidMessage("Invalid unset value for column c",
                              "SELECT * FROM %s WHERE c NOT CONTAINS ? ALLOW FILTERING",
                              unset());
-        assertInvalidMessage("Unsupported unset value for column d",
+        assertInvalidMessage("Invalid unset value for column d",
                              "SELECT * FROM %s WHERE d NOT CONTAINS ? ALLOW FILTERING",
                              unset());
-        assertInvalidMessage("Unsupported unset value for column e",
+        assertInvalidMessage("Invalid unset value for column e",
                              "SELECT * FROM %s WHERE e NOT CONTAINS ? ALLOW FILTERING",
                              unset());
-        assertInvalidMessage("Unsupported unset value for column e",
+        assertInvalidMessage("Invalid unset value for column e",
                              "SELECT * FROM %s WHERE e NOT CONTAINS KEY ? ALLOW FILTERING",
                              unset());
-        assertInvalidMessage("Unsupported unset map key for column e",
+        assertInvalidMessage("Invalid unset map key for column e",
                              "SELECT * FROM %s WHERE e[?] != 2 ALLOW FILTERING",
                              unset());
-        assertInvalidMessage("Unsupported unset map value for column e",
+        assertInvalidMessage("Invalid unset value for e[1]",
                              "SELECT * FROM %s WHERE e[1] != ? ALLOW FILTERING",
                              unset());
     }
