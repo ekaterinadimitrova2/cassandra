@@ -1453,13 +1453,11 @@ public class SelectTest extends CQLTester
                        row(1, 2, list(1, 6), set(2, 12), map(1, 6)));
 
             assertRows(execute("SELECT * FROM %s WHERE e[1] != 6 ALLOW FILTERING"),
-                       row(1, 3, list(3, 2), set(6, 4), map(3, 2)),
-                       row(1, 4, list(1, 2), set(2, 4), map(1, 2)),
-                       row(2, 3, list(3, 6), set(6, 12), map(3, 6)));
+                       row(1, 4, list(1, 2), set(2, 4), map(1, 2)));
 
-            assertRows(execute("SELECT * FROM %s WHERE e[1] != 6 AND e[3] != 2 ALLOW FILTERING"),
-                       row(1, 4, list(1, 2), set(2, 4), map(1, 2)),
-                       row(2, 3, list(3, 6), set(6, 12), map(3, 6)));
+            assertEmpty(execute("SELECT * FROM %s WHERE e[1] != 6 AND e[3] != 2 ALLOW FILTERING"));
+
+            assertEmpty(execute("SELECT * FROM %s WHERE e[1] = 6 AND e[3] = 2 ALLOW FILTERING"));
 
             assertRows(execute("SELECT * FROM %s WHERE e CONTAINS KEY 1 AND e[1] != 6 ALLOW FILTERING"),
                        row(1, 4, list(1, 2), set(2, 4), map(1, 2)));
