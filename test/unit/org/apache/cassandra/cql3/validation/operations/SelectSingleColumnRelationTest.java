@@ -572,12 +572,18 @@ public class SelectSingleColumnRelationTest extends CQLTester
         assertInvalidMessage("Invalid unset value for column k", "SELECT * from %s WHERE k IN ?", unset());
         assertInvalidMessage("Invalid unset value for column k", "SELECT * from %s WHERE k IN(?)", unset());
         assertInvalidMessage("Invalid unset value for column k", "SELECT * from %s WHERE k IN(?,?)", 1, unset());
+        assertInvalidMessage("Invalid unset value for column k", "SELECT * from %s WHERE k NOT IN ? ALLOW FILTERING", unset());
+        assertInvalidMessage("Invalid unset value for column k", "SELECT * from %s WHERE k NOT IN(?) ALLOW FILTERING", unset());
+        assertInvalidMessage("Invalid unset value for column k", "SELECT * from %s WHERE k NOT IN(?,?) ALLOW FILTERING", 1, unset());
         // clustering column
         assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i = ?", unset());
         assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i IN ?", unset());
         assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i IN(?)", unset());
         assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i IN(?,?)", 1, unset());
         assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE i = ? ALLOW FILTERING", unset());
+        assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i NOT IN ?", unset());
+        assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i NOT IN(?)", unset());
+        assertInvalidMessage("Invalid unset value for column i", "SELECT * from %s WHERE k = 1 AND i NOT IN(?,?)", 1, unset());
         // indexed column
         assertInvalidMessage("Invalid unset value for column s", "SELECT * from %s WHERE s = ?", unset());
         // range
@@ -621,11 +627,16 @@ public class SelectSingleColumnRelationTest extends CQLTester
         assertInvalidMessage("Undefined column name d", "SELECT * FROM %s WHERE d > 0 and d <= 2");
         assertInvalidMessage("Undefined column name d", "SELECT * FROM %s WHERE d CONTAINS 0");
         assertInvalidMessage("Undefined column name d", "SELECT * FROM %s WHERE d CONTAINS KEY 0");
+        assertInvalidMessage("Undefined column name d", "SELECT * FROM %s WHERE d NOT CONTAINS 0");
+        assertInvalidMessage("Undefined column name d", "SELECT * FROM %s WHERE d NOT CONTAINS KEY 0");
         assertInvalidMessage("Undefined column name d", "SELECT a AS d FROM %s WHERE d = 0");
         assertInvalidMessage("Undefined column name d", "SELECT b AS d FROM %s WHERE d IN (0, 1)");
+        assertInvalidMessage("Undefined column name d", "SELECT b AS d FROM %s WHERE d NOT IN (0, 1)");
         assertInvalidMessage("Undefined column name d", "SELECT b AS d FROM %s WHERE d > 0 and d <= 2");
         assertInvalidMessage("Undefined column name d", "SELECT c AS d FROM %s WHERE d CONTAINS 0");
         assertInvalidMessage("Undefined column name d", "SELECT c AS d FROM %s WHERE d CONTAINS KEY 0");
+        assertInvalidMessage("Undefined column name d", "SELECT c AS d FROM %s WHERE d NOT CONTAINS 0");
+        assertInvalidMessage("Undefined column name d", "SELECT c AS d FROM %s WHERE d NOT CONTAINS KEY 0");
         assertInvalidMessage("Undefined column name d", "SELECT d FROM %s WHERE a = 0");
     }
 
@@ -644,12 +655,16 @@ public class SelectSingleColumnRelationTest extends CQLTester
         assertInvalidMessage(msg, "SELECT * FROM %s WHERE b >= ?", udt);
         assertInvalidMessage(msg, "SELECT * FROM %s WHERE b <= ?", udt);
         assertInvalidMessage(msg, "SELECT * FROM %s WHERE b IN (?)", udt);
+        assertInvalidMessage(msg, "SELECT * FROM %s WHERE b NOT IN (?)", udt);
         assertInvalidMessage(msg, "SELECT * FROM %s WHERE b LIKE ?", udt);
+        assertInvalidMessage(msg, "SELECT * FROM %s WHERE b != {a: 0}", udt);
         assertInvalidMessage(msg, "SELECT * FROM %s WHERE b != {a: 0}", udt);
         assertInvalidMessage("Unsupported restriction: b IS NOT NULL",
                              "SELECT * FROM %s WHERE b IS NOT NULL", udt);
         assertInvalidMessage("Cannot use CONTAINS on non-collection column b",
                              "SELECT * FROM %s WHERE b CONTAINS ?", udt);
+        assertInvalidMessage("Cannot use NOT CONTAINS on non-collection column b",
+                             "SELECT * FROM %s WHERE b NOT CONTAINS ?", udt);
         assertInvalidMessage("Cannot use NOT CONTAINS on non-collection column b",
                              "SELECT * FROM %s WHERE b NOT CONTAINS ?", udt);
     }
@@ -963,7 +978,6 @@ public class SelectSingleColumnRelationTest extends CQLTester
         assertRows(execute("select * from %s where a = ? and b in ? and c not in ?", "key", list(2, 3), list(5, 6, 9)),
                    row("key", 2, 7, 4),
                    row("key", 3, 8, 5));
-
     }
 
     @Test
@@ -1204,7 +1218,6 @@ public class SelectSingleColumnRelationTest extends CQLTester
                    row(1, 1, 1),
                    row(1, 4, 4),
                    row(1, 5, 5));
-
     }
 
     @Test
