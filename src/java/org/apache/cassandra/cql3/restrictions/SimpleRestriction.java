@@ -133,7 +133,7 @@ public final class SimpleRestriction implements SingleRestriction
     }
 
     /**
-     * Checks if this restriction operator is a CONTAINS, CONTAINS_KEY or is an equality on a map element.
+     * Checks if this restriction operator is a CONTAINS, CONTAINS_KEY, NOT_CONTAINS, NOT_CONTAINS_KEY or is an equality on a map element.
      * @return {@code true} if the restriction operator is one of the contains operations, {@code false} otherwise.
      */
     public boolean isContains()
