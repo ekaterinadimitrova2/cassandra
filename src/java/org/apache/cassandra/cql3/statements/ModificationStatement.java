@@ -429,7 +429,7 @@ public abstract class ModificationStatement implements CQLStatement.SingleKeyspa
 
         try
         {
-            cl.validateForRead();
+            cl.validateForRead(false);
         }
         catch (InvalidRequestException e)
         {
