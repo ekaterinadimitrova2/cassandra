@@ -38,7 +38,6 @@ import org.apache.cassandra.io.util.DataInputPlus;
 import org.apache.cassandra.io.util.DataOutputPlus;
 import org.apache.cassandra.serializers.CollectionSerializer;
 import org.apache.cassandra.serializers.MarshalException;
-import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.cassandra.utils.bytecomparable.ByteComparable;
 import org.apache.cassandra.utils.bytecomparable.ByteSource;
@@ -371,7 +370,7 @@ public abstract class CollectionType<T> extends MultiElementType<T>
         return false;
     }
 
-    public static String setOrListToJsonString(ByteBuffer buffer, AbstractType<?> elementsType, ProtocolVersion protocolVersion)
+    public static String setOrListToJsonString(ByteBuffer buffer, AbstractType<?> elementsType)
     {
         ByteBuffer value = buffer.duplicate();
         StringBuilder sb = new StringBuilder().append('[');
@@ -383,7 +382,7 @@ public abstract class CollectionType<T> extends MultiElementType<T>
                 sb.append(", ");
             ByteBuffer element = CollectionSerializer.readValue(value, ByteBufferAccessor.instance, offset);
             offset += CollectionSerializer.sizeOfValue(element, ByteBufferAccessor.instance);
-            sb.append(elementsType.toJSONString(element, protocolVersion));
+            sb.append(elementsType.toJSONString(element));
         }
         return sb.append(']').toString();
     }

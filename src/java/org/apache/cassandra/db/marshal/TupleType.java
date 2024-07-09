@@ -38,7 +38,6 @@ import org.apache.cassandra.exceptions.ConfigurationException;
 import org.apache.cassandra.exceptions.InvalidRequestException;
 import org.apache.cassandra.exceptions.SyntaxException;
 import org.apache.cassandra.serializers.*;
-import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.cassandra.utils.JsonUtils;
 import org.apache.cassandra.utils.bytecomparable.ByteComparable;
@@ -505,7 +504,7 @@ public class TupleType extends MultiElementType<ByteBuffer>
     }
 
     @Override
-    public String toJSONString(ByteBuffer buffer, ProtocolVersion protocolVersion)
+    public String toJSONString(ByteBuffer buffer)
     {
         ByteBuffer duplicated = buffer.duplicate();
         int offset = 0;
@@ -520,7 +519,7 @@ public class TupleType extends MultiElementType<ByteBuffer>
             if (value == null)
                 sb.append("null");
             else
-                sb.append(types.get(i).toJSONString(value, protocolVersion));
+                sb.append(types.get(i).toJSONString(value));
         }
         return sb.append("]").toString();
     }

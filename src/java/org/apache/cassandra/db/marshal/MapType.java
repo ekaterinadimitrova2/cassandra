@@ -37,7 +37,6 @@ import org.apache.cassandra.exceptions.SyntaxException;
 import org.apache.cassandra.serializers.CollectionSerializer;
 import org.apache.cassandra.serializers.MapSerializer;
 import org.apache.cassandra.serializers.MarshalException;
-import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.utils.JsonUtils;
 import org.apache.cassandra.utils.bytecomparable.ByteComparable.Version;
 import org.apache.cassandra.utils.bytecomparable.ByteSource;
@@ -336,7 +335,7 @@ public class MapType<K, V> extends CollectionType<Map<K, V>>
     }
 
     @Override
-    public String toJSONString(ByteBuffer buffer, ProtocolVersion protocolVersion)
+    public String toJSONString(ByteBuffer buffer)
     {
         ByteBuffer value = buffer.duplicate();
         StringBuilder sb = new StringBuilder("{");
@@ -350,7 +349,7 @@ public class MapType<K, V> extends CollectionType<Map<K, V>>
             // map keys must be JSON strings, so convert non-string keys to strings
             ByteBuffer kv = CollectionSerializer.readValue(value, ByteBufferAccessor.instance, offset);
             offset += CollectionSerializer.sizeOfValue(kv, ByteBufferAccessor.instance);
-            String key = keys.toJSONString(kv, protocolVersion);
+            String key = keys.toJSONString(kv);
             if (key.startsWith("\""))
                 sb.append(key);
             else
@@ -359,7 +358,7 @@ public class MapType<K, V> extends CollectionType<Map<K, V>>
             sb.append(": ");
             ByteBuffer vv = CollectionSerializer.readValue(value, ByteBufferAccessor.instance, offset);
             offset += CollectionSerializer.sizeOfValue(vv, ByteBufferAccessor.instance);
-            sb.append(values.toJSONString(vv, protocolVersion));
+            sb.append(values.toJSONString(vv));
         }
         return sb.append("}").toString();
     }

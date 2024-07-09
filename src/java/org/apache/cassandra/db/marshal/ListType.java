@@ -34,7 +34,6 @@ import org.apache.cassandra.serializers.ListSerializer;
 import org.apache.cassandra.serializers.MarshalException;
 import org.apache.cassandra.utils.JsonUtils;
 import org.apache.cassandra.utils.TimeUUID;
-import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.utils.bytecomparable.ByteComparable.Version;
 import org.apache.cassandra.utils.bytecomparable.ByteSource;
 
@@ -244,9 +243,9 @@ public class ListType<T> extends CollectionType<List<T>>
     }
 
     @Override
-    public String toJSONString(ByteBuffer buffer, ProtocolVersion protocolVersion)
+    public String toJSONString(ByteBuffer buffer)
     {
-        return setOrListToJsonString(buffer, elements, protocolVersion);
+        return setOrListToJsonString(buffer, elements);
     }
 
     @Override
