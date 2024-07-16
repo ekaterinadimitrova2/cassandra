@@ -34,7 +34,6 @@ import org.apache.cassandra.db.rows.*;
 import org.apache.cassandra.db.marshal.*;
 import org.apache.cassandra.schema.ColumnMetadata;
 import org.apache.cassandra.schema.TableMetadata;
-import org.apache.cassandra.transport.ProtocolVersion;
 import org.apache.cassandra.utils.ByteBufferUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -127,7 +126,7 @@ public abstract class ColumnCondition
                 return new MultiCellCollectionBound(column, operator, bindTerms(options));
 
             if (column.type.isUDT() && column.type.isMultiCell())
-                return new MultiCellUdtBound(column, operator, bindAndGetTerms(options), options.getProtocolVersion());
+                return new MultiCellUdtBound(column, operator, bindAndGetTerms(options));
 
             return new SimpleBound(column, operator, bindAndGetTerms(options));
         }
@@ -679,17 +678,11 @@ public abstract class ColumnCondition
          */
         private final List<ByteBuffer> values;
 
-        /**
-         * The protocol version
-         */
-        private final ProtocolVersion protocolVersion;
-
-        private MultiCellUdtBound(ColumnMetadata column, Operator op, List<ByteBuffer> values, ProtocolVersion protocolVersion)
+        private MultiCellUdtBound(ColumnMetadata column, Operator op, List<ByteBuffer> values)
         {
             super(column, op);
             assert column.type.isMultiCell();
             this.values = values;
-            this.protocolVersion = protocolVersion;
         }
 
         @Override
@@ -702,7 +695,7 @@ public abstract class ColumnCondition
         {
             UserType userType = (UserType) column.type;
             Iterator<Cell<?>> iter = getCells(row, column);
-            return iter.hasNext() ? userType.serializeForNativeProtocol(iter, protocolVersion) : null;
+            return iter.hasNext() ? userType.serializeForNativeProtocol(iter) : null;
         }
 
         private boolean isSatisfiedBy(ByteBuffer rowValue)

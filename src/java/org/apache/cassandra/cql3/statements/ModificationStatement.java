@@ -665,7 +665,6 @@ public abstract class ModificationStatement implements CQLStatement.SingleKeyspa
                 Iterables.addAll(defs, metadata.primaryKeyColumns());
             Iterables.addAll(defs, columnsWithConditions);
             selection = Selection.forColumns(metadata, new ArrayList<>(defs), false);
-
         }
 
         Selectors selectors = selection.newSelectors(options);
