@@ -547,6 +547,11 @@ public enum Operator
     NOT_IN(16)
     {
         @Override
+        public Kind kind() {
+            return Kind.MULTI_VALUE;
+        }
+
+        @Override
         public String toString()
         {
             return "NOT IN";
