@@ -18,7 +18,6 @@
 
 package org.apache.cassandra.index.sai.cql;
 
-import org.apache.cassandra.cql3.restrictions.SimpleRestriction;
 import org.apache.cassandra.cql3.restrictions.StatementRestrictions;
 import org.junit.Test;
 
