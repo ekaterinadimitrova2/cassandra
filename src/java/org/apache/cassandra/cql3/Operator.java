@@ -811,7 +811,7 @@ public enum Operator
             case SINGLE_COLUMN:
                 ColumnMetadata firstColumn = expression.firstColumn();
                 AbstractType<?> columnType = firstColumn.type;
-                if (isSlice())
+                if (isSlice() && this != Operator.NEQ)
                 {
                     if (columnType.referencesDuration())
                     {
