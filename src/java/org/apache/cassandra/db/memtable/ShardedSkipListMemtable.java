@@ -148,6 +148,16 @@ public class ShardedSkipListMemtable extends AbstractShardedMemtable
     }
 
     @Override
+    public DecoratedKey minPartitionKey() {
+        return null;
+    }
+
+    @Override
+    public DecoratedKey maxPartitionKey() {
+        return null;
+    }
+
+    @Override
     public long partitionCount()
     {
         int total = 0;

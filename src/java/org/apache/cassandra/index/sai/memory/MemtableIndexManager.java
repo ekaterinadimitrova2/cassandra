@@ -38,6 +38,7 @@ import org.apache.cassandra.db.rows.Row;
 import org.apache.cassandra.dht.AbstractBounds;
 import org.apache.cassandra.index.sai.QueryContext;
 import org.apache.cassandra.index.sai.StorageAttachedIndex;
+import org.apache.cassandra.index.sai.iterators.KeyRangeAntiJoinIterator;
 import org.apache.cassandra.index.sai.plan.Expression;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.iterators.KeyRangeUnionIterator;
@@ -142,9 +143,10 @@ public class MemtableIndexManager
     {
         if (e.getIndexOperator().isNonEquality())
         {
-            // For negative searches we return everything and rely on anti-join / post filtering
-            // to do the exclusion
-            return scanMemtables(keyRange);
+            Expression negExpression = e.negated();
+            KeyRangeIterator allKeys = scanMemtables(keyRange);
+            KeyRangeIterator matchedKeys = searchMemtableIndexes(queryContext, negExpression, keyRange);
+            return KeyRangeAntiJoinIterator.create(allKeys, matchedKeys, () -> {});
         }
 
         Collection<MemtableIndex> memtableIndexes = liveMemtableIndexMap.values();

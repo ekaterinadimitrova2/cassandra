@@ -19,9 +19,7 @@
 package org.apache.cassandra.index.sai.plan;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -213,16 +211,23 @@ public class Operation
                 switch (expression.operator())
                 {
                     case EQ:
+                    case NEQ:
+                    case LT:
+                    case LTE:
+                    case GT:
+                    case GTE:
                         indexTargetType = IndexTarget.Type.KEYS_AND_VALUES;
                         break;
                     case CONTAINS:
+                    case NOT_CONTAINS:
                         indexTargetType = IndexTarget.Type.VALUES;
                         break;
                     case CONTAINS_KEY:
+                    case NOT_CONTAINS_KEY:
                         indexTargetType = IndexTarget.Type.KEYS;
                         break;
                     default:
-                        throw new InvalidRequestException("Invalid operator");
+                        throw new InvalidRequestException("Invalid operator " + expression.operator() + " for map type");
                 }
             }
         }
@@ -233,20 +238,27 @@ public class Operation
     {
         switch (op)
         {
+            // KATE: This patch changed the priority of EQ to 7 and lef the CONTAINS and CONTAINS_KEY at 6 in our fork
+            // KATE: I think this would be a breaking change maybe? To be checked; Leaving it for now as-is
             case EQ:
             case CONTAINS:
             case CONTAINS_KEY:
-            case NOT_CONTAINS:
-            case NOT_CONTAINS_KEY:
-                return 5;
+                return 6;
 
             case GTE:
             case GT:
-                return 3;
+                return 4;
 
             case LTE:
             case LT:
+                return 3;
+
+            case NOT_CONTAINS:
+            case NOT_CONTAINS_KEY:
                 return 2;
+
+            case NEQ:
+                return 1;
 
             default:
                 return 0;

@@ -18,11 +18,7 @@
 
 package org.apache.cassandra.index.sai.memory;
 
-import org.apache.cassandra.db.Clustering;
-import org.apache.cassandra.db.DataRange;
-import org.apache.cassandra.db.PartitionPosition;
-import org.apache.cassandra.db.Slice;
-import org.apache.cassandra.db.Slices;
+import org.apache.cassandra.db.*;
 import org.apache.cassandra.db.filter.ClusteringIndexSliceFilter;
 import org.apache.cassandra.db.filter.ColumnFilter;
 import org.apache.cassandra.db.memtable.Memtable;
@@ -31,10 +27,9 @@ import org.apache.cassandra.db.rows.Row;
 import org.apache.cassandra.db.rows.Unfiltered;
 import org.apache.cassandra.db.rows.UnfilteredRowIterator;
 import org.apache.cassandra.dht.AbstractBounds;
-import org.apache.cassandra.dht.IPartitioner;
-import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.utils.PrimaryKey;
+import org.apache.cassandra.io.util.FileUtils;
 import org.apache.cassandra.schema.TableMetadata;
 
 /**
@@ -49,14 +44,13 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
     private UnfilteredPartitionIterator partitionIterator;
     private UnfilteredRowIterator rowIterator;
 
-
     private MemtableKeyRangeIterator(Memtable memtable,
                                      PrimaryKey.Factory pkFactory,
                                      AbstractBounds<PartitionPosition> keyRange)
     {
-        super(pkFactory.create(keyRange.left.getToken()),
-              pkFactory.create(maxToken(keyRange, memtable.metadata().partitioner)),
-              memtable.operationCount());
+        super(minKey(memtable, pkFactory),
+                maxKey(memtable, pkFactory),
+                memtable.operationCount());
 
         TableMetadata metadata = memtable.metadata();
         this.memtable = memtable;
@@ -72,9 +66,16 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
         this.rowIterator = null;
     }
 
-    private static Token maxToken(AbstractBounds<PartitionPosition> keyRange, IPartitioner partitioner)
+    private static PrimaryKey minKey(Memtable memtable, PrimaryKey.Factory factory)
     {
-        return keyRange.right.getToken().isMinimum() ? partitioner.getMaximumToken() : keyRange.right.getToken();
+        DecoratedKey pk = memtable.minPartitionKey();
+        return pk != null ? factory.create(pk) : null;
+    }
+
+    private static PrimaryKey maxKey(Memtable memtable, PrimaryKey.Factory factory)
+    {
+        DecoratedKey pk = memtable.maxPartitionKey();
+        return pk != null ? factory.create(pk) : null;
     }
 
     public static MemtableKeyRangeIterator create(Memtable memtable, AbstractBounds<PartitionPosition> keyRange)
@@ -86,22 +87,31 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
     @Override
     protected void performSkipTo(PrimaryKey nextKey)
     {
-        AbstractBounds<PartitionPosition> keyRange = AbstractBounds.bounds(nextKey.partitionKey(),
-                                                                true,
-                                                                           this.keyRange.right,
-                                                                           this.keyRange.inclusiveRight());
-        DataRange dataRange = new DataRange(keyRange, new ClusteringIndexSliceFilter(Slices.ALL, false));
-        this.partitionIterator = memtable.partitionIterator(columns, dataRange, null);
+        PartitionPosition start = nextKey.partitionKey() != null
+                ? nextKey.partitionKey()
+                : nextKey.token().minKeyBound();
+        if (!keyRange.right.isMinimum() && start.compareTo(keyRange.right) > 0)
+        {
+            partitionIterator = EmptyIterators.unfilteredPartition(memtable.metadata());
+            rowIterator = null;
+            return;
+        }
+
+        AbstractBounds<PartitionPosition> partitionBounds = AbstractBounds.bounds(start, true, keyRange.right, true);
+        DataRange dataRange = new DataRange(partitionBounds, new ClusteringIndexSliceFilter(Slices.ALL, false));
+        FileUtils.closeQuietly(partitionIterator);
+        partitionIterator = memtable.partitionIterator(columns, dataRange, null);
         if (partitionIterator.hasNext())
         {
             this.rowIterator = partitionIterator.next();
-            if (!(this.memtable.metadata().comparator.size() == 0 && !nextKey.kind().hasClustering
-                    || this.memtable.metadata().comparator.size() > 0 && nextKey.kind().hasClustering)
-                    && rowIterator.partitionKey().equals(nextKey.partitionKey()))
+            if (!(memtable.metadata().comparator.size() == 0 && !nextKey.kind().hasClustering ||
+                  memtable.metadata().comparator.size() > 0 && nextKey.kind().hasClustering)
+                && rowIterator.partitionKey().equals(nextKey.partitionKey()))
             {
                 Slice slice = Slice.make(nextKey.clustering(), Clustering.EMPTY);
-                Slices slices = Slices.with(this.memtable.metadata().comparator, slice);
-                this.rowIterator = memtable.rowIterator(nextKey.partitionKey(), slices, this.columns, false, null);
+                Slices slices = Slices.with(memtable.metadata().comparator, slice);
+                FileUtils.closeQuietly(rowIterator);
+                rowIterator = memtable.rowIterator(nextKey.partitionKey(), slices, columns, false, null);
             }
         }
     }
@@ -121,6 +131,7 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
         {
             if (!hasNextRow(rowIterator))
             {
+                FileUtils.closeQuietly(rowIterator);
                 rowIterator = partitionIterator.next();
                 continue;
             }

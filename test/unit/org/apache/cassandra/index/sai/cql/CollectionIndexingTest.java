@@ -124,6 +124,7 @@ public class CollectionIndexingTest extends SAITester
         assertEquals(1, execute("SELECT * FROM %s WHERE value[1] = 'v1' AND value[2] = 'v2'").size());
         assertEquals(0, execute("SELECT * FROM %s WHERE value[1] != 'v1'").size());
         assertEquals(1, execute("SELECT * FROM %s WHERE value[1] != 'v2' AND value[2] != 'v2'").size());
+        assertEquals(2, execute("SELECT * FROM %s WHERE value[1] != 'v3'").size());
     }
 
     @Test
@@ -150,6 +151,7 @@ public class CollectionIndexingTest extends SAITester
         createPopulatedFrozenMap(createIndexDDL("FULL(value)"));
         assertUnsupportedIndexOperator(2, "SELECT * FROM %s WHERE value contains key 1");
         assertUnsupportedIndexOperator(0, "SELECT * FROM %s WHERE value not contains key 1");
+        assertEquals(2, execute("SELECT * FROM %s WHERE value contains key 1 ALLOW FILTERING").size());
     }
 
     @Test
@@ -158,6 +160,8 @@ public class CollectionIndexingTest extends SAITester
         createPopulatedFrozenMap(createIndexDDL("FULL(value)"));
         assertUnsupportedIndexOperator(2, "SELECT * FROM %s WHERE value contains 'v1'");
         assertUnsupportedIndexOperator(0, "SELECT * FROM %s WHERE value not contains 'v1'");
+        assertEquals(2, execute("SELECT * FROM %s WHERE value contains 'v1' ALLOW FILTERING").size());
+        assertEquals(0, execute("SELECT * FROM %s WHERE value not contains 'v1' ALLOW FILTERING").size());
     }
 
     @Test
@@ -182,6 +186,8 @@ public class CollectionIndexingTest extends SAITester
         createPopulatedMap(createIndexDDL("ENTRIES(value)"));
         assertUnsupportedIndexOperator(2, "SELECT * FROM %s WHERE value contains key 1");
         assertUnsupportedIndexOperator(0, "SELECT * FROM %s WHERE value not contains key 1");
+        assertEquals(2, execute("SELECT * FROM %s WHERE value contains key 1 ALLOW FILTERING").size());
+        assertEquals(0, execute("SELECT * FROM %s WHERE value not contains key 1 ALLOW FILTERING").size());
     }
 
     @Test
@@ -190,6 +196,8 @@ public class CollectionIndexingTest extends SAITester
         createPopulatedMap(createIndexDDL("ENTRIES(value)"));
         assertUnsupportedIndexOperator(2, "SELECT * FROM %s WHERE value contains 'v1'");
         assertUnsupportedIndexOperator(0, "SELECT * FROM %s WHERE value not contains 'v1'");
+        assertEquals(2, execute("SELECT * FROM %s WHERE value contains 'v1' ALLOW FILTERING").size());
+        assertEquals(0, execute("SELECT * FROM %s WHERE value not contains 'v1' ALLOW FILTERING").size());
     }
 
     @Test
@@ -230,6 +238,8 @@ public class CollectionIndexingTest extends SAITester
         createPopulatedMap(createIndexDDL("VALUES(value)"));
         assertUnsupportedIndexOperator(2, "SELECT * FROM %s WHERE value contains key 1");
         assertUnsupportedIndexOperator(0, "SELECT * FROM %s WHERE value not contains key 1");
+        assertEquals(2, execute("SELECT * FROM %s WHERE value contains key 1 ALLOW FILTERING").size());
+        assertEquals(0, execute("SELECT * FROM %s WHERE value not contains key 1 ALLOW FILTERING").size());
     }
 
     @Test
@@ -238,6 +248,25 @@ public class CollectionIndexingTest extends SAITester
         createPopulatedMap(createIndexDDL("VALUES(value)"));
         assertUnsupportedIndexOperator(2, "SELECT * FROM %s WHERE value[1] = 'v1'");
         assertUnsupportedIndexOperator(0, "SELECT * FROM %s WHERE value[1] != 'v1'");
+        assertEquals(2, execute("SELECT * FROM %s WHERE value[1] = 'v1' ALLOW FILTERING").size());
+        assertEquals(0, execute("SELECT * FROM %s WHERE value[1] != 'v1' ALLOW FILTERING").size());
+    }
+
+    @Test
+    public void notContainsShouldReturnUpdatedRows() throws Throwable {
+        createTable("CREATE TABLE %s(id int PRIMARY KEY, text_map map<text, text>)");
+        createIndex("CREATE CUSTOM INDEX ON %s(values(text_map)) USING 'StorageAttachedIndex'");
+
+        execute("INSERT INTO %s(id, text_map) values (1, {'k1':'v1'})");
+        flush();
+        // This update overwrites 'v1', so now the map does not contain 'v1' and the row should be returned
+        // by the NOT CONTAINS 'v1' query. We purposefuly make this update after flush, so it ends up in a separate
+        // index than the original row.
+        execute("INSERT INTO %s(id, text_map) values (1, {'k2':'v2'})");
+
+        beforeAndAfterFlush(() -> {
+            assertRows(execute("SELECT id FROM %s WHERE text_map NOT CONTAINS 'v1'"), row(1));
+        });
     }
 
     @Test

@@ -189,7 +189,6 @@ public abstract class Expression
                 upper = lower;
                 operator = IndexOperator.valueOf(op);
                 break;
-
             case LTE:
                 if (indexTermType.isReversed())
                 {

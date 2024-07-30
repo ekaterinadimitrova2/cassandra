@@ -127,7 +127,7 @@ public class KeyCacheCqlTest extends CQLTester
     }
 
     @Override
-    protected String createIndex(String query)
+    public String createIndex(String query)
     {
         return createIndex(KEYSPACE_PER_TEST, query);
     }

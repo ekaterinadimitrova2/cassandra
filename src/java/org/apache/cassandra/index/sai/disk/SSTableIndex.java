@@ -214,6 +214,11 @@ public abstract class SSTableIndex implements SegmentOrdering
         }
     }
 
+    public boolean isEmpty()
+    {
+        return this instanceof EmptyIndex;
+    }
+
     public void release()
     {
         int n = references.decrementAndGet();

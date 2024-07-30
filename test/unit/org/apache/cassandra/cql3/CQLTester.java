@@ -723,7 +723,7 @@ public abstract class CQLTester
         return cluster;
     }
 
-    protected void dropPerTestKeyspace() throws Throwable
+    protected void dropPerTestKeyspace()
     {
         execute(String.format("DROP KEYSPACE IF EXISTS %s", KEYSPACE_PER_TEST));
     }
@@ -989,7 +989,7 @@ public abstract class CQLTester
         return aggregateName;
     }
 
-    protected void createAggregateOverload(String aggregateName, String argTypes, String query) throws Throwable
+    protected void createAggregateOverload(String aggregateName, String argTypes, String query)
     {
         String fullQuery = String.format(query, aggregateName);
         registerAggregate(aggregateName, argTypes);
@@ -1013,7 +1013,7 @@ public abstract class CQLTester
         schemaChange(fullQuery);
     }
 
-    protected void alterKeyspaceMayThrow(String query) throws Throwable
+    protected void alterKeyspaceMayThrow(String query)
     {
         String fullQuery = String.format(query, currentKeyspace());
         logger.info(fullQuery);
@@ -1074,7 +1074,7 @@ public abstract class CQLTester
         return currentTable;
     }
 
-    protected void createTableMayThrow(String query) throws Throwable
+    protected void createTableMayThrow(String query)
     {
         String currentTable = createTableName();
         String fullQuery = formatQuery(query);
@@ -1202,7 +1202,7 @@ public abstract class CQLTester
         schemaChange(fullQuery);
     }
 
-    protected void alterTableMayThrow(String query) throws Throwable
+    protected void alterTableMayThrow(String query)
     {
         String fullQuery = formatQuery(query);
         logger.info(fullQuery);
@@ -1231,7 +1231,7 @@ public abstract class CQLTester
      * @param query the index creation query
      * @return the name of the created index
      */
-    protected String createIndex(String query)
+    public String createIndex(String query)
     {
         return createIndex(KEYSPACE, query);
     }
@@ -1436,7 +1436,7 @@ public abstract class CQLTester
         waitForAssert(assertion, ASSERTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     }
 
-    protected void createIndexMayThrow(String query) throws Throwable
+    protected void createIndexMayThrow(String query)
     {
         String fullQuery = formatQuery(query);
         logger.info(fullQuery);
@@ -2206,7 +2206,7 @@ public abstract class CQLTester
         }
     }
 
-    protected void assertAllRows(Object[]... rows) throws Throwable
+    protected void assertAllRows(Object[]... rows)
     {
         assertRows(execute("SELECT * FROM %s"), rows);
     }
@@ -2301,7 +2301,7 @@ public abstract class CQLTester
                : replaceValues(query, values);
     }
 
-    protected void assertValidSyntax(String query) throws Throwable
+    protected void assertValidSyntax(String query)
     {
         try
         {
@@ -2319,7 +2319,7 @@ public abstract class CQLTester
         assertInvalidSyntaxMessage(null, query, values);
     }
 
-    protected void assertInvalidSyntaxMessage(String errorMessage, String query, Object... values) throws Throwable
+    protected void assertInvalidSyntaxMessage(String errorMessage, String query, Object... values)
     {
         try
         {
@@ -2389,9 +2389,25 @@ public abstract class CQLTester
      */
     public void beforeAndAfterFlush(CheckedFunction runnable) throws Throwable
     {
-        runnable.apply();
+        try
+        {
+            runnable.apply();
+        }
+        catch (Throwable t)
+        {
+            throw new AssertionError("Test failed before flush:\n" + t, t);
+        }
+
         flush();
-        runnable.apply();
+
+        try
+        {
+            runnable.apply();
+        }
+        catch (Throwable t)
+        {
+            throw new AssertionError("Test failed after flush:\n" + t, t);
+        }
     }
 
     private static String replaceValues(String query, Object[] values)

@@ -60,7 +60,8 @@ public final class MergedRestriction implements SingleRestriction
     private final boolean isMultiColumn;
 
     /**
-     * The number of restrictions that require {@code CONTAINS}, {@code CONTAINS_KEY}, {@code NOT_CONTAINS}, {@code NOT_CONTAINS_KEY} and Map equality restrictions.
+     * The number of restrictions that require {@code CONTAINS}, {@code CONTAINS_KEY}, {@code NOT_CONTAINS},
+     * {@code NOT_CONTAINS_KEY} and Map equality restrictions.
      */
     private final int containsCount;
 
