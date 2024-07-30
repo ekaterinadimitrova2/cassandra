@@ -72,7 +72,6 @@ public interface PrimaryKeyMap extends Closeable
     long rowIdFromPrimaryKey(PrimaryKey key);
 
     /**
-<<<<<<< HEAD
      * Returns the first row ID of the nearest {@link Token} greater than or equal to the given {@link Token},
      * or a negative value if not found
      *
@@ -89,11 +88,11 @@ public interface PrimaryKeyMap extends Closeable
      * @return the floor row ID associated with the {@link Token}
      */
     long floor(Token token);
-=======
+
+    /**
      * Returns the number of primary keys in the map
      */
     long count();
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 
     @Override
     default void close()

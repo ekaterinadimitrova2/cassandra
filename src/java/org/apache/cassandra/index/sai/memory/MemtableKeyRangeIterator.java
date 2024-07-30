@@ -18,8 +18,6 @@
 
 package org.apache.cassandra.index.sai.memory;
 
-import java.io.IOException;
-
 import org.apache.cassandra.db.Clustering;
 import org.apache.cassandra.db.DataRange;
 import org.apache.cassandra.db.PartitionPosition;
@@ -56,8 +54,8 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
                                      PrimaryKey.Factory pkFactory,
                                      AbstractBounds<PartitionPosition> keyRange)
     {
-        super(pkFactory.createTokenOnly(keyRange.left.getToken()),
-              pkFactory.createTokenOnly(maxToken(keyRange, memtable.metadata().partitioner)),
+        super(pkFactory.create(keyRange.left.getToken()),
+              pkFactory.create(maxToken(keyRange, memtable.metadata().partitioner)),
               memtable.operationCount());
 
         TableMetadata metadata = memtable.metadata();
@@ -81,7 +79,7 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
 
     public static MemtableKeyRangeIterator create(Memtable memtable, AbstractBounds<PartitionPosition> keyRange)
     {
-        PrimaryKey.Factory pkFactory = new PrimaryKey.Factory(memtable.metadata().comparator);
+        PrimaryKey.Factory pkFactory = new PrimaryKey.Factory(memtable.metadata().partitioner, memtable.metadata().comparator);
         return new MemtableKeyRangeIterator(memtable, pkFactory, keyRange);
     }
 
@@ -97,7 +95,9 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
         if (partitionIterator.hasNext())
         {
             this.rowIterator = partitionIterator.next();
-            if (!nextKey.hasEmptyClustering() && rowIterator.partitionKey().equals(nextKey.partitionKey()))
+            if (!(this.memtable.metadata().comparator.size() == 0 && !nextKey.kind().hasClustering
+                    || this.memtable.metadata().comparator.size() > 0 && nextKey.kind().hasClustering)
+                    && rowIterator.partitionKey().equals(nextKey.partitionKey()))
             {
                 Slice slice = Slice.make(nextKey.clustering(), Clustering.EMPTY);
                 Slices slices = Slices.with(this.memtable.metadata().comparator, slice);
@@ -107,7 +107,7 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
     }
 
     @Override
-    public void close() throws IOException
+    public void close()
     {
         partitionIterator.close();
         if (rowIterator != null)

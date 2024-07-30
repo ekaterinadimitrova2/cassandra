@@ -26,18 +26,17 @@ import java.util.List;
 import org.apache.cassandra.db.PartitionPosition;
 import org.apache.cassandra.db.virtual.SimpleDataSet;
 import org.apache.cassandra.dht.AbstractBounds;
-import org.apache.cassandra.index.sai.IndexContext;
 import org.apache.cassandra.index.sai.QueryContext;
 import org.apache.cassandra.index.sai.SSTableContext;
+import org.apache.cassandra.index.sai.StorageAttachedIndex;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.plan.Expression;
-import org.apache.cassandra.utils.ByteBufferUtil;
 
 public class EmptyIndex extends SSTableIndex
 {
-    public EmptyIndex(SSTableContext sstableContext, IndexContext indexContext)
+    public EmptyIndex(SSTableContext sstableContext, StorageAttachedIndex index)
     {
-        super(sstableContext, indexContext);
+        super(sstableContext, index);
     }
 
     @Override
@@ -87,7 +86,7 @@ public class EmptyIndex extends SSTableIndex
                                          AbstractBounds<PartitionPosition> keyRange,
                                          QueryContext context) throws IOException
     {
-        if (expression.getOp().isNonEquality())
+        if (expression.getIndexOperator().isNonEquality())
         {
             // for negative searches we return everything
             // and AntiJoin + post-filtering at the top level will filter out the unnecesary keys

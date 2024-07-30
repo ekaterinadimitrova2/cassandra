@@ -72,17 +72,12 @@ public class MemtableIndexManager
 
         if (index.termType().isNonFrozenCollection())
         {
-<<<<<<< HEAD
             Iterator<ByteBuffer> bufferIterator = index.termType().valuesOf(row, FBUtilities.nowInSeconds());
-            if (bufferIterator != null)
-=======
-            Iterator<ByteBuffer> bufferIterator = indexContext.getValuesOf(row, FBUtilities.nowInSeconds());
             if (bufferIterator == null || !bufferIterator.hasNext())
             {
                 bytes += target.index(key, row.clustering(), null);
             }
             else
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
             {
                 while (bufferIterator.hasNext())
                 {
@@ -145,7 +140,7 @@ public class MemtableIndexManager
 
     public KeyRangeIterator searchMemtableIndexes(QueryContext queryContext, Expression e, AbstractBounds<PartitionPosition> keyRange)
     {
-        if (e.getOp().isNonEquality())
+        if (e.getIndexOperator().isNonEquality())
         {
             // For negative searches we return everything and rely on anti-join / post filtering
             // to do the exclusion

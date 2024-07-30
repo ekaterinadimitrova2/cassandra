@@ -117,23 +117,13 @@ public class FilterTree
 
                 if (filter.getIndexTermType().isNonFrozenCollection())
                 {
-<<<<<<< HEAD
                     Iterator<ByteBuffer> valueIterator = filter.getIndexTermType().valuesOf(localRow, now);
-                    result = localOperator.apply(result, collectionMatch(valueIterator, filter));
+                    result = localOperator.apply(result, filter.isSatisfiedBy(valueIterator));
                 }
                 else
                 {
                     ByteBuffer value = filter.getIndexTermType().valueOf(key, localRow, now);
-                    result = localOperator.apply(result, singletonMatch(value, filter));
-=======
-                    Iterator<ByteBuffer> valueIterator = filter.context.getValuesOf(row, now);
-                    result = op.apply(result, filter.isSatisfiedBy(valueIterator));
-                }
-                else
-                {
-                    ByteBuffer value = filter.context.getValueOf(key, row, now);
-                    result = op.apply(result, filter.isSatisfiedBy(value));
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
+                    result = localOperator.apply(result, filter.isSatisfiedBy(value));
                 }
 
                 // If the operation is an AND then exit early if we get a single false

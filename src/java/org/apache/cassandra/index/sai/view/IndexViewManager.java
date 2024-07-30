@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.cassandra.index.sai.disk.EmptyIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -169,7 +170,7 @@ public class IndexViewManager
 
             if (sstableContext.indexDescriptor.isIndexEmpty(index.termType(), index.identifier()))
             {
-                SSTableIndex empty = new EmptyIndex(sstableContext, this);
+                SSTableIndex empty = new EmptyIndex(sstableContext, index);
                 valid.add(empty);
                 continue;
             }

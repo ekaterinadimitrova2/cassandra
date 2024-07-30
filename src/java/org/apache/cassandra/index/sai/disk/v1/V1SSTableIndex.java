@@ -21,7 +21,6 @@ package org.apache.cassandra.index.sai.disk.v1;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -33,14 +32,8 @@ import org.apache.cassandra.dht.AbstractBounds;
 import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.index.sai.QueryContext;
 import org.apache.cassandra.index.sai.SSTableContext;
-<<<<<<< HEAD
 import org.apache.cassandra.index.sai.StorageAttachedIndex;
-=======
-import org.apache.cassandra.index.sai.disk.PrimaryKeyMap;
-import org.apache.cassandra.index.sai.disk.PrimaryKeyMapIterator;
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 import org.apache.cassandra.index.sai.disk.SSTableIndex;
-import org.apache.cassandra.index.sai.disk.format.IndexDescriptor;
 import org.apache.cassandra.index.sai.disk.v1.segment.Segment;
 import org.apache.cassandra.index.sai.disk.v1.segment.SegmentMetadata;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
@@ -168,7 +161,7 @@ public class V1SSTableIndex extends SSTableIndex
                                          AbstractBounds<PartitionPosition> keyRange,
                                          QueryContext context) throws IOException
     {
-        if (expression.getOp().isNonEquality())
+        if (expression.getIndexOperator().isNonEquality())
         {
             // for NEQ, NOT_CONTAINS_KEY, NOT_CONTAINS_VALUE we return everything
             // and AntiJoin + post-filtering at the top level will filter out the unnecesary keys

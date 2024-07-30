@@ -1167,16 +1167,10 @@ public class StorageAttachedIndexDDLTest extends SAITester
         IndexTermType numericIndexTermType = createIndexTermType(Int32Type.instance);
         IndexTermType literalIndexTermType = createIndexTermType(UTF8Type.instance);
         populateData.run();
-<<<<<<< HEAD
-        verifySSTableIndexes(numericIndexIdentifier, 2, 0);
-        verifySSTableIndexes(literalIndexIdentifier, 2, 0);
+        verifySSTableIndexes(numericIndexIdentifier, 2, 2);
+        verifySSTableIndexes(literalIndexIdentifier, 2, 2);
         verifyIndexFiles(numericIndexTermType, numericIndexIdentifier, 2, 0, 2);
         verifyIndexFiles(literalIndexTermType, literalIndexIdentifier, 2, 0, 2);
-=======
-        verifySSTableIndexes(IndexMetadata.generateDefaultIndexName(currentTable(), V1_COLUMN_IDENTIFIER), 2, 2);
-        verifySSTableIndexes(IndexMetadata.generateDefaultIndexName(currentTable(), V2_COLUMN_IDENTIFIER), 2, 2);
-        verifyIndexFiles(numericIndexContext, literalIndexContext, 2, 0, 0, 2, 2);
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 
         ResultSet rows = executeNet("SELECT id1 FROM %s WHERE v1>=0");
         assertEquals(0, rows.all().size());
@@ -1185,16 +1179,10 @@ public class StorageAttachedIndexDDLTest extends SAITester
 
         // compact empty index
         compact();
-<<<<<<< HEAD
-        verifySSTableIndexes(numericIndexIdentifier, 1, 0);
-        verifySSTableIndexes(literalIndexIdentifier, 1, 0);
+        verifySSTableIndexes(numericIndexIdentifier, 1, 1);
+        verifySSTableIndexes(literalIndexIdentifier, 1, 1);
         waitForAssert(() -> verifyIndexFiles(numericIndexTermType, numericIndexIdentifier, 1, 0, 1));
         waitForAssert(() -> verifyIndexFiles(literalIndexTermType, literalIndexIdentifier, 1, 0, 1));
-=======
-        verifySSTableIndexes(IndexMetadata.generateDefaultIndexName(currentTable(), V1_COLUMN_IDENTIFIER), 1, 1);
-        verifySSTableIndexes(IndexMetadata.generateDefaultIndexName(currentTable(), V2_COLUMN_IDENTIFIER), 1, 1);
-        waitForAssert(() -> verifyIndexFiles(numericIndexContext, literalIndexContext, 1, 0, 0, 1, 1));
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 
         rows = executeNet("SELECT id1 FROM %s WHERE v1>=0");
         assertEquals(0, rows.all().size());

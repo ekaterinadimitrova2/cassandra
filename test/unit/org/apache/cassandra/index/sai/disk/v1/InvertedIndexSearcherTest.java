@@ -79,7 +79,6 @@ public class InvertedIndexSearcherTest extends SAIRandomizedTester
         }
 
         @Override
-<<<<<<< HEAD
         public long ceiling(Token token)
         {
             return 0;
@@ -89,11 +88,11 @@ public class InvertedIndexSearcherTest extends SAIRandomizedTester
         public long floor(Token token)
         {
             return 0;
-=======
+        }
+
         public long count()
         {
             return Long.MAX_VALUE;
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
         }
     };
     public static final PrimaryKeyMap.Factory TEST_PRIMARY_KEY_MAP_FACTORY = () -> TEST_PRIMARY_KEY_MAP;

@@ -74,7 +74,7 @@ public class IndexSearchResultIterator extends KeyRangeIterator
         {
             Expression negExpression = expression.negated();
             KeyRangeIterator negIterator = buildKeyIterator(negExpression, sstableIndexes, keyRange, queryContext, includeMemtables, onClose);
-            keyIterator = KeyRangeAntiJoinIterator.create(keyIterator, negIterator);
+            keyIterator = KeyRangeAntiJoinIterator.create(keyIterator, negIterator, onClose);
         }
 
         return new IndexSearchResultIterator(keyIterator, onClose);

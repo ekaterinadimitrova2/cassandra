@@ -41,11 +41,7 @@ public class RangeTermTree
     
     private final IntervalTree<Term, SSTableIndex, Interval<Term, SSTableIndex>> rangeTree;
 
-<<<<<<< HEAD
-    private RangeTermTree(ByteBuffer min, ByteBuffer max, IntervalTree<Term, SSTableIndex, Interval<Term, SSTableIndex>> rangeTree, IndexTermType indexTermType)
-=======
-    private RangeTermTree(IntervalTree<Term, SSTableIndex, Interval<Term, SSTableIndex>> rangeTree, AbstractType<?> comparator)
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
+    private RangeTermTree(IntervalTree<Term, SSTableIndex, Interval<Term, SSTableIndex>> rangeTree, IndexTermType indexTermType)
     {
         this.min = rangeTree.isEmpty() ? null : rangeTree.min().term;
         this.max = rangeTree.isEmpty() ? null : rangeTree.max().term;
@@ -55,13 +51,8 @@ public class RangeTermTree
 
     public List<SSTableIndex> search(Expression e)
     {
-<<<<<<< HEAD
-        ByteBuffer minTerm = e.lower() == null ? min : e.lower().value.encoded;
-        ByteBuffer maxTerm = e.upper() == null ? max : e.upper().value.encoded;
-=======
-        ByteBuffer minTerm = e.getOp().isNonEquality() || e.lower == null ? min : e.lower.value.encoded;
-        ByteBuffer maxTerm = e.getOp().isNonEquality() || e.upper == null ? max : e.upper.value.encoded;
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
+        ByteBuffer minTerm = e.getIndexOperator().isNonEquality() || e.lower == null ? min : e.lower.value.encoded;
+        ByteBuffer maxTerm = e.getIndexOperator().isNonEquality() || e.upper == null ? max : e.upper.value.encoded;
 
         return rangeTree.search(Interval.create(new Term(minTerm, indexTermType),
                                                 new Term(maxTerm, indexTermType),
@@ -70,12 +61,7 @@ public class RangeTermTree
 
     static class Builder
     {
-<<<<<<< HEAD
         private final IndexTermType indexTermType;
-        private ByteBuffer min, max;
-=======
-        private final AbstractType<?> comparator;
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
 
         final List<Interval<Term, SSTableIndex>> intervals = new ArrayList<>();
 
@@ -86,16 +72,8 @@ public class RangeTermTree
 
         public final void add(SSTableIndex index)
         {
-<<<<<<< HEAD
             assert !indexTermType.isVector();
 
-=======
-            addIndex(index);
-        }
-
-        public void addIndex(SSTableIndex index)
-        {
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
             Interval<Term, SSTableIndex> interval =
                     Interval.create(new Term(index.minTerm(), indexTermType), new Term(index.maxTerm(), indexTermType), index);
 
@@ -108,18 +86,11 @@ public class RangeTermTree
             }
 
             intervals.add(interval);
-
-            min = min == null || index.getIndexTermType().compare(min, index.minTerm()) > 0 ? index.minTerm() : min;
-            max = max == null || index.getIndexTermType().compare(max, index.maxTerm()) < 0 ? index.maxTerm() : max;
         }
 
         public RangeTermTree build()
         {
-<<<<<<< HEAD
-            return new RangeTermTree(min, max, IntervalTree.build(intervals), indexTermType);
-=======
-            return new RangeTermTree(IntervalTree.build(intervals), comparator);
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
+            return new RangeTermTree(IntervalTree.build(intervals), indexTermType);
         }
     }
 
@@ -141,17 +112,13 @@ public class RangeTermTree
         @Override
         public int compareTo(Term o)
         {
-<<<<<<< HEAD
-            return indexTermType.compare(term, o.term);
-=======
             if (term == null && o.term == null)
                 return 0;
             if (term == null)
                 return -1;
             if (o.term == null)
                 return 1;
-            return TypeUtil.compare(term, o.term, comparator);
->>>>>>> 5a2b739c72 (SAI acceleration of NOT CONTAINS / NOT CONTAINS KEY)
+            return indexTermType.compare(term, o.term);
         }
 
         @Override

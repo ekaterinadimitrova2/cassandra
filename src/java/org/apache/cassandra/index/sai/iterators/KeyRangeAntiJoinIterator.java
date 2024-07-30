@@ -18,8 +18,6 @@
 
 package org.apache.cassandra.index.sai.iterators;
 
-import java.io.IOException;
-
 import org.apache.cassandra.index.sai.utils.PrimaryKey;
 import org.apache.cassandra.io.util.FileUtils;
 
@@ -35,18 +33,16 @@ public class KeyRangeAntiJoinIterator extends KeyRangeIterator
 
     private PrimaryKey nextKeyToSkip = null;
 
-    private KeyRangeAntiJoinIterator(KeyRangeIterator.Builder.Statistics statistics, KeyRangeIterator left, KeyRangeIterator right)
+    private KeyRangeAntiJoinIterator(KeyRangeIterator left, KeyRangeIterator right, Runnable onClose)
     {
-        super(statistics);
+        super(left.getMinimum(), left.getMaximum(), left.getMaxKeys(), onClose);
         this.left = left;
         this.right = right;
     }
 
-    public static KeyRangeAntiJoinIterator create(KeyRangeIterator left, KeyRangeIterator right)
+    public static KeyRangeAntiJoinIterator create(KeyRangeIterator left, KeyRangeIterator right, Runnable onClose)
     {
-        AntiJoinStatistics statistics = new AntiJoinStatistics();
-        statistics.update(left);
-        return new KeyRangeAntiJoinIterator(statistics, left, right);
+        return new KeyRangeAntiJoinIterator(left, right, onClose);
     }
 
     protected void performSkipTo(PrimaryKey nextKey)
@@ -55,7 +51,7 @@ public class KeyRangeAntiJoinIterator extends KeyRangeIterator
         right.performSkipTo(nextKey);
     }
 
-    public void close() throws IOException
+    public void close()
     {
         FileUtils.closeQuietly(left);
         FileUtils.closeQuietly(right);
@@ -75,12 +71,12 @@ public class KeyRangeAntiJoinIterator extends KeyRangeIterator
             if (cmp == 0)
             {
                 key = left.nextOrNull();
-                nextKeyToSkip = right.nextOrNull();
             }
             else
             {
-                nextKeyToSkip = right.skipTo(key);
+                right.skipTo(key);
             }
+            nextKeyToSkip = right.nextOrNull();
             cmp = compare(key, nextKeyToSkip);
         }
 
@@ -91,17 +87,4 @@ public class KeyRangeAntiJoinIterator extends KeyRangeIterator
     {
         return (key1 == null || key2 == null) ? -1 : key1.compareTo(key2);
     }
-
-    private static class AntiJoinStatistics extends KeyRangeIterator.Builder.Statistics
-    {
-        @Override
-        public void update(KeyRangeIterator range)
-        {
-            min = nullSafeMax(min, range.getMinimum());
-            max = nullSafeMin(max, range.getMaximum());
-            count += range.getCount();
-        }
-    }
-
-
 }
