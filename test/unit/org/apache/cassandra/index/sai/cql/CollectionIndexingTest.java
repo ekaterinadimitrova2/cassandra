@@ -42,8 +42,7 @@ public class CollectionIndexingTest extends SAITester
     }
 
     @Test
-    public void indexMap()
-    {
+    public void indexMap() throws Throwable {
         createPopulatedMap(createIndexDDL("value"));
         assertEquals(2, execute("SELECT * FROM %s WHERE value CONTAINS 'v1'").size());
 
@@ -135,7 +134,7 @@ public class CollectionIndexingTest extends SAITester
     }
 
     @Test
-    public void indexFrozenMap() throws Throwable
+    public void indexFrozenMap()
     {
         createPopulatedFrozenMap(createIndexDDL("FULL(value)"));
         assertEquals(1, execute("SELECT * FROM %s WHERE value = ?", new HashMap<Integer, String>() {{
