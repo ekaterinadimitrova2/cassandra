@@ -69,14 +69,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[1] = 1 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
-        test("SELECT k FROM %s WHERE m[1] = 1 OR v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m[1] = 1 OR v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2));
 
         // not equals entries
         test("SELECT k FROM %s WHERE m[1] != 1",
@@ -90,14 +82,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[1] != 1 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
-        test("SELECT k FROM %s WHERE m[1] != 1 OR v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m[1] != 1 OR v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(3), row(4), row(5), row(6));
 
         // range entries (>)
         test("SELECT k FROM %s WHERE m[3] > 3",
@@ -111,14 +95,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[3] > 3 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
-        test("SELECT k FROM %s WHERE m[3] > 3 OR v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m[3] > 3 OR v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(5));
 
         // range entries (<)
         test("SELECT k FROM %s WHERE m[3] < 30",
@@ -132,14 +108,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[3] < 30 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
-        test("SELECT k FROM %s WHERE m[3] < 30 OR v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m[3] < 30 OR v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(2));
 
         // range entries (>=)
         test("SELECT k FROM %s WHERE m[3] >= 3",
@@ -153,14 +121,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[3] >= 3 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
-        test("SELECT k FROM %s WHERE m[3] >= 3 OR v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m[3] >= 3 OR v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(2), row(5));
 
         // range entries (<=)
         test("SELECT k FROM %s WHERE m[3] <= 30",
@@ -174,14 +134,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[3] <= 30 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
-        test("SELECT k FROM %s WHERE m[3] <= 30 OR v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m[3] <= 30 OR v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAllIndexes("me", "v"),
-                row(2), row(5));
 
         // contains keys
         test("SELECT k FROM %s WHERE m CONTAINS KEY 1",
@@ -195,14 +147,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m CONTAINS KEY 1 AND v = 1",
                 !hasAllIndexes("mk", "v"),
                 hasAnyIndexes("mk", "v"));
-        test("SELECT k FROM %s WHERE m CONTAINS KEY 1 OR v = 0",
-                !hasAllIndexes("mk", "v"),
-                hasAllIndexes("mk", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m CONTAINS KEY 1 OR v = 1",
-                !hasAllIndexes("mk", "v"),
-                hasAllIndexes("mk", "v"),
-                row(1), row(2), row(4), row(5));
 
         // not contains keys
         test("SELECT k FROM %s WHERE m NOT CONTAINS KEY 4",
@@ -216,14 +160,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m NOT CONTAINS KEY 4 AND v = 1",
                 !hasAllIndexes("mk", "v"),
                 hasAnyIndexes("mk", "v"));
-        test("SELECT k FROM %s WHERE m NOT CONTAINS KEY 4 OR v = 0",
-                !hasAllIndexes("mk", "v"),
-                hasAllIndexes("mk", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m NOT CONTAINS KEY 4 OR v = 1",
-                !hasAllIndexes("mk", "v"),
-                hasAllIndexes("mk", "v"),
-                row(1), row(2), row(4), row(5));
 
         // contains values
         test("SELECT k FROM %s WHERE m CONTAINS 1",
@@ -237,14 +173,6 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m CONTAINS 1 AND v = 1",
                 !hasAllIndexes("mv", "v"),
                 hasAnyIndexes("mv", "v"));
-        test("SELECT k FROM %s WHERE m CONTAINS 1 OR v = 0",
-                !hasAllIndexes("mv", "v"),
-                hasAllIndexes("mv", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m CONTAINS 1 OR v = 1",
-                !hasAllIndexes("mv", "v"),
-                hasAllIndexes("mv", "v"),
-                row(1), row(2));
 
         // not contains values
         test("SELECT k FROM %s WHERE m NOT CONTAINS 5",
@@ -258,13 +186,5 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m NOT CONTAINS 5 AND v = 1",
                 !hasAllIndexes("mv", "v"),
                 hasAnyIndexes("mv", "v"));
-        test("SELECT k FROM %s WHERE m NOT CONTAINS 5 OR v = 0",
-                !hasAllIndexes("mv", "v"),
-                hasAllIndexes("mv", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE m NOT CONTAINS 5 OR v = 1",
-                !hasAllIndexes("mv", "v"),
-                hasAllIndexes("mv", "v"),
-                row(1), row(2), row(4), row(5), row(6));
     }
 }

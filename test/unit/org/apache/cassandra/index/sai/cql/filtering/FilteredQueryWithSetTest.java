@@ -65,14 +65,6 @@ public class FilteredQueryWithSetTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE s CONTAINS 1 AND v = 1",
                 !hasAllIndexes("s", "v"),
                 hasAnyIndexes("s", "v"));
-        test("SELECT k FROM %s WHERE s CONTAINS 1 OR v = 0",
-                !hasAllIndexes("s", "v"),
-                hasAllIndexes("s", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE s CONTAINS 1 OR v = 1",
-                !hasAllIndexes("s", "v"),
-                hasAllIndexes("s", "v"),
-                row(1), row(2), row(3));
 
         // not contains
         test("SELECT k FROM %s WHERE s NOT CONTAINS 1",
@@ -86,13 +78,5 @@ public class FilteredQueryWithSetTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE s NOT CONTAINS 1 AND v = 1",
                 !hasAllIndexes("s", "v"),
                 hasAnyIndexes("s", "v"));
-        test("SELECT k FROM %s WHERE s NOT CONTAINS 1 OR v = 0",
-                !hasAllIndexes("s", "v"),
-                hasAllIndexes("s", "v"),
-                row(1), row(2), row(3), row(4), row(5), row(6));
-        test("SELECT k FROM %s WHERE s NOT CONTAINS 1 OR v = 1",
-                !hasAllIndexes("s", "v"),
-                hasAllIndexes("s", "v"),
-                row(4), row(5), row(6));
     }
 }

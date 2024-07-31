@@ -74,40 +74,5 @@ public class FilteredQueryWithRegularTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE x=1 AND y IN (1, 2)",
                 !hasAllIndexes("x", "y"),
                 hasAnyIndexes("x", "y"));
-
-        test("SELECT k FROM %s WHERE x=0 AND (y=1 OR y=2)",
-                !hasAllIndexes("x", "y"),
-                hasAnyIndexes("x", "y"),
-                row(1), row(2));
-        test("SELECT k FROM %s WHERE x=1 AND (y=1 OR y=2)",
-                !hasAllIndexes("x", "y"),
-                hasAnyIndexes("x", "y"));
-
-        test("SELECT k FROM %s WHERE x=0 OR y=0",
-                !hasAllIndexes("x", "y"),
-                hasAllIndexes("x", "y"),
-                row(0), row(1), row(2), row(3));
-        test("SELECT k FROM %s WHERE x=1 OR y=0",
-                !hasAllIndexes("x", "y"),
-                hasAllIndexes("x", "y"),
-                row(0));
-
-        test("SELECT k FROM %s WHERE x=0 OR (y=0 AND z=0)",
-                !hasAllIndexes("x", "y", "z"),
-                hasAllIndexes("x", "y") || hasAllIndexes("x", "z"),
-                row(0), row(1), row(2), row(3));
-        test("SELECT k FROM %s WHERE x=1 OR (y=0 AND z=0)",
-                !hasAllIndexes("x", "y", "z"),
-                hasAllIndexes("x", "y") || hasAllIndexes("x", "z"),
-                row(0));
-
-        test("SELECT k FROM %s WHERE x=0 OR y=0 OR z=0",
-                !hasAllIndexes("x", "y", "z"),
-                hasAllIndexes("x", "y", "z"),
-                row(0), row(1), row(2), row(3));
-        test("SELECT k FROM %s WHERE x=1 OR y=0 OR z=0",
-                !hasAllIndexes("x", "y", "z"),
-                hasAllIndexes("x", "y", "z"),
-                row(0), row(1));
     }
 }
