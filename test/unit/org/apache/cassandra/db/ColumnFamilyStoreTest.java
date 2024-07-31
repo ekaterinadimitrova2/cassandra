@@ -722,18 +722,6 @@ public class ColumnFamilyStoreTest
             }
 
             @Override
-            public DecoratedKey minPartitionKey()
-            {
-                return null;
-            }
-
-            @Override
-            public DecoratedKey maxPartitionKey()
-            {
-                return null;
-            }
-
-            @Override
             public void addMemoryUsageTo(MemoryUsage usage)
             {
             }

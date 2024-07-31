@@ -364,25 +364,6 @@ public class SkipListMemtable extends AbstractAllocatorMemtable
         return liveDataSize.get();
     }
 
-    @Override
-    public DecoratedKey minPartitionKey()
-    {
-        Map.Entry<PartitionPosition, AtomicBTreePartition> entry = partitions.firstEntry();
-
-        return (entry != null)
-                ? entry.getValue().partitionKey()
-                : null;
-    }
-
-    @Override
-    public DecoratedKey maxPartitionKey()
-    {
-        Map.Entry<PartitionPosition, AtomicBTreePartition> entry = partitions.lastEntry();
-        return (entry != null)
-                ? entry.getValue().partitionKey()
-                : null;
-    }
-
     /**
      * For testing only. Give this memtable too big a size to make it always fail flushing.
      */

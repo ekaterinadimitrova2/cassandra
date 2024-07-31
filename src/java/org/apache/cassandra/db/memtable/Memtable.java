@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.cassandra.db.ColumnFamilyStore;
-import org.apache.cassandra.db.DecoratedKey;
 import org.apache.cassandra.db.PartitionPosition;
 import org.apache.cassandra.db.RegularAndStaticColumns;
 import org.apache.cassandra.db.commitlog.CommitLogPosition;
@@ -208,12 +207,6 @@ public interface Memtable extends Comparable<Memtable>, UnfilteredSource
      * executed.
      */
     long operationCount();
-
-    /** Min partition key inserted so far. */
-    DecoratedKey minPartitionKey();
-
-    /** Max partition key inserted so far. */
-    DecoratedKey maxPartitionKey();
 
     /**
      * The table's definition metadata.

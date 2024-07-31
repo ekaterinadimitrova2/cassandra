@@ -227,30 +227,6 @@ public class TrieMemtable extends AbstractShardedMemtable
     }
 
     @Override
-    public DecoratedKey minPartitionKey()
-    {
-        for (int i = 0; i < shards.length; i++)
-        {
-            MemtableShard shard = shards[i];
-            if (!shard.isEmpty())
-                return shard.minPartitionKey();
-        }
-        return null;
-    }
-
-    @Override
-    public DecoratedKey maxPartitionKey()
-    {
-        for (int i = shards.length - 1; i >= 0; i--)
-        {
-            MemtableShard shard = shards[i];
-            if (!shard.isEmpty())
-                return shard.maxPartitionKey();
-        }
-        return null;
-    }
-
-    @Override
     public long partitionCount()
     {
         int total = 0;
