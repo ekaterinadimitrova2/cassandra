@@ -256,7 +256,6 @@ public class CollectionIndexingTest extends SAITester
     public void notContainsShouldReturnUpdatedRows() throws Throwable {
         createTable("CREATE TABLE %s(id int PRIMARY KEY, text_map map<text, text>)");
         createIndex("CREATE CUSTOM INDEX ON %s(values(text_map)) USING 'StorageAttachedIndex'");
-
         execute("INSERT INTO %s(id, text_map) values (1, {'k1':'v1'})");
         flush();
         // This update overwrites 'v1', so now the map does not contain 'v1' and the row should be returned
