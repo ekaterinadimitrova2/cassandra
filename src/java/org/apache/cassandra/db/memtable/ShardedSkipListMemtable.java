@@ -148,12 +148,16 @@ public class ShardedSkipListMemtable extends AbstractShardedMemtable
     }
 
     @Override
-    public DecoratedKey minPartitionKey() {
+    public DecoratedKey minPartitionKey()
+    {
+        // for later
         return null;
     }
 
     @Override
-    public DecoratedKey maxPartitionKey() {
+    public DecoratedKey maxPartitionKey()
+    {
+        // for later
         return null;
     }
 

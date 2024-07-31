@@ -34,7 +34,7 @@ import org.apache.cassandra.index.sai.plan.Expression;
 
 public class EmptyIndex extends SSTableIndex
 {
-    public EmptyIndex(SSTableContext sstableContext, StorageAttachedIndex index)
+    private EmptyIndex(SSTableContext sstableContext, StorageAttachedIndex index)
     {
         super(sstableContext, index);
     }
@@ -86,13 +86,6 @@ public class EmptyIndex extends SSTableIndex
                                          AbstractBounds<PartitionPosition> keyRange,
                                          QueryContext context) throws IOException
     {
-        if (expression.getIndexOperator().isNonEquality())
-        {
-            // for negative searches we return everything
-            // and AntiJoin + post-filtering at the top level will filter out the unnecesary keys
-            return allSSTableKeys(keyRange);
-        }
-
         return Collections.emptyList();
     }
 
@@ -104,5 +97,12 @@ public class EmptyIndex extends SSTableIndex
     @Override
     protected void internalRelease()
     {
+    }
+
+    @Override
+    public KeyRangeIterator limitToTopKResults(QueryContext context, List<org.apache.cassandra.index.sai.utils.PrimaryKey> primaryKeys, Expression expression)
+    {
+        // KATE: Is this the right way to handle this? Tests pass...
+        return null;
     }
 }

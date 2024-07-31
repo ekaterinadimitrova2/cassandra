@@ -27,6 +27,8 @@ import org.apache.cassandra.db.rows.Row;
 import org.apache.cassandra.db.rows.Unfiltered;
 import org.apache.cassandra.db.rows.UnfilteredRowIterator;
 import org.apache.cassandra.dht.AbstractBounds;
+import org.apache.cassandra.dht.IPartitioner;
+import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.utils.PrimaryKey;
 import org.apache.cassandra.io.util.FileUtils;
@@ -48,9 +50,9 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
                                      PrimaryKey.Factory pkFactory,
                                      AbstractBounds<PartitionPosition> keyRange)
     {
-        super(minKey(memtable, pkFactory),
-                maxKey(memtable, pkFactory),
-                memtable.operationCount());
+        super(pkFactory.create(keyRange.left.getToken()),
+              pkFactory.create(maxToken(keyRange, memtable.metadata().partitioner)),
+              memtable.operationCount());
 
         TableMetadata metadata = memtable.metadata();
         this.memtable = memtable;
@@ -66,16 +68,9 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
         this.rowIterator = null;
     }
 
-    private static PrimaryKey minKey(Memtable memtable, PrimaryKey.Factory factory)
+    private static Token maxToken(AbstractBounds<PartitionPosition> keyRange, IPartitioner partitioner)
     {
-        DecoratedKey pk = memtable.minPartitionKey();
-        return pk != null ? factory.create(pk) : null;
-    }
-
-    private static PrimaryKey maxKey(Memtable memtable, PrimaryKey.Factory factory)
-    {
-        DecoratedKey pk = memtable.maxPartitionKey();
-        return pk != null ? factory.create(pk) : null;
+        return keyRange.right.getToken().isMinimum() ? partitioner.getMaximumToken() : keyRange.right.getToken();
     }
 
     public static MemtableKeyRangeIterator create(Memtable memtable, AbstractBounds<PartitionPosition> keyRange)
@@ -141,7 +136,10 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
                 continue;
 
             Row row = (Row) unfiltered;
-            return pkFactory.create(rowIterator.partitionKey(), row.clustering());
+            if (pkFactory.hasClustering())
+                return pkFactory.create(rowIterator.partitionKey(), row.clustering());
+            else
+                return pkFactory.create(rowIterator.partitionKey());
         }
         return endOfData();
     }

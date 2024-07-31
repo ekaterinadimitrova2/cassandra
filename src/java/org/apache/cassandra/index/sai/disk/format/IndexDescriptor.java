@@ -174,7 +174,7 @@ public class IndexDescriptor
     public boolean isIndexEmpty(IndexTermType indexTermType, IndexIdentifier indexIdentifier)
     {
         // The index is empty if the index build completed successfully in that both
-        // a GROUP_COMPLETION_MARKER companent and a COLUMN_COMPLETION_MARKER exist for
+        // a GROUP_COMPLETION_MARKER component and a COLUMN_COMPLETION_MARKER exist for
         // the index and the number of per-index components is 1 indicating that only the
         // COLUMN_COMPLETION_MARKER exists for the index, as this is the only file that
         // will be written if the index is empty

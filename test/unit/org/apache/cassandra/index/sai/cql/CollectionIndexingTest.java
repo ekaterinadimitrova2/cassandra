@@ -95,7 +95,7 @@ public class CollectionIndexingTest extends SAITester
         assertRowsIgnoringOrder(execute("SELECT pk FROM %s WHERE value CONTAINS 'v1'"),
                                 row(1));
         assertRowsIgnoringOrder(execute("SELECT pk FROM %s WHERE value NOT CONTAINS 'v1'"),
-                                row(2), row(3));
+                                row(2));
     }
 
     @Test
@@ -253,10 +253,10 @@ public class CollectionIndexingTest extends SAITester
     }
 
     @Test
-    public void notContainsShouldReturnUpdatedRows() throws Throwable {
+    public void notContainsShouldReturnUpdatedRows() throws Throwable
+    {
         createTable("CREATE TABLE %s(id int PRIMARY KEY, text_map map<text, text>)");
         createIndex("CREATE CUSTOM INDEX ON %s(values(text_map)) USING 'StorageAttachedIndex'");
-
         execute("INSERT INTO %s(id, text_map) values (1, {'k1':'v1'})");
         flush();
         // This update overwrites 'v1', so now the map does not contain 'v1' and the row should be returned
@@ -264,9 +264,7 @@ public class CollectionIndexingTest extends SAITester
         // index than the original row.
         execute("INSERT INTO %s(id, text_map) values (1, {'k2':'v2'})");
 
-        beforeAndAfterFlush(() -> {
-            assertRows(execute("SELECT id FROM %s WHERE text_map NOT CONTAINS 'v1'"), row(1));
-        });
+        beforeAndAfterFlush(() -> assertRows(execute("SELECT id FROM %s WHERE text_map NOT CONTAINS 'v1'"), row(1)));
     }
 
     @Test

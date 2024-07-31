@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.apache.cassandra.index.sai.disk.EmptyIndex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,8 +169,8 @@ public class IndexViewManager
 
             if (sstableContext.indexDescriptor.isIndexEmpty(index.termType(), index.identifier()))
             {
-                SSTableIndex empty = new EmptyIndex(sstableContext, index);
-                valid.add(empty);
+                logger.debug(index.identifier().logMessage("No on-disk index was built for SSTable {} because the SSTable " +
+                        "had no indexable rows for the index."), sstableContext.descriptor());
                 continue;
             }
 

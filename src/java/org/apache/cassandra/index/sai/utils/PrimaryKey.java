@@ -107,6 +107,11 @@ public interface PrimaryKey extends Comparable<PrimaryKey>, ByteComparable
             return new SkinnyPrimaryKey(partitionKey);
         }
 
+        public boolean hasClustering()
+        {
+            return clusteringComparator.size() > 0;
+        }
+
         /**
          * Creates a {@link PrimaryKey} that is fully represented by partition key
          * and clustering.

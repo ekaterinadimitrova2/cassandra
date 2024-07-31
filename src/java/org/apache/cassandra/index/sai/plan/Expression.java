@@ -239,33 +239,7 @@ public abstract class Expression
     }
 
     /**
-     * Returns an expression that matches keys not matched by this expression.
-     */
-    public Expression negated()
-    {
-        Expression result = Expression.create(indexTermType);
-        result.lower = lower;
-        result.upper = upper;
-
-        switch (operator)
-        {
-            case NEQ:
-                result.operator = IndexOperator.EQ;
-                break;
-            case NOT_CONTAINS_KEY:
-                result.operator = IndexOperator.CONTAINS_KEY;
-                break;
-            case NOT_CONTAINS_VALUE:
-                result.operator = IndexOperator.CONTAINS_VALUE;
-                break;
-            default:
-                throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
-        }
-        return result;
-    }
-
-    /**
-     * Used in post-filtering to determine is an indexed value matches the expression
+     * Used in post-filtering to determine if an indexed value matches the expression
      */
     public boolean isSatisfiedBy(ByteBuffer columnValue)
     {
@@ -336,6 +310,32 @@ public abstract class Expression
                 return !success;
         }
         return success;
+    }
+
+    /**
+     * Returns an expression that matches keys not matched by this expression.
+     */
+    public Expression negated()
+    {
+        Expression result = Expression.create(indexTermType);
+        result.lower = lower;
+        result.upper = upper;
+
+        switch (operator)
+        {
+            case NEQ:
+                result.operator = IndexOperator.EQ;
+                break;
+            case NOT_CONTAINS_KEY:
+                result.operator = IndexOperator.CONTAINS_KEY;
+                break;
+            case NOT_CONTAINS_VALUE:
+                result.operator = IndexOperator.CONTAINS_VALUE;
+                break;
+            default:
+                throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
+        }
+        return result;
     }
 
     private boolean validateStringValue(ByteBuffer columnValue, ByteBuffer requestedValue)
@@ -483,6 +483,30 @@ public abstract class Expression
         AbstractAnalyzer getAnalyzer()
         {
             return index.analyzer();
+        }
+
+        @Override
+        public Expression negated()
+        {
+            Expression result = new IndexedExpression(index);
+            result.lower = lower;
+            result.upper = upper;
+
+            switch (operator)
+            {
+                case NEQ:
+                    result.operator = IndexOperator.EQ;
+                    break;
+                case NOT_CONTAINS_KEY:
+                    result.operator = IndexOperator.CONTAINS_KEY;
+                    break;
+                case NOT_CONTAINS_VALUE:
+                    result.operator = IndexOperator.CONTAINS_VALUE;
+                    break;
+                default:
+                    throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
+            }
+            return result;
         }
     }
 
