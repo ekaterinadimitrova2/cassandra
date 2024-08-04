@@ -107,11 +107,6 @@ public interface PrimaryKey extends Comparable<PrimaryKey>, ByteComparable
             return new SkinnyPrimaryKey(partitionKey);
         }
 
-        public boolean hasClustering()
-        {
-            return clusteringComparator.size() > 0;
-        }
-
         /**
          * Creates a {@link PrimaryKey} that is fully represented by partition key
          * and clustering.
@@ -471,6 +466,18 @@ public interface PrimaryKey extends Comparable<PrimaryKey>, ByteComparable
      * if they do not support clustering columns.
      */
     Clustering<?> clustering();
+
+    /**
+     * Return whether the primary key has an empty clustering or not.
+     * By default the clustering is empty if the internal clustering
+     * is null or is empty.
+     *
+     * @return {@code true} if the clustering is empty, otherwise {@code false}
+     */
+    default boolean hasEmptyClustering()
+    {
+        return clustering() == null || clustering().isEmpty();
+    }
 
     /**
      * Returns the {@link PrimaryKey} as a {@link ByteSource} byte comparable representation.

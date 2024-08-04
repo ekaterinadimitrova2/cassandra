@@ -99,9 +99,7 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
         if (partitionIterator.hasNext())
         {
             this.rowIterator = partitionIterator.next();
-            if (!(memtable.metadata().comparator.size() == 0 && !nextKey.kind().hasClustering ||
-                  memtable.metadata().comparator.size() > 0 && nextKey.kind().hasClustering)
-                && rowIterator.partitionKey().equals(nextKey.partitionKey()))
+            if (!nextKey.hasEmptyClustering() && rowIterator.partitionKey().equals(nextKey.partitionKey()))
             {
                 Slice slice = Slice.make(nextKey.clustering(), Clustering.EMPTY);
                 Slices slices = Slices.with(memtable.metadata().comparator, slice);
@@ -132,14 +130,11 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
             }
 
             Unfiltered unfiltered = rowIterator.next();
-            if (!unfiltered.isRow())
-                continue;
-
-            Row row = (Row) unfiltered;
-            if (pkFactory.hasClustering())
+            if (unfiltered.isRow())
+            {
+                Row row = (Row) unfiltered;
                 return pkFactory.create(rowIterator.partitionKey(), row.clustering());
-            else
-                return pkFactory.create(rowIterator.partitionKey());
+            }
         }
         return endOfData();
     }
