@@ -34,9 +34,9 @@ import org.apache.cassandra.index.sai.plan.Expression;
 
 public class EmptyIndex extends SSTableIndex
 {
-    private EmptyIndex(SSTableContext sstableContext, StorageAttachedIndex index)
+    public EmptyIndex()
     {
-        super(sstableContext, index);
+        super(null, null);
     }
 
     @Override

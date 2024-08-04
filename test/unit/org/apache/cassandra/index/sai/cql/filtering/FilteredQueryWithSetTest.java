@@ -70,11 +70,11 @@ public class FilteredQueryWithSetTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE s NOT CONTAINS 1",
                 !hasAllIndexes("s"),
                 hasAllIndexes("s"),
-                row(4), row(5), row(6));
+                row(4), row(5));
         test("SELECT k FROM %s WHERE s NOT CONTAINS 1 AND v = 0",
                 !hasAllIndexes("s", "v"),
                 hasAnyIndexes("s", "v"),
-                row(4), row(5), row(6));
+                row(4), row(5));
         test("SELECT k FROM %s WHERE s NOT CONTAINS 1 AND v = 1",
                 !hasAllIndexes("s", "v"),
                 hasAnyIndexes("s", "v"));

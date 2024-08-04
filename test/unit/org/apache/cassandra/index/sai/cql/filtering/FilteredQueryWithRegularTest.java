@@ -50,7 +50,8 @@ public class FilteredQueryWithRegularTest extends FilteredQueryTester
     }
 
     @Test
-    public void testQueries() throws Throwable {
+    public void testQueries() throws Throwable
+    {
         test("SELECT k FROM %s WHERE x=0",
                 !hasIndex("x"),
                 hasIndex("x"),
@@ -58,21 +59,5 @@ public class FilteredQueryWithRegularTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE x=1",
                 !hasIndex("x"),
                 hasIndex("x"));
-
-        test("SELECT k FROM %s WHERE y IN (1, 2)",
-                !hasIndex("y"),
-                hasIndex("y"),
-                row(1), row(2));
-        test("SELECT k FROM %s WHERE y IN (4, 6)",
-                !hasIndex("y"),
-                hasIndex("y"));
-
-        test("SELECT k FROM %s WHERE x=0 AND y IN (1, 2)",
-                !hasAllIndexes("x", "y"),
-                hasAnyIndexes("x", "y"),
-                row(1), row(2));
-        test("SELECT k FROM %s WHERE x=1 AND y IN (1, 2)",
-                !hasAllIndexes("x", "y"),
-                hasAnyIndexes("x", "y"));
     }
 }

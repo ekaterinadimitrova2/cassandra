@@ -81,7 +81,13 @@ public class ComplexQueryTest extends SAITester
 
         assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a != 2 AND b != 7"), row(1), row(4));
         assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a != 2 AND a != 3"), row(1), row(4));
-        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3)"), row(1), row(4));
-        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) AND b NOT IN (7, 8)"), row(1));
+        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) ALLOW FILTERING"), row(1), row(4));
+        assertRowsIgnoringOrder(execute("SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) AND b NOT IN (7, 8) ALLOW FILTERING"), row(1));
+        assertInvalidRequestMessage("Cannot execute this query as it might involve data filtering and thus may have unpredictable performance." +
+                                    " If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING",
+                                    "SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3)");
+        assertInvalidRequestMessage("Cannot execute this query as it might involve data filtering and thus may have unpredictable performance." +
+                                    " If you want to execute this query despite the performance unpredictability, use ALLOW FILTERING",
+                                    "SELECT ck FROM %s WHERE pk = 1 AND a NOT IN (2, 3) AND b NOT IN (7, 8)");
     }
 }

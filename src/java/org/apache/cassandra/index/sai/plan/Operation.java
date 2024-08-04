@@ -66,6 +66,7 @@ public class Operation
                                                                                     List<RowFilter.Expression> expressions)
     {
         ListMultimap<ColumnMetadata, Expression> analyzed = ArrayListMultimap.create();
+        Map<ColumnMetadata, Boolean> columnIsMultiExpression = new HashMap<>();
 
         // sort all the expressions in the operation by name and priority of the logical operator
         // this gives us an efficient way to handle inequality and combining into ranges without extra processing
@@ -84,9 +85,9 @@ public class Operation
                 List<Expression> perColumn = analyzed.get(expression.column());
 
                 if (index == null)
-                    buildUnindexedExpression(queryController, expression, perColumn);
+                    buildUnindexedExpression(queryController, expression, perColumn, columnIsMultiExpression);
                 else
-                    buildIndexedExpression(index, expression, perColumn);
+                    buildIndexedExpression(index, expression, perColumn, columnIsMultiExpression);
             }
         }
 
@@ -95,19 +96,20 @@ public class Operation
 
     private static void buildUnindexedExpression(QueryController queryController,
                                                  RowFilter.Expression expression,
-                                                 List<Expression> perColumn)
+                                                 List<Expression> perColumn,
+                                                 Map<ColumnMetadata, Boolean> columnIsMultiExpression)
     {
         IndexTermType indexTermType = IndexTermType.create(expression.column(),
                                                            queryController.metadata().partitionKeyColumns(),
                                                            determineIndexTargetType(expression));
-        if (indexTermType.isMultiExpression(expression))
+        if (indexTermType.isMultiExpression(expression, perColumn.isEmpty(), columnIsMultiExpression))
         {
             perColumn.add(Expression.create(indexTermType).add(expression.operator(), expression.getIndexValue().duplicate()));
         }
         else
         {
             Expression range;
-            if (perColumn.size() == 0)
+            if (perColumn.isEmpty())
             {
                 range = Expression.create(indexTermType);
                 perColumn.add(range);
@@ -120,7 +122,10 @@ public class Operation
         }
     }
 
-    private static void buildIndexedExpression(StorageAttachedIndex index, RowFilter.Expression expression, List<Expression> perColumn)
+    private static void buildIndexedExpression(StorageAttachedIndex index,
+                                               RowFilter.Expression expression,
+                                               List<Expression> perColumn,
+                                               Map<ColumnMetadata, Boolean> columnIsMultiExpression)
     {
         if (index.hasAnalyzer())
         {
@@ -129,7 +134,7 @@ public class Operation
             {
                 analyzer.reset(expression.getIndexValue().duplicate());
 
-                if (index.termType().isMultiExpression(expression))
+                if (index.termType().isMultiExpression(expression, perColumn.isEmpty(), columnIsMultiExpression))
                 {
                     while (analyzer.hasNext())
                     {
@@ -143,7 +148,7 @@ public class Operation
                 // not-equals is combined with the range iff operator is AND.
                 {
                     Expression range;
-                    if (perColumn.size() == 0)
+                    if (perColumn.isEmpty())
                     {
                         range = Expression.create(index);
                         perColumn.add(range);
@@ -174,14 +179,14 @@ public class Operation
         }
         else
         {
-            if (index.termType().isMultiExpression(expression))
+            if (index.termType().isMultiExpression(expression, perColumn.isEmpty(), columnIsMultiExpression))
             {
                 perColumn.add(Expression.create(index).add(expression.operator(), expression.getIndexValue().duplicate()));
             }
             else
             {
                 Expression range;
-                if (perColumn.size() == 0)
+                if (perColumn.isEmpty())
                 {
                     range = Expression.create(index);
                     perColumn.add(range);
@@ -238,7 +243,7 @@ public class Operation
     {
         switch (op)
         {
-            // KATE: This patch changed the priority of EQ to 7 and lef the CONTAINS and CONTAINS_KEY at 6 in our fork
+            // KATE: This patch changed the priority of EQ to 7 and left the CONTAINS and CONTAINS_KEY at 6 in our fork
             // KATE: I think this would be a breaking change maybe? To be checked; Leaving it for now as-is
             case EQ:
             case CONTAINS:

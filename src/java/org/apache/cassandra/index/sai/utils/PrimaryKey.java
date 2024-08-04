@@ -96,6 +96,11 @@ public interface PrimaryKey extends Comparable<PrimaryKey>, ByteComparable
             return new TokenOnlyPrimaryKey(token);
         }
 
+        public boolean hasClustering()
+        {
+            return clusteringComparator.size() > 0;
+        }
+
         /**
          * Create a {@link PrimaryKey} for tables without clustering columns
          */
@@ -185,13 +190,13 @@ public interface PrimaryKey extends Comparable<PrimaryKey>, ByteComparable
             @Override
             public DecoratedKey partitionKey()
             {
-                throw new UnsupportedOperationException();
+                return null;
             }
 
             @Override
             public Clustering<?> clustering()
             {
-                throw new UnsupportedOperationException();
+                return null;
             }
 
             @Override
@@ -399,7 +404,9 @@ public interface PrimaryKey extends Comparable<PrimaryKey>, ByteComparable
                 // key then it must be equal to it. See comment in the compareTo for static keys above.
                 if (o.kind() == Kind.STATIC)
                     return 0;
-                return clusteringComparator.compare(clustering(), o.clustering());
+                return (o.clustering() != Clustering.EMPTY && clustering() != Clustering.EMPTY)
+                        ? clusteringComparator.compare(clustering(), o.clustering())
+                        : cmp;
             }
 
             @Override

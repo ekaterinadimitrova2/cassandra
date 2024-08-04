@@ -27,8 +27,6 @@ import org.apache.cassandra.db.rows.Row;
 import org.apache.cassandra.db.rows.Unfiltered;
 import org.apache.cassandra.db.rows.UnfilteredRowIterator;
 import org.apache.cassandra.dht.AbstractBounds;
-import org.apache.cassandra.dht.IPartitioner;
-import org.apache.cassandra.dht.Token;
 import org.apache.cassandra.index.sai.iterators.KeyRangeIterator;
 import org.apache.cassandra.index.sai.utils.PrimaryKey;
 import org.apache.cassandra.io.util.FileUtils;
@@ -50,8 +48,8 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
                                      PrimaryKey.Factory pkFactory,
                                      AbstractBounds<PartitionPosition> keyRange)
     {
-        super(pkFactory.create(keyRange.left.getToken()),
-              pkFactory.create(maxToken(keyRange, memtable.metadata().partitioner)),
+        super(minKey(memtable, pkFactory),
+              maxKey(memtable, pkFactory),
               memtable.operationCount());
 
         TableMetadata metadata = memtable.metadata();
@@ -68,9 +66,30 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
         this.rowIterator = null;
     }
 
-    private static Token maxToken(AbstractBounds<PartitionPosition> keyRange, IPartitioner partitioner)
+    private static PrimaryKey minKey(Memtable memtable, PrimaryKey.Factory factory)
     {
-        return keyRange.right.getToken().isMinimum() ? partitioner.getMaximumToken() : keyRange.right.getToken();
+        DecoratedKey pk = memtable.minPartitionKey();
+
+        if (pk == null)
+            return null;
+
+        if (memtable.metadata().comparator.size() == 0)
+            return factory.create(pk);
+
+        return factory.create(pk, Clustering.EMPTY);
+    }
+
+    private static PrimaryKey maxKey(Memtable memtable, PrimaryKey.Factory factory)
+    {
+        DecoratedKey pk = memtable.maxPartitionKey();
+
+        if (pk==null)
+            return null;
+
+        if (memtable.metadata().comparator.size() == 0)
+            return factory.create(pk);
+
+        return factory.create(pk, Clustering.EMPTY);
     }
 
     public static MemtableKeyRangeIterator create(Memtable memtable, AbstractBounds<PartitionPosition> keyRange)
@@ -83,8 +102,8 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
     protected void performSkipTo(PrimaryKey nextKey)
     {
         PartitionPosition start = nextKey.partitionKey() != null
-                ? nextKey.partitionKey()
-                : nextKey.token().minKeyBound();
+                                  ? nextKey.partitionKey()
+                                  : nextKey.token().minKeyBound();
         if (!keyRange.right.isMinimum() && start.compareTo(keyRange.right) > 0)
         {
             partitionIterator = EmptyIterators.unfilteredPartition(memtable.metadata());
@@ -133,7 +152,10 @@ public class MemtableKeyRangeIterator extends KeyRangeIterator
             if (unfiltered.isRow())
             {
                 Row row = (Row) unfiltered;
-                return pkFactory.create(rowIterator.partitionKey(), row.clustering());
+                if (pkFactory.hasClustering())
+                    return pkFactory.create(rowIterator.partitionKey(), row.clustering());
+
+                return pkFactory.create(rowIterator.partitionKey());
             }
         }
         return endOfData();

@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Objects;
 import com.google.common.io.Files;
+import org.apache.cassandra.index.sai.disk.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +36,6 @@ import org.apache.cassandra.dht.IPartitioner;
 import org.apache.cassandra.index.sai.StorageAttachedIndex;
 import org.apache.cassandra.index.sai.IndexValidation;
 import org.apache.cassandra.index.sai.SSTableContext;
-import org.apache.cassandra.index.sai.disk.PerColumnIndexWriter;
-import org.apache.cassandra.index.sai.disk.PerSSTableIndexWriter;
-import org.apache.cassandra.index.sai.disk.PrimaryKeyMap;
-import org.apache.cassandra.index.sai.disk.RowMapping;
-import org.apache.cassandra.index.sai.disk.SSTableIndex;
 import org.apache.cassandra.index.sai.disk.io.IndexFileUtils;
 import org.apache.cassandra.index.sai.disk.io.IndexOutputWriter;
 import org.apache.cassandra.index.sai.utils.IndexIdentifier;
@@ -126,7 +122,9 @@ public class IndexDescriptor
 
     public SSTableIndex newSSTableIndex(SSTableContext sstableContext, StorageAttachedIndex index)
     {
-        return version.onDiskFormat().newSSTableIndex(sstableContext, index);
+        return isIndexEmpty(index.termType(), index.identifier())
+                ? new EmptyIndex()
+                : version.onDiskFormat().newSSTableIndex(sstableContext, index);
     }
 
     public PerSSTableIndexWriter newPerSSTableIndexWriter() throws IOException
@@ -169,6 +167,11 @@ public class IndexDescriptor
     public File fileFor(IndexComponent indexComponent, IndexIdentifier indexIdentifier)
     {
         return createFile(indexComponent, indexIdentifier);
+    }
+
+    public boolean isSSTableEmpty()
+    {
+        return isPerSSTableIndexBuildComplete() && numberOfComponents(hasClustering()) == 1;
     }
 
     public boolean isIndexEmpty(IndexTermType indexTermType, IndexIdentifier indexIdentifier)
@@ -472,6 +475,11 @@ public class IndexDescriptor
                       .map(c -> fileFor(c, indexIdentifier))
                       .filter(File::exists)
                       .count();
+    }
+
+    private int numberOfComponents(boolean hasClustering)
+    {
+        return version.onDiskFormat().perSSTableIndexComponents(hasClustering).size();
     }
 
     private void deleteComponent(File file)

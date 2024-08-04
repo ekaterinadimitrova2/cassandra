@@ -312,32 +312,6 @@ public abstract class Expression
         return success;
     }
 
-    /**
-     * Returns an expression that matches keys not matched by this expression.
-     */
-    public Expression negated()
-    {
-        Expression result = Expression.create(indexTermType);
-        result.lower = lower;
-        result.upper = upper;
-
-        switch (operator)
-        {
-            case NEQ:
-                result.operator = IndexOperator.EQ;
-                break;
-            case NOT_CONTAINS_KEY:
-                result.operator = IndexOperator.CONTAINS_KEY;
-                break;
-            case NOT_CONTAINS_VALUE:
-                result.operator = IndexOperator.CONTAINS_VALUE;
-                break;
-            default:
-                throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
-        }
-        return result;
-    }
-
     private boolean validateStringValue(ByteBuffer columnValue, ByteBuffer requestedValue)
     {
         if (hasAnalyzer())
@@ -384,6 +358,32 @@ public abstract class Expression
                 break;
         }
         return isMatch;
+    }
+
+    /**
+     * Returns an expression that matches keys not matched by this expression.
+     */
+    public Expression negated()
+    {
+        Expression result = Expression.create(indexTermType);
+        result.lower = lower;
+        result.upper = upper;
+
+        switch (operator)
+        {
+            case NEQ:
+                result.operator = IndexOperator.EQ;
+                break;
+            case NOT_CONTAINS_KEY:
+                result.operator = IndexOperator.CONTAINS_KEY;
+                break;
+            case NOT_CONTAINS_VALUE:
+                result.operator = IndexOperator.CONTAINS_VALUE;
+                break;
+            default:
+                throw new UnsupportedOperationException(String.format("Negation of operator %s not supported", operator));
+        }
+        return result;
     }
 
     private boolean hasLower()

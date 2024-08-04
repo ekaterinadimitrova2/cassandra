@@ -46,9 +46,10 @@ public interface TermTree
         public final void add(SSTableIndex index)
         {
             addIndex(index);
-
-            min = min == null || comparator.compare(min, index.minTerm()) > 0 ? index.minTerm() : min;
-            max = max == null || comparator.compare(max, index.maxTerm()) < 0 ? index.maxTerm() : max;
+            if (index.minTerm() != null)
+                min = min == null || comparator.compare(min, index.minTerm()) > 0 ? index.minTerm() : min;
+            if (index.maxTerm() != null)
+                max = max == null || comparator.compare(max, index.maxTerm()) < 0 ? index.maxTerm() : max;
         }
 
         protected abstract void addIndex(SSTableIndex index);

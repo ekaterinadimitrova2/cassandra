@@ -38,8 +38,7 @@ public class MultipleColumnIndexTest extends SAITester
     }
 
     @Test
-    public void indexNamedAsColumnWillCoExistWithGeneratedIndexNames()
-    {
+    public void indexNamedAsColumnWillCoExistWithGeneratedIndexNames() throws Throwable {
         createTable("CREATE TABLE %s(id int PRIMARY KEY, text_map map<text, text>)");
 
         createIndex("CREATE INDEX text_map ON %s(keys(text_map)) USING 'sai'");
@@ -50,7 +49,7 @@ public class MultipleColumnIndexTest extends SAITester
         execute("INSERT INTO %s(id, text_map) values (2, {'k1':'v1', 'k3':'v3'})");
         execute("INSERT INTO %s(id, text_map) values (3, {'k4':'v4', 'k5':'v5'})");
 
-        //beforeAndAfterFlush(() -> {
+        beforeAndAfterFlush(() -> {
             assertEquals(1, execute("SELECT * FROM %s WHERE text_map['k1'] = 'v1' AND text_map['k2'] = 'v2'").size());
             assertEquals(2, execute("SELECT * FROM %s WHERE text_map CONTAINS 'v1'").size());
             assertEquals(2, execute("SELECT * FROM %s WHERE text_map CONTAINS 'v1' AND text_map NOT CONTAINS 'v5'").size());
@@ -76,6 +75,6 @@ public class MultipleColumnIndexTest extends SAITester
             assertEquals(1, execute("SELECT * FROM %s WHERE text_map['k1'] != 'v2' AND text_map NOT CONTAINS 'v3' AND text_map NOT CONTAINS 'v5'").size());
             assertEquals(2, execute("SELECT * FROM %s WHERE text_map['k1'] != 'v2' AND text_map NOT CONTAINS KEY 'k3'").size());
             assertEquals(1, execute("SELECT * FROM %s WHERE text_map['k1'] != 'v2' AND text_map NOT CONTAINS KEY 'k3' AND text_map NOT CONTAINS KEY 'k5'").size());
-        //});
+        });
     }
 }

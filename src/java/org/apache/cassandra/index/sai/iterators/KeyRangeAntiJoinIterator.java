@@ -47,8 +47,8 @@ public class KeyRangeAntiJoinIterator extends KeyRangeIterator
 
     protected void performSkipTo(PrimaryKey nextKey)
     {
-        left.performSkipTo(nextKey);
-        right.performSkipTo(nextKey);
+        left.skipTo(nextKey);
+        right.skipTo(nextKey);
     }
 
     public void close()
