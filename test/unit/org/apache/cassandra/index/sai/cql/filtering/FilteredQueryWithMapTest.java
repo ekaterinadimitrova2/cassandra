@@ -74,64 +74,12 @@ public class FilteredQueryWithMapTest extends FilteredQueryTester
         test("SELECT k FROM %s WHERE m[1] != 1",
                 !hasIndex("me"),
                 hasIndex("me"),
-                row(3), row(4), row(5), row(6));
+                row(4), row(5));
         test("SELECT k FROM %s WHERE m[1] != 1 AND v = 0",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"),
-                row(3), row(4), row(5), row(6));
+                row(4), row(5));
         test("SELECT k FROM %s WHERE m[1] != 1 AND v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"));
-
-        // range entries (>)
-        test("SELECT k FROM %s WHERE m[3] > 3",
-                !hasIndex("me"),
-                hasIndex("me"),
-                row(5));
-        test("SELECT k FROM %s WHERE m[3] > 3 AND v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"),
-                row(5));
-        test("SELECT k FROM %s WHERE m[3] > 3 AND v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"));
-
-        // range entries (<)
-        test("SELECT k FROM %s WHERE m[3] < 30",
-                !hasIndex("me"),
-                hasIndex("me"),
-                row(2));
-        test("SELECT k FROM %s WHERE m[3] < 30 AND v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"),
-                row(2));
-        test("SELECT k FROM %s WHERE m[3] < 30 AND v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"));
-
-        // range entries (>=)
-        test("SELECT k FROM %s WHERE m[3] >= 3",
-                !hasIndex("me"),
-                hasIndex("me"),
-                row(2), row(5));
-        test("SELECT k FROM %s WHERE m[3] >= 3 AND v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"),
-                row(2), row(5));
-        test("SELECT k FROM %s WHERE m[3] >= 3 AND v = 1",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"));
-
-        // range entries (<=)
-        test("SELECT k FROM %s WHERE m[3] <= 30",
-                !hasIndex("me"),
-                hasIndex("me"),
-                row(2), row(5));
-        test("SELECT k FROM %s WHERE m[3] <= 30 AND v = 0",
-                !hasAllIndexes("me", "v"),
-                hasAnyIndexes("me", "v"),
-                row(2), row(5));
-        test("SELECT k FROM %s WHERE m[3] <= 30 AND v = 1",
                 !hasAllIndexes("me", "v"),
                 hasAnyIndexes("me", "v"));
 

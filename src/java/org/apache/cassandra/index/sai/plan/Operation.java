@@ -217,10 +217,6 @@ public class Operation
                 {
                     case EQ:
                     case NEQ:
-                    case LT:
-                    case LTE:
-                    case GT:
-                    case GTE:
                         indexTargetType = IndexTarget.Type.KEYS_AND_VALUES;
                         break;
                     case CONTAINS:

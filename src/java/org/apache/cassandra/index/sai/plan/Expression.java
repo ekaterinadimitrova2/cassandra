@@ -302,6 +302,9 @@ public abstract class Expression
         if (values == null)
             values = Collections.emptyIterator();
 
+        if (!values.hasNext())
+            return false;
+
         boolean success = operator.isNonEquality();
         while (values.hasNext())
         {
