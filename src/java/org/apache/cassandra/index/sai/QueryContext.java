@@ -28,6 +28,7 @@ import org.apache.cassandra.index.sai.plan.FilterTree;
 import org.apache.cassandra.index.sai.plan.QueryController;
 import org.apache.cassandra.utils.Clock;
 
+import static org.apache.cassandra.config.CassandraRelevantProperties.SAI_TEST_DISABLE_TIMEOUT;
 
 /**
  * Tracks state relevant to the execution of a single query, including metrics and timeout monitoring.
@@ -37,7 +38,7 @@ import org.apache.cassandra.utils.Clock;
 @NotThreadSafe
 public class QueryContext
 {
-    private static final boolean DISABLE_TIMEOUT = true;
+    private static final boolean DISABLE_TIMEOUT = SAI_TEST_DISABLE_TIMEOUT.getBoolean();
 
     private final ReadCommand readCommand;
     private final long queryStartTimeNanos;
