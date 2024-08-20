@@ -221,9 +221,7 @@ public final class SimpleRestriction implements SingleRestriction
     {
         assert operator == Operator.EQ ||
                operator == Operator.IN ||
-               operator == Operator.ANN ||
-               operator == Operator.NEQ ||
-               operator == Operator.NOT_IN;
+               operator == Operator.ANN;
         return bindAndGetClusteringElements(options);
     }
 
