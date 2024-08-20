@@ -502,7 +502,7 @@ public enum Operator
         @Override
         public boolean requiresFilteringOrIndexingFor(ColumnMetadata.Kind columnKind)
         {
-            return !columnKind.isPrimaryKeyKind();
+            return columnKind != ColumnMetadata.Kind.CLUSTERING;
         }
 
         @Override
@@ -666,7 +666,7 @@ public enum Operator
         @Override
         public boolean requiresFilteringOrIndexingFor(ColumnMetadata.Kind columnKind)
         {
-            return !columnKind.isPrimaryKeyKind();
+            return columnKind != ColumnMetadata.Kind.CLUSTERING;
         }
 
         @Override
