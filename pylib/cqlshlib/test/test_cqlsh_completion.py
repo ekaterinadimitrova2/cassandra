@@ -381,7 +381,7 @@ class TestCqlshCompletion(CqlshCompletionCase):
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE lonel",
                             immediate='ykey ')
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE lonelykey ",
-                            choices=['=', '<=', '>=', '>', '<', 'BETWEEN', 'CONTAINS', 'NOT', 'CONTAINS', 'IN', 'NOT', 'IN', '['])
+                            choices=['=', '<=', '>=', '>', '<', '!=' 'BETWEEN', 'CONTAINS', 'IN', '['])
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE lonelykey = 0.0 ",
                             choices=['AND', 'IF', ';'])
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE lonelykey = 0.0 AND ",
@@ -390,7 +390,7 @@ class TestCqlshCompletion(CqlshCompletionCase):
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE TOKEN(lonelykey ",
                             choices=[',', ')'])
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE TOKEN(lonelykey) ",
-                            choices=['=', '<=', '>=', '<', '>', '!='])
+                            choices=['=', '<=', '>=', '<', '>'])
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE TOKEN(lonelykey) <= TOKEN(13) ",
                             choices=[';', 'AND', 'IF'])
         self.trycompletions("UPDATE empty_table SET lonelycol = 'eggs' WHERE TOKEN(lonelykey) <= TOKEN(13) IF ",
@@ -464,7 +464,7 @@ class TestCqlshCompletion(CqlshCompletionCase):
                             choices=['a', 'b', 'TOKEN('])
 
         self.trycompletions('DELETE FROM twenty_rows_composite_table USING TIMESTAMP 0 WHERE a ',
-                            choices=['<=', '>=', 'BETWEEN', 'CONTAINS', 'NOT', 'CONTAINS', 'IN', 'NOT', 'IN', '[', '=', '<', '>'])
+                            choices=['<=', '>=', 'BETWEEN', 'CONTAINS', 'IN', '[', '=', '<', '>', '!='])
 
         self.trycompletions('DELETE FROM twenty_rows_composite_table USING TIMESTAMP 0 WHERE TOKEN(',
                             immediate='a ')
@@ -473,7 +473,7 @@ class TestCqlshCompletion(CqlshCompletionCase):
         self.trycompletions('DELETE FROM twenty_rows_composite_table USING TIMESTAMP 0 WHERE TOKEN(a ',
                             choices=[')', ','])
         self.trycompletions('DELETE FROM twenty_rows_composite_table USING TIMESTAMP 0 WHERE TOKEN(a) ',
-                            choices=['>=', '<=', '=', '<', '>', '!='])
+                            choices=['>=', '<=', '=', '<', '>'])
         self.trycompletions('DELETE FROM twenty_rows_composite_table USING TIMESTAMP 0 WHERE TOKEN(a) >= ',
                             choices=['false', 'true', '<pgStringLiteral>',
                                      'token(', '-', '<float>', 'TOKEN',

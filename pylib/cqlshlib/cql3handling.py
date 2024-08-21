@@ -738,12 +738,10 @@ syntax_rules += r'''
                     ;
 <whereClause> ::= <relation> ( "AND" <relation> )*
                 ;
-<relation> ::= [rel_lhs]=<cident> ( "[" <term> "]" )? ( "=" | "<" | ">" | "<=" | ">=" | ( "NOT" )? "CONTAINS" ( "KEY" )? ) <term>
+<relation> ::= [rel_lhs]=<cident> ( "[" <term> "]" )? ( "=" | "<" | ">" | "<=" | ">=" | "!=" | ( "NOT" )? "CONTAINS" ( "KEY" )? | ( "NOT" )? "IN" ) <term>
              | token="TOKEN" "(" [rel_tokname]=<cident>
                                  ( "," [rel_tokname]=<cident> )*
-                             ")" ("=" | "!=" | "<" | ">" | "<=" | ">=") <tokenDefinition>
-             | [rel_lhs]=<cident> "IN" "(" <term> ( "," <term> )* ")"
-             | [rel_lhs]=<cident> "NOT IN" "(" <term> ( "," <term> )* ")"
+                             ")" ("=" | "<" | ">" | "<=" | ">=") <tokenDefinition>
              | [rel_lhs]=<cident> "BETWEEN" <term> "AND" <term>
              ;
 <selectClause> ::= "DISTINCT"? <selector> ("AS" <cident>)? ("," <selector> ("AS" <cident>)?)*
