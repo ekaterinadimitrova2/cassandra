@@ -190,6 +190,9 @@ public final class Relation
     {
         ColumnsExpression columnsExpression = rawExpressions.prepare(table);
 
+        if (operator == Operator.NEQ && columnsExpression.kind() == ColumnsExpression.Kind.TOKEN)
+            throw invalidRequest("Unsupported '!=' relation: %s", this);
+
         // TODO support restrictions on list elements as we do in conditions, then we can probably move below validations
         //  to ElementExpression prepare/validateColumns
         if (columnsExpression.isMapElementExpression())

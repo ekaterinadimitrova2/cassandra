@@ -60,4 +60,16 @@ public class TokenRangeReadTest extends SAITester
             assertInvalidMessage(StatementRestrictions.REQUIRES_ALLOW_FILTERING_MESSAGE, "SELECT k1 FROM %s WHERE token(k1) >= token(2) AND token(k1) < token(2) AND v1 NOT CONTAINS 'z'");
         });
     }
+
+    @Test
+    public void testInvalidOperatorTokenRangeRead() throws Throwable
+    {
+        createTable("CREATE TABLE %s (k1 int, v1 set<text>, PRIMARY KEY (k1))");
+        createIndex(format("CREATE CUSTOM INDEX ON %%s(v1) USING '%s'", StorageAttachedIndex.class.getName()));
+
+        execute("INSERT INTO %S(k1, v1) values(1, {'a', 'b', 'c'})");
+        execute("INSERT INTO %S(k1, v1) values(2, {'a', 'd'})");
+
+        assertInvalidMessage("Unsupported '!=' relation: token(k1) != 'token(2)","SELECT k1 FROM %s WHERE token(k1) != 'token(2)'");
+    }
 }
