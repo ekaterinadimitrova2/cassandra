@@ -66,15 +66,27 @@ public class JMXServerUtils
     {
         Map<String, Object> env = new HashMap<>();
 
-        InetAddress serverAddress = null;
+        InetAddress serverAddress = InetAddress.getByName("0.0.0.0");
         if (local)
         {
             serverAddress = InetAddress.getLoopbackAddress();
-            System.setProperty("java.rmi.server.hostname", serverAddress.getHostAddress());
+        }
+        else
+        {
+            String host = "com.sun.management.jmxremote.host";;
+            if (System.getProperty(host) != null)
+            {
+                serverAddress = InetAddress.getByName(System.getProperty(host));
+            }
         }
 
+        // Primarily for JMXServerUtilsTest to have a deterministic "backchannel" address, since RMI server +
+        // server are running in the same JVM. Also allows users to explicitly set this property.
+        if (System.getProperty("java.rmi.server.hostname") == null)
+            System.setProperty("java.rmi.server.hostname", serverAddress.getHostAddress());
+
         // Configure the RMI client & server socket factories, including SSL config.
-        env.putAll(configureJmxSocketFactories(serverAddress, local));
+        env.putAll(configureJmxSocketFactories(serverAddress));
 
         // configure the RMI registry
         Registry registry = new JmxRegistry(port,
@@ -196,7 +208,7 @@ public class JMXServerUtils
         }
     }
 
-    private static Map<String, Object> configureJmxSocketFactories(InetAddress serverAddress, boolean localOnly)
+    private static Map<String, Object> configureJmxSocketFactories(InetAddress serverAddress)
     {
         Map<String, Object> env = new HashMap<>();
         if (Boolean.getBoolean("com.sun.management.jmxremote.ssl"))
@@ -225,7 +237,7 @@ public class JMXServerUtils
             env.put("com.sun.jndi.rmi.factory.socket", clientFactory);
             logJmxSslConfig(serverFactory);
         }
-        else if (localOnly)
+        else
         {
             env.put(RMIConnectorServer.RMI_SERVER_SOCKET_FACTORY_ATTRIBUTE,
                     new RMIServerSocketFactoryImpl(serverAddress));
