@@ -761,11 +761,13 @@ public class OutboundConnection
             // this number is inaccurate for old versions, but we don't mind terribly - we'll send at least one message,
             // and get round to it eventually (though we could add a fudge factor for some room for older versions)
             int maxSendBytes = (int) min(pendingBytes() - flushingBytes, LARGE_MESSAGE_THRESHOLD);
+            logger.debug("KATE: maxSendBytes={}", maxSendBytes);
             if (maxSendBytes == 0)
                 return false;
 
             OutboundConnectionSettings settings = established.settings;
             int messagingVersion = established.messagingVersion;
+            logger.debug("KATE: messagingVersion={}", messagingVersion);
 
             FrameEncoder.Payload sending = null;
             int canonicalSize = 0; // number of bytes we must use for our resource accounting
@@ -777,6 +779,7 @@ public class OutboundConnection
                     return false; // we failed to acquire the queue lock, so return; we will be scheduled again when the lock is available
 
                 sending = established.payloadAllocator.allocate(true, maxSendBytes);
+                logger.debug("KATE: sending={}", sending);
                 DataOutputBufferFixed out = new DataOutputBufferFixed(sending.buffer);
 
                 Message<?> next;
@@ -785,11 +788,13 @@ public class OutboundConnection
                     try
                     {
                         int messageSize = next.serializedSize(messagingVersion);
+                        logger.debug("KATE: messageSize={}", messageSize);
 
                         // actual message size for this version is larger than permitted maximum
                         if (messageSize > DatabaseDescriptor.getInternodeMaxMessageSizeInBytes())
                             throw new Message.OversizedMessageException(messageSize);
 
+                        logger.debug("KATE: senidng.remaining()={}", sending.remaining());
                         if (messageSize > sending.remaining())
                         {
                             // if we don't have enough room to serialize the next message, we have either
@@ -812,8 +817,17 @@ public class OutboundConnection
                         Tracing.instance.traceOutgoingMessage(next, messageSize, settings.connectTo);
                         Message.serializer.serialize(next, out, messagingVersion);
 
+                        logger.debug("KATE: sending.length()={}", sending.length());
+                        logger.debug("KATE: sendingBytes={}", sendingBytes);
+                        logger.debug("KATE: messageSize={}", messageSize);
+
                         if (sending.length() != sendingBytes + messageSize)
+                        {
+                            logger.debug("KATE: sending.length()={}", sending.length());
+                            logger.debug("KATE: sendingBytes={}", sendingBytes);
+                            logger.debug("KATE: messageSize={}", messageSize);
                             throw new InvalidSerializedSizeException(next.verb(), messageSize, sending.length() - sendingBytes);
+                        }
 
                         canonicalSize += canonicalSize(next);
                         sendingCount += 1;
@@ -964,6 +978,7 @@ public class OutboundConnection
         @SuppressWarnings({ "resource", "RedundantSuppression" }) // make eclipse warnings go away
         boolean doRun(Established established)
         {
+            logger.debug("KATE, large message do run");
             Message<?> send = queue.tryPoll(approxTime.now(), this::execute);
             if (send == null)
                 return false;
@@ -972,6 +987,7 @@ public class OutboundConnection
             try
             {
                 int messageSize = send.serializedSize(established.messagingVersion);
+                logger.debug("KATE messageSize:{}", messageSize);
                 out = new AsyncMessageOutputPlus(established.channel, DEFAULT_BUFFER_SIZE, messageSize, established.payloadAllocator);
                 // actual message size for this version is larger than permitted maximum
                 if (messageSize > DatabaseDescriptor.getInternodeMaxMessageSizeInBytes())
@@ -980,6 +996,8 @@ public class OutboundConnection
                 Tracing.instance.traceOutgoingMessage(send, messageSize, established.settings.connectTo);
                 Message.serializer.serialize(send, out, established.messagingVersion);
 
+                logger.debug("KATE out.position():{}", out.position());
+                logger.debug("KATE messageSize:{}", messageSize);
                 if (out.position() != messageSize)
                     throw new InvalidSerializedSizeException(send.verb(), messageSize, out.position());
 

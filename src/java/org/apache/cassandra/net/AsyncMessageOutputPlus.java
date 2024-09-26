@@ -21,6 +21,9 @@ package org.apache.cassandra.net;
 import java.io.IOException;
 import java.nio.channels.ClosedChannelException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.WriteBufferWaterMark;
@@ -39,6 +42,7 @@ import org.apache.cassandra.io.util.DataOutputStreamPlus;
  */
 public class AsyncMessageOutputPlus extends AsyncChannelOutputPlus
 {
+    static final Logger logger = LoggerFactory.getLogger(AsyncMessageOutputPlus.class);
     /**
      * the maximum {@link #highWaterMark} and minimum {@link #lowWaterMark} number of bytes we have flushing
      * during which we should still be writing to the channel.
@@ -112,6 +116,8 @@ public class AsyncMessageOutputPlus extends AsyncChannelOutputPlus
 
     public long position()
     {
+        logger.debug("KATE: flushed:{}", flushed());
+        logger.debug("KATE: payload.length():{}", payload.length());
         return flushed() + payload.length();
     }
 
